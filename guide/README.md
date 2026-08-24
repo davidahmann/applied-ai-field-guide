@@ -246,6 +246,8 @@ Review whether to continue, improve, expand, constrain, pause, or retire. An exp
 
 Transfer is complete when the receiving team can operate, change, recover, support, and retire the service without delivery-team heroics. Documents alone do not prove operating capability; exercises do.
 
+Use forward-deployed capacity while ambiguity is producing consequential new evidence. Once representative evidence supports an accepted specification and the remaining work is ordinary implementation, transfer execution to the product, engineering, and operating teams. Continued embedded support should be time-bounded and justified by new learning or an explicit support contract—not convenience or hidden staffing dependency.
+
 **Use in the repository:** [Operate and Scale](../playbooks/03-operate-and-scale.md), [production service review](../templates/production-service-review.md), [operations map](../operations/README.md), and [handoff template](../templates/customer-enablement-handoff.md).
 
 ## 11. Turn field learning into product capability

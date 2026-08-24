@@ -52,6 +52,14 @@ Use three field moves before inventing a larger process:
 
 Accepted changes update only the dependent scope, design, evaluation, and delivery records. Rejected or deferred changes remain in the chronology without mutating the current boundary. The [field-engagement and accountable-reframing playbook](../playbooks/00-field-engagement-and-reframing.md) provides the full method.
 
+## Know when the FDE should leave
+
+Use forward-deployed capacity when the workflow, boundary, authority, or solution specification is still unknown or contradicted. Once representative evidence supports an accepted specification and the remaining work is ordinary implementation, transfer it to the product, engineering, and operating teams. Do not relabel general staffing as FDE work.
+
+Define the exit evidence before embedding: the receiving team can operate, change, evaluate, release, recover, support, and retire the service without FDE heroics; any temporary support has an owner, expiry, and exercised exit. At portfolio review, ask whether embedded engineers are still discovering portable truths or are holding revenue and production together. Persistent dependency is an economic and operating risk even when it is described as white-glove service.
+
+Repeated field pain does not automatically become product. Classify it as customer configuration, a target-owned extension, a reusable pattern or platform gap, a time-bounded experiment, or non-viable work. Each engagement should leave customer-owned operating capability and, separately, a sanitized field-learning record with clear reuse rights and target-specific validation.
+
 ## The minimum working packet
 
 Do not complete every template by default. Create only the evidence needed for the next consequential decision.
