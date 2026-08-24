@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.20.0] - 2026-08-24
+
+- Add a concise FDE entry-and-exit test: embed while consequential workflow, authority, boundary, or specification uncertainty remains; transfer ordinary implementation once representative evidence supports an accepted specification.
+- Make customer-owned operating capability, time-bounded support, exercised exit evidence, and embedded-engineering dependency explicit in the short and concise Guides.
+- Distinguish portable field learning from customer-specific pain and add regression coverage so generic staffing and revenue-support dependency cannot quietly become the FDE operating model.
+
 ## [1.19.0] - 2026-08-20
 
 - Add a canonical five-minute FDE Guide that distills the field job, five operating rules, three moves for a contradicted brief, minimum working packet, and task-based next routes into a bounded first read.
@@ -171,7 +177,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.19.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.20.0...HEAD
+[1.20.0]: https://github.com/davidahmann/fde-guide/compare/v1.19.0...v1.20.0
 [1.19.0]: https://github.com/davidahmann/fde-guide/compare/v1.18.0...v1.19.0
 [1.18.0]: https://github.com/davidahmann/fde-guide/compare/v1.17.0...v1.18.0
 [1.17.0]: https://github.com/davidahmann/fde-guide/compare/v1.16.0...v1.17.0

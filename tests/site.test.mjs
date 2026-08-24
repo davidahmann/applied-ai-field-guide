@@ -41,6 +41,7 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
     "## The job",
     "## Five rules that matter",
     "## When the brief is wrong",
+    "## Know when the FDE should leave",
     "## The minimum working packet",
     "## Choose the next route",
     "## Keep the boundary clear",
@@ -53,6 +54,8 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
     "concise FDE Guide](README.md)",
   ]) assert.ok(source.includes(target), target);
   assert.match(source, /guidance—not production approval/i);
+  assert.match(source, /Do not relabel general staffing as FDE work/);
+  assert.match(source, /holding revenue and production together/);
 });
 
 test("the capability roadmap is a bounded secondary entry layer", async () => {
