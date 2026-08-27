@@ -143,6 +143,7 @@ These are professional-practice boundaries over the guide's existing value, secu
 
 - The model proposes; deterministic controls authorize and commit.
 - The operational domain includes state, decisions, actions, security, feedback, and reconciliation—not only retrieved content.
+- Codified methods, expert logic, metric definitions, and tool interfaces are engineering inputs only when their owner, version, provenance, scope, authority, evaluation, and correction path are explicit. [R26-76]
 - Interactive delegated and unattended agents use explicit, different actor-identity patterns.
 - Read-only tools are assessed for disclosure and open-world capability, not only side effects.
 - Egress is bound to operation and credential provenance, not host name alone.
@@ -177,5 +178,6 @@ These are professional-practice boundaries over the guide's existing value, secu
 [R26-67]: ../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-67
 [R26-70]: ../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-70
 [R26-71]: ../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-71
+[R26-76]: ../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76
 
-Evidence: [R26-37 through R26-46](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#fde-delivery-and-operating-model-evidence), [R26-47 through R26-56](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-47), [R26-62 through R26-64](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-62), [R26-70 through R26-74](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-70), the [AI Engineer video index](../research/2026-08-07--ai-engineer-production-agent-video-index.md), the [operational-redesign note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), the [FDE product-boundaries note](../research/2026-08-10--fde-product-boundaries-and-capability-transfer.md), and the [multimodal and computer-use note](../research/2026-08-11--multimodal-operations-and-computer-use.md).
+Evidence: [R26-37 through R26-46](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#fde-delivery-and-operating-model-evidence), [R26-47 through R26-56](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-47), [R26-62 through R26-64](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-62), [R26-70 through R26-74](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-70), the [AI Engineer video index](../research/2026-08-07--ai-engineer-production-agent-video-index.md), the [operational-redesign note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), the [FDE product-boundaries note](../research/2026-08-10--fde-product-boundaries-and-capability-transfer.md), the [multimodal and computer-use note](../research/2026-08-11--multimodal-operations-and-computer-use.md), and the bounded [Bridgewater PAT field report](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76).

@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.21.0] - 2026-08-27
+
+- Add a bounded first-party evidence review of Bridgewater's Pocket Analyst Tool without turning one finance deployment into a generic architecture or performance threshold.
+- Clarify that codified institutional methods are versioned, purpose-bound context and that analytical generation should cross typed planning, deterministic policy, constrained execution, and evidence-linked review boundaries.
+- Route specialist decomposition and expert-feedback-derived changes through measured topology admission, protected evaluation, independent review, and ordinary release authority.
+
 ## [1.20.0] - 2026-08-24
 
 - Add a concise FDE entry-and-exit test: embed while consequential workflow, authority, boundary, or specification uncertainty remains; transfer ordinary implementation once representative evidence supports an accepted specification.
@@ -177,7 +183,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.20.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.21.0...HEAD
+[1.21.0]: https://github.com/davidahmann/fde-guide/compare/v1.20.0...v1.21.0
 [1.20.0]: https://github.com/davidahmann/fde-guide/compare/v1.19.0...v1.20.0
 [1.19.0]: https://github.com/davidahmann/fde-guide/compare/v1.18.0...v1.19.0
 [1.18.0]: https://github.com/davidahmann/fde-guide/compare/v1.17.0...v1.18.0
