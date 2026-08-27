@@ -42,6 +42,8 @@ Start from the workflow charter: decision, eligible population, exclusions, grai
 
 Record system, environment, interface, residency, owner, source-of-truth status, schema, revision, freshness, classification, tenant and field scope, retention, deletion, and correction behavior. Observe what operators trust when SOWs, policy, runbooks, code, databases, and actual practice disagree.
 
+Treat codified methods, expert logic, metric definitions, analytical routines, and tool interfaces as sources too. Record owner, version, provenance, applicable population, permitted purpose, authority class, dependencies, review date, and correction path. A widely used internal method can be valuable context without becoming source-of-truth state, action authority, or anonymous evaluation ground truth. The [Bridgewater PAT field report](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76) illustrates the leverage of institutional legibility while remaining first-party and non-portable.
+
 ### 3. Profile decision-critical quality
 
 Measure the fields and relationships that can change the decision:
@@ -97,6 +99,6 @@ Compare source repair, governed derived views, constrained population, human col
 
 ## Evidence and limits
 
-This chapter applies source ownership and readiness from [R26-14](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-14), retrieval sufficiency from [R26-16](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-16), evaluation authority from [R26-47](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-47) and [R26-53](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-53), and lineage vocabulary from [R26-67](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-67). These sources support the engineering boundaries, not universal thresholds. Target owners must set and verify thresholds for their workflow.
+This chapter applies source ownership and readiness from [R26-14](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-14), retrieval sufficiency from [R26-16](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-16), evaluation authority from [R26-47](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-47) and [R26-53](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-53), lineage vocabulary from [R26-67](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-67), and bounded institutional-method evidence from [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76). These sources support the engineering boundaries, not universal thresholds. Target owners must set and verify thresholds for their workflow.
 
 Controls: `CTX-001`, `CTX-006`, `CTX-007`, `CTX-008`, `CTX-009`, `EVA-001`, `EVA-006`, `OPS-001`, `OPS-002`, `OPS-005`, `VAL-001`, `VAL-002`.

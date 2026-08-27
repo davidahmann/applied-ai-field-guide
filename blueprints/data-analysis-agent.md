@@ -50,6 +50,12 @@ Trust boundaries:
 | Deliverable | Notebook, table, chart, memo, or review packet |
 | Acceptance | Deterministic checks plus named domain-review rubric |
 
+### Institutional method context
+
+Codified expert methods, metric definitions, analytical routines, notebooks, and tool interfaces are governed inputs. Bind every admitted method to an owner, version, provenance, applicable population, permitted purpose, source and policy dependencies, review date, correction path, and deterministic implementation or prompt digest. The system MUST distinguish an authoritative policy or metric definition from an advisory heuristic and from untrusted retrieved prose (`CTX-001`, `CTX-006`, `EVA-007`).
+
+Historical use, expert authorship, or model retrieval does not make a method current or universally applicable. A plan that invokes an unknown, stale, out-of-scope, or unauthorized method pauses for resolution; the model cannot silently synthesize a replacement and label it institutional practice.
+
 ### Query plan
 
 The model submits a typed logical plan. A deterministic compiler and policy layer MUST:
@@ -146,4 +152,4 @@ Run the same workload over repeated trials and a multi-day simulated workspace. 
 - HUM-001/HUM-002: the reviewer can inspect, correct, reject, pause, and resume a persistent evidence-linked artifact.
 - OPS-006/OPS-007: production monitoring detects data, policy, model, tool, and behavior drift per versioned route.
 
-Evidence leads: R26-16, R26-23, R26-40, R26-47, R26-51, R26-52, R26-53.
+Evidence leads: R26-16, R26-23, R26-40, R26-47, R26-51, R26-52, R26-53, and the bounded [Bridgewater PAT field report](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76).

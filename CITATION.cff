@@ -8,8 +8,8 @@ authors:
 repository-code: "https://github.com/davidahmann/fde-guide"
 url: "https://github.com/davidahmann/fde-guide"
 license: Apache-2.0
-version: 1.20.0
-date-released: 2026-08-24
+version: 1.21.0
+date-released: 2026-08-27
 abstract: "A progressively disclosed guide to field discovery, accountable adaptation, value engineering, and production architecture for FDEs and applied-AI teams, with a five-minute orientation, deeper playbooks, controls, evaluations, and executable references."
 keywords:
   - AI agents

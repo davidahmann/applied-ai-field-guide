@@ -2,7 +2,7 @@
 
 This folder holds dated evidence that supports the implementation library.
 
-**Repository source review:** The general source set was last rechecked 2026-08-10; the multi-agent topology note was reviewed 2026-08-14. Link reachability and first-party publication do not establish general validity; every implementation pattern still requires local evaluation.
+**Repository source review:** The general source set was last rechecked 2026-08-10; the multi-agent topology note was reviewed 2026-08-14; the Bridgewater PAT field report was reviewed 2026-08-27. Link reachability and first-party publication do not establish general validity; every implementation pattern still requires local evaluation.
 
 ## How sources are admitted
 
@@ -27,6 +27,7 @@ Social, Reddit, YouTube, and news are research channels—not automatic authorit
 - [FDE product-boundaries and capability-transfer note](2026-08-10--fde-product-boundaries-and-capability-transfer.md) — directly inspectable practitioner evidence for contribution zones, product feedback, shadow-product avoidance, receiving-team capability, and reuse-rights decisions, with organizational claims kept non-normative.
 - [Multimodal operations and computer-use boundaries](2026-08-11--multimodal-operations-and-computer-use.md) — attributed field evidence for long-running multimodal work, reference-label authority, and browser/desktop action boundaries, with vendor metrics and an insurance vertical profile explicitly deferred.
 - [Multi-agent topology selection evidence](2026-08-14--multi-agent-topology-selection.md) — controlled evidence for matched-budget single-agent and multi-agent comparison, topology-dependent performance, error containment, and limits on portable thresholds.
+- [Bridgewater PAT: governed institutional analysis](2026-08-27--bridgewater-pocket-analyst-tool.md) — bounded first-party field evidence for codified-method context, typed analytical planning, constrained execution, specialist admission, and controlled feedback learning.
 
 ## Archive
 

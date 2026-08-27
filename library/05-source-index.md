@@ -262,6 +262,15 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Multimodal and computer-use research note](../research/2026-08-11--multimodal-operations-and-computer-use.md), [computer-use blueprint](../blueprints/computer-use-action-boundary.md), and evaluation-reference authority.
 - **Caution:** Performance, volume, SLA, organizational, moat, pricing, and vertical-market claims remain first-party assertions. They are not production thresholds or independent evidence that an insurance profile is reusable.
 
+<a id="s26"></a>
+## S26 — Bridgewater AIA Labs: PAT, the Pocket Analyst Tool
+
+- **Evidence:** [Direct first-party presentation](https://www.bridgewater.com/aia-labs/how-bridgewaters-aia-labs-built-pat-the-ai-pocket-analyst-tool), recorded 2026-05-19 and reviewed 2026-08-27
+- **Speakers:** Brendan McManus, Michael Ran, and Santi Weight, Bridgewater AIA Labs
+- **Contribution:** The reported internal research system combines codified institutional methods, structured and unstructured data, identity-scoped tools, typed analytical planning, compiler-like code generation, system-managed execution, narrow specialists, validation, and expert-feedback-derived candidate improvements.
+- **Use in this library:** [Bounded PAT evidence review](../research/2026-08-27--bridgewater-pocket-analyst-tool.md), governed data analysis, data-context contracts, controlled improvement, and measured specialist admission.
+- **Caution:** The presentation is a first-party field report. Deployment scale, speed, accuracy, and learning claims are not independently reproducible or portable thresholds; same-system checking does not establish independent verification.
+
 ## Cross-source convergence
 
 The most repeated ideas are:
@@ -283,3 +292,4 @@ The most repeated ideas are:
 15. Data, domain, behavior, tools, policy, evaluation, runtime, and user experience form one compatible release boundary.
 16. Evaluation results need explicit claims, environment versions, repeated trials, uncertainty, and contamination controls.
 17. Engagement conversion, continuation, and reuse are portfolio signals; they do not replace workflow-level accepted outcomes, realized value, or release evidence.
+18. Codified institutional methods compound only when their ownership, version, provenance, scope, authority, evaluation, and correction paths are explicit.

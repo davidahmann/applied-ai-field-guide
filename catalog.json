@@ -746,6 +746,12 @@
       "type": "evidence",
       "path": "research/2026-08-14--multi-agent-topology-selection.md",
       "tags": ["sources", "multi-agent", "architecture", "evaluation"]
+    },
+    {
+      "id": "evidence.bridgewater-pocket-analyst",
+      "type": "evidence",
+      "path": "research/2026-08-27--bridgewater-pocket-analyst-tool.md",
+      "tags": ["sources", "data-analysis", "context", "evaluation", "field-reports"]
     }
   ]
 }

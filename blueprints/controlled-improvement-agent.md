@@ -61,6 +61,12 @@ Failure classes: `context`, `retrieval`, `data_quality`, `model_behavior`, `tool
 - Rollback artifact and last-known-good digest.
 - Required reviewers and segregation-of-duties check.
 
+## Expert-feedback admission
+
+An expert correction MAY open a diagnostic record, replay case, proposed benchmark, and isolated candidate change. The correction MUST retain the triggering interaction, affected claim or behavior, source and policy revisions, label author, accountable owner, independent approver, disagreement and adjudication path, classification, contamination treatment, and review date. Usage frequency, seniority, or a generated pull request does not make the correction ground truth.
+
+Candidate-generation automation MUST NOT modify the protected benchmark, grader, threshold, holdout, CI result, approval, merge, deployment, or rollback evidence that judges its own change (`EVA-002`, `OPS-007`, `REL-003`). The bounded [Bridgewater PAT field report](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76) is an implementation lead for converting expert feedback into candidate benchmarks and changes; it is not evidence that autonomous self-improvement is safe or complete.
+
 ## State machine
 
 ```text
@@ -89,7 +95,7 @@ Every terminal path emits a reason. No failed, rejected, or rolled-back path rea
 - Canary can be stopped by kill switch, automatically rolls back on declared criteria, and verifies the restored digest.
 - Promotion cannot occur from an agent-authored natural-language success claim.
 
-Evidence leads: R26-17, R26-20, R26-25, R26-46, R26-51, R26-55.
+Evidence leads: R26-17, R26-20, R26-25, R26-46, R26-51, R26-55, and [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76).
 
 ## Controls
 
