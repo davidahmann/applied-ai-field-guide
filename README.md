@@ -10,7 +10,7 @@ An independent, open-source guide and engineering kit for forward deployed engin
 [![Latest release](https://img.shields.io/github/v/release/davidahmann/fde-guide)](https://github.com/davidahmann/fde-guide/releases/latest)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-[Read the five-minute Guide](guide/fde-guide-in-five-minutes.md) · [Read it on the web](https://davidahmann.github.io/fde-guide/five-minute-guide/) · [Read the concise Guide](guide/README.md) · [Use the value scorecard](guide/ai-value-engineering-scorecard.md) · [Establish data readiness](library/16-data-readiness-and-context-contracts.md) · [Build FDE capability](guide/capability-roadmap.md) · [Use the Handbook](playbooks/README.md) · [Run the code](#see-it-working) · [Browse solutions](solutions/README.md) · [Use with an agent](#optional-use-it-with-a-coding-agent)
+[Read the five-minute Guide](guide/fde-guide-in-five-minutes.md) · [Read it on the web](https://davidahmann.github.io/fde-guide/five-minute-guide/) · [Read the concise Guide](guide/README.md) · [Use the value scorecard](guide/ai-value-engineering-scorecard.md) · [Establish data readiness](library/16-data-readiness-and-context-contracts.md) · [Bridge to enterprise reality](library/17-enterprise-integration-and-scale-reality.md) · [Build FDE capability](guide/capability-roadmap.md) · [Use the Handbook](playbooks/README.md) · [Run the code](#see-it-working) · [Browse solutions](solutions/README.md) · [Use with an agent](#optional-use-it-with-a-coding-agent)
 
 ## Choose your depth
 
@@ -58,7 +58,7 @@ npm run test:evals
 npm run test:hybrid
 ```
 
-The examples are in-memory teaching systems, not deployable products. Their tests prove only the declared local behavior. The full repository gate also validates links, schemas, controls, release integrity, security contracts, telemetry, and solution coverage.
+The examples are in-memory teaching systems, not deployable products. Their tests prove only the declared local behavior. Use [Enterprise Integration and Scale Reality](library/17-enterprise-integration-and-scale-reality.md) to map each teaching convenience to target-system state, execution, identity, audit, reconciliation, load, recovery, and operating evidence. The full repository gate validates the repository itself; it does not certify a customer deployment.
 
 ## Who this is for
 
@@ -68,6 +68,7 @@ The examples are in-memory teaching systems, not deployable products. Their test
 | Inherited brief or field contradiction | [Field engagement and accountable reframing](playbooks/00-field-engagement-and-reframing.md) → [engagement-reframe record](templates/engagement-reframe.json) | Process knower, representative evidence, bounded conflict, safe fallback, scoped disposition, and next field move |
 | Business value or use-case selection | [Concise Guide](guide/README.md) → [Discovery and Value](playbooks/01-discovery-and-value.md) | Bounded workflow, baseline, accepted outcome, verifier, value case, guardrails, and decision |
 | Data, context, or knowledge readiness | [Data readiness and context contracts](library/16-data-readiness-and-context-contracts.md) → [assessment](templates/data-readiness-assessment.md) | Decision-bound source inventory, quality thresholds, preparation lineage, output ownership, remediation economics, and operating contract |
+| Legacy integration or target-scale boundary | [Enterprise integration and scale reality](library/17-enterprise-integration-and-scale-reality.md) → [production service readiness](templates/production-service-readiness.md) | Observed source seams, reconciliation, identity and environment constraints, teaching-to-production mapping, and target evidence plan |
 | FDE or internal applied-AI delivery | [Handbook](playbooks/README.md) → current lifecycle stage | Evidence-backed path from observation through adoption, handoff, operation, and field learning |
 | AI engineering or software architecture | [Intelligence selection](library/12-software-architecture-and-intelligence-selection.md) → [blueprints](blueprints/README.md) | Smallest sufficient mechanism, coherent system boundary, contracts, failure behavior, and test plan |
 | Platform, security, release, or reliability | [Security and action boundaries](library/15-production-ai-security-and-action-boundaries.md) → [controls](controls/control-catalog.json) → [release gates](operations/release-gates.md) → [operations](operations/README.md) | Explicit authority, compatible release, telemetry, recovery, change, and retirement evidence |

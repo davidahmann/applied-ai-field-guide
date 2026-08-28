@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.22.0] - 2026-08-27
+
+- Add a bounded enterprise-integration and scale-reality chapter that opens source authority, extraction, preparation, identity, execution, and restricted-environment seams without prescribing a universal infrastructure stack.
+- Extend the integration runtime, enterprise foundation, and production-readiness record with reconciliation, backfill, row- and field-level access, durable execution, promotion, recovery, load, and target-system evidence.
+- Map both in-memory teaching systems to their production responsibilities, add a hostile fictional deployment scenario, and enforce the boundary through repository and public-site tests.
+
 ## [1.21.0] - 2026-08-27
 
 - Add a bounded first-party evidence review of Bridgewater's Pocket Analyst Tool without turning one finance deployment into a generic architecture or performance threshold.
@@ -183,7 +189,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.21.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.22.0...HEAD
+[1.22.0]: https://github.com/davidahmann/fde-guide/compare/v1.21.0...v1.22.0
 [1.21.0]: https://github.com/davidahmann/fde-guide/compare/v1.20.0...v1.21.0
 [1.20.0]: https://github.com/davidahmann/fde-guide/compare/v1.19.0...v1.20.0
 [1.19.0]: https://github.com/davidahmann/fde-guide/compare/v1.18.0...v1.19.0

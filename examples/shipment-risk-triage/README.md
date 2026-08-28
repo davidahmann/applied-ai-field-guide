@@ -106,4 +106,8 @@ npm test
 
 The reference has no network access, credentials, vendor model call, or production data. It demonstrates the architecture boundary around a model; it is not an ML training package or shipment-management product.
 
+## Teaching-to-production boundary
+
+The fixture keeps shipment context, policy, review cases, identity, and traces in one local process so the decision boundary stays visible. A target service must separately prove source completeness and reconciliation, durable queue and case state when required, concurrent and duplicate event behavior, current tenant and field-level authorization, audit retention, dependency throttling, recovery, representative load, and operating ownership. Use [Enterprise Integration and Scale Reality](../../library/17-enterprise-integration-and-scale-reality.md) and the [production service readiness record](../../templates/production-service-readiness.md); passing this local suite is not evidence for those target responsibilities.
+
 The generic `stage_write` contract calls its receipt a proposal. In this reference, that proposal is a non-binding review-case record; the human coordinator's later disposition remains the business decision.
