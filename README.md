@@ -12,11 +12,25 @@ An independent, open-source guide and engineering kit for forward deployed engin
 
 [Read the five-minute Guide](guide/fde-guide-in-five-minutes.md) · [Read it on the web](https://davidahmann.github.io/fde-guide/five-minute-guide/) · [Read the concise Guide](guide/README.md) · [Use the value scorecard](guide/ai-value-engineering-scorecard.md) · [Establish data readiness](library/16-data-readiness-and-context-contracts.md) · [Bridge to enterprise reality](library/17-enterprise-integration-and-scale-reality.md) · [Build FDE capability](guide/capability-roadmap.md) · [Use the Handbook](playbooks/README.md) · [Run the code](#see-it-working) · [Browse solutions](solutions/README.md) · [Use with an agent](#optional-use-it-with-a-coding-agent)
 
+## Start with what went wrong
+
+You don't need to understand the repository map first. Pick the situation that looks most like the work in front of you.
+
+| What happened | Start here | What to get before moving on |
+| --- | --- | --- |
+| **The brief doesn't match the real workflow** | [Field engagement and accountable reframing](playbooks/00-field-engagement-and-reframing.md) | One representative case, the conflicting claims, a safe fallback, and the person who may decide |
+| **Nobody can identify the real process owner or expert** | [Find the process knower](playbooks/00-field-engagement-and-reframing.md#find-the-process-knower) and open a [field-observation log](templates/field-observation-log.md) | A named operator or owner and a recent exception you can follow end to end |
+| **The sponsor, operator, and policy disagree** | [Bound the conflict](playbooks/00-field-engagement-and-reframing.md#5-bound-the-conflict) and use the [engagement-reframe record](templates/engagement-reframe.json) | Cited evidence, the disposition authority, and an accepted, rejected, or deferred reframe |
+| **The team needs to prove one safe slice** | [Discovery and Value](playbooks/01-discovery-and-value.md), then [build one vertical slice](playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice) | An accepted outcome, verifier, eligible work, exclusions, maximum effect, and test cases |
+| **Something was built, but acceptance or ownership is stuck** | [Production service readiness](templates/production-service-readiness.md) and [customer handoff](templates/customer-enablement-handoff.md) | The missing evidence or operating capability, its owner, and a repair, transfer, pause, or retirement decision |
+
+If none fits cleanly, spend five minutes with the [short field guide](guide/fde-guide-in-five-minutes.md). It starts with a messy brief rather than the repository taxonomy.
+
 ## Choose your depth
 
-This is one method at three levels. Start with only the depth your job requires.
+Once you know the immediate job, use only the depth it requires.
 
-**New here?** Start with [The FDE Guide in Five Minutes](guide/fde-guide-in-five-minutes.md). It gives you the job, five rules, three field moves, minimum working packet, and next route without loading the full repository.
+**New here?** Start with [The FDE Guide in Five Minutes](guide/fde-guide-in-five-minutes.md). It follows one plausible Monday-morning problem from field evidence to a bounded slice and the next route.
 
 | Layer | Use it when | Start here |
 | --- | --- | --- |

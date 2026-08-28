@@ -73,10 +73,10 @@ export const pages = [
   {
     route: "/five-minute-guide/",
     source: "guide/fde-guide-in-five-minutes.md",
-    navTitle: "The Guide in five minutes",
-    title: "The FDE Guide in Five Minutes: From Field Work to Operated Value",
+    navTitle: "Five-minute field guide",
+    title: "The FDE Guide in Five Minutes: Start with the Messy Brief",
     description:
-      "Learn the essential FDE method in five minutes: observe real work, bound value, choose the smallest mechanism, prove the release, and transfer ownership.",
+      "Start with a broken brief, missing process owner, stakeholder conflict, unsafe first slice, or stalled handoff and find the next defensible FDE move.",
   },
   {
     route: "/forward-deployed-engineering/",

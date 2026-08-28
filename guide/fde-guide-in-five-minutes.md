@@ -1,90 +1,96 @@
 # The FDE Guide in Five Minutes
 
-> Turn messy work into a measurable, accepted, and operated outcome.
+> The brief is probably wrong somewhere. Your first job is to find out where.
 
-This is the shortest useful orientation to the FDE Guide. Read it before the [concise Guide](README.md) when you need the mental model, not the complete operating manual. It is guidance—not production approval, customer authority, or a substitute for the target organization's policy, security, architecture, and risk review.
+A common Monday starts like this. The brief says, “Build an agent that clears invoice exceptions.” By 9:40, the analyst sharing her screen has shown you three queues, a spreadsheet nobody mentioned, and a policy check that only the controller can approve. Sales described one workflow. The work has at least four.
 
-## The job
+Don't open the architecture diagram yet.
 
-A forward-deployed engineer does more than translate requirements into software. The job is to discover how work actually happens, decide what is worth changing, build the smallest reliable intervention, and help an accountable team own the result.
+The FDE job is to work out what is actually happening, which part is worth changing, who has the authority to change it, and what evidence would make the result acceptable. Then you build the smallest intervention that can survive contact with the real operation.
 
-That often begins with an inherited brief that is incomplete or wrong. A sponsor may describe one workflow while operators perform another. A commercial promise may conflict with policy, system behavior, or the people who carry the risk. Good field work does not hide those contradictions or silently rewrite history. It finds representative evidence, identifies who may decide, proposes a bounded reframe, and keeps delivery moving safely.
+This page is guidance—not production approval, customer authority, or a substitute for the target organization's policy, security, architecture, and risk review.
+
+## Start with what broke
+
+You don't need to learn the repository before using it. Pick the line that sounds closest to today.
+
+| What you walked into | Do this next | Leave the first pass with |
+| --- | --- | --- |
+| **The brief doesn't match the work** | Preserve what was sold, then follow one recent case with the person who handled it. Use the [field-engagement playbook](../playbooks/00-field-engagement-and-reframing.md). | The inherited claim, the observed reality, and the next decision written separately |
+| **Nobody can explain the whole process** | Find the process knower through recent exceptions, repairs, and handoffs—not the org chart. Start a [field-observation log](../templates/field-observation-log.md). | One named operator or owner and one representative case you can inspect |
+| **The sponsor, operator, and policy disagree** | Cite each claim, name the safe fallback, and ask the actual disposition authority for a scoped decision. Use the [engagement-reframe record](../templates/engagement-reframe.json). | A bounded conflict, its evidence, and an accepted, rejected, or deferred reframe |
+| **The team needs to prove a safe first slice** | Define one accepted outcome, its verifier, eligible work, exclusions, and maximum effect before selecting technology. Use [Discovery and Value](../playbooks/01-discovery-and-value.md), then [build one vertical slice](../playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice). | A testable boundary and a reason this slice is worth running |
+| **Something was built, but nobody will accept or own it** | Stop adding features. Check acceptance evidence, operating ownership, rollback, support, and transfer with [production readiness](../templates/production-service-readiness.md) and the [customer handoff](../templates/customer-enablement-handoff.md). | A named gap, owner, and decision to repair, constrain, transfer, pause, or retire |
+
+Not sure which one fits? Start with the first row.
+
+## Before you design anything
+
+Find the person who knows the work because they do it, repair it, or get blamed when it goes wrong. Recent exceptions are a better trail than the org chart. Ask for one actual case. Watch the handoffs, judgment calls, policy checks, and quiet workarounds.
+
+Keep the kinds of evidence separate. “The sponsor said” is not the same as “the operator did.” Neither is the same as system-enforced behavior or policy-authorized behavior. Dates and source revisions matter. So do the gaps.
+
+Now write the conflict in plain English. For example:
+
+> **Sold brief:** the agent approves invoice exceptions automatically.
+>
+> **Observed:** four of the last twenty cases needed controller judgment, and the policy source changes outside the workflow tool.
+>
+> **Safe fallback:** prepare a cited recommendation; don't approve or post anything.
+>
+> **Decision needed:** whether to test that bounded review path for two weeks.
+
+That note is often more useful than another discovery workshop. It gives the right person something concrete to accept, reject, narrow, or defer. Until that happens, preserve the original brief and don't quietly rewrite the project around your preferred solution.
 
 ```mermaid
 flowchart LR
-    A["Inherit the brief"] --> B["Observe the real work"]
-    B --> C["Agree outcome and boundary"]
-    C --> D["Select the smallest mechanism"]
-    D --> E["Build one controlled slice"]
-    E --> F["Prove the exact release"]
-    F --> G["Operate, transfer, or retire"]
+    A["Inherit the brief"] --> B["Follow one real case"]
+    B --> C["Name the conflict"]
+    C --> D["Get a scoped decision"]
+    D --> E["Build one bounded slice"]
+    E --> F["Prove it on representative work"]
+    F --> G["Transfer, operate, or stop"]
 ```
 
-## Five rules that matter
+## Once the boundary is real
 
-### 1. Observe before you automate
+Define what success means before choosing the mechanism. Name the eligible work, current baseline, intended outcome, accountable owner, and independent verifier. Add the decision deadline, full-cost ceiling, guardrails, and the conditions for continuing, reshaping, pausing, or stopping.
 
-Find the person who actually knows or performs the process. Watch a representative case, including exceptions, recovery, handoffs, and workarounds. Separate what was sold, stated, observed, enforced by the system, and authorized by policy. An interview is evidence that something was said; it is not proof that the workflow behaves that way.
+If nobody with authority can accept the outcome, you're still in discovery. That's inconvenient, but useful to know before the team spends six weeks polishing a demo.
 
-### 2. Define acceptance before architecture
+Then split the workflow into actual decisions. A rule may handle eligibility. Retrieval may find the governing passage. A model may draft a comparison. A person may still own the judgment. Compare deterministic software, optimization, classical machine learning, retrieval, a bounded model call, an agent workflow, and human review where each is relevant. Use the simplest route that meets the need.
 
-Name the workflow, eligible population, baseline, intended outcome, accountable owner, and independent verifier. State the adoption path, decision deadline, cost ceiling, guardrails, and conditions to continue, reshape, pause, or stop. If the outcome cannot be measured or accepted by someone with authority, stay in discovery.
+The model can propose. It can't grant itself permission or prove that an effect occurred. Trusted software has to enforce identity, tenant, scope, policy, approval, duplicate safety, and effect limits. For a consequential action, read the result back from the authoritative system before telling anyone it is done.
 
-### 3. Choose the smallest sufficient mechanism
+## Prove the service people will actually run
 
-For each consequential decision, compare deterministic software, optimization, classical machine learning, retrieval, a foundation-model call, a bounded agent workflow, and human review. Use the least complex option that meets the need. A model or agent is a component choice, not the starting point or the product.
+A tidy happy path isn't enough. Test normal work, awkward exceptions, stale sources, dependency failures, policy changes, retries, recovery, reviewer capacity, cost, and latency. Bind the result to the exact data, behavior, tools, software, and policy versions that ran.
 
-### 4. Put authority in software boundaries
+Watch the human side too. Can the operator understand the evidence? Does review fit inside the working day? Are people correcting the system, bypassing it, or abandoning it? A model score won't answer those questions.
 
-Model output may recommend; it does not authorize effects or prove completion. Trusted software must enforce identity, tenant, scope, policy, approvals, duplicate safety, and effect limits. Consequential actions also need source-of-truth readback. Keep rules, models, agents, and human review separately observable and testable.
+Before launch, use the [release gates](../operations/release-gates.md) to name the operating owner, telemetry, support route, rollback trigger, change process, and retirement conditions. A canary without somebody watching it is just a smaller unattended release.
 
-### 5. Prove and operate the exact service
+## Know when to leave
 
-Evaluate realistic cases, failures, adversarial inputs, human review, cost, and latency against source-bound expectations. Bind the evidence to the exact data, prompt, model, tools, configuration, and software release. Before launch, name the operator, telemetry, support path, rollback, change process, and retirement conditions. Passing a model benchmark is not production readiness.
+Stay forward-deployed while consequential uncertainty remains in the workflow, authority, boundary, or specification. Once representative evidence supports an accepted specification and the remaining work is ordinary implementation, transfer it to the product, engineering, and operating teams. Don't relabel general staffing as FDE work.
 
-## When the brief is wrong
+Agree on exit evidence early. The receiving team should be able to operate, evaluate, change, release, recover, support, and retire the service without FDE heroics. If embedded engineers are still holding revenue or production together months later, call that dependency what it is and decide whether to fix it or fund it explicitly.
 
-Use three field moves before inventing a larger process:
+## Keep the working packet small
 
-1. **Find or validate the process knower.** Identify who performs or owns the work and who can explain exceptions.
-2. **Observe a representative case.** Capture the exact source, date, scope, owner, passage, limitations, and what it proves.
-3. **Resolve a cited conflict.** Show both sides, preserve the inherited brief, propose a safe fallback and bounded reframe, and obtain a scoped human disposition from the right authority.
+Don't fill every template. Create the evidence needed for the next consequential decision:
 
-Accepted changes update only the dependent scope, design, evaluation, and delivery records. Rejected or deferred changes remain in the chronology without mutating the current boundary. The [field-engagement and accountable-reframing playbook](../playbooks/00-field-engagement-and-reframing.md) provides the full method.
+- an [observation log](../templates/field-observation-log.md) for what happened in the work;
+- an [engagement reframe](../templates/engagement-reframe.json) when field evidence contradicts the brief;
+- a [workflow charter](../templates/workflow-charter.json) and [value case](../templates/value-case.md) once the boundary is credible;
+- an [intelligence-selection record](../templates/intelligence-selection-record.md) before committing to a mechanism;
+- representative [evaluation cases](../templates/evaluation-case.json) before making a release claim;
+- [production readiness](../templates/production-service-readiness.md) and [handoff evidence](../templates/customer-enablement-handoff.md) before the delivery team leaves.
 
-## Know when the FDE should leave
+If an artifact doesn't help someone make, verify, operate, or revisit a decision, you probably don't need it yet.
 
-Use forward-deployed capacity when the workflow, boundary, authority, or solution specification is still unknown or contradicted. Once representative evidence supports an accepted specification and the remaining work is ordinary implementation, transfer it to the product, engineering, and operating teams. Do not relabel general staffing as FDE work.
+## Where to go next
 
-Define the exit evidence before embedding: the receiving team can operate, change, evaluate, release, recover, support, and retire the service without FDE heroics; any temporary support has an owner, expiry, and exercised exit. At portfolio review, ask whether embedded engineers are still discovering portable truths or are holding revenue and production together. Persistent dependency is an economic and operating risk even when it is described as white-glove service.
+Still reconciling the brief? Continue with [Field Engagement and Accountable Reframing](../playbooks/00-field-engagement-and-reframing.md). If the workflow boundary is accepted and you need the full mental model, read the [concise FDE Guide](README.md). If you're designing or reviewing the implementation, move into the [lifecycle playbooks](../playbooks/README.md) and [Engineering Kit](../examples/invoice-exception/README.md).
 
-Repeated field pain does not automatically become product. Classify it as customer configuration, a target-owned extension, a reusable pattern or platform gap, a time-bounded experiment, or non-viable work. Each engagement should leave customer-owned operating capability and, separately, a sanitized field-learning record with clear reuse rights and target-specific validation.
-
-## The minimum working packet
-
-Do not complete every template by default. Create only the evidence needed for the next consequential decision.
-
-| Need | Smallest useful artifact |
-| --- | --- |
-| Understand reality | [Field observation log](../templates/field-observation-log.md), plus an [engagement reframe](../templates/engagement-reframe.json) when evidence contradicts the brief |
-| Bound value and acceptance | [Workflow charter](../templates/workflow-charter.json) and [value case](../templates/value-case.md) |
-| Choose the intervention | [Intelligence-selection record](../templates/intelligence-selection-record.md) |
-| Prove behavior | Representative [evaluation cases](../templates/evaluation-case.json) and target-system evidence |
-| Launch and leave responsibly | [Production readiness](../templates/production-service-readiness.md), [release gates](../operations/release-gates.md), and [customer handoff](../templates/customer-enablement-handoff.md) |
-
-## Choose the next route
-
-| Your immediate job | Go here |
-| --- | --- |
-| The sold brief conflicts with field reality | [Field engagement and accountable reframing](../playbooks/00-field-engagement-and-reframing.md) |
-| You need to qualify one workflow | [Discovery and Value](../playbooks/01-discovery-and-value.md) |
-| You need outcome economics and hard gates | [12 Factors of AI Value Engineering](../library/14-twelve-factors-ai-value-engineering.md) and the [one-page scorecard](ai-value-engineering-scorecard.md) |
-| You need to choose the mechanism or architecture | [Software Architecture and Intelligence Selection](../library/12-software-architecture-and-intelligence-selection.md) |
-| You need evaluation or release evidence | [Production Evaluation and Governance](../library/04-production-evaluation-and-governance.md) and [release gates](../operations/release-gates.md) |
-| You need to operate or transfer the service | [Operate and Scale](../playbooks/03-operate-and-scale.md) and the [customer handoff](../templates/customer-enablement-handoff.md) |
-
-## Keep the boundary clear
-
-The Guide is a design and verification kit, not a drop-in runtime, certification, or universal compliance standard. Templates and examples accelerate thinking; they are not customer evidence or proof that a target release is safe. Target-system policy, source authority, human decisions, and independently inspectable evidence remain controlling.
-
-Continue with the [concise FDE Guide](README.md) for the full mental model, the [lifecycle playbooks](../playbooks/README.md) for the detailed method, or the [Engineering Kit](../examples/invoice-exception/README.md) for contracts, code, evaluations, and executable reference systems.
+The Guide is a design and verification kit, not a runtime, certification, or universal compliance standard. Complete templates and teaching systems aren't customer evidence. Target-system policy, source authority, human decisions, and inspectable release evidence still control what may ship.
