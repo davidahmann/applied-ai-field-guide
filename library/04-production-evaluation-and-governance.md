@@ -174,7 +174,7 @@ Runtime ownership can enable deeper optimization and meet regulatory requirement
 
 ## Safe self-improvement
 
-Several sources describe systems that monitor themselves, generate proposed fixes, or learn from feedback. [S01] [S08] [S17]
+Several sources describe systems that monitor themselves, generate proposed fixes, or learn from feedback. [S01] [S08] [S17] [S28]
 
 A safe improvement loop is:
 
@@ -191,6 +191,10 @@ production signal
 ```
 
 Do not let the same agent silently redefine its goal, evaluation, permissions, and implementation. Separate proposal, evaluation, authorization, and deployment. Preserve the baseline and attribute the observed improvement to a specific versioned change.
+
+The baseline is the complete effective release, not a model name or one configuration file. Bind the workflow topology, behavior bundle, prompts, admitted skills and capabilities, tools and MCP servers, context and guardrail policy, evaluator, runtime, permissions, budgets, environment, and applicable data and policy revisions. The Guide's agent-system, behavior-bundle, capability-manifest, evaluation-report, and solution-release records already form this graph; a vendor factory manifest may project it but must not become a second source of truth. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
+
+Treat a scorer as an evaluator. Declare its claim, eligible population, sampling policy, inputs, rubric, version, label authority, uncertainty, cost, calibration, disagreement path, and failure behavior. Traces and human interactions can identify candidates, but neither becomes ground truth or promotion evidence automatically. Compare the current and candidate configurations on identical representative tasks, world and policy revisions, resource budgets, scorer versions, trial rules, and acceptance criteria; retain per-case results and a protected holdout.
 
 ## Launch gates
 

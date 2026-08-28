@@ -77,6 +77,14 @@ Include unauthorized, prohibited, duplicate, effect-unknown, and readback-mismat
 
 List production behavior clusters, new regressions, evaluator calibration changes, and open gaps.
 
+### Scorer and observation review
+
+| Scorer/claim/version | Eligible runs, sample, and exclusions | Trace and human-interaction sources | Label authority, calibration, and disagreement | Cost and reviewer burden | Accepted-outcome effect / decision |
+| --- | --- | --- | --- | ---: | --- |
+| — | — | — | — | — | — |
+
+Automated scores, reviewer comments, corrections, and overrides can identify a failure or improvement candidate. They do not authorize effects, become anonymous ground truth, or prove improvement without a matched evaluation and the ordinary release path. Record privacy and reuse authority for human-interaction evidence. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
+
 ### Direct and downstream contract health
 
 Use this section when a prediction, classification, ranking, retrieval result, or model proposal feeds another component or customer-visible decision.

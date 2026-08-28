@@ -23,7 +23,7 @@ Controls: `DEL-001`, `DEL-002`, `EVA-006`, `OPS-007`.
 Record:
 
 - Change ID, owner, reason, affected requirements, controls, segments, tenants, and effect classes
-- Before/after digests for every changed component
+- Before/after digests for the complete effective release graph, including workflow topology, behavior, admitted skills and capabilities, tools and MCP servers, evaluator, runtime, permissions, budgets, environment, data, and policy
 - Dependency and vendor lifecycle dates
 - Data/state migration and backward compatibility
 - Threat and failure-mode delta
@@ -74,6 +74,8 @@ Apply these additional rules when a model or agent route changes. Other selected
 - Record prompt/instruction/tool-description diffs or immutable digests.
 - Set an expiry for model-specific workarounds and retest them after model upgrades.
 - Never lower a threshold, weaken a fixture, or alter a grader solely to make the candidate pass.
+
+When a configuration benchmark compares complete routes, freeze the representative tasks, world and policy revisions, resource ceilings, scorer versions, trial rules, and acceptance criteria across the current and candidate release graphs. Retain per-case outcomes, failures, exclusions, uncertainty, safety slices, scorer cost, and an unchanged holdout. A synthesized recommendation or agent-authored diff remains a candidate; it cannot approve, merge, deploy, or alter the evaluator and release evidence that judges it. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
 
 Anthropic's April 2026 postmortem is direct evidence that model defaults, context handling, and a small prompt change can produce route-specific regressions. Uber's traffic-forecasting report separately illustrates why an improved upstream metric can still degrade a downstream product decision when calibration and component contracts drift. These cases motivate controlled comparison and downstream replay; their implementation details and reported effects are not guide defaults. [R26-51](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-51) [R26-78](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-78)
 

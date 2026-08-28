@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-08-24",
+  "updated": "2026-08-28",
   "artifacts": [
     {
       "id": "guide.five-minute",
@@ -758,6 +758,12 @@
       "type": "evidence",
       "path": "research/2026-08-28--uber-production-ai-operating-lessons.md",
       "tags": ["sources", "operations", "cost", "evaluation", "semantic-analysis", "identity"]
+    },
+    {
+      "id": "evidence.warp-software-factory-improvement",
+      "type": "evidence",
+      "path": "research/2026-08-28--warp-self-improving-software-factories.md",
+      "tags": ["sources", "operations", "evaluation", "change", "software-factory"]
     }
   ]
 }
