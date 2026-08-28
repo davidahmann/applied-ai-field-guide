@@ -111,9 +111,9 @@
         {
           "component_id": "node-dependency-lock",
           "uri": "../package-lock.json",
-          "version": "1.24.0",
+          "version": "1.25.0",
           "schema_version": null,
-          "digest": "sha256:7c1caeade46370ae98757dbf03dc5209d97439dc29e6339506d02783e31de2b7"
+          "digest": "sha256:a2cb5549c272f8ae79d11d6c514a6306e6224b7012010c646a091c86802227ab"
         },
         {
           "component_id": "operational-ontology",
@@ -144,7 +144,7 @@
           "digest": "sha256:4fe9e3f8ddb9a904f0e85889699369179dd66e0123600ef16167e5d415fded74"
         }
       ],
-      "environment_digest": "sha256:c392c0986aea9432e4101aca6299cf1e040ea613d221073e2ab131953b3d0871",
+      "environment_digest": "sha256:7ae7b08e0b207bb809ba9fe35f73a6d2f87057c0a89809a229031354bad67d24",
       "network_mode": "not_executed"
     }
   },
@@ -180,7 +180,7 @@
       "uri": null,
       "version": null,
       "schema_version": null,
-      "digest": "sha256:00ffc7387c140e3165a9b107ea92fbe19b1829caf29384591e5bd54a398255ed"
+      "digest": "sha256:50be6c2c12cb3a4b3281728c5f9051a180bcd4d2764c3cd148e03d9c2ab4bb35"
     },
     "minimum_confidence": 0.95
   },

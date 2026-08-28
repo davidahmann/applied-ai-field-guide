@@ -10,7 +10,7 @@ Read [AGENTS.md](AGENTS.md) before modifying this repository.
 
 - Human overview: [README.md](README.md)
 - Searchable web guide: [The FDE Guide](https://davidahmann.github.io/fde-guide/)
-- Five-minute FDE orientation: [guide/fde-guide-in-five-minutes.md](guide/fde-guide-in-five-minutes.md)
+- Situation-first five-minute FDE orientation: [guide/fde-guide-in-five-minutes.md](guide/fde-guide-in-five-minutes.md)
 - Concise linear FDE Guide: [guide/README.md](guide/README.md)
 - FDE and AI engineer capability roadmap: [guide/capability-roadmap.md](guide/capability-roadmap.md)
 - Agent editing and routing contract: [AGENTS.md](AGENTS.md)

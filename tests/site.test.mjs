@@ -38,24 +38,64 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
     .match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) ?? [];
   assert.ok(words.length >= 700 && words.length <= 1_100, `five-minute guide has ${words.length} words`);
   for (const heading of [
-    "## The job",
-    "## Five rules that matter",
-    "## When the brief is wrong",
-    "## Know when the FDE should leave",
-    "## The minimum working packet",
-    "## Choose the next route",
-    "## Keep the boundary clear",
+    "## Start with what broke",
+    "## Before you design anything",
+    "## Once the boundary is real",
+    "## Prove the service people will actually run",
+    "## Know when to leave",
+    "## Keep the working packet small",
+    "## Where to go next",
   ]) assert.ok(source.includes(heading), heading);
   assert.equal((source.match(/```mermaid/g) ?? []).length, 1);
   for (const target of [
     "playbooks/00-field-engagement-and-reframing.md",
     "templates/workflow-charter.json",
+    "templates/production-service-readiness.md",
     "operations/release-gates.md",
     "concise FDE Guide](README.md)",
   ]) assert.ok(source.includes(target), target);
   assert.match(source, /guidance—not production approval/i);
-  assert.match(source, /Do not relabel general staffing as FDE work/);
-  assert.match(source, /holding revenue and production together/);
+  assert.match(source, /Don't relabel general staffing as FDE work/);
+  assert.match(source, /holding revenue (?:and|or) production together/);
+  assert.match(source, /A common Monday starts like this/);
+  assert.match(source, /\*\*Sold brief:\*\*[\s\S]*\*\*Observed:\*\*[\s\S]*\*\*Safe fallback:\*\*[\s\S]*\*\*Decision needed:\*\*/);
+  assert.doesNotMatch(source, /## Five rules that matter|### [1-5]\./);
+
+  const contractions = source.match(/\b(?:don't|doesn't|isn't|can't|won't|you're|that's|it's|they're|we're|shouldn't|couldn't|wouldn't)\b/gi) ?? [];
+  assert.ok(contractions.length >= 8, `five-minute guide has ${contractions.length} contractions`);
+  const proseParagraphs = source
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter((paragraph) => paragraph && !/^(?:#|\||>|-|```)/.test(paragraph));
+  const sentenceCounts = proseParagraphs.map((paragraph) => (paragraph.match(/[.!?](?:\s|$)/g) ?? []).length);
+  assert.ok(new Set(sentenceCounts).size >= 3, "five-minute guide should vary paragraph rhythm");
+});
+
+test("the public entry layer routes five common field situations before repository taxonomy", async () => {
+  const [overview, shortGuide] = await Promise.all([
+    readFile(path.join(root, "README.md"), "utf8"),
+    readFile(path.join(root, "guide/fde-guide-in-five-minutes.md"), "utf8"),
+  ]);
+
+  assert.ok(overview.indexOf("## Start with what went wrong") < overview.indexOf("## Choose your depth"));
+  for (const situation of [
+    "The brief doesn't match the real workflow",
+    "Nobody can identify the real process owner or expert",
+    "The sponsor, operator, and policy disagree",
+    "The team needs to prove one safe slice",
+    "Something was built, but acceptance or ownership is stuck",
+  ]) assert.ok(overview.includes(situation), situation);
+
+  for (const route of [
+    "playbooks/00-field-engagement-and-reframing.md",
+    "templates/field-observation-log.md",
+    "templates/engagement-reframe.json",
+    "playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice",
+    "templates/customer-enablement-handoff.md",
+  ]) {
+    assert.ok(overview.includes(route), route);
+    assert.ok(shortGuide.includes(`../${route}`), route);
+  }
 });
 
 test("the capability roadmap is a bounded secondary entry layer", async () => {

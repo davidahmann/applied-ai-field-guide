@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.25.0] - 2026-08-28
+
+- Put five common Monday-morning situations ahead of repository taxonomy so a reader can route a broken brief, missing process knower, stakeholder conflict, unsafe slice, or stalled handoff directly into the existing method.
+- Rewrite the five-minute Guide around a concrete field case with a more conversational operator voice, varied rhythm, fewer formal enumerations, and a smaller decision-bound working packet.
+- Align the concise Guide, public-site metadata, and machine index, and add regression coverage for situation-first routing, concrete evidence, conversational cadence, canonical depth, and generated-site integrity.
+
 ## [1.24.0] - 2026-08-28
 
 - Add a bounded vendor evidence review of Warp's software-factory improvement model without adopting cloud-only, API-only, multi-model, multi-agent, or automation-percentage defaults.
@@ -201,7 +207,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.24.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.25.0...HEAD
+[1.25.0]: https://github.com/davidahmann/fde-guide/compare/v1.24.0...v1.25.0
 [1.24.0]: https://github.com/davidahmann/fde-guide/compare/v1.23.0...v1.24.0
 [1.23.0]: https://github.com/davidahmann/fde-guide/compare/v1.22.0...v1.23.0
 [1.22.0]: https://github.com/davidahmann/fde-guide/compare/v1.21.0...v1.22.0
