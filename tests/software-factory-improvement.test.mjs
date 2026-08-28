@@ -20,7 +20,10 @@ test("Warp software-factory evidence is dated, cataloged, bounded, and reachable
 
   assert.match(research, /<a id="r26-81"><\/a>/);
   assert.match(research, /## R26-81 — Warp:/);
-  assert.ok(research.includes("https://www.warp.dev/blog/agent-self-improving-software-factories"));
+  assert.match(
+    research,
+    /\[Closing the loop with self-improving cloud software factories\]\(https:\/\/www\.warp\.dev\/blog\/agent-self-improving-software-factories\)/,
+  );
   assert.match(research, /vendor-authored product and engineering article/i);
   assert.match(research, /not an independently reproducible benchmark/i);
   assert.match(index, /2026-08-28--warp-self-improving-software-factories\.md/);
