@@ -280,6 +280,15 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Bounded Uber evidence review](../research/2026-08-28--uber-production-ai-operating-lessons.md), value and service economics, hybrid-system evaluation, secure AI workloads, change management, and delegated-agent identity.
 - **Caution:** The architecture, scale, cost reductions, quality gains, revenue impact, file-security metrics, and latency are first-party claims from Uber's environment. They are not portable thresholds or a required platform design.
 
+<a id="s28"></a>
+## S28 — Warp: self-improving software factories
+
+- **Evidence:** [First-party vendor engineering article](https://www.warp.dev/blog/agent-self-improving-software-factories), published 2026-08-27 and reviewed 2026-08-28
+- **Publisher:** Warp
+- **Contribution:** The article connects a version-controlled agent-system configuration with trace scorers, human-interaction evidence, agent-proposed diffs, and representative configuration benchmarks. The portable lesson is to bind the exact release graph and route scored observations through protected evaluation, review, canary, and rollback.
+- **Use in this library:** [Bounded Warp evidence review](../research/2026-08-28--warp-self-improving-software-factories.md), production evaluation, controlled improvement, behavior monitoring, change management, and execution portability.
+- **Caution:** The article promotes Warp Factories. Its cloud-only, API-first, multi-model, multi-agent, scorer, and metric recommendations are product claims and design leads, not universal requirements or independent outcome evidence.
+
 ## Cross-source convergence
 
 The most repeated ideas are:
@@ -303,5 +312,6 @@ The most repeated ideas are:
 17. Engagement conversion, continuation, and reuse are portfolio signals; they do not replace workflow-level accepted outcomes, realized value, or release evidence.
 18. Codified institutional methods compound only when their ownership, version, provenance, scope, authority, evaluation, and correction paths are explicit.
 19. Agent-work efficiency needs causal cost drivers beneath full cost per accepted outcome; cheaper requests are not evidence of better outcomes.
-20. Upstream model improvements require downstream contract, calibration, compatibility, and replay evidence before release.
-21. Delegated authority remains verifiable only when caller, workload, logical-agent, recipient, scope, tenant, expiry, and policy lineage survive every hop.
+20. Closed-loop improvement needs an exact configuration baseline, governed scorers, matched comparisons, and separate proposal, evaluation, approval, deployment, and rollback authority.
+21. Upstream model improvements require downstream contract, calibration, compatibility, and replay evidence before release.
+22. Delegated authority remains verifiable only when caller, workload, logical-agent, recipient, scope, tenant, expiry, and policy lineage survive every hop.

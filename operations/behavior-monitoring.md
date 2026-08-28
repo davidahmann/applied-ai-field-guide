@@ -54,6 +54,12 @@ users × sessions/user × turns/session × requests/turn × tokens/request × pr
 
 Progressive tool loading and trusted code-mediated batching MAY reduce zero-value model turns. The code path remains bounded by tool contracts, current authorization, egress, result limits, cancellation, audit, and source-of-truth verification. A cheaper session that increases errors, review, recovery, or rejected outcomes is not an improvement. [R26-77](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77)
 
+## Scored observations
+
+When an automated or human scorer reviews production runs, bind every grade to the eligible population, sample and exclusions, source run and release graph, scorer claim, rubric, version and digest, label or reference authority, uncertainty, cost, and review date. Include relevant human comments, corrections, overrides, and task outcomes only when their collection and reuse are purpose-bound, classified, minimized, and permitted. A human interaction is evidence about the workflow; it is not anonymous ground truth.
+
+Scorers inform diagnosis and evaluation. They MUST NOT grant action authority, prove source-of-truth completion, or directly update prompts, skills, policies, thresholds, graders, or deployed behavior. Monitor scorer disagreement, calibration, false-positive and false-negative behavior, coverage, drift, latency, cost, and reviewer burden. Fail or abstain according to the declared evaluation contract when the scorer, required evidence, or sampling process is unavailable or invalid. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
+
 ## Trace-derived improvement
 
 Recurring trace papercuts MAY produce a sanitized failure record, replay case, and candidate prompt, skill, route, tool, or context change. Production traces MUST NOT directly rewrite prompts, skills, labels, graders, policies, thresholds, or deployed code. Apply purpose and confidentiality review, contamination controls, independent evaluation, change approval, canary, rollback, and the normal release authority before adoption. `FDE-004`, `EVA-004`, `EVA-006`, `OPS-007`.
@@ -71,5 +77,6 @@ Recurring trace papercuts MAY produce a sanitized failure record, replay case, a
 - Repeated-search or polling loop that exhausts budget without improving evidence
 - Oversized or unused tool context that raises cost while the accepted outcome is unchanged
 - Trace-derived skill candidate attempting to alter its evaluator, approval, or release gate
+- Scorer sampling that omits a consequential failure slice or treats reviewer comments as anonymous ground truth
 
-Evidence: [OpenAI monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-04), [Anthropic approval and monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-50), [capability-aware containment](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-49), and [Uber production AI operations](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77).
+Evidence: [OpenAI monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-04), [Anthropic approval and monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-50), [capability-aware containment](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-49), [Uber production AI operations](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77), and [Warp configuration improvement](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81).

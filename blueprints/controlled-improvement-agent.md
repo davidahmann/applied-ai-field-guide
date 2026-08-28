@@ -17,6 +17,10 @@ flowchart LR
     P --> S
 ```
 
+## Exact configuration baseline
+
+Bind every observed run and proposed change to the complete effective release graph: workflow topology, model route, prompt, harness, context and guardrail policy, admitted skill and capability digests, tool and MCP contracts, evaluator, runtime, permissions, resource budgets, environment, and applicable data and policy revisions. Use the existing agent-system, behavior-bundle, capability-manifest, evaluation-report, and solution-release records rather than introducing a parallel factory manifest. A partial baseline cannot support a causal improvement claim.
+
 ## Authority separation
 
 | Plane | Agent may | Agent MUST NOT |
@@ -51,7 +55,7 @@ Failure classes: `context`, `retrieval`, `data_quality`, `model_behavior`, `tool
 
 ## Candidate change packet
 
-- Before/after digests for model route, prompt, context policy, tool, guardrail, evaluator, runtime, and schema.
+- Before/after release-graph digests for workflow topology, model route, prompt, context policy, admitted skills and capabilities, tools and MCP servers, guardrail, evaluator, runtime, permissions, budgets, environment, data, policy, and schema.
 - Affected workflows, segments, identities, data classes, effect classes, and external dependencies.
 - Diagnostic and replay-case links.
 - Threat-model delta and new negative tests.
@@ -60,6 +64,12 @@ Failure classes: `context`, `retrieval`, `data_quality`, `model_behavior`, `tool
 - Canary population, duration, success/rollback criteria, and accountable owner.
 - Rollback artifact and last-known-good digest.
 - Required reviewers and segregation-of-duties check.
+
+## Scored-observation admission
+
+A scorer is a governed evaluator, not a trusted narrator. Record its claim, eligible run population, sampling and exclusion policy, trace and human-interaction inputs, rubric, version and digest, label or reference authority, uncertainty, calibration, cost, disagreement and adjudication path, and unavailable or invalid-result behavior. Minimize and classify trace, PR, task-tracker, reviewer, and correction data before scoring.
+
+A configuration benchmark MUST compare the current and candidate release graphs on the same representative tasks, frozen world and policy revisions, resource ceilings, scorer versions, trial rules, and acceptance criteria. Preserve per-case results, failed and excluded cases, uncertainty, safety slices, and an unchanged holdout. Select on the workload-specific Pareto frontier across accepted-outcome quality, reliability, safety, latency, reviewer effect, and full cost; an aggregate score or apparent winner cannot hide a consequential regression.
 
 ## Expert-feedback admission
 
@@ -92,10 +102,12 @@ Every terminal path emits a reason. No failed, rejected, or rolled-back path rea
 - Candidate passes the incident case, unchanged regression suite, isolated holdout, safety slices, and resource budgets.
 - Evaluator and decision principals differ from the candidate author.
 - Changed model/prompt/tool/context/guardrail routes are evaluated independently (OPS-007).
+- Scorer configuration, sample, rubric, cost, label authority, and disagreement path are versioned and reviewable.
+- Current and candidate configurations run against identical tasks, worlds, policies, budgets, scorers, and trial rules.
 - Canary can be stopped by kill switch, automatically rolls back on declared criteria, and verifies the restored digest.
 - Promotion cannot occur from an agent-authored natural-language success claim.
 
-Evidence leads: R26-17, R26-20, R26-25, R26-46, R26-51, R26-55, and [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76).
+Evidence leads: R26-17, R26-20, R26-25, R26-46, R26-51, R26-55, [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76), and [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81).
 
 ## Controls
 
