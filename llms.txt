@@ -45,6 +45,7 @@ Read [AGENTS.md](AGENTS.md) before modifying this repository.
 - Healthcare access-coordination profile: [solutions/verticals/healthcare-access-coordination.md](solutions/verticals/healthcare-access-coordination.md)
 - Enterprise foundation accelerator: [solutions/enterprise-foundation.md](solutions/enterprise-foundation.md)
 - Integration runtime accelerator: [solutions/integration-runtime.md](solutions/integration-runtime.md)
+- Enterprise integration and scale reality: [library/17-enterprise-integration-and-scale-reality.md](library/17-enterprise-integration-and-scale-reality.md)
 - Secure AI workload accelerator: [solutions/secure-ai-workload.md](solutions/secure-ai-workload.md)
 - Deployment and operations accelerator: [solutions/deployment-and-operations.md](solutions/deployment-and-operations.md)
 - Governed data-agent design: [blueprints/data-analysis-agent.md](blueprints/data-analysis-agent.md)

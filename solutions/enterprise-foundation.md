@@ -43,7 +43,7 @@ flowchart LR
     ONB --> APP
 ```
 
-Authentication establishes identity. Provisioning changes the identity registry. Request-time authorization intersects the current principal, tenant, role, entitlement, resource, and policy revision. Database isolation is defense in depth; it does not replace service-layer authorization. `IAM-001`, `IAM-002`, `IAM-003`, `SEC-005`.
+Authentication establishes identity. Provisioning changes the identity registry. Request-time authorization intersects the current principal, tenant, role, entitlement, resource, purpose, and policy revision. Database row- and column-level controls are defense in depth; they do not replace service-layer authorization and must not be inferred from a model, display name, or copied group label. `IAM-001`, `IAM-002`, `IAM-003`, `SEC-005`.
 
 Usage metering is deterministic financial infrastructure. Meter events need a stable business-operation identity, explicit aggregation semantics, service-enforced duplicate safety, and reconciliation against both the source system and billing provider. A model MAY explain an anomaly; it MUST NOT authorize access, rate an invoice, or prove revenue accuracy. `ARC-005`, `REL-001`, `REL-003`.
 
@@ -64,7 +64,7 @@ Add a second protocol, billing model, region, or tenant class only after the fir
 
 | Case | Required evidence |
 | --- | --- |
-| Cross-tenant access | Request is denied before data return; cache, job, log, and database paths show no foreign-tenant disclosure. |
+| Cross-tenant or field-level access | Request is denied before data return; service, cache, job, log, row-filter, column-filter, database, tool, and telemetry paths show no unauthorized disclosure. |
 | User deprovisioning | Existing and new sessions lose authority within the declared objective; background work cannot reuse revoked identity. |
 | Role or entitlement downgrade | The next consequential request uses current policy and fails closed on missing or stale context. |
 | Duplicate usage event | Same business operation creates one accepted meter event and one billable unit under the declared aggregation rule. |
@@ -72,7 +72,7 @@ Add a second protocol, billing model, region, or tenant class only after the fir
 | Tenant suspension | New work stops, credentials and egress are constrained, and the operating team can restore or retire safely. |
 | Onboarding success | A named verifier accepts the first workflow outcome; completion is not inferred from checklist clicks. |
 
-Test malformed assertions, wrong issuer or audience, replay, stale group membership, SCIM retry and out-of-order updates, cache-key collisions, row-filter bypass, background-job tenant loss, billing-provider timeout, and partial reconciliation. `EVA-001`, `EVA-003`, `SEC-004`.
+Test malformed assertions, wrong issuer or audience, replay, stale group membership, SCIM retry and out-of-order updates, cache-key collisions, row- and column-filter bypass, background-job tenant loss, billing-provider timeout, and partial reconciliation. Map any local teaching identity or tenant fixture to target-system evidence with [Enterprise Integration and Scale Reality](../library/17-enterprise-integration-and-scale-reality.md). `EVA-001`, `EVA-003`, `SEC-004`.
 
 ## Operating contract
 

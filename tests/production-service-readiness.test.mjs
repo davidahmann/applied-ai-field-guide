@@ -26,6 +26,7 @@ test("production readiness covers the minimum service boundary and resolves ever
   ]);
   for (const dimension of [
     "Identity and authorization",
+    "Source integration, reconciliation, and environment constraints",
     "Durable state and data recovery",
     "Async work, concurrency, retries, and idempotency",
     "Rate, cost, and capacity limits",
@@ -47,6 +48,8 @@ test("infrastructure mechanisms remain conditional on the declared workflow", as
   assert.match(body, /A queue or durable workflow engine is required only when work outlives a request/i);
   assert.match(body, /Caching and horizontal scaling are required only when measured load/i);
   assert.match(body, /Synchronous bounded work may be `not applicable` with evidence/i);
+  assert.match(body, /A completed request, file load, or batch proves transport only/i);
+  assert.match(body, /Enterprise Integration and Scale Reality/);
 });
 
 test("the readiness packet is cataloged and reachable from human and agent routes", async () => {

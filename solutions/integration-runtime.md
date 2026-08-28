@@ -43,6 +43,8 @@ flowchart LR
 
 The gateway MUST reject invalid signatures, stale events, unknown tenants, unsupported schemas, and oversized payloads before durable acceptance. A successful HTTP response proves receipt only when the source contract defines it that way; it never proves downstream completion.
 
+For legacy or batch interfaces, preserve the same contract through versioned extraction cursors, overlap windows, late-arrival and deletion behavior, quarantined schema drift, transformation lineage, and independent reconciliation. A completed file load or job is not proof that the eligible business population is complete. Record unmatched keys, corrected history, backfill scope, and the owner who accepts the reconciliation. Use [Enterprise Integration and Scale Reality](../library/17-enterprise-integration-and-scale-reality.md) to inspect the source-to-target seams before selecting connector infrastructure. `CTX-001`, `CTX-006`, `CTX-008`, `CTX-009`.
+
 Credentials stay behind a broker, egress is destination- and account-bound, and every connector build has verified provenance, declared authority, an owner, a disable path, and lifecycle state. `SEC-001`, `SEC-002`, `SEC-006`, `SEC-007`, `TOL-006`.
 
 Prefer a provider API or target-owned adapter. If the approved workflow can only use a browser, desktop client, or terminal emulator, treat it as a separate [computer-use action boundary](../blueprints/computer-use-action-boundary.md): record the API gap and migration trigger, isolate the tenant-bound session, treat visual content as untrusted, separate observation from commit, classify recordings, detect interface drift, and verify the target state independently. Do not hide computer use behind the same reliability claim as a supported API connector.
@@ -73,6 +75,8 @@ Do not begin with four branded connectors. Prove the shared runtime with one rep
 | Timeout after effect | Operation enters effect-unknown, reads the destination, and resolves, compensates, or escalates. |
 | Revoked credential | Broker denies use; queued work cannot reuse cached secret material. |
 | Schema drift | Unsupported version is quarantined; an owner receives a sampled, minimized diagnostic. |
+| Backfill or corrected history | Exact source range, transformation build, prior target state, duplicates, unmatched records, and reconciliation totals are retained and reviewed before promotion. |
+| Restricted or air-gapped environment | Exact signed artifacts, configuration, policy, migration, evaluation, and rollback evidence cross the approved promotion boundary without exposing credentials or protected data. |
 | Cross-tenant replay | Replay authority, connection, operation, credential, and destination remain bound to the original tenant. |
 | Disabled connector | Exact artifact digest remains denied even if name or version is reused. |
 | Browser or desktop fallback | Wrong account, prompt injection, layout drift, duplicate submit, misleading success, and session revocation stop safely; only independent target readback completes the operation. |
@@ -94,6 +98,7 @@ Kill switches MUST stop new intake, a tenant connection, write paths, affected c
 - [Threat model](../templates/threat-model.json) with destination, credential, replay, and tenant abuse cases
 - [Evaluation cases](../templates/evaluation-case.json), [evaluation report](../templates/evaluation-report.json), and [solution release](../templates/solution-release.json)
 - [SLO scorecard](../operations/slo-scorecard.md), [incident runbook](../operations/incident-runbook.md), and [change management](../operations/change-management.md)
+- [Enterprise integration and scale reality](../library/17-enterprise-integration-and-scale-reality.md) and [production service readiness](../templates/production-service-readiness.md) for source reconciliation, restricted environments, load, recovery, and target-system proof
 
 ## What this does not prove
 

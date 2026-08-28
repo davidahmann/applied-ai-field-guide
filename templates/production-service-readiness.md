@@ -38,6 +38,7 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 | Dimension | Status | Accountable owner | Target-system evidence and revision | Gap and next proof | Guide controls |
 | --- | --- | --- | --- | --- | --- |
 | Identity and authorization | required | — | — | — | `IAM-001`, `IAM-002`, `IAM-003`, `SEC-005` |
+| Source integration, reconciliation, and environment constraints | required | — | — | — | `CTX-001`, `CTX-005`, `CTX-006`, `CTX-008`, `CTX-009`, `DEL-002`, `SEC-006`, `SEC-007` |
 | Durable state and data recovery | required | — | — | — | `STA-001`, `STA-002`, `STA-003`, `OPS-005` |
 | Async work, concurrency, retries, and idempotency | required | — | — | — | `REL-001`, `REL-002`, `REL-004`, `OPS-005` |
 | Rate, cost, and capacity limits | required | — | — | — | `REL-002`, `TOL-005`, `CST-001`, `CST-002` |
@@ -52,6 +53,13 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 
 - Name interactive and unattended identities, tenant binding, current scopes, policy revision, and the action-boundary recheck.
 - Record denial, stale-policy, deprovisioning, and cross-tenant tests where applicable.
+
+### Source integration, reconciliation, and environment constraints
+
+- Name each source owner, interface, extraction cursor, schema and semantic revision, freshness objective, deletion and late-arrival behavior, transformation build, quarantine, and independent reconciliation.
+- Exercise incomplete extracts, unmatched keys, corrected history, backfills, schema drift, restricted-network promotion, artifact provenance, credential rotation, and rollback where applicable.
+- A completed request, file load, or batch proves transport only. Advance the row to `tested` only when target-system evidence reconciles the declared business population and failure cases.
+- Use [Enterprise Integration and Scale Reality](../library/17-enterprise-integration-and-scale-reality.md) to map local or teaching components to target responsibilities without mandating one infrastructure stack.
 
 ### Durable state and data recovery
 

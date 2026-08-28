@@ -299,7 +299,7 @@ npm run test:evals
 npm run test:hybrid
 ```
 
-These are in-memory teaching implementations. Passing their tests proves only the declared local behavior; it does not certify a target deployment.
+These are in-memory teaching implementations. Passing their tests proves only the declared local behavior; it does not certify a target deployment. Before translating either example into a customer environment, use [Enterprise Integration and Scale Reality](../library/17-enterprise-integration-and-scale-reality.md) to open the source, extraction, preparation, identity, execution, and environment seams and define the target-system evidence required at each one.
 
 ## 13. Start a real engagement
 

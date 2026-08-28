@@ -34,6 +34,7 @@ export const navigation = [
       "/ai-value-engineering/",
       "/ai-value-engineering-scorecard/",
       "/ai-data-readiness/",
+      "/enterprise-ai-integration/",
       "/ai-workflows-vs-agents/",
       "/production-ai-agent-architecture/",
       "/workflow-automation-examples/",
@@ -132,6 +133,14 @@ export const pages = [
     title: "AI Data Readiness: Context, Quality, Lineage, and Drift",
     description:
       "A decision-bound data readiness method for operational data, AI context, evaluation evidence, preparation lineage, output ownership, and production drift.",
+  },
+  {
+    route: "/enterprise-ai-integration/",
+    source: "library/17-enterprise-integration-and-scale-reality.md",
+    navTitle: "Enterprise integration reality",
+    title: "Enterprise AI Integration: From Teaching Code to Target Evidence",
+    description:
+      "Bridge local AI examples to enterprise deployment through source authority, reconciliation, identity, durable execution, restricted promotion, and target evidence.",
   },
   {
     route: "/ai-workflows-vs-agents/",
