@@ -25,6 +25,22 @@
 
 Explain attribution, non-adoption, downstream rework, avoided loss evidence, realized residual loss, fixed cost, and any rebaseline. Deduct residual loss separately only when it is not already netted from avoided loss or unit value.
 
+### Agent-work cost drivers when applicable
+
+Keep full cost per accepted outcome as the decision measure. Use the factor chain only to explain model-mediated spend changes; reconcile it with tool, compute, storage, wait, retry, human-review, recovery, and allocated-service cost.
+
+| Driver | Prior | Current | Explained effect | Evidence / fixed comparison | Owner |
+| --- | ---: | ---: | ---: | --- | --- |
+| Eligible users | — | — | — | — | — |
+| Sessions per user | — | — | — | — | — |
+| Turns per session | — | — | — | — | — |
+| Requests per turn | — | — | — | — | — |
+| Tokens per request | — | — | — | — | — |
+| Price per token | — | — | — | — | — |
+| Other service cost and unexplained residual | — | — | — | — | — |
+
+Record whether comparisons held the representative workload, model, route, and enforced budget constant. Do not attribute a mixed change to one lever.
+
 ## Declared adoption contract
 
 Compare the current result with the pre-pilot contract; do not silently redefine the metric after observing performance.
@@ -60,6 +76,22 @@ Include unauthorized, prohibited, duplicate, effect-unknown, and readback-mismat
 | — | — | — | — | — | — |
 
 List production behavior clusters, new regressions, evaluator calibration changes, and open gaps.
+
+### Direct and downstream contract health
+
+Use this section when a prediction, classification, ranking, retrieval result, or model proposal feeds another component or customer-visible decision.
+
+| Component and version | Direct contract / metric / result | Downstream decision / metric / result | Calibration or drift by slice | Replay or experiment evidence | Decision |
+| --- | --- | --- | --- | --- | --- |
+| — | — | — | — | — | — |
+
+### Zero-value work and improvement candidates
+
+| Signal | Volume and cost | Accepted-outcome or reliability effect | Containment | Candidate change | Evaluation / canary / rollback |
+| --- | ---: | --- | --- | --- | --- |
+| Repeated searching, unnecessary turns, oversized results, model-visible polling, unused tool schemas, avoidable cache misses, or overpowered routing | — | — | — | — | — |
+
+Trace-derived papercuts may create sanitized replay cases and candidate skill, prompt, routing, or tool changes. They do not update production behavior, protected evaluators, or release thresholds without independent evaluation and ordinary change approval. [R26-77](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77)
 
 ## Changes and dependencies
 

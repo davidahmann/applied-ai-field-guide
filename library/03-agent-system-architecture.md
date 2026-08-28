@@ -224,6 +224,8 @@ MCP sessions, request IDs, and tool caches are protocol concerns; they are not d
 
 Unattended agents need a dedicated non-human workload identity. Interactive delegated agents may instead use a short-lived user-bound session only when trusted software enforces server-side authorization, scoped authority, mutation policy or approval, and user-plus-agent attribution. Delegation always inherits the caller's authorization ceiling; it never acquires whatever the downstream runtime happens to permit. Use per-tool scopes and step-up authorization for sensitive operations. [R26-11](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-11) [R26-15](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-15) [R26-32](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-32)
 
+For multi-hop work, keep the initiating principal, hosting workload, logical agent, current recipient, tenant, and target operation distinct. Trusted software rechecks the current authority intersection at every hop and binds each delegated grant to its intended recipient, purpose, scope, expiry, and policy revision. Missing, forged, truncated, replayed, revoked, or widened lineage fails closed. A short-lived token, registry, service mesh, or protocol can implement this contract; none is the contract itself. [R26-80](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-80)
+
 ### Model-visible actions need a smaller trust domain
 
 Treat every LLM-visible tool as a potential execution boundary. The hardened pattern is a model in a constrained environment, a trusted gateway holding credentials, explicitly allowed egress, policy-controlled tool invocation, and staged writes. Keep secrets out of model and sandbox context rather than relying on the agent to avoid them. [R26-03](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-03) [R26-08](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-08) [R26-12](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-12)
@@ -244,5 +246,6 @@ Parallel workers change both behavior and failure modes. Define bounded fan-out,
 [S16]: 05-source-index.md#s16
 [S17]: 05-source-index.md#s17
 [S18]: 05-source-index.md#s18
+[S27]: 05-source-index.md#s27
 [S19]: 05-source-index.md#s19
 [S20]: 05-source-index.md#s20

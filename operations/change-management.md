@@ -64,14 +64,18 @@ Apply these additional rules when a model or agent route changes. Other selected
 
 - Run the suite on every affected model and route; aggregate pass rate cannot hide one failing route.
 - Compare against the current production candidate using identical worlds and enforced resources.
+- State the causal claim. Hold the model and representative workload constant when isolating context, caching, batching, tool-loading, or harness effects; treat model, workload-mix, adoption, and price changes as separate drivers.
+- Select model and route candidates on the workload-specific Pareto frontier across accepted-outcome quality, reliability, latency, reviewer effect, and full cost—not token price alone.
 - Use ablation to identify whether the changed component is load-bearing.
 - Test tool selection, trajectory, final artifact, effect, safety, latency, cost, and reviewer impact.
+- When an upstream component feeds another model, optimizer, policy, workflow, or customer-visible decision, bind its direct contract and the downstream product contract. Run downstream replay and a bounded experiment where justified; local metric improvement alone cannot promote the change.
+- Version and bind material aggregation, feature, calibration, and post-processing components. Test calibration and drift by consequential slice and declare correction, rollback, and compatibility behavior.
 - Preserve a holdout not used to tune the change.
 - Record prompt/instruction/tool-description diffs or immutable digests.
 - Set an expiry for model-specific workarounds and retest them after model upgrades.
 - Never lower a threshold, weaken a fixture, or alter a grader solely to make the candidate pass.
 
-Anthropic's April 2026 postmortem is direct evidence that model defaults, context handling, and a small prompt change can produce route-specific regressions. [R26-51](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-51)
+Anthropic's April 2026 postmortem is direct evidence that model defaults, context handling, and a small prompt change can produce route-specific regressions. Uber's traffic-forecasting report separately illustrates why an improved upstream metric can still degrade a downstream product decision when calibration and component contracts drift. These cases motivate controlled comparison and downstream replay; their implementation details and reported effects are not guide defaults. [R26-51](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-51) [R26-78](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-78)
 
 ## Evaluator-change rules
 

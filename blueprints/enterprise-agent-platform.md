@@ -110,6 +110,7 @@ flowchart TB
 7. **Runtime → evaluation:** sanitize production evidence; deny the candidate access to hidden tests, labels, graders, other trials, and pass signals.
 8. **Candidate change → production:** require independent review, compatible manifest, canary, health and outcome soak, and rollback.
 9. **FDE/platform → customer environment:** keep customer data and policy inside the customer boundary; export only approved reusable patterns.
+10. **Delegating actor → next-hop recipient:** preserve verifiable initiating-caller, hosting-workload, logical-agent, tenant, purpose, and intermediary attribution; bind the grant to the exact recipient, scope, expiry, and policy revision; fail closed on a missing, invalid, truncated, replayed, revoked, or widened chain.
 
 ## Runtime actor modes
 
@@ -127,6 +128,8 @@ Delegated workers and effect services are identity roles, not actor-mode enum va
 | Effect service | Target-service identity behind trusted gateway | Only validated, authorized, duplicate-safe operations |
 
 Controls: `IAM-001`, `IAM-002`, `IAM-003`.
+
+The initiating human or service principal, hosting workload, logical agent, current recipient, and effect-service identity are distinct even when one credential format carries several claims. Every hop re-authenticates the current recipient and evaluates the intersection of caller, workload, agent, tenant, destination, capability, resource, policy, approval, and expiry. A registry, short-lived audience-bound credential, standardized client, or service mesh MAY implement this contract; no named protocol or infrastructure component is required. [R26-80](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-80)
 
 ## Solution release manifest
 
@@ -187,6 +190,7 @@ In addition to the [telemetry contract](../operations/telemetry-contract.md), re
 - Workflow charter, solution release, and user-surface versions
 - Eligible segment and accepted-outcome verifier revision
 - Actor mode and user-plus-agent attribution
+- Verified initiating-caller, hosting-workload, logical-agent, recipient, destination, scope, expiry, and policy lineage for delegated hops
 - Context/handoff schema version and provenance completeness
 - Evaluation claim, trial, environment, and report revision
 - Adoption, override, abandonment, reviewer wait, and support event
@@ -201,6 +205,7 @@ Control: `OPS-006`.
 - Requirement-to-component trace completeness
 - Cross-resource compatibility and migration rehearsal
 - User-delegated and unattended identity separation
+- Forged or missing caller, wrong recipient/audience, replayed, expired or revoked grant, agent/workload mismatch, truncated lineage, and intermediary scope-expansion denial
 - Cross-tenant, stale-policy, revoked-scope, and approval-expiry denial
 - Sensitive read, result-size, redirect, credential-provenance, and package-proxy egress cases
 - Duplicate, reordered, cancelled, partial, and timeout-after-effect delivery

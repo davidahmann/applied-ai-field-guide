@@ -42,6 +42,22 @@ No universal model or threshold is assumed. A monitor that operators routinely i
 - Route containment through trusted policy, gateway, workflow, identity, or egress controls.
 - Retain only the evidence needed for calibration, incident response, and audit.
 
+## Operating-efficiency signals
+
+Efficiency monitoring is diagnostic, not an authorization or quality signal. When model-mediated work is material, retain privacy-minimized counters for repeated searches, unnecessary turns, requests per turn, input and output volume, oversized tool results, model-visible polling, loaded-but-unused tool schemas, cache misses, route selection, retries, and budget exhaustion. Reconcile these signals with accepted outcomes, safety, reliability, latency, reviewer load, and full service cost before changing the route.
+
+Keep **cost per accepted outcome** as the decision measure. Use the factor chain below only to locate a spend change, not to redefine value:
+
+```text
+users × sessions/user × turns/session × requests/turn × tokens/request × price/token
+```
+
+Progressive tool loading and trusted code-mediated batching MAY reduce zero-value model turns. The code path remains bounded by tool contracts, current authorization, egress, result limits, cancellation, audit, and source-of-truth verification. A cheaper session that increases errors, review, recovery, or rejected outcomes is not an improvement. [R26-77](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77)
+
+## Trace-derived improvement
+
+Recurring trace papercuts MAY produce a sanitized failure record, replay case, and candidate prompt, skill, route, tool, or context change. Production traces MUST NOT directly rewrite prompts, skills, labels, graders, policies, thresholds, or deployed code. Apply purpose and confidentiality review, contamination controls, independent evaluation, change approval, canary, rollback, and the normal release authority before adoption. `FDE-004`, `EVA-004`, `EVA-006`, `OPS-007`.
+
 ## Release cases
 
 - Benign action at the policy boundary
@@ -52,5 +68,8 @@ No universal model or threshold is assumed. A monitor that operators routinely i
 - False success followed by missing source-of-truth effect
 - Monitor timeout, outage, and delayed result
 - High alert volume producing approval or alert fatigue
+- Repeated-search or polling loop that exhausts budget without improving evidence
+- Oversized or unused tool context that raises cost while the accepted outcome is unchanged
+- Trace-derived skill candidate attempting to alter its evaluator, approval, or release gate
 
-Evidence: [OpenAI monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-04), [Anthropic approval and monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-50), and [capability-aware containment](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-49).
+Evidence: [OpenAI monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-04), [Anthropic approval and monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-50), [capability-aware containment](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-49), and [Uber production AI operations](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77).

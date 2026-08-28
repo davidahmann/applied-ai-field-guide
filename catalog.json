@@ -752,6 +752,12 @@
       "type": "evidence",
       "path": "research/2026-08-27--bridgewater-pocket-analyst-tool.md",
       "tags": ["sources", "data-analysis", "context", "evaluation", "field-reports"]
+    },
+    {
+      "id": "evidence.uber-production-ai-operating-lessons",
+      "type": "evidence",
+      "path": "research/2026-08-28--uber-production-ai-operating-lessons.md",
+      "tags": ["sources", "operations", "cost", "evaluation", "semantic-analysis", "identity"]
     }
   ]
 }
