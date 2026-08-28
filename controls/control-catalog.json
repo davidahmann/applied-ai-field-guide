@@ -270,8 +270,8 @@
       "id": "IAM-002",
       "domain": "identity",
       "level": "MUST",
-      "requirement": "Delegated actions MUST intersect agent capability with the initiating caller's current authorization and tenant scope.",
-      "evidence": ["R26-11", "R26-15"],
+      "requirement": "Delegated actions MUST intersect agent capability with the initiating caller's current authorization and tenant scope; every hop MUST preserve verifiable caller, workload, logical-agent, and recipient attribution, bind the delegated grant to its intended recipient, purpose, scope, expiry, and policy revision, and fail closed when that lineage or authority is missing, invalid, stale, truncated, replayed, revoked, or widened.",
+      "evidence": ["R26-11", "R26-15", "R26-80"],
       "release_gates": ["sandbox", "shadow", "autonomy"]
     },
     {

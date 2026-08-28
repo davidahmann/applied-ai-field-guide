@@ -60,6 +60,8 @@ The envelope binds:
 
 The recipient's versioned system and tool contracts enforce role-specific result validation and source allowlists. The envelope carries the applicable objective, verified state, provenance, and attenuated authority; free-form text remains untrusted data. The returned worker result uses the same envelope so the parent can verify authority, provenance, budget, and terminal state before merge.
 
+The envelope is the task and evidence handoff; the runtime identity proof is a separate consume-time responsibility. At every hop, trusted software authenticates the initiating caller or prior principal, hosting workload, logical worker, exact recipient, tenant, destination, and current policy. Any credential or grant is short-lived, recipient-bound, downscoped, and replay-protected. The implementation MUST reject a forged or dropped caller, wrong audience, expiry or revocation, agent/workload mismatch, truncated lineage, or scope expansion even when the JSON is schema-valid. `IAM-001`, `IAM-002`, `IAM-003`. [R26-80](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-80)
+
 At consumption, trusted code MUST resolve the current parent grant or consumed parent handoff from an authoritative store, recompute the parent-authority digest from that state, and verify the producer and exact nested lineage. It MUST also authenticate the current recipient and exactly match its immutable principal, system, role, run, and actor mode to the envelope before admitting work. After attestation verification, one durable atomic compare-and-swap transaction MUST claim both `handoff_id` and nonce and reserve the requested child allocation against the current parent and recipient revisions (`CTX-005`, `IAM-002`, `IAM-003`, `REL-002`, `REL-004`). Missing parent state, current recipient, verifier, or atomic claim service fails closed. A schema-valid envelope is only a proposal until these consume-time checks pass.
 
 The atomic claim is the execution admission record. A concurrent or post-restart retry of the same envelope receives `already_claimed` and must not execute again; reuse of either replay key with different content is a conflict. An unknown claim outcome remains blocked until the durable ledger is reconciled—never “rolled back” from process memory.
@@ -114,19 +116,22 @@ The atomic claim is the execution admission record. A concurrent or post-restart
 
 1. Authority attenuation on every worker.
 2. Fan-out cap under recursive delegation attempt.
-3. Parent cancellation with active workers.
-4. Required worker failure.
-5. Optional worker timeout.
-6. Contradictory specialist conclusions.
-7. Duplicate child task, reused handoff ID, reused nonce, and result replay.
-8. One atomic replay-claim and sibling-budget reservation with an aggregate parent ceiling.
-9. Invented parent, stale parent revision, and nested parent ID/digest mismatch.
-10. Wrong, inactive, or unauthenticated current recipient is rejected before claim.
-11. Successful root and nested consumption through authoritative parent and recipient resolution.
-12. Concurrent and post-restart replay returns `already_claimed` without second admission.
-13. Unavailable verifier or atomic claim service fails closed.
-14. Matched-budget serial baseline comparison and topology admission or retirement decision.
-15. Malformed, over-scoped, stale, and tainted context-handoff rejection.
+3. Forged, missing, reordered, or truncated initiating-caller and intermediary lineage.
+4. Wrong recipient or destination audience; expired, revoked, or replayed delegation.
+5. Logical-agent and hosting-workload mismatch; tenant, capability, resource, or effect expansion at an intermediary hop.
+6. Parent cancellation with active workers.
+7. Required worker failure.
+8. Optional worker timeout.
+9. Contradictory specialist conclusions.
+10. Duplicate child task, reused handoff ID, reused nonce, and result replay.
+11. One atomic replay-claim and sibling-budget reservation with an aggregate parent ceiling.
+12. Invented parent, stale parent revision, and nested parent ID/digest mismatch.
+13. Wrong, inactive, or unauthenticated current recipient is rejected before claim.
+14. Successful root and nested consumption through authoritative parent and recipient resolution.
+15. Concurrent and post-restart replay returns `already_claimed` without second admission.
+16. Unavailable verifier or atomic claim service fails closed.
+17. Matched-budget serial baseline comparison and topology admission or retirement decision.
+18. Malformed, over-scoped, stale, and tainted context-handoff rejection.
 
 ## Controls
 

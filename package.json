@@ -1,6 +1,6 @@
 {
   "name": "fde-guide",
-  "version": "1.22.0",
+  "version": "1.23.0",
   "description": "An FDE and applied AI engineering guide for field discovery, accountable adaptation, measurable value, and production systems.",
   "private": true,
   "license": "Apache-2.0",
@@ -50,13 +50,14 @@
     "test:field-practice": "node --test tests/field-engagement.test.mjs",
     "test:production-readiness": "node --test tests/production-service-readiness.test.mjs",
     "test:enterprise-reality": "node --test tests/enterprise-deployment-reality.test.mjs",
+    "test:production-ai-operations": "node --test tests/production-ai-operating-lessons.test.mjs",
     "test:skills": "node --test tests/skills.test.mjs",
     "test:policy": "node --test examples/invoice-exception/authorization-policy.test.mjs",
     "test:reference": "node --test examples/invoice-exception/reference-loop.test.mjs",
     "test:evals": "node --test examples/invoice-exception/run-evals.test.mjs",
     "test:hybrid": "node --test examples/shipment-risk-triage/shipment-risk-triage.test.mjs",
     "test:site": "npm run build:site && node --test tests/site.test.mjs",
-    "test": "npm run validate && npm run test:markdown && npm run test:paths && npm run test:repository && npm run test:contracts && npm run test:tool-security && npm run test:telemetry && npm run test:governance && npm run test:release-integrity && npm run test:release-gates && npm run test:solutions && npm run test:value-framework && npm run test:data-readiness && npm run test:field-practice && npm run test:production-readiness && npm run test:enterprise-reality && npm run test:skills && npm run test:policy && npm run test:reference && npm run test:evals && npm run test:hybrid && npm run test:site"
+    "test": "npm run validate && npm run test:markdown && npm run test:paths && npm run test:repository && npm run test:contracts && npm run test:tool-security && npm run test:telemetry && npm run test:governance && npm run test:release-integrity && npm run test:release-gates && npm run test:solutions && npm run test:value-framework && npm run test:data-readiness && npm run test:field-practice && npm run test:production-readiness && npm run test:enterprise-reality && npm run test:production-ai-operations && npm run test:skills && npm run test:policy && npm run test:reference && npm run test:evals && npm run test:hybrid && npm run test:site"
   },
   "devDependencies": {
     "ajv": "8.20.0",

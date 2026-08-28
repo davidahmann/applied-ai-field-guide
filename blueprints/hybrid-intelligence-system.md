@@ -12,6 +12,7 @@ Controls: `ARC-001`, `ARC-002`, `ARC-004`, `ARC-005`, `VAL-002`, `CST-001`, `CST
 | Workflow orchestrator | Owns trigger, durable state, budgets, retries, stop conditions, and routing | Cannot bypass policy or source-of-truth verification |
 | Deterministic policy and validation | Applies rules, constraints, and business invariants | Runs outside model generation; rejects invalid state/action |
 | Optimizer or classical ML model | Produces a bounded score, ranking, forecast, or plan | Versioned input/output contract, threshold, and fallback |
+| Aggregation, feature, or calibration component when justified | Produces bounded model inputs or corrects systematic error | Versioned data, slice, freshness, compatibility, and rollback contract; cannot invent missing evidence |
 | Retrieval and foundation-model component | Interprets unstructured evidence or produces a typed proposal | Cannot authorize or commit an action |
 | Tool and effect gateway | Reads or changes an external system under current policy | Enforces identity, scope, tenant, idempotency, approval, and readback |
 | Human reviewer | Resolves ambiguity, exceptions, or high-stakes decisions | Accountable for decisions reserved to people |
@@ -29,6 +30,18 @@ validated input
 ```
 
 Record every consequential routing choice in the [intelligence-selection record](../templates/intelligence-selection-record.md). The selection must name the rejected simpler alternative, the measured reason it was insufficient, the evaluation evidence, the operating budget, and the fallback. `ARC-004`, `ARC-005`.
+
+## Direct and downstream contracts
+
+For every prediction, classification, ranking, retrieval result, or model proposal, declare:
+
+- The direct component input, output, metric, threshold, eligible population, latency, freshness, and failure contract
+- The downstream model, optimizer, policy, workflow, or human decision that consumes it
+- The downstream product metric and guardrail that the customer or operator actually experiences
+- Any aggregation, feature, calibration, or post-processing version between the two
+- The representative downstream replay, bounded experiment when justified, drift monitor, rollback, and accountable owners
+
+An improved local loss, accuracy, or judge score is not sufficient when the downstream decision degrades. Separate information gain from systematic calibration error when the distinction is useful, and measure both by consequential slice. Calibration MAY correct systematic error; it cannot recover missing information, valid labels, policy, or a wrongly scoped outcome. Production constraints such as latency, throughput, source availability, sparse segments, recovery, and operator capacity SHOULD shape the mechanism choice before a theoretically richer architecture is selected. [R26-78](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-78)
 
 ## State transitions
 
@@ -58,6 +71,7 @@ The domain model owns these states and any permitted transitions. A model may su
 | Tool, policy, or identity denial | Stop without effect and surface the reason in the work artifact |
 | Timeout, budget exhaustion, or partial external effect | Persist state, reconcile with the system of record, then repair, compensate, or escalate |
 | Drift in outcome, quality, data, model behavior, adoption, or cost | Constrain/rollback the affected route and create a replayable regression case |
+| Upstream metric improves while downstream contract regresses | Hold promotion, inspect compatibility and calibration, replay the full path, then correct, constrain, or revert |
 
 ## Telemetry and operating measures
 
@@ -68,6 +82,8 @@ Measure per decision route: eligible volume, route selection, evidence sufficien
 - Contract tests for every component interface and source revision.
 - Deterministic-policy and state-transition tests.
 - ML/optimization error, calibration, constraint, and fallback tests where applicable.
+- Direct-component and downstream-product contract replay for every consequential upstream dependency.
+- Aggregation, feature, calibration, and post-processing compatibility, freshness, drift, and rollback tests when those components exist.
 - Foundation-model output, tool-trajectory, retrieval-provenance, and adversarial tests where applicable.
 - End-to-end outcome and source-of-truth readback tests.
 - Route-specific budget, failure, rollback, and human-escalation tests.

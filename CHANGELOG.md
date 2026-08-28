@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.23.0] - 2026-08-28
+
+- Add a bounded first-party evidence review of Uber's software-factory economics, upstream and downstream model contracts, semantic file analysis, and delegated-agent identity without adopting Uber-specific infrastructure or operating defaults.
+- Extend value engineering, service review, behavior monitoring, change management, intelligence selection, and hybrid-system guidance with causal cost decomposition, controlled comparisons, Pareto routing, zero-value-work diagnostics, calibration, and downstream replay.
+- Strengthen semantic file-review boundaries and delegated identity with cited evidence, typed abstention, governed feedback, per-hop attribution, fail-closed negative cases, and regression coverage across the existing control system.
+
 ## [1.22.0] - 2026-08-27
 
 - Add a bounded enterprise-integration and scale-reality chapter that opens source authority, extraction, preparation, identity, execution, and restricted-environment seams without prescribing a universal infrastructure stack.
@@ -189,7 +195,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.22.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.23.0...HEAD
+[1.23.0]: https://github.com/davidahmann/fde-guide/compare/v1.22.0...v1.23.0
 [1.22.0]: https://github.com/davidahmann/fde-guide/compare/v1.21.0...v1.22.0
 [1.21.0]: https://github.com/davidahmann/fde-guide/compare/v1.20.0...v1.21.0
 [1.20.0]: https://github.com/davidahmann/fde-guide/compare/v1.19.0...v1.20.0

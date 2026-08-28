@@ -55,6 +55,18 @@ cost_per_accepted_outcome =
 
 Set a cost ceiling, an escalation rule, and a named owner before launch. A run can be technically correct but economically unacceptable. Cost is therefore a non-functional requirement alongside reliability, security, latency, and maintainability. This follows the Frugal Architecture emphasis on value-aligned trade-offs, observability, and continual re-evaluation—not indiscriminate cost cutting. [R26-63] [R26-64]
 
+### Explain agent-work cost without losing the outcome denominator
+
+For model-mediated work, decompose the spend beneath the full service metric:
+
+```text
+users × sessions/user × turns/session × requests/turn × tokens/request × price/token
+```
+
+This sequence separates adoption, engagement, orchestration, payload, and price effects. It is a diagnostic identity, not the value equation: tool, compute, storage, wait, retry, human-review, recovery, and allocated-service cost still belong in `cost_per_accepted_outcome`. State which factor moved and preserve the remaining residual rather than attributing a mixed change to one optimization.
+
+When claiming a saving, compare the same representative workload against the current route. Hold the model and enforced resource budget constant when isolating a context, batching, caching, or tool-loading change; separately test a model change on accepted-outcome quality, reliability, latency, and full cost. Re-run the Pareto comparison after material model, prompt, context, tool, topology, workload, or verifier changes. [R26-77](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77)
+
 ### Frugal system choices
 
 Apply these in order when they preserve the accepted outcome and risk ceiling:
@@ -66,6 +78,7 @@ Apply these in order when they preserve the accepted outcome and risk ceiling:
 5. Batch asynchronous work where the user does not need an immediate result; bound fan-out, retries, tool calls, time, and concurrency.
 6. Escalate ambiguous, low-confidence, high-risk, or over-budget work to a person or a safer workflow.
 7. Review cost, quality, latency, adoption, and recovery together; a local saving that increases review load or loss is not frugal.
+8. Inspect zero-value work: repeated searching, avoidable turns, oversized tool results, model-visible polling, unused schemas, and an unnecessarily expensive route.
 
 The [production service review](../templates/production-service-review.md) and [SLO scorecard](../operations/slo-scorecard.md) are the recurring decision points for this work.
 
