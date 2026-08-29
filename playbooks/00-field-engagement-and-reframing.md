@@ -116,6 +116,22 @@ Write a decision brief that contains:
 
 The reframe is a proposal. Model output, an FDE recommendation, elapsed time, or a funding deadline cannot accept it.
 
+### Put the conflict in the room
+
+Don't hide the contradiction in a status deck. Send the two cited claims before the meeting, then say what changes if each one wins:
+
+> We sold automatic posting. The reviewer walkthrough and controls policy require approval before posting. We can still reduce queue time by recommending and staging a correction, but we cannot safely ship the original boundary. I need the accounts-payable service owner to accept that narrower path, reject it, or defer the decision. Until then, the manual queue stays in place.
+
+Keep the language factual. The purpose is not to prove the sponsor wrong; it is to make the delivery consequence decidable.
+
+| Failure mode | Better move |
+| --- | --- |
+| Softening the evidence to protect the room | Cite the exact source, then separate what it proves from what it does not |
+| Presenting one preferred solution as inevitable | Offer the bounded proposal, safe fallback, and consequences of accept, reject, defer, or no decision |
+| Asking a sponsor to overrule an operating or policy owner | Route the disposition to the role that actually controls the affected boundary |
+| Letting silence become approval | Record `continue_discovery` or `defer`; time and momentum are not authority |
+| Reopening the whole engagement | Change only the claims and downstream artifacts that depend on the resolved conflict |
+
 ## 7. Record a scoped disposition
 
 The disposition authority records one engagement decision:
@@ -138,7 +154,7 @@ After a disposition:
 5. record why each downstream item changed, its owner, and rollback or reconsideration condition;
 6. route stale or newly conflicting work for review rather than silently regenerating it.
 
-Use the [engagement-reframe record](../templates/engagement-reframe.json) for the living contract and the [field-reframe example](../examples/field-reframe/README.md) for a worked case.
+Use the [engagement-reframe record](../templates/engagement-reframe.json) for the living contract and the [invoice-exception engagement](../examples/invoice-exception/engagement/README.md) for a worked chain from field conflict through the next release decision.
 
 ## Exit conditions
 

@@ -20,7 +20,7 @@ test("the canonical and worked engagement reframes are structurally and semantic
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
   const validate = ajv.compile(schema);
-  for (const relativePath of ["templates/engagement-reframe.json", "examples/field-reframe/engagement-reframe.json"]) {
+  for (const relativePath of ["templates/engagement-reframe.json", "examples/invoice-exception/engagement/engagement-reframe.json"]) {
     const record = await json(relativePath);
     assert.equal(validate(record), true, `${relativePath}: ${JSON.stringify(validate.errors)}`);
     assert.deepEqual(engagementReframeSemanticErrors(record, relativePath), []);
@@ -48,8 +48,37 @@ test("accepted reframes fail closed when conflict, references, or dependency lin
 });
 
 test("unrelated downstream state remains explicitly unchanged", async () => {
-  const record = await json("examples/field-reframe/engagement-reframe.json");
+  const record = await json("examples/invoice-exception/engagement/engagement-reframe.json");
   const unchanged = record.downstream_impacts.filter((impact) => impact.action === "no_change");
   assert.deepEqual(unchanged.map((impact) => impact.artifact_id), ["data_context_manifest"]);
   assert.deepEqual(unchanged[0].depends_on_claim_ids, []);
+});
+
+test("the invoice engagement preserves one navigable evidence chain without overstating production proof", async () => {
+  const files = [
+    "README.md",
+    "field-evidence.md",
+    "value-case.md",
+    "intelligence-selection.md",
+    "adoption-and-handoff.md",
+    "service-review.md",
+  ];
+  const bodies = await Promise.all(files.map((name) => readFile(path.join(root, "examples", "invoice-exception", "engagement", name), "utf8")));
+  const combined = bodies.join("\n");
+  for (const phrase of [
+    "field-evidence.md",
+    "engagement-reframe.json",
+    "value-case.md",
+    "intelligence-selection.md",
+    "adoption-and-handoff.md",
+    "service-review.md",
+    "continue as a review-only shadow candidate",
+    "handoff_blocked",
+    "no realized customer value",
+  ]) assert.ok(combined.toLowerCase().includes(phrase.toLowerCase()), `worked engagement omits ${phrase}`);
+
+  const valueCase = bodies[2];
+  assert.match(valueCase, /500 × 60% = 300/);
+  assert.match(valueCase, /\$1,000 \/ 240 = \$4\.17/);
+  assert.match(valueCase, /Every number is illustrative/);
 });

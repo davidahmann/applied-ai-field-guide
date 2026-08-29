@@ -130,6 +130,54 @@ test("the AI value scorecard is a portable assessment rather than a second frame
   ]) assert.ok(source.includes(target), target);
 });
 
+test("the executive route and worked engagement distinguish funding evidence from production proof", async () => {
+  const page = pages.find(({ source }) => source === "guide/funding-ai-for-accepted-outcomes.md");
+  const workedPage = pages.find(({ source }) => source === "examples/invoice-exception/engagement/README.md");
+  assert.equal(page?.route, "/funding-ai-for-accepted-outcomes/");
+  assert.equal(workedPage?.route, "/worked-engagement/invoice-exception/");
+  const [source, engagement, review] = await Promise.all([
+    readFile(path.join(root, page.source), "utf8"),
+    readFile(path.join(root, "examples/invoice-exception/engagement/README.md"), "utf8"),
+    readFile(path.join(root, "examples/invoice-exception/engagement/service-review.md"), "utf8"),
+  ]);
+  for (const phrase of ["fund discovery—not deployment", "four gates", "review-only shadow candidate", "do not deploy"]) {
+    assert.ok(`${source}\n${engagement}\n${review}`.toLowerCase().includes(phrase.toLowerCase()), phrase);
+  }
+  assert.match(source, /12 Factors of AI Value Engineering/);
+  assert.match(source, /invoice-exception engagement/);
+});
+
+test("public lifecycle views preserve one canonical sequence and label compressed alternatives", async () => {
+  const [overview, guide, shortGuide, capability] = await Promise.all([
+    readFile(path.join(root, "README.md"), "utf8"),
+    readFile(path.join(root, "guide/README.md"), "utf8"),
+    readFile(path.join(root, "guide/fde-guide-in-five-minutes.md"), "utf8"),
+    readFile(path.join(root, "guide/capability-roadmap.md"), "utf8"),
+  ]);
+  for (const body of [overview, guide]) {
+    for (const stage of ["Inherit the brief", "Observe and reconcile the work", "Charter value and scope", "Make data fit for the decision", "Select the mechanism", "Build one controlled slice", "Prove it with cases and users", "Launch and transfer ownership", "Operate, learn, or retire"]) {
+      assert.ok(body.includes(stage), stage);
+    }
+  }
+  assert.match(shortGuide, /compressed field path/);
+  assert.match(capability, /not a second lifecycle/);
+});
+
+test("the two public front doors remain compact while the complete guide keeps a human register", async () => {
+  const [overview, guide, maintenance] = await Promise.all([
+    readFile(path.join(root, "README.md"), "utf8"),
+    readFile(path.join(root, "guide/README.md"), "utf8"),
+    readFile(path.join(root, "docs/maintainers/repository-maintenance.md"), "utf8"),
+  ]);
+  assert.ok(overview.split(/\s+/).length <= 1100, "README should remain a thin public router");
+  assert.ok(guide.split(/\s+/).length <= 2600, "concise Guide should remain readable in one sitting");
+  for (const phrase of ["Monday morning", "The hard conversation can be plain", "Net value is only $320", "Documents can't replace those exercises"]) {
+    assert.ok(guide.includes(phrase), phrase);
+  }
+  assert.match(maintenance, /consolidation ceiling/);
+  assert.match(maintenance, /growth without a compensating merge or removal/i);
+});
+
 test("computer-use guidance is a first-class security route", async () => {
   const page = pages.find(({ source }) => source === "blueprints/computer-use-action-boundary.md");
   assert.equal(page?.route, "/computer-use-agent-security/");

@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-08-28",
+  "updated": "2026-08-29",
   "artifacts": [
     {
       "id": "guide.five-minute",
@@ -26,6 +26,12 @@
       "type": "standard",
       "path": "guide/ai-value-engineering-scorecard.md",
       "tags": ["value", "scorecard", "evidence", "decision"]
+    },
+    {
+      "id": "guide.funding-ai-for-accepted-outcomes",
+      "type": "standard",
+      "path": "guide/funding-ai-for-accepted-outcomes.md",
+      "tags": ["executive", "funding", "value", "decision"]
     },
     {
       "id": "playbook.field-engagement-reframing",
@@ -670,10 +676,10 @@
       "tags": ["skill", "learning", "productization", "reuse"]
     },
     {
-      "id": "example.field-reframe",
+      "id": "example.invoice-engagement",
       "type": "example",
-      "path": "examples/field-reframe/README.md",
-      "tags": ["fde", "field-discovery", "reframing", "accountable-change"]
+      "path": "examples/invoice-exception/engagement/README.md",
+      "tags": ["fde", "field-discovery", "reframing", "value", "adoption", "handoff"]
     },
     {
       "id": "example.invoice-exception",

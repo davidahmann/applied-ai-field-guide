@@ -22,7 +22,7 @@ No role receives authority merely from its title. Production access, approvals, 
 
 ## The capability map
 
-The work moves through one operating loop. Software, data, security, product judgment, and communication support every stage rather than forming separate tracks.
+The capability view below shows how practice compounds; it is not a second lifecycle. Follow the [canonical delivery loop](../README.md#from-idea-to-production) on live work. Software, data, security, product judgment, and communication support every stage rather than forming separate tracks.
 
 ```mermaid
 flowchart LR
