@@ -26,6 +26,7 @@ export const navigation = [
     label: "Field practice",
     routes: [
       "/field-engagement-reframing/",
+      "/worked-engagement/invoice-exception/",
     ],
   },
   {
@@ -33,6 +34,7 @@ export const navigation = [
     routes: [
       "/ai-value-engineering/",
       "/ai-value-engineering-scorecard/",
+      "/funding-ai-for-accepted-outcomes/",
       "/ai-data-readiness/",
       "/enterprise-ai-integration/",
       "/ai-workflows-vs-agents/",
@@ -103,6 +105,14 @@ export const pages = [
       "A practical FDE method for finding the process knower, reconciling field contradictions, obtaining scoped decisions, and changing direction without erasing history.",
   },
   {
+    route: "/worked-engagement/invoice-exception/",
+    source: "examples/invoice-exception/engagement/README.md",
+    navTitle: "Complete worked engagement",
+    title: "Worked FDE Engagement: When the Sold Brief Cannot Ship",
+    description:
+      "Follow one synthetic invoice engagement from field contradiction and reframe through economics, evaluation, adoption, handoff, and a review-only decision.",
+  },
+  {
     route: "/fde-operating-model/",
     source: "library/10-fde-and-production-agent-synthesis.md",
     navTitle: "FDE operating model",
@@ -113,7 +123,7 @@ export const pages = [
   {
     route: "/ai-value-engineering/",
     source: "library/14-twelve-factors-ai-value-engineering.md",
-    navTitle: "AI value engineering",
+    navTitle: "12 Factors",
     title: "The 12 Factors of AI Value Engineering",
     description:
       "A twelve-factor framework for turning AI activity into accepted outcomes, positive net value, controlled risk, and durable operation.",
@@ -121,10 +131,18 @@ export const pages = [
   {
     route: "/ai-value-engineering-scorecard/",
     source: "guide/ai-value-engineering-scorecard.md",
-    navTitle: "AI value scorecard",
+    navTitle: "12 Factors worksheet",
     title: "AI Value Engineering Scorecard: 12 Factors and 4 Hard Gates",
     description:
       "Assess one AI-enabled workflow across twelve value factors and four hard gates, then record a bounded pilot or lifecycle decision.",
+  },
+  {
+    route: "/funding-ai-for-accepted-outcomes/",
+    source: "guide/funding-ai-for-accepted-outcomes.md",
+    navTitle: "Executive funding guide",
+    title: "Funding AI Initiatives for Accepted Outcomes",
+    description:
+      "An executive guide to funding, reshaping, expanding, pausing, or stopping AI work through owned outcomes, evidence, economics, risk, and operations.",
   },
   {
     route: "/ai-data-readiness/",

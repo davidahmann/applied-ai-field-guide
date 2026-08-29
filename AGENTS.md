@@ -33,7 +33,7 @@ Do not load the entire repository by default. Use one skill or task route, then 
 | [`blueprints/`](blueprints/README.md) | Defines reference components, boundaries, states, failures, and release tests | Architecture starting points, not mandatory frameworks |
 | [`solutions/`](solutions/README.md) | Connects business-flow patterns, industry profiles, and horizontal foundations | Design accelerators, not deployable products or release evidence |
 | [`templates/`](templates/README.md) | Provides starter design artifacts | Starting material that must be adapted and completed for the target workflow |
-| [`examples/`](examples/invoice-exception/README.md) | Shows a controlled-write system and an end-to-end hybrid FDE walkthrough | In-memory teaching implementations and regression surfaces |
+| [`examples/`](examples/invoice-exception/README.md) | Shows a complete synthetic invoice engagement, its controlled-write system, and an end-to-end hybrid FDE walkthrough | Worked decision chains, in-memory teaching implementations, and regression surfaces—not customer proof |
 | [`patterns/`](patterns/pattern-catalog.json) | Records patterns, anti-patterns, controls, evidence, and review dates | Machine-readable decision catalog |
 | [`library/`](library/00-start-here.md) | Explains design decisions, implementation sequence, and failure modes | Human-readable guidance |
 | [`operations/`](operations/README.md) | Defines release, telemetry, service objectives, incident response, and change | Operating contract |

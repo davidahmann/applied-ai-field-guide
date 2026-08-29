@@ -2,6 +2,44 @@
 
 Copy the smallest set needed for one workflow, replace the example values with evidence from the target environment, and keep the artifacts together under version control. A valid template is a structural starting point, not production evidence.
 
+## Validate as the decision matures
+
+The repository uses one canonical schema per governed artifact. The `starter` profile checks only the decision-bearing fields needed now while retaining the canonical schema's types and closed-object rules; it does not create a second “lite” contract. The `complete` profile requires the full canonical structure and semantic invariants.
+
+```bash
+npm run validate:artifact -- ./path/to/workflow-start.json --profile starter --type workflow-charter
+npm run validate:artifact -- ./path/to/workflow-charter.json --profile complete
+```
+
+Supported progressive types are `workflow-charter`, `engagement-reframe`, and `data-context-manifest`. Use `--json` for machine-readable results. Run `npm test` before treating a repository change as complete. Passing artifact validation proves structure and declared invariants only; it does not supply missing field evidence, authority, acceptance, or release approval.
+
+For a first workflow conversation, start with these twelve decision-bearing fields. This is the same workflow-charter object you will extend later, so no conversion or parallel “lite” artifact is required.
+
+```json
+{
+  "workflow_id": "invoice_exception_resolution",
+  "owners": {
+    "operational": "accounts-payable",
+    "risk": "finance-controls",
+    "receiving_service_owner": "accounts-payable-service"
+  },
+  "functional_requirement": {
+    "user": "accounts-payable reviewer",
+    "decision": "select the policy-covered resolution",
+    "accepted_outcome": "approved resolution matches ledger readback"
+  },
+  "scope": {
+    "initial_segment": "domestic price-variance exceptions",
+    "out_of_scope": ["payment execution"]
+  },
+  "outcome": { "verifier": "finance controls manager" },
+  "stop_conditions": ["source authority cannot be verified"],
+  "decision": { "disposition": "discover" }
+}
+```
+
+Run it with `--profile starter`. As evidence matures, add fields from the canonical [workflow-charter template](workflow-charter.json) and switch to `--profile complete`. The same progressive path works for a contradicted [engagement reframe](engagement-reframe.json) and a decision-bound [data-context manifest](data-context-manifest.json); validation errors name the next missing decision field.
+
 ## Engagement and value
 
 | Template | Decision it supports |

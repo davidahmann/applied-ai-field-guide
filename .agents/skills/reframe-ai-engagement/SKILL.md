@@ -11,7 +11,7 @@ Turn a consequential field contradiction into a bounded decision that keeps deli
 
 1. Read [Field Engagement and Accountable Reframing](../../../playbooks/00-field-engagement-and-reframing.md) and the [engagement-reframe schema](../../../schemas/engagement-reframe.schema.json).
 2. Use the [engagement-reframe record](../../../templates/engagement-reframe.json), [field-observation log](../../../templates/field-observation-log.md), and [discovery pack](../../../templates/fde-discovery-pack.md).
-3. Read the [field-reframe example](../../../examples/field-reframe/README.md) only as a teaching case, never as customer evidence.
+3. Read the [worked invoice engagement](../../../examples/invoice-exception/engagement/README.md) only as a teaching case, never as customer evidence.
 4. Apply `FDE-001`, `FDE-002`, `FDE-005`, `CTX-001`, `CTX-004`, and `DEL-002` from the [control catalog](../../../controls/control-catalog.json).
 5. If the reframe may affect a recurring solution, resolve the [solution portfolio](../../../solutions/README.md) and read only the selected context after the disposition; it is not target evidence or authority.
 

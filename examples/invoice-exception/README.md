@@ -1,5 +1,7 @@
 # Invoice Exception Reference System
 
+Start with the [complete worked engagement](engagement/README.md) if you want to see why this boundary exists, what the economics would have to prove, and why the current evidence supports review-only shadow work rather than deployment. The runtime below is one slice of that engagement—not the whole customer outcome.
+
 ## Objective
 
 ```text
@@ -36,6 +38,10 @@ flowchart LR
 
 | Artifact | Path |
 | --- | --- |
+| End-to-end worked engagement | [`engagement/README.md`](engagement/README.md) |
+| Field evidence and reframe | [`engagement/field-evidence.md`](engagement/field-evidence.md) and [`engagement/engagement-reframe.json`](engagement/engagement-reframe.json) |
+| Value and mechanism decisions | [`engagement/value-case.md`](engagement/value-case.md) and [`engagement/intelligence-selection.md`](engagement/intelligence-selection.md) |
+| Adoption, handoff, and evidence review | [`engagement/adoption-and-handoff.md`](engagement/adoption-and-handoff.md) and [`engagement/service-review.md`](engagement/service-review.md) |
 | Workflow charter | [`workflow-charter.json`](workflow-charter.json) |
 | Agent design | [`agent-system.json`](agent-system.json) |
 | Ontology | [`ontology.json`](ontology.json) |
@@ -88,9 +94,9 @@ npm test
 
 ## Scope of the example
 
-This example demonstrates the controlled-write core: exact release admission, contracts, current policy and identity checks, approval binding, duplicate-safe execution, effect-unknown recovery, signed service evidence, source-of-truth verification, runtime budgets, adversarial cases, and privacy-minimized trace evidence.
+The worked engagement demonstrates how field evidence narrows a sold automatic-posting promise into a reviewer-controlled slice, then connects that decision to a value forecast, mechanism selection, controlled-write implementation, evaluation, adoption plan, handoff gap, and next-gate review. The runtime demonstrates exact release admission, contracts, current policy and identity checks, approval binding, duplicate-safe execution, effect-unknown recovery, signed service evidence, source-of-truth verification, runtime budgets, adversarial cases, and privacy-minimized trace evidence.
 
-Its workflow charter contains illustrative values. The solution release remains `review`, capability manifests remain `candidate`, signatures and registry records use non-production example identities, and evaluations run in an ordinary host process rather than an isolated production sandbox. It does not claim field observation, authenticated production provenance, customer adoption, realized business value, deployment approval, or a completed customer handoff; use the [FDE playbooks](../../playbooks/README.md) for those engagement and operating artifacts.
+Every field source, role, value, and decision is a synthetic fixture. The solution release remains `review`, capability manifests remain `candidate`, signatures and registry records use non-production example identities, and evaluations run in an ordinary host process rather than an isolated production sandbox. The example does not claim authenticated production provenance, representative customer observation, customer adoption, realized business value, deployment approval, or completed handoff. Its [evidence review](engagement/service-review.md) keeps those gaps open.
 
 ## Teaching-to-production boundary
 

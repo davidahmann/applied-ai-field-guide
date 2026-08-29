@@ -22,7 +22,7 @@ You don't need to learn the repository before using it. Pick the line that sound
 | **The team needs to prove a safe first slice** | Define one accepted outcome, its verifier, eligible work, exclusions, and maximum effect before selecting technology. Use [Discovery and Value](../playbooks/01-discovery-and-value.md), then [build one vertical slice](../playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice). | A testable boundary and a reason this slice is worth running |
 | **Something was built, but nobody will accept or own it** | Stop adding features. Check acceptance evidence, operating ownership, rollback, support, and transfer with [production readiness](../templates/production-service-readiness.md) and the [customer handoff](../templates/customer-enablement-handoff.md). | A named gap, owner, and decision to repair, constrain, transfer, pause, or retire |
 
-Not sure which one fits? Start with the first row.
+Start with the closest row.
 
 ## Before you design anything
 
@@ -41,6 +41,8 @@ Now write the conflict in plain English. For example:
 > **Decision needed:** whether to test that bounded review path for two weeks.
 
 That note is often more useful than another discovery workshop. It gives the right person something concrete to accept, reject, narrow, or defer. Until that happens, preserve the original brief and don't quietly rewrite the project around your preferred solution.
+
+This is a compressed field path, not the [canonical lifecycle](../README.md#from-idea-to-production).
 
 ```mermaid
 flowchart LR

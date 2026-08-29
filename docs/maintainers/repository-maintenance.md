@@ -30,6 +30,32 @@ This document keeps the guide coherent as research, controls, templates, example
 5. For experimental guidance, label it and state the local evidence required before adoption.
 6. Set or preserve a review date for changing platform behavior.
 
+## Consolidation and pruning
+
+Prefer an edit, merge, or clearer route over a new canonical artifact. Add a file only when it answers a distinct user decision, cannot be expressed as a section of an existing authority, and has one obvious owner and retirement path.
+
+For every content-bearing release:
+
+1. Record which artifact was added, merged, superseded, or removed and why the surviving route is clearer.
+2. Check whether the change duplicates a lifecycle, framework, template, audience page, worked case, or normative requirement.
+3. Keep one canonical lifecycle and one definitive home for each framework; label compressed field and capability views rather than letting them drift into alternatives.
+4. Merge partial examples when one coherent case can carry field, value, design, evaluation, adoption, handoff, and operating evidence more honestly.
+5. Remove or redirect stale navigation in README, AGENTS, llms, catalog, site configuration, tests, and generated routes in the same release.
+6. Preserve historical evidence in Git and the changelog; do not keep a live duplicate merely to preserve history.
+
+A growing file count is not evidence of coverage. The acceptance test is whether a first-time user can reach the next decision with fewer unowned choices.
+
+The v1.26.0 inventory is the consolidation ceiling for the densest public layers:
+
+| Layer | Ceiling | Rule |
+| --- | ---: | --- |
+| `library/*.md` | 18 | Merge or retire a chapter before adding one |
+| top-level `templates/*` | 36 | Extend an existing decision artifact before introducing another |
+| `blueprints/*.md` | 12 | Add a blueprint only after a distinct boundary cannot fit an existing design |
+| `guide/*.md` | 5 | Keep two main front doors; audience pages must answer a distinct decision |
+
+These are maximums, not coverage targets. Raising one requires an explicit maintainer decision in the changelog: what could not be merged, who owns the new artifact, which route it replaces or improves, and what would trigger retirement. Content-bearing releases must report the net file-count change for these layers; growth without a compensating merge or removal is a failed consolidation review.
+
 ## Contract change matrix
 
 | Changed artifact | Also inspect |

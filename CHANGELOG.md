@@ -4,6 +4,13 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.26.0] - 2026-08-29
+
+- Consolidate the standalone field reframe into one complete synthetic invoice engagement spanning source-linked field evidence, scoped disposition, falsifiable economics, mechanism selection, controlled-write implementation, evaluation, adoption, handoff, and a review-only next-gate decision.
+- Add a progressive artifact validator over the canonical workflow-charter, engagement-reframe, and data-context schemas, with starter and complete profiles, closed-object checks, semantic invariants, CLI documentation, and negative regression coverage.
+- Cut the public router below 1,100 words and the complete Guide near 2,200 words, add concrete field-conversation language and worked adoption/economics scenes, establish one canonical lifecycle, and promote the executive funding route and 12 Factors identity.
+- Freeze the densest public layers at explicit consolidation ceilings so future additions require a merge, removal, or justified ceiling decision instead of silent accretion.
+
 ## [1.25.0] - 2026-08-28
 
 - Put five common Monday-morning situations ahead of repository taxonomy so a reader can route a broken brief, missing process knower, stakeholder conflict, unsafe slice, or stalled handoff directly into the existing method.
@@ -207,7 +214,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.25.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.26.0...HEAD
+[1.26.0]: https://github.com/davidahmann/fde-guide/compare/v1.25.0...v1.26.0
 [1.25.0]: https://github.com/davidahmann/fde-guide/compare/v1.24.0...v1.25.0
 [1.24.0]: https://github.com/davidahmann/fde-guide/compare/v1.23.0...v1.24.0
 [1.23.0]: https://github.com/davidahmann/fde-guide/compare/v1.22.0...v1.23.0
