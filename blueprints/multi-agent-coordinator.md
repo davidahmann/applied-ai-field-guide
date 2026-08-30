@@ -23,6 +23,8 @@ For every candidate topology:
 - Compare accepted outcome, safety, latency, full cost, review load, and failure isolation—not final-answer quality alone.
 - Rerun the comparison after changing the model, prompt, context policy, tool set, topology, or verifier, and retire coordination when it no longer wins.
 
+Do not use coordination to promote a creator-operated script into an operating service. Before agent-to-agent admission, each required route must already have durable state, current identity, schedulable execution, observable failure, cancellation, recovery, an accountable service owner, and a tested single-workflow fallback. An LLM-based handoff reviewer may be evaluated as a bounded scorer or proposal route; it is not authorization, deterministic merge policy, source-of-truth verification, or independent proof. Operational evidence precedes topology. [R26-83](../research/2026-08-26--agentic-operating-maturity-field-report.md#r26-83)
+
 Bridgewater's PAT presentation is a first-party field report of narrow analytical workers backed by codified methods, typed plans, system-managed execution, and specialized benchmarks. It corroborates specialization around real data, tool, and evaluation differences; it does not show that a crew is the default or that the reported topology transfers outside that workflow. Apply the same matched-budget admission and retirement test. [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76)
 
 ## Components

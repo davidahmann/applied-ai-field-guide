@@ -289,6 +289,24 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Bounded Warp evidence review](../research/2026-08-28--warp-self-improving-software-factories.md), production evaluation, controlled improvement, behavior monitoring, change management, and execution portability.
 - **Caution:** The article promotes Warp Factories. Its cloud-only, API-first, multi-model, multi-agent, scorer, and metric recommendations are product claims and design leads, not universal requirements or independent outcome evidence.
 
+<a id="s29"></a>
+## S29 — Mark Ajzenstadt: healthcare-claims context and evaluation
+
+- **Evidence:** [Full first-party practitioner post](https://x.com/mardehaym/status/2089648072217243780), published 2026-08-18 and reviewed 2026-08-30
+- **Author:** Mark Ajzenstadt, `@mardehaym`
+- **Contribution:** The post describes data mapping before model work, versioned decision-specific enrichment, removal of patient data before model invocation, strict output schemas, deterministic allowlist decisions, narrow workflow agents, and replay when providers or payer rules change.
+- **Use in this library:** [Qualified field-report review](../research/2026-08-18--healthcare-claims-context-and-evaluation.md), data-context contracts, model-boundary privacy, evaluation reporting, and change management.
+- **Caution:** The engagement, privacy, topology, timing, provider-portability, 34-variable, and 59-of-60 claims are self-reported and not independently inspectable. They are not portable targets or production evidence for another system.
+
+<a id="s30"></a>
+## S30 — Mark Ajzenstadt: agentic operating maturity
+
+- **Evidence:** [Full first-party practitioner post](https://x.com/mardehaym/status/2092516152274554891), published 2026-08-26 and reviewed 2026-08-30
+- **Author:** Mark Ajzenstadt, `@mardehaym`
+- **Contribution:** The post argues that governed context, evaluation discipline, durable execution, and lifecycle management should precede agent-to-agent orchestration and highly automated workflows.
+- **Use in this library:** [Qualified operating-maturity review](../research/2026-08-26--agentic-operating-maturity-field-report.md), enterprise operation, capability lifecycle, and multi-agent admission.
+- **Caution:** The seven-step ladder, knowledge-graph and gateway design, LLM handoff judge, tool-count trigger, 90-day retirement rule, and model-commoditization claim are practitioner heuristics, not portable requirements or independently validated thresholds.
+
 ## Cross-source convergence
 
 The most repeated ideas are:
@@ -315,3 +333,5 @@ The most repeated ideas are:
 20. Closed-loop improvement needs an exact configuration baseline, governed scorers, matched comparisons, and separate proposal, evaluation, approval, deployment, and rollback authority.
 21. Upstream model improvements require downstream contract, calibration, compatibility, and replay evidence before release.
 22. Delegated authority remains verifiable only when caller, workload, logical-agent, recipient, scope, tenant, expiry, and policy lineage survive every hop.
+23. Model context should be compiled as a versioned decision-scoped projection, and privacy should be tested on the final outbound payload across every supported route.
+24. Durable, governed single-workflow operation should precede agent-to-agent coordination; topology is not a maturity measure.

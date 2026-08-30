@@ -62,6 +62,10 @@ Use explicit thresholds, evidence, and fallbacks. Unknown critical quality means
 
 Parsing, OCR, normalization, deduplication, entity resolution, redaction, chunking, indexing, joins, feature engineering, and aggregation are production components. Version them. Test them. Record input revisions, implementation versions, output digests, validation, reversibility, and lineage. Preserve the raw source and make derived relationships explainable.
 
+When a model route is selected, compile the permitted facts for one bounded decision in trusted software. Bind the compiled context packet to its workflow and segment, allowed model-visible fields, source and policy revisions, preparation versions, freshness, sensitivity, provenance, digest, and compatible routes. This is a runtime projection of the existing data-context manifest and behavior bundle, not another manifest or source of authority. Missing evidence stays missing; the model does not get a broader search path to compensate.
+
+Test privacy after final prompt assembly and middleware, on the serialized request that would leave the boundary. Exercise primary, retry, fallback, and provider-failover routes plus error payloads, logs, traces, caches, and retained evaluation material. An earlier redaction step does not prove that a later join, prompt builder, or logger did not reintroduce a prohibited field.
+
 ### 5. Establish label and reference authority
 
 When evaluation, classical ML, or learned ranking needs labels, bind each definition to a source revision, observation window, owner, independent approver, agreement measure, disagreement sample, adjudication path, classification, and review date. Keep protected answers out of runtime context. An expert opinion without scope and provenance is not ground truth.
@@ -81,7 +85,9 @@ Do not fund an agent to compensate for an unresolved source contract.
 
 ### 7. Bind data to evaluation and release
 
-The evaluated release must identify the exact data-context manifest, source and schema revisions, preparation versions, index or feature revisions, label/evaluation authority, and known limitations. Cases should cover weak segments, missing/stale/conflicting/corrected data, permission changes, and transformation failures—not only happy-path records.
+The evaluated release must identify the exact data-context manifest, source and schema revisions, preparation versions, index or feature revisions, label/evaluation authority, and known limitations. Cases should cover weak segments, missing/stale/conflicting/corrected data, permission changes, transformation failures, and privacy failures on every supported route—not only happy-path records.
+
+Do not summarize this evidence with a pass count alone. Retain the tested claim, eligible population, case provenance, coverage, failed cases and severity, label authority, acceptance threshold, environment and route versions, uncertainty, limitations, and release disposition. One high-severity failure can block promotion even when the aggregate score is high.
 
 ### 8. Operate the data product
 
@@ -99,6 +105,6 @@ Compare source repair, governed derived views, constrained population, human col
 
 ## Evidence and limits
 
-This chapter applies source ownership and readiness from [R26-14](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-14), retrieval sufficiency from [R26-16](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-16), evaluation authority from [R26-47](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-47) and [R26-53](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-53), lineage vocabulary from [R26-67](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-67), and bounded institutional-method evidence from [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76). These sources support the engineering boundaries, not universal thresholds. Target owners must set and verify thresholds for their workflow.
+This chapter applies source ownership and readiness from [R26-14](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-14), retrieval sufficiency from [R26-16](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-16), evaluation authority from [R26-47](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-47) and [R26-53](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-53), lineage vocabulary from [R26-67](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-67), bounded institutional-method evidence from [R26-76](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76), and the qualified compiled-context field pattern in [R26-82](../research/2026-08-18--healthcare-claims-context-and-evaluation.md#r26-82). These sources support the engineering boundaries, not universal thresholds, privacy claims, topology, or performance results. Target owners must set and verify thresholds for their workflow.
 
 Controls: `CTX-001`, `CTX-006`, `CTX-007`, `CTX-008`, `CTX-009`, `EVA-001`, `EVA-006`, `OPS-001`, `OPS-002`, `OPS-005`, `VAL-001`, `VAL-002`.

@@ -10,10 +10,10 @@ Controls: `DEL-001`, `DEL-002`, `EVA-006`, `OPS-007`.
 | --- | --- | --- |
 | Documentation only | Explanation with no contract, code, policy, prompt, fixture, or procedure effect | Link, claim, and navigation validation |
 | Internal refactor | Behavior-preserving code or infrastructure change | Contract and regression suite; shadow if runtime path changes |
-| Data and context | Source semantics, keys, schema, access, quality, preparation, parser/OCR, join, index, feature, label, population, output, correction | Manifest diff, affected-segment evaluation, lineage verification, canary, replay, rebaseline or rollback |
-| Behavioral | Model, prompt, tool description, route, context, memory, guardrail, budget | Per-model/route eval, soak or canary, rollback |
+| Data and context | Source semantics, keys, schema, access, quality, preparation, parser/OCR, join, index, feature, enrichment, redaction, compiled context packet, label, population, output, correction | Manifest diff, affected-segment evaluation, lineage verification, canary, replay, rebaseline or rollback |
+| Behavioral | Model, provider, prompt, tool description, route, context, memory, guardrail, budget | Per-model/route eval, soak or canary, rollback |
 | Capability | New/changed tool, skill, MCP server, browser/code access, egress, credential | Threat update, contract/authorization/security tests, sandbox, scoped canary |
-| Domain/policy | Source, schema, ontology, business rule, policy, approval | Data reconciliation, migration, representative replay, owner approval |
+| Domain/policy | Source, schema, ontology, business or payer rule, policy, approval | Data reconciliation, migration, representative replay, owner approval |
 | State/runtime | Workflow state, checkpoint, concurrency, retry, queue, sandbox, dependency | Compatibility, recovery, load, cancellation, rollback rehearsal |
 | Evaluator | Fixture, grader, rubric, label, hidden test, threshold | Independent review, negative controls, calibration, baseline rerun |
 | User/operating model | Review surface, escalation, training, support, SLO, autonomy | Operator acceptance, adoption capacity, runbook and ownership review |
@@ -63,6 +63,8 @@ Merge, deploy, healthy runtime, accepted outcome, and realized value are differe
 Apply these additional rules when a model or agent route changes. Other selected mechanisms still require route-specific regression, effect, safety, cost, and rollback evidence under the same promotion sequence.
 
 - Run the suite on every affected model and route; aggregate pass rate cannot hide one failing route.
+- Rebuild the affected compiled context packet and replay its consequential slices when source semantics, preparation, enrichment, redaction, domain rules, or policy revisions change.
+- Inspect the final serialized request for every supported primary, retry, fallback, and provider-failover path; a provider or route change cannot promote if prohibited fields appear in requests, errors, logs, traces, or caches.
 - Compare against the current production candidate using identical worlds and enforced resources.
 - State the causal claim. Hold the model and representative workload constant when isolating context, caching, batching, tool-loading, or harness effects; treat model, workload-mix, adoption, and price changes as separate drivers.
 - Select model and route candidates on the workload-specific Pareto frontier across accepted-outcome quality, reliability, latency, reviewer effect, and full cost—not token price alone.
@@ -71,6 +73,7 @@ Apply these additional rules when a model or agent route changes. Other selected
 - When an upstream component feeds another model, optimizer, policy, workflow, or customer-visible decision, bind its direct contract and the downstream product contract. Run downstream replay and a bounded experiment where justified; local metric improvement alone cannot promote the change.
 - Version and bind material aggregation, feature, calibration, and post-processing components. Test calibration and drift by consequential slice and declare correction, rollback, and compatibility behavior.
 - Preserve a holdout not used to tune the change.
+- Retain every failed case, its source and label authority, severity, coverage denominator, threshold impact, and disposition. An aggregate pass count cannot overrule a blocking slice.
 - Record prompt/instruction/tool-description diffs or immutable digests.
 - Set an expiry for model-specific workarounds and retest them after model upgrades.
 - Never lower a threshold, weaken a fixture, or alter a grader solely to make the candidate pass.
@@ -78,6 +81,8 @@ Apply these additional rules when a model or agent route changes. Other selected
 When a configuration benchmark compares complete routes, freeze the representative tasks, world and policy revisions, resource ceilings, scorer versions, trial rules, and acceptance criteria across the current and candidate release graphs. Retain per-case outcomes, failures, exclusions, uncertainty, safety slices, scorer cost, and an unchanged holdout. A synthesized recommendation or agent-authored diff remains a candidate; it cannot approve, merge, deploy, or alter the evaluator and release evidence that judges it. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
 
 Anthropic's April 2026 postmortem is direct evidence that model defaults, context handling, and a small prompt change can produce route-specific regressions. Uber's traffic-forecasting report separately illustrates why an improved upstream metric can still degrade a downstream product decision when calibration and component contracts drift. These cases motivate controlled comparison and downstream replay; their implementation details and reported effects are not guide defaults. [R26-51](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-51) [R26-78](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-78)
+
+The healthcare-claims field report adds a concrete but self-reported example of versioned enrichment, boundary redaction, deterministic output adjudication, and replay after provider or domain-rule changes. It does not validate the claimed privacy, topology, timing, or pass rate; use the operating pattern only through the Guide's existing release evidence. [R26-82](../research/2026-08-18--healthcare-claims-context-and-evaluation.md#r26-82)
 
 ## Evaluator-change rules
 

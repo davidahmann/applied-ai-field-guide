@@ -40,6 +40,8 @@ The result is not a generic data inventory. It is a decision-bound contract for 
 
 Unattended or shared execution needs durable state, schedulable availability, current identity, controlled team access, observable runs, cancellation, recovery, and owned operation. Those are requirements; “cloud” is not. Public cloud, private cloud, VPC, on-premises, hybrid, restricted-network, and local development paths may satisfy different parts of the target contract. Select the environment from data classification, residency, network, dependency, availability, support, cost, recovery, and customer-ownership evidence.
 
+A developer laptop is a valid development surface, not evidence of an unattended service. If a workflow must continue without its creator logged in, prove restart-safe state, scheduled or event-driven admission, workload identity, team-owned configuration, support, recovery, and retirement in the target environment. Do not call a system mature because it is “headless,” multi-agent, or highly automated; maturity comes from accepted outcomes and exercised operating evidence. [R26-83](../research/2026-08-26--agentic-operating-maturity-field-report.md#r26-83)
+
 A typed API is often the right automation surface, but API-first is not an authority model. The same trusted software boundary should support appropriate API, CLI, MCP, event, and user-interface projections while enforcing identity, tenancy, purpose, authorization, idempotency, limits, audit, cancellation, and source-of-truth readback. Do not move a workload to the cloud or add an API merely to qualify it as a software factory. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
 
 ## Treat legacy integration as product behavior

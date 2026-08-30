@@ -51,6 +51,12 @@ The registry MUST fail closed when signature, publisher, policy, or provenance v
 6. Roll back, replace, or retire each affected release.
 7. Add the failure to the capability suite before re-admission.
 
+## Lifecycle review and retirement
+
+Review use, accepted-outcome contribution, current owner, authority, credentials, dependency support, evaluation status, incidents, cost, and every referencing release by an owned due date. Inventory size, elapsed time, or inactivity may trigger this review; they are not universal retirement thresholds. A rarely invoked emergency capability can remain necessary, while a frequently invoked route can still require immediate disablement.
+
+Retire or constrain a capability when its owner is missing, authority or credentials cannot be kept current, dependencies are unsupported, evaluation or safety falls below the target's approved threshold, value no longer justifies its risk and cost, or every dependent release has migrated. Inactive capabilities MUST NOT retain unowned active credentials or silently remain eligible for new releases. [R26-83](../research/2026-08-26--agentic-operating-maturity-field-report.md#r26-83)
+
 ## Negative release tests
 
 - Spoofed publisher or unsigned artifact is rejected.

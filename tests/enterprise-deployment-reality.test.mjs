@@ -99,3 +99,34 @@ test("teaching examples state the exact production responsibilities they do not 
     assert.match(body, /production service readiness/i);
   }
 });
+
+test("agentic operating maturity is evidence-led rather than topology-led", async () => {
+  const [research, index, sourceIndex, chapter, capabilities, coordinator, catalogText] = await Promise.all([
+    readFile(path.join(root, "research", "2026-08-26--agentic-operating-maturity-field-report.md"), "utf8"),
+    readFile(path.join(root, "research", "README.md"), "utf8"),
+    readFile(path.join(root, "library", "05-source-index.md"), "utf8"),
+    readFile(chapterPath, "utf8"),
+    readFile(path.join(root, "operations", "capability-supply-chain.md"), "utf8"),
+    readFile(path.join(root, "blueprints", "multi-agent-coordinator.md"), "utf8"),
+    readFile(path.join(root, "catalog.json"), "utf8"),
+  ]);
+
+  assert.match(research, /<a id="r26-83"><\/a>/);
+  assert.match(research, /https:\/\/x\.com\/mardehaym\/status\/2092516152274554891/);
+  for (const rejectedDefault of ["seven steps", "knowledge graphs", "90-day", "LLM handoff", "not portable"]) {
+    assert.match(research, new RegExp(rejectedDefault, "i"));
+  }
+  assert.match(index, /2026-08-26--agentic-operating-maturity-field-report\.md/);
+  assert.match(sourceIndex, /## S30 — Mark Ajzenstadt/);
+  assert.match(chapter, /developer laptop is a valid development surface, not evidence of an unattended service/i);
+  assert.match(chapter, /maturity comes from accepted outcomes and exercised operating evidence/i);
+  assert.match(capabilities, /inactivity may trigger this review; they are not universal retirement thresholds/i);
+  assert.match(capabilities, /MUST NOT retain unowned active credentials/);
+  assert.match(coordinator, /Operational evidence precedes topology/);
+  assert.match(coordinator, /not authorization, deterministic merge policy, source-of-truth verification, or independent proof/i);
+
+  const artifact = JSON.parse(catalogText).artifacts.find(({ path: artifactPath }) => (
+    artifactPath === "research/2026-08-26--agentic-operating-maturity-field-report.md"
+  ));
+  assert.equal(artifact?.id, "evidence.agentic-operating-maturity");
+});
