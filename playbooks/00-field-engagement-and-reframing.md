@@ -20,6 +20,12 @@ inherit the story
 
 Repeat the loop when new evidence invalidates the current boundary. Do not wait for design or build work to finish before surfacing a material contradiction.
 
+## Keep one engagement boundary
+
+Before capturing field evidence, bind the working session to one `engagement_id`, customer or tenant, workflow, environment, evidence store, and retention policy. Every interaction, claim, decision, and derived readout carries that boundary. If the engagement is missing or ambiguous, stop and ask; never search across customer folders or blend two engagements because their terminology looks similar.
+
+The storage mechanism is target-specific. It may be a customer-owned repository, governed case workspace, document system, or another approved store. A convenient local folder is not a portable data-governance rule. Record the actual owner, access policy, classification, revision, and deletion or retention behavior instead.
+
 ## 1. Preserve the inherited story
 
 Record the brief exactly enough to test it:
@@ -68,6 +74,17 @@ Use the [field-observation log](../templates/field-observation-log.md). Observe 
 - whether the case proves occurrence only or is representative of a wider population.
 
 Observation proves what occurred in its recorded scope. It does not prove frequency, permission, policy, or authorization.
+
+### Close every field interaction
+
+Do this after a meeting, shadowing session, incident review, or artifact handoff—while the source is still fresh:
+
+1. **Stage the source record.** Assign an interaction ID; record the engagement boundary, date, participants and roles, source references and revisions, classification, access basis, and any redaction. Keep the source separate from derived claims.
+2. **Propose the changes.** Draft the claims, decisions, risks, commitments, conflicts, and next moves that the interaction appears to support. Cite exact passages and state what each source cannot establish.
+3. **Preview and confirm.** Show the proposed additions and affected records before appending them. A named reviewer confirms, corrects, rejects, or defers each consequential item; silence is not confirmation.
+4. **Append a receipt.** Preserve the source reference, proposal, reviewer disposition, timestamp, and resulting record IDs or digests. Do not rewrite prior entries. A rejected proposal remains visible with its disposition.
+
+A capture receipt proves that an interaction was recorded and reviewed. It does not prove the claim, grant authority, or accept a reframe. Use the confirmed receipts to derive a current sponsor readout; do not maintain a separate status narrative that can drift from the evidence record. This adapts a useful interaction pattern from the independently reviewed FDEOps repository while retaining the Guide's existing evidence and authority contracts. [R26-84](../research/2026-08-30--fde-interaction-workflow-ergonomics.md#r26-84)
 
 ## 4. Compare claims without collapsing authority
 

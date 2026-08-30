@@ -273,6 +273,7 @@ test("site output is self-contained and free of retired or local references", as
     "assets/site.js",
     "assets/search-index.json",
     "assets/fde-guide-banner.svg",
+    "assets/fde-guide-social.svg",
     "assets/fde-guide-social.png",
     "assets/ai-value-engineering-scorecard.svg",
     "assets/ai-value-engineering-scorecard.png",
@@ -294,4 +295,32 @@ test("site output is self-contained and free of retired or local references", as
   assert.doesNotMatch(combined, /\/Users\/|file:\/\//);
   assert.doesNotMatch(combined, placeholderPattern);
   assert.doesNotMatch(combined, /SEO|keyword stuffing|GEO|AEO/i);
+});
+
+test("the social preview keeps an editable source and a GitHub-compatible deterministic export", async () => {
+  const [source, raster, maintenance] = await Promise.all([
+    readFile(path.join(root, "assets", "fde-guide-social.svg"), "utf8"),
+    readFile(path.join(root, "assets", "fde-guide-social.png")),
+    readFile(path.join(root, "docs", "maintainers", "repository-maintenance.md"), "utf8"),
+  ]);
+
+  assert.match(source, /width="1280" height="640" viewBox="0 0 1280 640"/);
+  for (const phrase of [
+    "OPEN SOURCE · FDE FIELD GUIDE",
+    "The work before",
+    "the architecture.",
+    "Messy brief",
+    "Field evidence",
+    "Authorized change",
+    "Accepted system",
+    "github.com/davidahmann/fde-guide",
+  ]) assert.ok(source.includes(phrase), phrase);
+  assert.doesNotMatch(source, /(?:href|src)=["']https?:\/\/|@import|<image\b/i);
+
+  assert.deepEqual([...raster.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.equal(raster.readUInt32BE(16), 1280);
+  assert.equal(raster.readUInt32BE(20), 640);
+  assert.ok(raster.byteLength < 1_000_000, `social preview is ${raster.byteLength} bytes`);
+  assert.match(maintenance, /Settings → Social preview → Edit/);
+  assert.match(maintenance, /committed asset alone does not change GitHub's repository social-preview setting/i);
 });

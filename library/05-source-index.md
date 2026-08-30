@@ -307,6 +307,15 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Qualified operating-maturity review](../research/2026-08-26--agentic-operating-maturity-field-report.md), enterprise operation, capability lifecycle, and multi-agent admission.
 - **Caution:** The seven-step ladder, knowledge-graph and gateway design, LLM handoff judge, tool-count trigger, 90-day retirement rule, and model-commoditization claim are practitioner heuristics, not portable requirements or independently validated thresholds.
 
+<a id="s31"></a>
+## S31 — suboss87: FDEOps
+
+- **Evidence:** [Direct open-source implementation](https://github.com/suboss87/FDEOps), repository, usage documentation, schema, skill reference, and routing fixtures reviewed 2026-08-30
+- **Author/publisher:** suboss87 and repository contributors
+- **Contribution:** The project demonstrates a practical post-interaction loop that separates raw input from proposed structured changes, previews changes before confirmation, appends dated records, isolates one engagement workspace, and exposes situation-first task cues and record-derived receipts.
+- **Use in this library:** [Bounded interaction-workflow review](../research/2026-08-30--fde-interaction-workflow-ergonomics.md), field interaction capture, engagement isolation, task-interface routing, and sponsor readouts.
+- **Caution:** The repository does not independently prove customer outcomes or task-routing quality. Its thirty-method taxonomy, local client folder, trust score, staleness heuristic, and CLI/dashboard surface are product choices, not Guide requirements. No source code or method text is copied.
+
 ## Cross-source convergence
 
 The most repeated ideas are:

@@ -4,6 +4,14 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.29.0] - 2026-08-30
+
+- Close every consequential field interaction through one engagement-bound stage, propose, preview, confirm, and append loop that preserves raw sources, rejected proposals, review receipts, chronology, and target-specific storage policy.
+- Add receipt-derived sponsor readouts, clearer situation-first skill cues, and a ten-minute route through the existing complete invoice engagement without creating another lifecycle, artifact system, router, CLI, dashboard, or worked case.
+- Record a bounded, attributed review of FDEOps and adopt only its useful interaction ergonomics while rejecting its thirty-method taxonomy, local storage convention, trust scores, and unverified outcome claims as Guide defaults.
+- Replace the social preview with an editable 1280 × 640 SVG source and a visually verified 8-bit PNG export for GitHub and public-site metadata, with deterministic dimension, dependency, and file-size checks plus maintainer upload guidance.
+- Keep the net file-count change at zero across `guide/`, `library/`, `templates/`, and `blueprints/`; the only new content source is the dated research record, and the only new design source is the social-preview SVG.
+
 ## [1.28.0] - 2026-08-30
 
 - Turn adoption into an observable funnel from eligible work through exposure, completion, independent acceptance, verified business effect, and sustained value, with guidance to repair the first broken transition instead of assuming a training problem.

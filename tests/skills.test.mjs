@@ -183,6 +183,34 @@ test("qualification, engagement reframing, and value engineering have distinct f
   assert.match(quotedYamlValue(reframeUi, "default_prompt"), /scoped human disposition/i);
 });
 
+test("skill interfaces expose situation-first routing cases without claiming host behavior", async () => {
+  const cases = [
+    { skill: "qualify-ai-workflow", prompt: "We have a candidate workflow but have not observed it or named the verifier.", terms: ["workflow", "before value modeling"] },
+    { skill: "reframe-ai-engagement", prompt: "The brief is wrong; the sponsor and operator disagree about what may ship.", terms: ["brief is wrong", "sponsor and operator disagree"] },
+    { skill: "engineer-ai-value", prompt: "The workflow is bounded. Is it worth funding once adoption and full cost are counted?", terms: ["bounded", "cost"] },
+    { skill: "select-ai-mechanism", prompt: "Should this decision use rules, retrieval, ML, an agent, or a person?", terms: ["smallest sufficient mechanism", "human review"] },
+    { skill: "design-production-ai-system", prompt: "The workflow and mechanism are approved; design the production system.", terms: ["production ai-enabled system", "architecture"] },
+    { skill: "build-ai-evaluation", prompt: "Build realistic cases and graders for this production AI release.", terms: ["evaluations", "graders"] },
+    { skill: "secure-ai-action-boundary", prompt: "Secure this tool call with identity, authorization, idempotency, and readback.", terms: ["authorization", "readback"] },
+    { skill: "review-ai-production-readiness", prompt: "This exact release needs a production readiness decision and rollback conditions.", terms: ["release", "rollback"] },
+    { skill: "operate-ai-service", prompt: "The service is live; review SLOs, incidents, cost, and whether to retire it.", terms: ["slo", "retirement"] },
+    { skill: "transfer-ai-service", prompt: "Prove the receiving team can operate, recover, change, and retire the service.", terms: ["operating team", "retire"] },
+    { skill: "productize-field-learning", prompt: "This failure keeps recurring; decide what is reusable without leaking customer context.", terms: ["recurring", "without leaking customer context"] },
+  ];
+
+  assert.deepEqual(new Set(cases.map(({ skill }) => skill)), new Set(expectedSkills.keys()));
+  for (const { skill, prompt, terms } of cases) {
+    assert.ok(prompt.length >= 50, `${skill} prompt is not representative`);
+    const body = await readFile(path.join(skillsRoot, skill, "SKILL.md"), "utf8");
+    const description = parseFrontmatter(body).metadata.description.toLowerCase();
+    for (const term of terms) assert.ok(description.includes(term), `${skill} description omits ${term}`);
+  }
+
+  const readme = await readFile(path.join(root, "README.md"), "utf8");
+  assert.match(readme, /Describe the situation; don't translate it into repository taxonomy first/);
+  assert.match(readme, /These cues don't prove host routing/);
+});
+
 test("qualification, value engineering, and production review use bounded decision vocabularies", async () => {
   const [qualification, value, review, charterSchemaText, releaseSchemaText] = await Promise.all([
     readFile(path.join(skillsRoot, "qualify-ai-workflow", "SKILL.md"), "utf8"),

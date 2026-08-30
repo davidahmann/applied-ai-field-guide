@@ -2,6 +2,26 @@
 
 This synthetic engagement connects the field work, value decision, system boundary, evaluation, adoption plan, handoff, and service review for the invoice-exception reference. Read it in order. Each artifact states what the fixture demonstrates and what a customer would still need to prove.
 
+## Ten-minute walkthrough
+
+You do not need to read the repository first. Use this as a short decision trail:
+
+| Minute | Open | Look for |
+| ---: | --- | --- |
+| 0–2 | [Field evidence](field-evidence.md) | The sold promise, one observed case, the policy conflict, and the role allowed to decide |
+| 2–4 | [Engagement reframe](engagement-reframe.json) | Preserved history, a narrower proposal, the human disposition, and unchanged downstream state |
+| 4–6 | [Value case](value-case.md) and [intelligence selection](intelligence-selection.md) | What must be true economically and why the fixture keeps deterministic policy plus human approval |
+| 6–8 | [Reference system](../README.md) and [evaluation report](../evaluation-report.json) | Staging, authorization, effect receipt, readback, and the exact limits of five passing cases |
+| 8–10 | [Adoption and handoff](adoption-and-handoff.md) and [evidence review](service-review.md) | Why the next decision is review-only, which exercises are missing, and the next field move |
+
+Validate the governed reframe while you read:
+
+```bash
+npm run validate:artifact -- examples/invoice-exception/engagement/engagement-reframe.json --profile complete
+```
+
+At ten minutes, you should be able to explain why the original brief cannot ship, which bounded path may continue, what the implementation actually proves, and what evidence is still missing. The packet is synthetic teaching evidence, not a customer claim.
+
 ## The situation
 
 The sold brief promised automatic resolution and posting of eligible invoice exceptions. One observed case, the current controls policy, and the current-build behavior all showed a different boundary: a designated accounts-payable reviewer must approve a staged correction before it is posted.

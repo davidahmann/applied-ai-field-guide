@@ -91,6 +91,7 @@ async function rewriteLocalTarget(target, currentPage, { image = false } = {}) {
 
   const publicAssets = new Set([
     "assets/fde-guide-banner.svg",
+    "assets/fde-guide-social.svg",
     "assets/ai-value-engineering-scorecard.svg",
     "assets/ai-value-engineering-scorecard.png",
   ]);
@@ -381,6 +382,7 @@ async function build() {
   await copyFile(path.join(root, "site/assets/site.js"), path.join(outputRoot, "assets/site.js"));
   await copyFile(path.join(root, "site/assets/favicon.svg"), path.join(outputRoot, "assets/favicon.svg"));
   await copyFile(path.join(root, "assets/fde-guide-banner.svg"), path.join(outputRoot, "assets/fde-guide-banner.svg"));
+  await copyFile(path.join(root, "assets/fde-guide-social.svg"), path.join(outputRoot, "assets/fde-guide-social.svg"));
   await copyFile(path.join(root, "assets/fde-guide-social.png"), path.join(outputRoot, "assets/fde-guide-social.png"));
   await copyFile(path.join(root, "assets/ai-value-engineering-scorecard.svg"), path.join(outputRoot, "assets/ai-value-engineering-scorecard.svg"));
   await copyFile(path.join(root, "assets/ai-value-engineering-scorecard.png"), path.join(outputRoot, "assets/ai-value-engineering-scorecard.png"));

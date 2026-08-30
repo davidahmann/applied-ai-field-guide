@@ -1,4 +1,4 @@
 interface:
   display_name: "Reframe AI Engagement"
   short_description: "Resolve field evidence that contradicts a sold brief"
-  default_prompt: "Use $reframe-ai-engagement to preserve this inherited brief, reconcile the field evidence, and obtain a scoped human disposition without rewriting history."
+  default_prompt: "Use $reframe-ai-engagement to capture this field interaction, preserve the inherited brief, reconcile the evidence, and obtain a scoped human disposition without rewriting history."

@@ -110,6 +110,17 @@ npx skills add davidahmann/fde-guide
 
 Review and pin the source before production use. Skills grant no credentials, tools, authorization, approval, or evidence. Give an agent [AGENTS.md](AGENTS.md) for the repository contract.
 
+Describe the situation; don't translate it into repository taxonomy first:
+
+| Say this | Intended route |
+| --- | --- |
+| “The brief is wrong, and sponsor and operator disagree.” | [`$reframe-ai-engagement`](.agents/skills/reframe-ai-engagement/SKILL.md) |
+| “We bounded the workflow. Is it worth funding?” | [`$engineer-ai-value`](.agents/skills/engineer-ai-value/SKILL.md) |
+| “This exact release is ready for a production decision.” | [`$review-ai-production-readiness`](.agents/skills/review-ai-production-readiness/SKILL.md) |
+| “The service is live; decide what to improve, constrain, or retire.” | [`$operate-ai-service`](.agents/skills/operate-ai-service/SKILL.md) |
+
+These cues don't prove host routing. Confirm the selected skill and its boundary before consequential work.
+
 ## Scope and contribution
 
 The control catalog is engineering policy normative within this project; it is not an external compliance standard. Target organizations retain their own legal, security, architecture, risk, and release authority.
