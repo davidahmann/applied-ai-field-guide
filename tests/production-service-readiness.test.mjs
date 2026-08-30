@@ -32,6 +32,7 @@ test("production readiness covers the minimum service boundary and resolves ever
     "Rate, cost, and capacity limits",
     "Telemetry, alerts, and service objectives",
     "Failure, degraded operation, and rollback",
+    "Operator workflow, adoption, and review capacity",
     "Scaling assumptions and limits",
     "Service ownership and evidence lifecycle",
   ]) assert.match(body, new RegExp(`\\| ${dimension.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&")} \\|`));
@@ -50,6 +51,8 @@ test("infrastructure mechanisms remain conditional on the declared workflow", as
   assert.match(body, /Synchronous bounded work may be `not applicable` with evidence/i);
   assert.match(body, /A completed request, file load, or batch proves transport only/i);
   assert.match(body, /Enterprise Integration and Scale Reality/);
+  assert.match(body, /eligible, exposed, completed, independently accepted, and business-effect events/i);
+  assert.match(body, /Documentation, a demo, or delivery-team-led usage remains `designed`/i);
 });
 
 test("the readiness packet is cataloged and reachable from human and agent routes", async () => {

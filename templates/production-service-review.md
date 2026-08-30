@@ -59,15 +59,19 @@ Include unauthorized, prohibited, duplicate, effect-unknown, and readback-mismat
 
 ## Adoption and human review
 
-| Measure | Current | Trend | Slice | Capacity or risk decision |
-| --- | ---: | --- | --- | --- |
-| Eligible use | — | — | — | — |
-| Completion | — | — | — | — |
-| Override/edit/reject | — | — | — | — |
-| Abandonment | — | — | — | — |
-| Approval acceptance and unsafe sample | — | — | — | — |
-| Reviewer wait and workload | — | — | — | — |
-| Support contacts and training gaps | — | — | — | — |
+| Funnel or guardrail measure | Current | Trend | Slice | Observed cause from representative cases | Capacity, product, or risk decision |
+| --- | ---: | --- | --- | --- | --- |
+| Eligible workflow opportunities | — | — | — | — | — |
+| Exposed in the usable surface | — | — | — | — | — |
+| Completed or explicitly dispositioned | — | — | — | — | — |
+| Independently accepted | — | — | — | — | — |
+| Verified business effect | — | — | — | — | — |
+| Override/edit/reject and abandonment | — | — | — | — | — |
+| Approval acceptance and unsafe sample | — | — | — | — | — |
+| Reviewer wait and workload | — | — | — | — | — |
+| Support contacts and training gaps | — | — | — | — | — |
+
+Assign the first broken transition to an owning layer and dated response. Do not prescribe training until access, routing, integration, data quality, product friction, behavior quality, policy, and reviewer capacity have been checked.
 
 ## Evaluation and behavior
 

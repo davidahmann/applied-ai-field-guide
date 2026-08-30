@@ -43,6 +43,8 @@ For every content-bearing release:
 5. Remove or redirect stale navigation in README, AGENTS, llms, catalog, site configuration, tests, and generated routes in the same release.
 6. Preserve historical evidence in Git and the changelog; do not keep a live duplicate merely to preserve history.
 
+Keep one canonical end-to-end worked engagement unless a second case teaches a materially different lifecycle decision that cannot be expressed as a bounded vignette, exercise, or extension of an existing example. An implementation reference does not need a parallel engagement chain merely for symmetry. Deepen the existing chain before adding another.
+
 A growing file count is not evidence of coverage. The acceptance test is whether a first-time user can reach the next decision with fewer unowned choices.
 
 The v1.26.0 inventory is the consolidation ceiling for the densest public layers:

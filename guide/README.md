@@ -142,6 +142,8 @@ The first slice should cross the real interface and control boundaries without p
 
 Start adoption and handoff during the pilot. In the worked invoice case, a five-case fixture passes and the result is still handoff_blocked: the receiving team hasn't reproduced the adoption numbers, added an evaluation case, exercised rollback, handled an incident, or retired the service. Documents can't replace those exercises.
 
+Measure adoption as a path through eligible work: eligible -> exposed -> completed or dispositioned -> independently accepted -> verified business effect -> sustained net value. Diagnose the first weak transition from representative cases. Low exposure may point to access, routing, integration, or eligibility; low completion to product flow, timing, trust, training, or fallback; low acceptance to evidence, behavior, policy, or authority. Don't label every break “resistance,” and don't expand beyond reviewer or support capacity.
+
 Predeclare the pilot duration, evidence cutoff, and separate technical, operator, adoption, value, economics, and production-readiness gates. A good demo doesn't get to drift into production. Use the [delivery and adoption plan](../templates/delivery-and-adoption-plan.md), [production service readiness](../templates/production-service-readiness.md), and [customer handoff](../templates/customer-enablement-handoff.md).
 
 ## 9. Prove claims on representative work

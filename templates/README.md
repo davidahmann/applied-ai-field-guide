@@ -13,6 +13,20 @@ npm run validate:artifact -- ./path/to/workflow-charter.json --profile complete
 
 Supported progressive types are `workflow-charter`, `engagement-reframe`, and `data-context-manifest`. Use `--json` for machine-readable results. Run `npm test` before treating a repository change as complete. Passing artifact validation proves structure and declared invariants only; it does not supply missing field evidence, authority, acceptance, or release approval.
 
+### Why progressive profiles stop at JSON contracts
+
+Starter profiles apply only to closed, machine-readable contracts whose canonical JSON Schema can retain type and unknown-field rules while requiring a smaller decision-bearing subset. The Markdown delivery, readiness, and handoff templates are collaborative working records: their tables carry target evidence, exercises, dissent, owners, and narrative decisions that cannot be made true by structural validation. Converting them to JSON merely for symmetry would create worse human artifacts and another contract surface to maintain.
+
+Use their minimum viable sections progressively instead:
+
+| Decision | Start with | Add before the next gate |
+| --- | --- | --- |
+| Plan a pilot | Delivery contract, pilot graduation contract, adoption measurement contract, and adoption design | Funnel diagnosis, cohort sequence, capacity, artifact lineage, and prototype debt |
+| Assess rollout readiness | Assessment identity, status contract, applicable readiness rows, and blocking gaps | Target-system tests, operating evidence, rollout decision, and restoration evidence |
+| Start transfer | Ownership, pilot transfer plan, open capability gaps, and temporary support boundary | Receiving-team-led exercises, immutable artifact lineage, post-exit support, and acceptance decision |
+
+Repository tests verify that these canonical sections, control references, and links remain present. That is a structural guardrail, not evidence that a target team filled the record, exercised the path, or accepted the decision. Keep these documents in the pilot packet from the start and deepen the same files; do not create separate “starter” Markdown copies.
+
 For a first workflow conversation, start with these twelve decision-bearing fields. This is the same workflow-charter object you will extend later, so no conversion or parallel “lite” artifact is required.
 
 ```json
