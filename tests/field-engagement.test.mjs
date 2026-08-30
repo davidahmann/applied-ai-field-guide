@@ -81,4 +81,26 @@ test("the invoice engagement preserves one navigable evidence chain without over
   assert.match(valueCase, /500 × 60% = 300/);
   assert.match(valueCase, /\$1,000 \/ 240 = \$4\.17/);
   assert.match(valueCase, /Every number is illustrative/);
+
+  const adoption = bodies[4];
+  for (const phrase of [
+    "What the adoption path would have to prove",
+    "Friction hypotheses to test",
+    "How a pilot result would be diagnosed",
+    "These are test questions, not findings",
+    "This table is predeclared planning logic. It contains no observed pilot result.",
+  ]) assert.match(adoption, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
+  for (const stage of ["Eligible opportunity", "Exposed in the review surface", "Completed or dispositioned", "Independently accepted", "Sustained net value"]) {
+    assert.match(adoption, new RegExp(stage, "i"));
+  }
+});
+
+test("the repository keeps one canonical engagement chain instead of duplicating examples for symmetry", async () => {
+  const [maintenance, shipment] = await Promise.all([
+    readFile(path.join(root, "docs", "maintainers", "repository-maintenance.md"), "utf8"),
+    readFile(path.join(root, "examples", "shipment-risk-triage", "README.md"), "utf8"),
+  ]);
+  assert.match(maintenance, /one canonical end-to-end worked engagement/i);
+  assert.match(maintenance, /implementation reference does not need a parallel engagement chain merely for symmetry/i);
+  assert.doesNotMatch(shipment, /engagement\/adoption-and-handoff\.md/);
 });

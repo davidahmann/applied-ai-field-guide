@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -45,7 +46,7 @@ test("starter workflow validation requires decision-bearing fields without forki
   assert.ok(failed.errors.some((error) => error.includes("/outcome/verifier")));
 });
 
-test("the documented twelve-field starter is copyable and uses the packaged CLI", async () => {
+test("the documented twelve-field starter is copyable without advertising an unpublished global binary", async () => {
   const templates = await readFile(path.join(root, "templates", "README.md"), "utf8");
   const match = templates.match(/twelve decision-bearing fields[\s\S]*?```json\n([\s\S]*?)\n```/);
   assert.ok(match, "templates README should contain one copyable starter JSON object");
@@ -54,7 +55,50 @@ test("the documented twelve-field starter is copyable and uses the packaged CLI"
   assert.equal(result.ok, true, result.errors.join("\n"));
 
   const packageDocument = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"));
-  assert.equal(packageDocument.bin?.["fde-guide"], "./scripts/validate-artifact.mjs");
+  assert.equal(packageDocument.private, true);
+  assert.equal(packageDocument.bin, undefined);
+});
+
+test("CLI help leads with commands available from a private repository clone", () => {
+  const helpText = execFileSync(process.execPath, [path.join(root, "scripts", "validate-artifact.mjs"), "--help"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+  assert.match(helpText, /Usage from a repository clone:/);
+  assert.match(helpText, /npm run validate:artifact -- <artifact\.json>/);
+  assert.match(helpText, /Direct script equivalent:/);
+  assert.doesNotMatch(helpText, /^\s*fde-guide validate/m);
+});
+
+test("progressive validation keeps collaborative Markdown plans human-readable and structurally guarded", async () => {
+  const [templates, delivery, readiness, handoff] = await Promise.all([
+    readFile(path.join(root, "templates", "README.md"), "utf8"),
+    readFile(path.join(root, "templates", "delivery-and-adoption-plan.md"), "utf8"),
+    readFile(path.join(root, "templates", "production-service-readiness.md"), "utf8"),
+    readFile(path.join(root, "templates", "customer-enablement-handoff.md"), "utf8"),
+  ]);
+
+  assert.match(templates, /Why progressive profiles stop at JSON contracts/);
+  assert.match(templates, /do not create separate “starter” Markdown copies/);
+  assert.match(templates, /structural guardrail, not evidence/i);
+  for (const heading of [
+    "## Delivery contract",
+    "## Pilot graduation contract",
+    "## Adoption measurement contract",
+    "## Adoption funnel and friction review",
+    "## Adoption rehearsal and cohort sequence",
+    "## Review and support capacity",
+  ]) assert.ok(delivery.includes(heading), heading);
+  for (const heading of ["## Assessment identity", "## Status contract", "## Readiness matrix", "## Decision and handoff"]) {
+    assert.ok(readiness.includes(heading), heading);
+  }
+  for (const heading of [
+    "## Ownership",
+    "## Pilot transfer plan",
+    "## Capability evidence",
+    "## Post-exit support and re-entry contract",
+    "## Acceptance decision",
+  ]) assert.ok(handoff.includes(heading), heading);
 });
 
 test("starter validation retains closed-object and type rules from the canonical schema", async () => {

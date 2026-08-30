@@ -101,6 +101,43 @@ Operators may reasonably fear that documenting their expertise will eliminate th
 
 Low-friction surfaces can accelerate adoption. Replit reports that a Slack interface exposed its internal agents to non-engineering teams; teams then contributed their own skills and integrations. The lesson is not “use Slack everywhere,” but to meet users in a familiar workflow while keeping the durable artifact elsewhere. [S17]
 
+### Start with the operator's current path
+
+The first adoption interview should not ask, “Would you use this?” Put a recent case on the screen instead. Ask the operator to show where it arrived, what they opened, which evidence they trusted, where they hesitated, what they changed, who they asked, and how they knew the work was finished. Record the current artifact, wait states, workarounds, recovery path, and time spent.
+
+Now place the proposed surface beside that case. What disappears from the operator's workday? What new judgment, verification, or support burden appears? If the system saves the sponsor time by making the operator's job slower, more anxious, or less legible, “resistance” may be a correct product signal.
+
+### Measure the path, not registrations
+
+Adoption is a funnel over eligible work:
+
+```text
+eligible workflow opportunity
+  -> exposed in the usable surface
+  -> completed or explicitly dispositioned
+  -> independently accepted
+  -> verified business effect
+  -> sustained after guardrails and full cost
+```
+
+Each break points to a different problem:
+
+| Observed break | First question | Likely owning work |
+| --- | --- | --- |
+| Eligible work is not exposed | Did routing, access, integration, or data readiness exclude it? | Integration, identity, instrumentation, or segment definition |
+| Exposed work is abandoned | Is the surface slow, confusing, badly timed, or missing a safe action? | Product flow, training, workflow placement, or fallback |
+| Work is completed but rejected or heavily edited | Is the evidence insufficient, the behavior wrong, or the policy boundary unclear? | Context, mechanism, evaluation, or authority |
+| Accepted work produces no measurable effect | Did the workflow target the wrong bottleneck or use a weak baseline? | Product thesis, value model, or outcome instrumentation |
+| Accepted value is real but queues or support load grow | Did reviewer and service capacity become the constraint? | Operating model, staffing, limits, or scope |
+
+Registered users, logins, prompts, and runs cannot locate those breaks. Before a pilot, freeze the eligible denominator, exclusions, baseline, target, guardrails, window, event/query revisions, and accountable owner. Instrument exposure, completion, acceptance, correction, rejection, abandonment, reviewer wait, and support demand. Preserve the old definition when any of those fields changes.
+
+### Earn the next cohort
+
+Adoption work should move through evidence-bearing steps: observe the current job, rehearse the new surface on representative cases, run assisted shadow use, let operators lead a bounded cohort, and have the receiving team support and measure that cohort. Each step has an exit decision. Weak exposure calls for access or routing work; weak acceptance calls for product or behavior repair; a support queue beyond capacity calls for constraint, not a larger launch.
+
+Training is necessary when the job changes, but training cannot repair a surface that hides evidence or adds pointless work. Likewise, office hours cannot substitute for owned support, and a charismatic FDE cannot be the permanent escalation path. The receiving team must reproduce the adoption calculation, diagnose one real break, support users, change the service safely, and decide when to constrain or retire it. Use the [delivery and adoption plan](../templates/delivery-and-adoption-plan.md) and [customer enablement handoff](../templates/customer-enablement-handoff.md) to make that evidence inspectable.
+
 ## Pattern libraries are the compounding asset
 
 Customer data and company-specific rules may not be portable, but deployment methods can compound:
@@ -130,6 +167,9 @@ Mike Fishbein's proposed automation of forward-deployed discovery—voice interv
 - Can the user pause, redirect, and resume?
 - What triggers escalation, and to whom?
 - How will the operator experience improve?
+- Which eligible opportunities reached the surface, completed, were independently accepted, and produced the intended effect?
+- Where does the adoption funnel break, and which team owns that break?
+- Can the receiving team reproduce the metric, support a cohort, and diagnose non-adoption without the delivery team?
 - Which deployment learning is reusable without moving customer data?
 
 [S01]: 05-source-index.md#s01

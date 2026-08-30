@@ -166,6 +166,18 @@ Before pilot entry, define the adoption metric independently of the observed res
 
 Instrument eligible exposure, completion, accepted outcome, override, rejection, abandonment, reviewer wait, and support events during the pilot. A denominator, source, window, or exclusion change creates a new metric revision; it is not an in-place correction to an unfavorable result.
 
+Diagnose the first broken transition before prescribing training or expanding the cohort:
+
+| Transition | If it is weak | First response |
+| --- | --- | --- |
+| Eligible -> exposed | Access, routing, integration, data readiness, or eligibility may be wrong | Repair the path or narrow the declared segment |
+| Exposed -> completed | The surface, timing, instructions, trust, or safe fallback may be wrong | Observe cases and remove product friction |
+| Completed -> independently accepted | Evidence, behavior, policy, or authority may be wrong | Repair context, mechanism, evaluation, or boundary |
+| Accepted -> business effect | The workflow or baseline may be wrong | Revisit the product and value thesis |
+| Business effect -> sustained value | Review, support, recovery, or operating cost may be too high | Constrain, redesign the operating model, or stop |
+
+Record reason codes from actual cases rather than inferring motives from low usage. Run access and surface rehearsal before shadow; let operators lead the bounded cohort before canary; require the receiving team to reproduce the funnel and support path before handoff.
+
 At pilot entry, re-confirm the predeclared graduation contract without changing thresholds after seeing results. Technical performance, operator acceptance, adoption, business value, full economics, and production readiness remain separate decisions. A strong result in one dimension cannot compensate for a failed authority, safety, ownership, or value gate.
 
 Use the [delivery and adoption plan](../templates/delivery-and-adoption-plan.md).
@@ -211,6 +223,8 @@ Control: `ADP-002`.
 - [ ] Cross-resource versions form one compatible release candidate.
 - [ ] Replay, shadow, safety, cost, and adoption evidence meet their separate thresholds.
 - [ ] Adoption denominator, baseline, target, guardrail, window, source, and owner were fixed before pilot evidence was reviewed.
+- [ ] Funnel breaks were diagnosed from representative cases and owned actions, not explained away as generic resistance.
+- [ ] Reviewer and support capacity were exercised for the proposed cohort and have declared limits.
 - [ ] Pilot graduation gates, evidence cutoff, decision date, and stop or redesign path remained frozen or changed through an explicit revision.
 - [ ] Prototype debt has an owner and blocking disposition.
 - [ ] Customer owners have exercised harness change, measurement, release, support, and incident paths.

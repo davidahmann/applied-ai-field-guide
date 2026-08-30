@@ -44,6 +44,7 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 | Rate, cost, and capacity limits | required | — | — | — | `REL-002`, `TOL-005`, `CST-001`, `CST-002` |
 | Telemetry, alerts, and service objectives | required | — | — | — | `OPS-001`, `OPS-004`, `OPS-006` |
 | Failure, degraded operation, and rollback | required | — | — | — | `DEL-002`, `OPS-002`, `OPS-003`, `CTX-009` |
+| Operator workflow, adoption, and review capacity | required | — | — | — | `ADP-001`, `FDE-003`, `VAL-002`, `OPS-006` |
 | Scaling assumptions and limits | required | — | — | — | `REL-004`, `SEC-005`, `CST-002` |
 | Service ownership and evidence lifecycle | required | — | — | — | `ADP-002`, `DEL-001`, `OPS-007` |
 
@@ -85,6 +86,13 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 
 - For every severe failure, record detection, containment, safe fallback, readback, recovery, owner, regression, and rollback trigger.
 - Show that new work, writes, identities, egress, and affected capabilities can be stopped without hiding pending effects.
+
+### Operator workflow, adoption, and review capacity
+
+- Exercise the final persistent surface with representative operators: find the work, inspect evidence and uncertainty, correct, reject, escalate, interrupt, and resume without losing state or audit history.
+- Reconcile eligible, exposed, completed, independently accepted, and business-effect events to the frozen adoption contract. Sample non-use and abandonment by reason rather than treating logins or runs as adoption.
+- Name access, training, support, domain-review, and escalation owners. Exercise expected reviewer/support load, queue and wait limits, overflow, degraded operation, and the manual fallback for the proposed cohort.
+- Advance this row to `tested` only when target users and the receiving team have exercised the path. Documentation, a demo, or delivery-team-led usage remains `designed`.
 
 ### Scaling assumptions and limits
 

@@ -1,6 +1,6 @@
 {
   "name": "fde-guide",
-  "version": "1.27.0",
+  "version": "1.28.0",
   "description": "An FDE and applied AI engineering guide for field discovery, accountable adaptation, measurable value, and production systems.",
   "private": true,
   "license": "Apache-2.0",
@@ -29,9 +29,6 @@
     "observability"
   ],
   "type": "module",
-  "bin": {
-    "fde-guide": "./scripts/validate-artifact.mjs"
-  },
   "engines": {
     "node": ">=22"
   },

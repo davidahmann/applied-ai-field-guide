@@ -4,6 +4,14 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.28.0] - 2026-08-30
+
+- Turn adoption into an observable funnel from eligible work through exposure, completion, independent acceptance, verified business effect, and sustained value, with guidance to repair the first broken transition instead of assuming a training problem.
+- Strengthen delivery, readiness, service-review, and handoff records with cohort rehearsal, operator workflow, review and support capacity, receiving-team exercises, and a bounded post-exit support and re-entry contract.
+- Deepen the single synthetic invoice engagement with explicit adoption hypotheses and evidence states while retaining one canonical worked engagement and making clear that no customer pilot result is claimed.
+- Make the repository-local artifact-validator path the documented CLI entry, explain why progressive profiles cover closed JSON contracts rather than collaborative Markdown records, and add structural regression coverage without creating parallel template formats.
+- Keep the public front doors concise, update human and machine navigation, and hold the net file-count change at zero across `guide/`, `library/`, `templates/`, and `blueprints/`.
+
 ## [1.27.0] - 2026-08-30
 
 - Add a qualified practitioner field report on healthcare-claims delivery while keeping its timeline, topology, variable count, privacy claim, provider portability, and evaluation result explicitly self-reported and non-portable.
@@ -221,7 +229,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.27.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.28.0...HEAD
+[1.28.0]: https://github.com/davidahmann/fde-guide/compare/v1.27.0...v1.28.0
 [1.27.0]: https://github.com/davidahmann/fde-guide/compare/v1.26.0...v1.27.0
 [1.26.0]: https://github.com/davidahmann/fde-guide/compare/v1.25.0...v1.26.0
 [1.25.0]: https://github.com/davidahmann/fde-guide/compare/v1.24.0...v1.25.0

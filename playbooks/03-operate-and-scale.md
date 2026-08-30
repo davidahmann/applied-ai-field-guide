@@ -149,6 +149,8 @@ Segment results by user group, workflow type, risk, and behavior cluster. Report
 
 Calculate adoption only from its predeclared eligible denominator, baseline, target, guardrail, measurement window, authoritative source revision, and accountable owner. Preserve the prior definition and effective date when any field changes.
 
+Review the transitions separately: eligible to exposed, exposed to completed, completed to independently accepted, accepted to measured business effect, and effect to sustained net value. Assign the first broken transition to an owner with representative cases and a dated response. Do not prescribe training when access, product flow, behavior quality, policy, or reviewer capacity is the actual constraint.
+
 Control: `VAL-002`.
 
 ## 8. Maintain the customer operating capability
@@ -160,6 +162,7 @@ Open the [customer enablement handoff](../templates/customer-enablement-handoff.
 - Review evaluations and build new domain cases
 - Version and test harness, prompt, routing, context-policy, tool-bundle, and guardrail changes
 - Reproduce adoption numerator, eligible denominator, exclusions, and guardrails from authoritative sources
+- Diagnose one adoption-funnel break from representative cases and deliver the owned response
 - Promote a change and execute rollback
 - Respond to an alert, use kill switches, reconcile effects, and close an incident
 - Support and train users, measure adoption, and triage feedback

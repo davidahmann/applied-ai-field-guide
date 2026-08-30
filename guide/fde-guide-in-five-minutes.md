@@ -2,11 +2,11 @@
 
 > The brief is probably wrong somewhere. Your first job is to find out where.
 
-A common Monday starts like this. The brief says, “Build an agent that clears invoice exceptions.” By 9:40, the analyst sharing her screen has shown you three queues, a spreadsheet nobody mentioned, and a policy check that only the controller can approve. Sales described one workflow. The work has at least four.
+A common Monday starts like this: “Build an agent that clears invoice exceptions.” By 9:40, the analyst has shown you three queues, an unmentioned spreadsheet, and a controller-only policy check. Sales described one workflow. The work has four.
 
 Don't open the architecture diagram yet.
 
-The FDE job is to work out what is actually happening, which part is worth changing, who has the authority to change it, and what evidence would make the result acceptable. Then you build the smallest intervention that can survive contact with the real operation.
+The FDE job is to find what is happening, what is worth changing, who has authority, and what evidence would make the result acceptable. Then build the smallest intervention that can survive the real operation.
 
 This page is guidance—not production approval, customer authority, or a substitute for the target organization's policy, security, architecture, and risk review.
 
@@ -77,6 +77,8 @@ Before launch, use the [release gates](../operations/release-gates.md) to name t
 Stay forward-deployed while consequential uncertainty remains in the workflow, authority, boundary, or specification. Once representative evidence supports an accepted specification and the remaining work is ordinary implementation, transfer it to the product, engineering, and operating teams. Don't relabel general staffing as FDE work.
 
 Agree on exit evidence early. The receiving team should be able to operate, evaluate, change, release, recover, support, and retire the service without FDE heroics. If embedded engineers are still holding revenue or production together months later, call that dependency what it is and decide whether to fix it or fund it explicitly.
+
+Track eligible work through exposure, completion, acceptance, and effect. Fix the first break; don't assume training or exceed support capacity.
 
 ## Keep the working packet small
 

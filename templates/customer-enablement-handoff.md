@@ -26,6 +26,7 @@ Open this record at pilot entry. Handoff is complete only when the receiving tea
 | Tool, identity, authorization, egress, and effect controls | — | — | — | — | — |
 | Evaluation cases, graders, fixtures, and reports | — | — | — | — | — |
 | Adoption event, denominator query, guardrails, and rebaseline | — | — | — | — | — |
+| Operator workflow, access, training, support, and adoption diagnosis | — | — | — | — | — |
 | Release, canary, rollback, and dependency lifecycle | — | — | — | — | — |
 | Alerts, incidents, reconciliation, and support | — | — | — | — | — |
 
@@ -37,6 +38,8 @@ Open this record at pilot entry. Handoff is complete only when the receiving tea
 | Add a representative evaluation case | Case authored and run independently | Valid fixture, grader, and expected result | — | — |
 | Change the harness safely | Version one behavior component and run affected-route tests | Compatible manifest, evaluation, canary, and rollback evidence | — | — |
 | Reproduce adoption measurement | Run numerator and eligible-denominator queries from declared sources | Result matches dashboard and exclusions are explained | — | — |
+| Enable one representative cohort | Receiving team grants access, runs workflow-native training, and supports first use | Users reach the final surface through the owned path; access and support evidence is retained | — | — |
+| Diagnose an adoption break | Trace one weak funnel transition through representative cases and reason codes | Owning layer, response, due date, and follow-up measure are accepted | — | — |
 | Release a compatible change | Branch, review, promotion, and canary | Release evidence and healthy soak | — | — |
 | Roll back behavior | Trigger simulated rollback | Prior version restored and verified | — | — |
 | Respond to an alert | Game day from detection to containment | Alert, owner, kill switch, and readback work | — | — |
@@ -84,6 +87,20 @@ Document temporary support with a scope, owner, expiry, and exit exercise. Do no
 | User surface, telemetry, runbooks, and support assets | — | — | — | — | — | — | — | — |
 
 Every production row resolves to an immutable version or digest and names both the upstream inputs and the path used to promote a change.
+
+## Post-exit support and re-entry contract
+
+| Field | Value |
+| --- | --- |
+| Receiving-team support hours, channel, severity, and response target | — |
+| Temporary delivery-team support scope and maximum hours | — |
+| Temporary support owner and expiry | — |
+| Escalation and succession path | — |
+| First post-exit service review | — |
+| Re-entry trigger and approving owner | New workflow evidence / severe incident / material policy or dependency change / other |
+| Explicitly excluded delivery-team work | Routine operation / ordinary support / unowned backlog / other |
+
+Re-entry is a scoped decision, not a reset to permanent embedded delivery. Preserve the receiving team's ownership, name the new evidence or event, bound the work, and set the next exit exercise.
 
 ## Acceptance decision
 

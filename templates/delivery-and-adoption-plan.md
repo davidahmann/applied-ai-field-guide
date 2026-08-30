@@ -78,6 +78,41 @@ Freeze this contract before pilot entry. Changes to the denominator, event defin
 
 Record the identity-deduplication rule, late-event policy, timezone, missing-data behavior, and segment keys used to calculate the metric.
 
+## Adoption funnel and friction review
+
+Use one cohort, window, and metric revision across the funnel. Every count must reconcile to its authoritative event/query source; do not infer a missing stage from downstream activity.
+
+| Funnel stage | Declared event or query | Eligible count / reached count / rate | Leading failure reasons from representative cases | Owner and dated response |
+| --- | --- | --- | --- | --- |
+| Eligible opportunity | — | — | Eligibility, source quality, policy, or segment exclusions | — |
+| Exposed in the usable surface | — | — | Routing, access, integration, latency, or missing context | — |
+| Completed or explicitly dispositioned | — | — | Workflow placement, surface friction, trust, training, or fallback | — |
+| Independently accepted | — | — | Evidence, behavior, correction, rejection, policy, or authority | — |
+| Verified business effect | — | — | Wrong bottleneck, weak baseline, downstream rework, or attribution | — |
+| Sustained net value | — | — | Reviewer load, support, recovery, incidents, or full cost | — |
+
+Define bounded reason codes from observed cases and preserve an open-text escape hatch. Sample non-use and abandonment; do not classify silence as user resistance without checking access, routing, data, timing, and the current manual path.
+
+## Adoption rehearsal and cohort sequence
+
+| Step | Representative users and cases | Entry evidence | Exercise | Exit evidence or stop condition | Owner |
+| --- | --- | --- | --- | --- | --- |
+| Observe current work | — | Recent cases and process knower | Trace the current artifact, waits, workarounds, escalation, and recovery | Current path and operator burden are evidenced | — |
+| Access and surface rehearsal | — | Final role and representative fixture | Sign in, find the case, inspect evidence, correct, reject, escalate, and resume | Critical action or access friction is resolved | — |
+| Assisted shadow | — | Frozen adoption contract and instrumentation | Operator uses the surface while the current path remains authoritative | Funnel events reconcile and no blocking safety or workflow gap remains | — |
+| Operator-led bounded cohort | — | Support capacity and rollback ready | Operators lead; delivery team observes and records reason codes | Thresholds and guardrails pass, or cohort is constrained/stopped | — |
+| Receiving-team-led cohort | — | Named service, training, access, and support owners | Receiving team enables users, supports cases, reproduces metrics, and leads review | Exercised capability supports handoff decision | — |
+
+## Review and support capacity
+
+| Capacity | Forecast demand and burst | Available capacity and hours | Queue/wait limit | Overflow or degraded path | Owner | Evidence and decision |
+| --- | ---: | ---: | --- | --- | --- | --- |
+| Domain review | — | — | — | — | — | — |
+| User support and training | — | — | — | — | — | — |
+| Incident and reconciliation | — | — | — | — | — | — |
+
+Do not expand a cohort when adoption success would exceed review, support, or recovery capacity. A named person is not capacity evidence; exercise the forecast peak, wait limit, overflow path, and escalation.
+
 ## Adoption design
 
 | User group | Eligible segment | Current job and artifact | New surface | Benefit | New responsibility | Training | Feedback channel | Adoption contract row |
@@ -120,6 +155,7 @@ Open this workstream at pilot entry. The receiving team pairs on the actual harn
 | Release and rollback | Promote an isolated compatible release and restore the prior version | — | — | — | — | — |
 | Alert, containment, and reconciliation | Run a game day using the production route and source-of-truth readback | — | — | — | — | — |
 | User support and feedback triage | Resolve a pilot support case and classify the resulting learning | — | — | — | — | — |
+| Adoption diagnosis and response | Diagnose one funnel break from representative cases and deliver the owned product, access, training, or operating response | — | — | — | — | — |
 
 Controls: `FDE-003`, `ADP-002`, `DEL-001`, `OPS-007`.
 

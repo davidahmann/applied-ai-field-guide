@@ -86,8 +86,11 @@ const typeDefinitions = new Map([
 ]);
 
 function help() {
-  return `Usage:
-  fde-guide validate <artifact.json> [--profile starter|complete] [--type TYPE] [--json]
+  return `Usage from a repository clone:
+  npm run validate:artifact -- <artifact.json> [--profile starter|complete] [--type TYPE] [--json]
+
+Direct script equivalent:
+  node scripts/validate-artifact.mjs validate <artifact.json> [--profile starter|complete] [--type TYPE] [--json]
 
 Types:
   workflow-charter | engagement-reframe | data-context-manifest
