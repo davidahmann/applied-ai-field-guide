@@ -13,6 +13,21 @@
 | Continuation mechanism, owner, and decision date | External renewal / internal funding or sponsorship / other |
 | Decision required | Expand, continue, improve, constrain, pause, or retire |
 
+## Current sponsor readout
+
+Generate this view from dated interaction receipts, effect or evaluation evidence, and the current governed records. Freeze the evidence cutoff and source digests. Do not maintain a parallel status narrative.
+
+| Question | Current answer | Source receipt, record, or digest | Owner |
+| --- | --- | --- | --- |
+| What outcome and workflow boundary are currently accepted? | — | — | — |
+| What changed since the last review? | — | — | — |
+| What is measured, estimated, contested, or still unknown? | — | — | — |
+| Which consequential conflict or decision is open? | — | — | — |
+| What is the next field or operating move, by whom, and by when? | — | — | — |
+| What remains excluded or unproved? | — | — | — |
+
+This readout is a projection, not a new source of truth, approval, or acceptance record. Reconcile it with the cited source when a receipt is missing, stale, disputed, or outside the engagement boundary.
+
 ## Outcome and value
 
 | Metric | Baseline | Target | Current | Eligible denominator | Confidence | Owner |

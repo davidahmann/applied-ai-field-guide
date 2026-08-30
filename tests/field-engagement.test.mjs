@@ -104,3 +104,38 @@ test("the repository keeps one canonical engagement chain instead of duplicating
   assert.match(maintenance, /implementation reference does not need a parallel engagement chain merely for symmetry/i);
   assert.doesNotMatch(shipment, /engagement\/adoption-and-handoff\.md/);
 });
+
+test("field interactions close through an isolated reviewed append loop and a derived readout", async () => {
+  const [playbook, observation, discovery, serviceReview, example, research] = await Promise.all([
+    readFile(path.join(root, "playbooks", "00-field-engagement-and-reframing.md"), "utf8"),
+    readFile(path.join(root, "templates", "field-observation-log.md"), "utf8"),
+    readFile(path.join(root, "templates", "fde-discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "templates", "production-service-review.md"), "utf8"),
+    readFile(path.join(root, "examples", "invoice-exception", "engagement", "README.md"), "utf8"),
+    readFile(path.join(root, "research", "2026-08-30--fde-interaction-workflow-ergonomics.md"), "utf8"),
+  ]);
+
+  for (const phrase of [
+    "Keep one engagement boundary",
+    "Stage the source record",
+    "Propose the changes",
+    "Preview and confirm",
+    "Append a receipt",
+    "does not prove the claim, grant authority, or accept a reframe",
+  ]) assert.match(playbook, new RegExp(phrase, "i"));
+  for (const body of [playbook, observation, discovery]) {
+    assert.match(body, /engagement (?:id|boundary)/i);
+    assert.match(body, /retention/i);
+  }
+  assert.match(observation, /Post-interaction capture receipt/);
+  assert.match(observation, /Confirm \/ correct \/ reject \/ defer/);
+  assert.match(serviceReview, /Current sponsor readout/);
+  assert.match(serviceReview, /projection, not a new source of truth, approval, or acceptance record/i);
+  assert.match(example, /Ten-minute walkthrough/);
+  for (const minute of ["0–2", "2–4", "4–6", "6–8", "8–10"]) assert.ok(example.includes(minute), minute);
+  assert.match(research, /R26-84/);
+  assert.match(research, /do not build another FDE workspace, router, CLI, storage convention, lifecycle, or trust-score system/i);
+
+  const combined = [playbook, observation, discovery, serviceReview].join("\n");
+  assert.doesNotMatch(combined, /~\/.fde|\.fde\/clients|21-day|trust traffic light|@fde\b/i);
+});

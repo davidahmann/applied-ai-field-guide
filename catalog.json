@@ -782,6 +782,12 @@
       "type": "evidence",
       "path": "research/2026-08-28--warp-self-improving-software-factories.md",
       "tags": ["sources", "operations", "evaluation", "change", "software-factory"]
+    },
+    {
+      "id": "evidence.fde-interaction-workflow-ergonomics",
+      "type": "evidence",
+      "path": "research/2026-08-30--fde-interaction-workflow-ergonomics.md",
+      "tags": ["sources", "fde", "field-discovery", "reframing", "workflow"]
     }
   ]
 }

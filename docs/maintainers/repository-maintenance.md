@@ -108,6 +108,14 @@ These are maximums, not coverage targets. Raising one requires an explicit maint
 - Keep `robots.txt`, `sitemap.xml`, structured metadata, the generated web `llms.txt`, and visible source links bound to the same route map.
 - After deployment, verify the canonical URL, core assets, sitemap, crawler policy, and a deep route over HTTPS. Use Search Console or equivalent measurement after ownership is configured; do not infer ranking from a successful deployment.
 
+## Social preview procedure
+
+- Keep [`assets/fde-guide-social.svg`](../../assets/fde-guide-social.svg) as the editable 1280 × 640 source. Exact copy, dimensions, safe margins, and the repository URL remain deterministic.
+- Export [`assets/fde-guide-social.png`](../../assets/fde-guide-social.png) at 1280 × 640, under 1 MB, with no external fonts or network-loaded assets. The public site uses this raster file for Open Graph and X metadata because those consumers do not consistently render SVG previews.
+- Inspect the PNG at full size and a small feed-sized preview. Check clipping, contrast, legibility, and whether the four-step path reads in order.
+- After merge, upload the PNG under repository **Settings → Social preview → Edit**. GitHub accepts PNG, JPG, or GIF; the SVG remains the maintained source for future revisions.
+- Verify the public repository card or `openGraphImageUrl` after propagation. A committed asset alone does not change GitHub's repository social-preview setting.
+
 ## Maintainer acceptance questions
 
 - Does the change improve a real user path or contract rather than add parallel prose?

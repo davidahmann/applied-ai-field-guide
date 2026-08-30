@@ -22,6 +22,8 @@ Do not infer the process knower, operator, disposition authority, or verifier fr
 
 | Field | Value |
 | --- | --- |
+| Engagement ID and customer/tenant boundary | |
+| Approved evidence store, retention, and deletion rule | |
 | Workflow ID | |
 | Executive sponsor | |
 | Independent sponsor or business-owner backup | |
@@ -64,6 +66,12 @@ No claim class universally outranks another or grants authority. Observation pro
 | | | | | continue discovery / bounded kickoff / defer / stop | find owner / observe case / resolve cited conflict |
 
 When field evidence materially changes the brief, use the machine-readable [engagement-reframe record](engagement-reframe.json) to preserve the competing claims, scoped decision, selective downstream impact, and chronology.
+
+## Interaction receipts and current readout
+
+Keep source material separate from proposed conclusions. For each meeting, observation, incident review, or artifact handoff, record the interaction ID, engagement boundary, source revisions, proposed additions, named review disposition, appended record IDs, and timestamp in the [field-observation log](field-observation-log.md). Preview the changes before append; rejected and deferred proposals remain visible.
+
+The sponsor readout is a projection of these dated receipts and the current governed records. It states the evidence cutoff, current boundary, measured outcome, unresolved consequential decision, next move, and source links. Do not maintain it as an independent status artifact or let it silently override the engagement reframe, value case, release evidence, or service review.
 
 ## Workflow event log
 
