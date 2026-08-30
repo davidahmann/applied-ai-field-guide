@@ -11,6 +11,7 @@ import { dataContextManifestSemanticErrors } from "../scripts/governance-invaria
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const readJson = async (repositoryPath) => JSON.parse(await readFile(path.join(root, repositoryPath), "utf8"));
+const readText = async (repositoryPath) => readFile(path.join(root, repositoryPath), "utf8");
 
 const manifest = await readJson("templates/data-context-manifest.json");
 const invoiceManifest = await readJson("examples/invoice-exception/data-context-manifest.json");
@@ -99,4 +100,46 @@ test("operating monitors and economic decisions resolve to governed sources and 
   const errors = dataContextManifestSemanticErrors(candidate).join("\n");
   assert.match(errors, /monitor .* unknown source missing_source/);
   assert.match(errors, /selects unknown economic option missing_option/);
+});
+
+test("compiled context guidance is source-bounded, privacy-tested, and change-aware", async () => {
+  const [research, index, sourceIndex, blueprint, library, monitoring, changes, catalogText] = await Promise.all([
+    readText("research/2026-08-18--healthcare-claims-context-and-evaluation.md"),
+    readText("research/README.md"),
+    readText("library/05-source-index.md"),
+    readText("blueprints/data-preparation-and-context-pipeline.md"),
+    readText("library/16-data-readiness-and-context-contracts.md"),
+    readText("operations/behavior-monitoring.md"),
+    readText("operations/change-management.md"),
+    readText("catalog.json"),
+  ]);
+
+  assert.match(research, /<a id="r26-82"><\/a>/);
+  assert.match(research, /https:\/\/x\.com\/mardehaym\/status\/2089648072217243780/);
+  for (const claim of ["seven agents", "34 variables", "59-of-60", "zero-patient-data-exposure"]) {
+    assert.match(research, new RegExp(claim, "i"));
+  }
+  assert.match(research, /self-reported/i);
+  assert.match(research, /not portable targets/i);
+  assert.match(index, /2026-08-18--healthcare-claims-context-and-evaluation\.md/);
+  assert.match(sourceIndex, /## S29 — Mark Ajzenstadt/);
+
+  for (const body of [blueprint, library]) {
+    assert.match(body, /compiled context packet/i);
+    assert.match(body, /runtime projection/i);
+    assert.match(body, /not .*authority/i);
+  }
+  for (const body of [blueprint, library, monitoring, changes]) {
+    assert.match(body, /primary, retry, fallback, and provider[- ]failover/i);
+    assert.match(body, /logs, traces, (?:(?:and|or) )?caches/i);
+  }
+  assert.match(changes, /enrichment/);
+  assert.match(changes, /payer rule/);
+  assert.match(changes, /aggregate pass count cannot overrule a blocking slice/i);
+  assert.match(monitoring, /final serialized request/i);
+
+  const artifact = JSON.parse(catalogText).artifacts.find(({ path: artifactPath }) => (
+    artifactPath === "research/2026-08-18--healthcare-claims-context-and-evaluation.md"
+  ));
+  assert.equal(artifact?.id, "evidence.healthcare-claims-context-evaluation");
 });

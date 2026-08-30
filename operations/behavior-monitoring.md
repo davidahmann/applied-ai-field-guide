@@ -14,8 +14,15 @@ Prefer privacy-minimized structured data:
 - Policy decision, obligations, approval, and current revisions
 - State transition, budget, and stop reason
 - External effect receipt and readback status
+- Context-packet ID and digest, source/preparation/policy revisions, model route, and privacy-validation result
 
 Do not require hidden model reasoning. Do not feed the monitor unrestricted retrieved content or the agent's self-justification as trusted evidence.
+
+## Model-boundary privacy
+
+For routes with prohibited model-visible fields, validate the final serialized request after prompt assembly and middleware. Exercise primary, retry, fallback, and provider-failover paths; inspect network egress, error payloads, logs, traces, caches, and retained evaluation material. Record allowlisted metadata and the privacy-check result without copying the protected payload into monitoring.
+
+A scoped, reproducible result may establish that named fields were absent from named measured paths for one release. It does not establish zero exposure across an uninspected application, provider, operator workflow, backup, or retention surface. Failed or unavailable validation stops or constrains the affected route according to policy. [R26-82](../research/2026-08-18--healthcare-claims-context-and-evaluation.md#r26-82)
 
 ## Decisions
 
@@ -78,5 +85,6 @@ Recurring trace papercuts MAY produce a sanitized failure record, replay case, a
 - Oversized or unused tool context that raises cost while the accepted outcome is unchanged
 - Trace-derived skill candidate attempting to alter its evaluator, approval, or release gate
 - Scorer sampling that omits a consequential failure slice or treats reviewer comments as anonymous ground truth
+- Retry or provider-failover middleware reintroducing a prohibited field after the normal route passed privacy validation
 
-Evidence: [OpenAI monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-04), [Anthropic approval and monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-50), [capability-aware containment](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-49), [Uber production AI operations](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77), and [Warp configuration improvement](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81).
+Evidence: [OpenAI monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-04), [Anthropic approval and monitoring](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-50), [capability-aware containment](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-49), [Uber production AI operations](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-77), [Warp configuration improvement](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81), and the qualified [healthcare-claims context field report](../research/2026-08-18--healthcare-claims-context-and-evaluation.md#r26-82).

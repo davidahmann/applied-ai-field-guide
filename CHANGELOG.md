@@ -4,6 +4,13 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.27.0] - 2026-08-30
+
+- Add a qualified practitioner field report on healthcare-claims delivery while keeping its timeline, topology, variable count, privacy claim, provider portability, and evaluation result explicitly self-reported and non-portable.
+- Define compiled context packets as versioned runtime projections of existing data and behavior contracts, with final-payload privacy checks across primary, retry, fallback, provider-failover, logging, tracing, and caching paths.
+- Treat enrichment, redaction, domain-rule, context, model, and provider changes as affected-slice replay triggers, and require failed-case severity and disposition instead of accepting aggregate pass counts alone.
+- Reinforce that durable, governed single-workflow operation precedes orchestration, that inactive capabilities need owned lifecycle review rather than a universal timer, and that topology is not maturity.
+
 ## [1.26.0] - 2026-08-29
 
 - Consolidate the standalone field reframe into one complete synthetic invoice engagement spanning source-linked field evidence, scoped disposition, falsifiable economics, mechanism selection, controlled-write implementation, evaluation, adoption, handoff, and a review-only next-gate decision.
@@ -214,7 +221,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.26.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.27.0...HEAD
+[1.27.0]: https://github.com/davidahmann/fde-guide/compare/v1.26.0...v1.27.0
 [1.26.0]: https://github.com/davidahmann/fde-guide/compare/v1.25.0...v1.26.0
 [1.25.0]: https://github.com/davidahmann/fde-guide/compare/v1.24.0...v1.25.0
 [1.24.0]: https://github.com/davidahmann/fde-guide/compare/v1.23.0...v1.24.0
