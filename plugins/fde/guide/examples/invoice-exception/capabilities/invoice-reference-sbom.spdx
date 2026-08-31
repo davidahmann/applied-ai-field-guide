@@ -1,0 +1,17 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: invoice-exception-reference-capabilities
+DocumentNamespace: https://github.com/davidahmann/production-agent-engineering/examples/invoice-exception/capabilities/invoice-reference-sbom/3.0.0
+Creator: Tool: production-agent-engineering-reference
+Created: 2026-08-07T15:00:00Z
+
+PackageName: invoice-exception-reference-capabilities
+SPDXID: SPDXRef-Package-InvoiceReferenceCapabilities
+PackageVersion: 3.0.0
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageChecksum: SHA256: e332eec268866329703f468b2f8c88b7d0ada0c9b051ab3ebbb94c157b9ebf86
+PackageLicenseConcluded: Apache-2.0
+PackageLicenseDeclared: Apache-2.0
+PackageCopyrightText: NOASSERTION

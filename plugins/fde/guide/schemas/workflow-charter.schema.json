@@ -1,0 +1,414 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/workflow-charter.schema.json",
+  "title": "FDE workflow charter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "workflow_id",
+    "version",
+    "status",
+    "owners",
+    "problem",
+    "functional_requirement",
+    "scope",
+    "outcome",
+    "value_case",
+    "readiness",
+    "stop_conditions",
+    "decision",
+    "assumptions"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.2.0" },
+    "workflow_id": { "$ref": "#/$defs/id" },
+    "version": { "$ref": "#/$defs/version" },
+    "status": {
+      "enum": ["candidate", "discovery", "pilot", "production", "paused", "retired"]
+    },
+    "owners": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["executive_sponsor", "operational", "technical", "risk", "receiving_service_owner", "domain_experts"],
+      "properties": {
+        "executive_sponsor": { "$ref": "#/$defs/owner" },
+        "operational": { "$ref": "#/$defs/owner" },
+        "technical": { "$ref": "#/$defs/owner" },
+        "risk": { "$ref": "#/$defs/owner" },
+        "receiving_service_owner": { "$ref": "#/$defs/owner" },
+        "domain_experts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/owner" }
+        }
+      }
+    },
+    "problem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_or_job", "affected_users", "trigger", "current_state", "pain_evidence"],
+      "properties": {
+        "decision_or_job": { "type": "string", "minLength": 10 },
+        "affected_users": { "$ref": "#/$defs/nonEmptyStrings" },
+        "trigger": { "type": "string", "minLength": 5 },
+        "current_state": { "type": "string", "minLength": 10 },
+        "pain_evidence": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "functional_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user", "interface", "decision", "inputs", "action", "accepted_outcome"],
+      "properties": {
+        "user": { "type": "string", "minLength": 3 },
+        "interface": { "type": "string", "minLength": 3 },
+        "decision": { "type": "string", "minLength": 10 },
+        "inputs": { "$ref": "#/$defs/nonEmptyStrings" },
+        "action": { "type": "string", "minLength": 10 },
+        "accepted_outcome": { "type": "string", "minLength": 10 }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["in_scope", "out_of_scope", "initial_segment", "autonomy_ceiling", "maximum_effect"],
+      "properties": {
+        "in_scope": { "$ref": "#/$defs/nonEmptyStrings" },
+        "out_of_scope": { "$ref": "#/$defs/nonEmptyStrings" },
+        "initial_segment": { "type": "string", "minLength": 5 },
+        "autonomy_ceiling": {
+          "enum": ["observe", "recommend", "execute_reversible", "execute_bounded", "coordinate"]
+        },
+        "maximum_effect": { "enum": ["none", "staged", "reversible", "irreversible"] }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accepted_event", "verifier", "primary_metric", "guardrail_metrics"],
+      "properties": {
+        "accepted_event": { "type": "string", "minLength": 10 },
+        "verifier": { "type": "string", "minLength": 10 },
+        "primary_metric": { "$ref": "#/$defs/metric" },
+        "guardrail_metrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/guardrailMetric" }
+        }
+      }
+    },
+    "value_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annual_eligible_volume",
+        "adoption_rate",
+        "value_per_accepted_outcome_usd",
+        "annual_avoided_loss_usd",
+        "annual_expected_residual_loss_usd",
+        "implementation_cost_usd",
+        "annual_fixed_operating_cost_usd",
+        "annual_variable_operating_cost_usd",
+        "annual_human_review_cost_usd",
+        "annual_recovery_cost_usd",
+        "max_cost_per_accepted_outcome_usd",
+        "attribution_method",
+        "confidence",
+        "review_cadence"
+      ],
+      "properties": {
+        "annual_eligible_volume": { "$ref": "#/$defs/nullableNonNegative" },
+        "adoption_rate": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "value_per_accepted_outcome_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "annual_avoided_loss_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "annual_expected_residual_loss_usd": {
+          "$ref": "#/$defs/nullableNonNegative",
+          "$comment": "Expected loss deducted only when it is not already reflected in value_per_accepted_outcome_usd or annual_avoided_loss_usd. Use null when unmeasured; do not assume zero."
+        },
+        "implementation_cost_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "annual_fixed_operating_cost_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "annual_variable_operating_cost_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "annual_human_review_cost_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "annual_recovery_cost_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "max_cost_per_accepted_outcome_usd": { "$ref": "#/$defs/nullableNonNegative" },
+        "attribution_method": { "type": "string", "minLength": 10 },
+        "confidence": { "enum": ["unknown", "low", "medium", "high"] },
+        "review_cadence": { "enum": ["weekly", "monthly", "quarterly"] }
+      }
+    },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workflow", "context", "verifier", "integration", "adoption", "operations", "risk", "constraints"],
+      "properties": {
+        "workflow": { "$ref": "#/$defs/readinessDimension" },
+        "context": { "$ref": "#/$defs/readinessDimension" },
+        "verifier": { "$ref": "#/$defs/readinessDimension" },
+        "integration": { "$ref": "#/$defs/readinessDimension" },
+        "adoption": { "$ref": "#/$defs/readinessDimension" },
+        "operations": { "$ref": "#/$defs/readinessDimension" },
+        "risk": { "$ref": "#/$defs/readinessDimension" },
+        "constraints": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "stop_conditions": { "$ref": "#/$defs/nonEmptyStrings" },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "rationale", "approvers", "review_due"],
+      "properties": {
+        "disposition": { "enum": ["discover", "pilot", "defer", "do_not_build", "promote", "pause", "retire"] },
+        "rationale": { "type": "string", "minLength": 10 },
+        "approvers": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/approval" },
+          "allOf": [
+            { "not": { "contains": { "$ref": "#/$defs/technicalApproval" }, "minContains": 2 } },
+            { "not": { "contains": { "$ref": "#/$defs/operationalApproval" }, "minContains": 2 } },
+            { "not": { "contains": { "$ref": "#/$defs/riskApproval" }, "minContains": 2 } }
+          ]
+        },
+        "review_due": { "type": ["string", "null"], "format": "date" }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assumption_id", "statement", "owner", "validation_method", "status"],
+        "properties": {
+          "assumption_id": { "$ref": "#/$defs/id" },
+          "statement": { "type": "string", "minLength": 10 },
+          "owner": { "$ref": "#/$defs/owner" },
+          "validation_method": { "type": "string", "minLength": 10 },
+          "status": { "enum": ["open", "validated", "invalidated"] }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "anyOf": [
+          { "properties": { "status": { "const": "pilot" } }, "required": ["status"] },
+          {
+            "properties": {
+              "decision": {
+                "type": "object",
+                "properties": { "disposition": { "const": "pilot" } },
+                "required": ["disposition"]
+              }
+            },
+            "required": ["decision"]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "type": "object",
+            "properties": {
+              "approvers": {
+                "type": "array",
+                "minItems": 2,
+                "allOf": [
+                  { "contains": { "$ref": "#/$defs/operationalApproval" } },
+                  { "contains": { "$ref": "#/$defs/riskApproval" } }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "anyOf": [
+          { "properties": { "status": { "const": "production" } }, "required": ["status"] },
+          {
+            "properties": {
+              "decision": {
+                "type": "object",
+                "properties": { "disposition": { "const": "promote" } },
+                "required": ["disposition"]
+              }
+            },
+            "required": ["decision"]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "type": "object",
+            "properties": {
+              "primary_metric": {
+                "type": "object",
+                "properties": {
+                  "baseline": {
+                    "type": "object",
+                    "properties": {
+                      "status": { "const": "measured" },
+                      "value": { "type": "number" },
+                      "as_of": { "type": "string", "format": "date" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "readiness": { "$ref": "#/$defs/productionReadiness" },
+          "decision": {
+            "type": "object",
+            "properties": {
+              "approvers": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "allOf": [
+                  { "contains": { "$ref": "#/$defs/technicalApproval" } },
+                  { "contains": { "$ref": "#/$defs/operationalApproval" } },
+                  { "contains": { "$ref": "#/$defs/riskApproval" } }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "owner": { "type": "string", "minLength": 2 },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "nullableNonNegative": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metric_id", "unit", "direction", "eligible_population", "baseline", "target", "measurement_window_days", "owner"],
+      "properties": {
+        "metric_id": { "$ref": "#/$defs/id" },
+        "unit": { "type": "string", "minLength": 1 },
+        "direction": { "enum": ["increase", "decrease", "maintain"] },
+        "eligible_population": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["definition", "denominator_event", "exclusions", "source"],
+          "properties": {
+            "definition": { "type": "string", "minLength": 10 },
+            "denominator_event": { "type": "string", "minLength": 5 },
+            "exclusions": { "type": "array", "items": { "type": "string", "minLength": 3 } },
+            "source": { "type": "string", "minLength": 3 }
+          }
+        },
+        "baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "value", "source", "as_of"],
+          "properties": {
+            "status": { "enum": ["unmeasured", "estimated", "measured", "illustrative_fixture"] },
+            "value": { "type": ["number", "null"] },
+            "source": { "type": "string", "minLength": 3 },
+            "as_of": { "type": ["string", "null"], "format": "date" }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "status": { "const": "measured" } }, "required": ["status"] },
+              "then": {
+                "properties": {
+                  "value": { "type": "number" },
+                  "as_of": { "type": "string", "format": "date" }
+                }
+              }
+            }
+          ]
+        },
+        "target": { "type": "number" },
+        "measurement_window_days": { "type": "integer", "minimum": 1 },
+        "owner": { "$ref": "#/$defs/owner" }
+      }
+    },
+    "guardrailMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metric_id", "operator", "threshold", "owner"],
+      "properties": {
+        "metric_id": { "$ref": "#/$defs/id" },
+        "operator": { "enum": ["eq", "lte", "gte"] },
+        "threshold": { "type": "number" },
+        "owner": { "$ref": "#/$defs/owner" }
+      }
+    },
+    "readinessDimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "evidence"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "evidence": { "type": "string", "minLength": 5 }
+      }
+    },
+    "productionReadinessDimension": {
+      "type": "object",
+      "properties": {
+        "score": { "type": "integer", "minimum": 3, "maximum": 4 }
+      }
+    },
+    "productionReadiness": {
+      "type": "object",
+      "properties": {
+        "workflow": { "$ref": "#/$defs/productionReadinessDimension" },
+        "context": { "$ref": "#/$defs/productionReadinessDimension" },
+        "verifier": { "$ref": "#/$defs/productionReadinessDimension" },
+        "integration": { "$ref": "#/$defs/productionReadinessDimension" },
+        "adoption": { "$ref": "#/$defs/productionReadinessDimension" },
+        "operations": { "$ref": "#/$defs/productionReadinessDimension" },
+        "risk": { "$ref": "#/$defs/productionReadinessDimension" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "principal", "approved_at"],
+      "properties": {
+        "role": { "enum": ["technical", "operational", "risk"] },
+        "principal": { "$ref": "#/$defs/owner" },
+        "approved_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "technicalApproval": {
+      "type": "object",
+      "properties": { "role": { "const": "technical" } },
+      "required": ["role"]
+    },
+    "operationalApproval": {
+      "type": "object",
+      "properties": { "role": { "const": "operational" } },
+      "required": ["role"]
+    },
+    "riskApproval": {
+      "type": "object",
+      "properties": { "role": { "const": "risk" } },
+      "required": ["role"]
+    }
+  }
+}

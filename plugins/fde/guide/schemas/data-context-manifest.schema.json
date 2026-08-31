@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/data-context-manifest.schema.json",
+  "title": "Data Context Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "context_manifest_id", "version", "workflow_id",
+    "owner", "reviewed_at", "decision_scope", "status", "data_planes", "sources",
+    "preparation", "quality_contract", "label_contracts", "output_records", "economics",
+    "operations", "decision", "control_ids"
+  ],
+  "properties": {
+    "$schema": { "enum": ["../schemas/data-context-manifest.schema.json", "../../schemas/data-context-manifest.schema.json"] },
+    "schema_version": { "const": "1.0.0" },
+    "context_manifest_id": { "$ref": "#/$defs/id" },
+    "version": { "$ref": "#/$defs/version" },
+    "workflow_id": { "$ref": "#/$defs/id" },
+    "owner": { "$ref": "#/$defs/text" },
+    "reviewed_at": { "type": "string", "format": "date-time" },
+    "decision_scope": { "$ref": "#/$defs/text" },
+    "status": { "enum": ["draft", "conditionally_ready", "ready", "remediation_required", "not_viable"] },
+    "data_planes": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": { "$ref": "#/$defs/dataPlane" }
+    },
+    "sources": {
+      "type": "array", "minItems": 4,
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "preparation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["owner", "steps", "lineage_store"],
+      "properties": {
+        "owner": { "$ref": "#/$defs/text" },
+        "lineage_store": { "$ref": "#/$defs/text" },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/preparationStep" } }
+      }
+    },
+    "quality_contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["decision_critical_fields", "reconciliation_rules", "segment_coverage", "unresolved_conditions"],
+      "properties": {
+        "decision_critical_fields": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/criticalField" } },
+        "reconciliation_rules": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/reconciliationRule" } },
+        "segment_coverage": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/segmentCoverage" } },
+        "unresolved_conditions": { "type": "array", "items": { "$ref": "#/$defs/text" } }
+      }
+    },
+    "label_contracts": { "type": "array", "items": { "$ref": "#/$defs/labelContract" } },
+    "output_records": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/outputRecord" } },
+    "economics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["selected_option", "options", "decision_basis"],
+      "properties": {
+        "selected_option": { "$ref": "#/$defs/id" },
+        "options": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/economicOption" } },
+        "decision_basis": { "$ref": "#/$defs/text" }
+      }
+    },
+    "operations": {
+      "type": "object", "additionalProperties": false,
+      "required": ["monitors", "drift_response", "rebaseline_trigger", "rollback_condition", "change_owner"],
+      "properties": {
+        "monitors": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/monitor" } },
+        "drift_response": { "$ref": "#/$defs/text" },
+        "rebaseline_trigger": { "$ref": "#/$defs/text" },
+        "rollback_condition": { "$ref": "#/$defs/text" },
+        "change_owner": { "$ref": "#/$defs/text" }
+      }
+    },
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["disposition", "rationale", "conditions", "approved_by", "review_due"],
+      "properties": {
+        "disposition": { "enum": ["continue", "remediate", "constrain", "pause", "do_not_build"] },
+        "rationale": { "$ref": "#/$defs/text" },
+        "conditions": { "type": "array", "items": { "$ref": "#/$defs/text" } },
+        "approved_by": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/approval" } },
+        "review_due": { "type": "string", "format": "date" }
+      }
+    },
+    "control_ids": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "type": "string", "pattern": "^CTX-[0-9]{3}$" } }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{2,127}$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "stringList": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" } },
+    "dataPlane": {
+      "type": "object", "additionalProperties": false,
+      "required": ["plane_id", "owner", "purpose", "source_ids", "allowed_uses", "prohibited_uses", "retention", "training_use"],
+      "properties": {
+        "plane_id": { "enum": ["operational", "knowledge_context", "evaluation_training", "telemetry_feedback"] },
+        "owner": { "$ref": "#/$defs/text" },
+        "purpose": { "$ref": "#/$defs/text" },
+        "source_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "allowed_uses": { "$ref": "#/$defs/stringList" },
+        "prohibited_uses": { "$ref": "#/$defs/stringList" },
+        "retention": { "$ref": "#/$defs/text" },
+        "training_use": { "enum": ["prohibited", "explicit_approval_required", "allowed_by_policy"] }
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_id", "planes", "location", "owner", "source_of_truth", "purpose", "classification", "trust", "tenant_binding", "population", "contract", "access", "quality", "failure_behavior"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" },
+        "planes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["operational", "knowledge_context", "evaluation_training", "telemetry_feedback"] } },
+        "location": {
+          "type": "object", "additionalProperties": false, "required": ["system", "environment", "interface", "residency"],
+          "properties": { "system": { "$ref": "#/$defs/text" }, "environment": { "$ref": "#/$defs/text" }, "interface": { "$ref": "#/$defs/text" }, "residency": { "$ref": "#/$defs/text" } }
+        },
+        "owner": { "$ref": "#/$defs/text" },
+        "source_of_truth": { "type": "boolean" },
+        "purpose": { "$ref": "#/$defs/text" },
+        "classification": { "enum": ["public", "internal", "confidential", "restricted"] },
+        "trust": { "enum": ["trusted_data", "trusted_control", "tainted_context"] },
+        "tenant_binding": { "type": "boolean" },
+        "population": {
+          "type": "object", "additionalProperties": false, "required": ["definition", "grain", "entity_keys", "time_semantics", "coverage_segments"],
+          "properties": {
+            "definition": { "$ref": "#/$defs/text" }, "grain": { "$ref": "#/$defs/text" },
+            "entity_keys": { "$ref": "#/$defs/stringList" }, "time_semantics": { "$ref": "#/$defs/text" },
+            "coverage_segments": { "$ref": "#/$defs/stringList" }
+          }
+        },
+        "contract": {
+          "type": "object", "additionalProperties": false, "required": ["schema_id", "version", "digest", "revision", "freshness_slo_seconds"],
+          "properties": { "schema_id": { "$ref": "#/$defs/id" }, "version": { "$ref": "#/$defs/version" }, "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }, "revision": { "$ref": "#/$defs/text" }, "freshness_slo_seconds": { "type": "integer", "minimum": 0 } }
+        },
+        "access": {
+          "type": "object", "additionalProperties": false, "required": ["principals", "row_scope", "field_scope", "purpose_limit", "retention", "deletion"],
+          "properties": {
+            "principals": { "$ref": "#/$defs/stringList" }, "row_scope": { "$ref": "#/$defs/text" },
+            "field_scope": { "$ref": "#/$defs/text" }, "purpose_limit": { "$ref": "#/$defs/text" },
+            "retention": { "$ref": "#/$defs/text" }, "deletion": { "$ref": "#/$defs/text" }
+          }
+        },
+        "quality": {
+          "type": "object", "additionalProperties": false, "required": ["profiled_at", "method", "sample_size", "metrics"],
+          "properties": {
+            "profiled_at": { "type": "string", "format": "date-time" }, "method": { "$ref": "#/$defs/text" },
+            "sample_size": { "type": "integer", "minimum": 1 },
+            "metrics": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/qualityMetric" } }
+          }
+        },
+        "failure_behavior": {
+          "type": "object", "additionalProperties": false, "required": ["missing", "stale", "conflicting", "corrected", "late_arriving"],
+          "properties": { "missing": { "$ref": "#/$defs/text" }, "stale": { "$ref": "#/$defs/text" }, "conflicting": { "$ref": "#/$defs/text" }, "corrected": { "$ref": "#/$defs/text" }, "late_arriving": { "$ref": "#/$defs/text" } }
+        }
+      }
+    },
+    "qualityMetric": {
+      "type": "object", "additionalProperties": false,
+      "required": ["dimension", "unit", "threshold_operator", "threshold", "observed", "status", "evidence"],
+      "properties": {
+        "dimension": { "enum": ["completeness", "validity", "uniqueness", "consistency", "timeliness", "coverage", "representativeness", "label_agreement", "retrieval_recall"] },
+        "unit": { "$ref": "#/$defs/text" }, "threshold_operator": { "enum": [">=", "<=", "=", "not_applicable"] },
+        "threshold": { "type": ["number", "null"] }, "observed": { "type": ["number", "null"] },
+        "status": { "enum": ["pass", "fail", "unknown", "not_applicable"] }, "evidence": { "$ref": "#/$defs/text" }
+      }
+    },
+    "preparationStep": {
+      "type": "object", "additionalProperties": false,
+      "required": ["step_id", "kind", "inputs", "output_id", "owner", "implementation", "version", "deterministic", "transformations", "validation", "reversible", "lineage_event"],
+      "properties": {
+        "step_id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["parse", "ocr", "normalize", "deduplicate", "entity_resolution", "redact", "chunk", "index", "feature_engineer", "join", "aggregate", "summarize", "other"] },
+        "inputs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "output_id": { "$ref": "#/$defs/id" }, "owner": { "$ref": "#/$defs/text" }, "implementation": { "$ref": "#/$defs/text" },
+        "version": { "$ref": "#/$defs/version" }, "deterministic": { "type": "boolean" }, "transformations": { "$ref": "#/$defs/stringList" },
+        "validation": { "$ref": "#/$defs/stringList" }, "reversible": { "type": "boolean" }, "lineage_event": { "$ref": "#/$defs/text" }
+      }
+    },
+    "criticalField": {
+      "type": "object", "additionalProperties": false, "required": ["source_id", "field", "decision_use", "required_dimensions", "fallback"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" }, "field": { "$ref": "#/$defs/text" }, "decision_use": { "$ref": "#/$defs/text" },
+        "required_dimensions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["completeness", "validity", "uniqueness", "consistency", "timeliness", "coverage", "representativeness"] } },
+        "fallback": { "$ref": "#/$defs/text" }
+      }
+    },
+    "reconciliationRule": {
+      "type": "object", "additionalProperties": false, "required": ["rule_id", "source_ids", "precedence", "conflict_owner", "stop_condition"],
+      "properties": { "rule_id": { "$ref": "#/$defs/id" }, "source_ids": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }, "precedence": { "$ref": "#/$defs/text" }, "conflict_owner": { "$ref": "#/$defs/text" }, "stop_condition": { "$ref": "#/$defs/text" } }
+    },
+    "segmentCoverage": {
+      "type": "object", "additionalProperties": false, "required": ["segment", "eligible_count", "observed_count", "minimum_coverage", "status"],
+      "properties": { "segment": { "$ref": "#/$defs/text" }, "eligible_count": { "type": "integer", "minimum": 0 }, "observed_count": { "type": "integer", "minimum": 0 }, "minimum_coverage": { "type": "number", "minimum": 0, "maximum": 1 }, "status": { "enum": ["pass", "fail", "unknown"] } }
+    },
+    "labelContract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["label_id", "definition", "source_id", "owner", "independent_approver", "source_revision", "adjudication", "agreement_measure", "reviewed_at"],
+      "properties": { "label_id": { "$ref": "#/$defs/id" }, "definition": { "$ref": "#/$defs/text" }, "source_id": { "$ref": "#/$defs/id" }, "owner": { "$ref": "#/$defs/text" }, "independent_approver": { "$ref": "#/$defs/text" }, "source_revision": { "$ref": "#/$defs/text" }, "adjudication": { "$ref": "#/$defs/text" }, "agreement_measure": { "$ref": "#/$defs/text" }, "reviewed_at": { "type": "string", "format": "date-time" } }
+    },
+    "outputRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["output_id", "owner", "system_of_record", "classification", "durability", "provenance", "correction", "downstream_uses", "retention", "deletion", "training_use"],
+      "properties": { "output_id": { "$ref": "#/$defs/id" }, "owner": { "$ref": "#/$defs/text" }, "system_of_record": { "$ref": "#/$defs/text" }, "classification": { "enum": ["public", "internal", "confidential", "restricted"] }, "durability": { "enum": ["ephemeral", "reviewable_artifact", "durable_record"] }, "provenance": { "$ref": "#/$defs/text" }, "correction": { "$ref": "#/$defs/text" }, "downstream_uses": { "$ref": "#/$defs/stringList" }, "retention": { "$ref": "#/$defs/text" }, "deletion": { "$ref": "#/$defs/text" }, "training_use": { "enum": ["prohibited", "explicit_approval_required", "allowed_by_policy"] } }
+    },
+    "economicOption": {
+      "type": "object", "additionalProperties": false, "required": ["option_id", "description", "one_time_cost_usd", "annual_cost_usd", "delay_days", "residual_risk", "owner"],
+      "properties": { "option_id": { "$ref": "#/$defs/id" }, "description": { "$ref": "#/$defs/text" }, "one_time_cost_usd": { "type": "number", "minimum": 0 }, "annual_cost_usd": { "type": "number", "minimum": 0 }, "delay_days": { "type": "integer", "minimum": 0 }, "residual_risk": { "$ref": "#/$defs/text" }, "owner": { "$ref": "#/$defs/text" } }
+    },
+    "monitor": {
+      "type": "object", "additionalProperties": false, "required": ["monitor_id", "source_id", "dimension", "threshold", "window", "owner", "response"],
+      "properties": { "monitor_id": { "$ref": "#/$defs/id" }, "source_id": { "$ref": "#/$defs/id" }, "dimension": { "enum": ["schema", "freshness", "completeness", "validity", "uniqueness", "consistency", "coverage", "representativeness", "permission", "lineage", "drift"] }, "threshold": { "$ref": "#/$defs/text" }, "window": { "$ref": "#/$defs/text" }, "owner": { "$ref": "#/$defs/text" }, "response": { "$ref": "#/$defs/text" } }
+    },
+    "approval": {
+      "type": "object", "additionalProperties": false, "required": ["role", "principal", "approved_at"],
+      "properties": { "role": { "enum": ["data", "operational", "risk"] }, "principal": { "$ref": "#/$defs/text" }, "approved_at": { "type": "string", "format": "date-time" } }
+    }
+  }
+}

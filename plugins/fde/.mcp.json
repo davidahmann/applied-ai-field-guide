@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "fde": {
+      "command": "node",
+      "args": ["./mcp/server.mjs"],
+      "cwd": ".",
+      "env_vars": ["FDE_CONFIG_PATH"]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/control-catalog.schema.json",
+  "title": "Production agent control catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "controls"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "controls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "domain", "level", "requirement", "evidence", "release_gates"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" },
+          "domain": {
+            "enum": ["adoption", "architecture", "context", "cost", "delivery", "evaluation", "human_review", "identity", "operations", "reliability", "security", "state", "tools", "value"]
+          },
+          "level": { "enum": ["MUST", "SHOULD", "MAY"] },
+          "requirement": { "type": "string", "minLength": 20 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 3 }
+          },
+          "release_gates": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "enum": ["design", "sandbox", "shadow", "canary", "autonomy", "operations"] }
+          }
+        }
+      }
+    }
+  }
+}

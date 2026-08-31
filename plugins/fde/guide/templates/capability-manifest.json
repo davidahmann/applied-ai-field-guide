@@ -1,0 +1,115 @@
+{
+  "$schema": "../schemas/capability-manifest.schema.json",
+  "schema_version": "1.1.0",
+  "capability_id": "stage_proposal_capability",
+  "version": "0.1.0",
+  "kind": "tool",
+  "status": "candidate",
+  "owner": "agent-platform",
+  "provenance": {
+    "source_repository": "https://github.com/example/bounded-workflow-tool",
+    "source_commit": "1111111111111111111111111111111111111111",
+    "publisher": "candidate-internal-publisher",
+    "publisher_verified": false,
+    "build_attestation_digest": "sha256:4886fa8ee64b4c546bd6f796fb7f5dd1c5174979665dd918ff2879267f7a2b4a",
+    "artifact_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+    "attestation": {
+      "format": "in_toto_statement",
+      "algorithm": "Ed25519",
+      "key_id": "fixture-builder-ed25519-1",
+      "issuer": "approved-build-service",
+      "subject_artifact_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "subject_tool_contract_digest": "sha256:6f589f84fdd8aa1fd3b68e7f3cbf11f79c8b5ec3a29961aec2f68ffcba88b17c",
+      "predicate_type": "https://slsa.dev/provenance/v1",
+      "location": "https://attestations.example.invalid/stage-proposal-capability/0.1.0",
+      "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "registry_record": {
+      "registry_id": "capability-registry",
+      "decision": "candidate",
+      "capability_id": "stage_proposal_capability",
+      "capability_version": "0.1.0",
+      "artifact_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "tool_contract_digest": "sha256:6f589f84fdd8aa1fd3b68e7f3cbf11f79c8b5ec3a29961aec2f68ffcba88b17c",
+      "authority_digest": "sha256:d371b41984a773e7c6166e62067c55718fc71e1cb097632eac5fa76c18959f9c",
+      "verified_at": "2026-08-07T15:00:00Z",
+      "expires_at": "2026-08-08T15:00:00Z",
+      "decision_digest": "sha256:984752ce46640f93ff19487448d1efd586ebce3a33da1f35ed342a955b62a50f"
+    },
+    "sbom_uri": "capability-sbom.spdx",
+    "sbom_digest": "sha256:ea1cfc9f53dd09be89bebdfb1906234da83432df9437b3e1841c13785aa89db8",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "artifacts": {
+    "entrypoint": "tool-gateway/stage-proposal",
+    "executable_uri": null,
+    "instruction_digest": null,
+    "executable_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+    "input_schema_digest": "sha256:8b10f85c9daae37c28074b84477492e30cc0acdc72a186d95b36e06d09d4a321",
+    "output_schema_digest": "sha256:bf0cb6bc1f351b1036bbac1d5d346688b04ac0cb4b32845bb6ca213eb26984d9",
+    "tool_contract": {
+      "uri": "tool-contract.json",
+      "tool_id": "stage_proposal",
+      "version": "0.1.0",
+      "schema_version": "1.1.0",
+      "digest": "sha256:6f589f84fdd8aa1fd3b68e7f3cbf11f79c8b5ec3a29961aec2f68ffcba88b17c"
+    }
+  },
+  "authority": {
+    "digest": "sha256:d371b41984a773e7c6166e62067c55718fc71e1cb097632eac5fa76c18959f9c",
+    "actor_modes": [
+      "interactive_delegated"
+    ],
+    "scopes": [
+      "proposal:stage"
+    ],
+    "data_classes": [
+      "internal",
+      "confidential"
+    ],
+    "effect_ceiling": "staged",
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "proposal_service",
+        "scheme": "https",
+        "authority": "proposal-service.internal",
+        "port": 443,
+        "path_prefix": "/v1/proposals"
+      }
+    ],
+    "credential_mode": "short_lived_brokered",
+    "tenant_binding": true
+  },
+  "runtime": {
+    "sandbox_profile": "write-staging-isolated",
+    "network_policy": "operation-scoped-allowlist",
+    "resource_profile": "cpu-1-memory-512mb-time-30s",
+    "supported_harness_versions": [
+      "0.1.0"
+    ]
+  },
+  "lifecycle": {
+    "introduced_at": "2026-08-07",
+    "review_due": "2026-11-07",
+    "eol_at": null,
+    "disable_procedure": "Disable the registry entry and revoke its workload identity.",
+    "rollback_version": null
+  },
+  "assurance": {
+    "threat_model_uri": "threat-model.json",
+    "evaluation_suite_uri": "evaluation-case.json",
+    "negative_test_ids": [
+      "publisher-spoof",
+      "signature-mismatch",
+      "registry-unavailable"
+    ],
+    "approved_by": []
+  },
+  "control_ids": [
+    "TOL-006",
+    "SEC-007"
+  ]
+}

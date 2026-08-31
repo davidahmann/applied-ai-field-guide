@@ -1,0 +1,114 @@
+{
+  "$schema": "../../../schemas/capability-manifest.schema.json",
+  "schema_version": "1.1.0",
+  "capability_id": "readback_invoice_effect_capability",
+  "version": "2.0.0",
+  "kind": "tool",
+  "status": "candidate",
+  "owner": "accounts-payable-platform",
+  "provenance": {
+    "source_repository": "https://github.com/davidahmann/production-agent-engineering",
+    "source_commit": "c4b1d525b8a5ac6f2cc7fafad9639bd08f0de786",
+    "publisher": "reference-example-unverified",
+    "publisher_verified": false,
+    "build_attestation_digest": "sha256:474174846aa8688bad81df0f365f4fe461405c1813653bd543fc023b81f4fcc8",
+    "artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+    "attestation": {
+      "format": "in_toto_statement",
+      "algorithm": "Ed25519",
+      "key_id": "unverified-reference-builder-key",
+      "issuer": "reference-build-example",
+      "subject_artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+      "subject_tool_contract_digest": "sha256:b86413b438a24b6f118024177938ef75a8a7a979aa3623188efbb7c00f67caec",
+      "predicate_type": "https://slsa.dev/provenance/v1",
+      "location": "https://attestations.example.invalid/readback_invoice_effect_capability/2.0.0",
+      "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "registry_record": {
+      "registry_id": "reference-capability-registry",
+      "decision": "candidate",
+      "capability_id": "readback_invoice_effect_capability",
+      "capability_version": "2.0.0",
+      "artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+      "tool_contract_digest": "sha256:b86413b438a24b6f118024177938ef75a8a7a979aa3623188efbb7c00f67caec",
+      "authority_digest": "sha256:3753843b9a2083d7feb5d1bab7006228f746de5dea5733bb82e431964e2f28a3",
+      "verified_at": "2026-08-07T15:00:00Z",
+      "expires_at": "2026-08-08T15:00:00Z",
+      "decision_digest": "sha256:70b2ff9d3c42d4a1b5e88f3df436235420c26e276c47a7126776090cb7e0cd86"
+    },
+    "sbom_uri": "invoice-reference-sbom.spdx",
+    "sbom_digest": "sha256:8d3816722ddad1557dc5293c629b7f4ea56dfcc978ad2d11960eee1d9d7ff8cb",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "artifacts": {
+    "entrypoint": "invoice-world-fixture/readback_invoice_effect",
+    "executable_uri": "../invoice-world-fixture.mjs",
+    "instruction_digest": null,
+    "executable_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+    "input_schema_digest": "sha256:fd391374fefbbbcb4bc1ac351971f53b9f660943e58f9c77b8074f1f655aeb25",
+    "output_schema_digest": "sha256:d42b5a27b11e87aa722ed5f330c48ecac6a53d47846759f0e6d4f3a5ed91f333",
+    "tool_contract": {
+      "uri": "../tools/readback-invoice-effect.json",
+      "tool_id": "readback_invoice_effect",
+      "version": "2.0.0",
+      "schema_version": "1.1.0",
+      "digest": "sha256:b86413b438a24b6f118024177938ef75a8a7a979aa3623188efbb7c00f67caec"
+    }
+  },
+  "authority": {
+    "digest": "sha256:3753843b9a2083d7feb5d1bab7006228f746de5dea5733bb82e431964e2f28a3",
+    "actor_modes": [
+      "interactive_delegated"
+    ],
+    "scopes": [
+      "invoice-resolution:readback"
+    ],
+    "data_classes": [
+      "confidential",
+      "internal"
+    ],
+    "effect_ceiling": "none",
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "ap_ledger",
+        "scheme": "https",
+        "authority": "ap-ledger.internal",
+        "port": 443,
+        "path_prefix": "/v1/resolutions/readback"
+      }
+    ],
+    "credential_mode": "short_lived_brokered",
+    "tenant_binding": true
+  },
+  "runtime": {
+    "sandbox_profile": "isolated-reference-world",
+    "network_policy": "operation-scoped-allowlist",
+    "resource_profile": "cpu-1-memory-512mb-time-90s",
+    "supported_harness_versions": [
+      "3.0.0"
+    ]
+  },
+  "lifecycle": {
+    "introduced_at": "2026-08-07",
+    "review_due": "2026-11-07",
+    "eol_at": null,
+    "disable_procedure": "Disable readback_invoice_effect_capability by exact manifest and executable digest.",
+    "rollback_version": null
+  },
+  "assurance": {
+    "threat_model_uri": "../threat-model.json",
+    "evaluation_suite_uri": "../evals",
+    "negative_test_ids": [
+      "readback_invoice_effect-authority-denial",
+      "readback_invoice_effect-digest-mismatch"
+    ],
+    "approved_by": []
+  },
+  "control_ids": [
+    "TOL-006",
+    "SEC-007"
+  ]
+}

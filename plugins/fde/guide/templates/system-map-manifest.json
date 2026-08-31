@@ -1,0 +1,165 @@
+{
+  "$schema": "../schemas/system-map-manifest.schema.json",
+  "schema_version": "1.0.0",
+  "map_id": "workflow_system_map",
+  "version": "0.1.0",
+  "status": "verified",
+  "map_kind": "combined",
+  "scope": {
+    "system_id": "workflow_system",
+    "description": "An illustrative map of the workflow, software components, evidence sources, and operating contracts needed for navigation and change review.",
+    "in_scope": [
+      "workflow decision and user surface",
+      "source evidence and policy",
+      "runtime, capability, evaluation, and operations contracts"
+    ],
+    "out_of_scope": [
+      "raw confidential records",
+      "runtime authorization decisions",
+      "source-of-truth completion evidence"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "workflow_contract",
+      "kind": "documentation",
+      "uri": "workflow-charter.json",
+      "authority": "source_of_truth",
+      "classification": "internal",
+      "revision": "workflow-charter-version",
+      "owner": "workflow-owner",
+      "included": true
+    },
+    {
+      "source_id": "agent_contract",
+      "kind": "code",
+      "uri": "agent-system.json",
+      "authority": "source_of_truth",
+      "classification": "internal",
+      "revision": "agent-system-version",
+      "owner": "technical-owner",
+      "included": true
+    },
+    {
+      "source_id": "operating_contract",
+      "kind": "runbook",
+      "uri": "operations-bundle.mjs",
+      "authority": "reference",
+      "classification": "internal",
+      "revision": "operations-bundle-version",
+      "owner": "service-owner",
+      "included": true
+    },
+    {
+      "source_id": "evaluation_contract",
+      "kind": "documentation",
+      "uri": "evaluation-report.json",
+      "authority": "reference",
+      "classification": "internal",
+      "revision": "evaluation-report-version",
+      "owner": "evaluation-owner",
+      "included": true
+    }
+  ],
+  "derivation": {
+    "method": "hybrid",
+    "producer": {
+      "name": "approved-system-map-builder",
+      "version": "0.1.0",
+      "configuration_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "input_revision": "replace-with-immutable-input-revision",
+    "executed_at": "2026-08-08T16:00:00Z",
+    "coverage": {
+      "status": "complete",
+      "included_source_ids": ["workflow_contract", "agent_contract", "operating_contract", "evaluation_contract"],
+      "excluded_reason": null
+    },
+    "semantic_processing": "approved_remote_model"
+  },
+  "nodes": [
+    {
+      "node_id": "workflow_system",
+      "kind": "system",
+      "owner": "service-owner",
+      "classification": "internal",
+      "source_refs": ["workflow_contract", "agent_contract"]
+    },
+    {
+      "node_id": "workflow_decision",
+      "kind": "decision",
+      "owner": "workflow-owner",
+      "classification": "internal",
+      "source_refs": ["workflow_contract"]
+    },
+    {
+      "node_id": "workflow_runtime",
+      "kind": "component",
+      "owner": "technical-owner",
+      "classification": "internal",
+      "source_refs": ["agent_contract"]
+    },
+    {
+      "node_id": "workflow_operations",
+      "kind": "runbook",
+      "owner": "service-owner",
+      "classification": "internal",
+      "source_refs": ["operating_contract"]
+    },
+    {
+      "node_id": "workflow_evaluation",
+      "kind": "evaluation",
+      "owner": "evaluation-owner",
+      "classification": "internal",
+      "source_refs": ["evaluation_contract"]
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "decision_implemented_by_runtime",
+      "source_node_id": "workflow_decision",
+      "target_node_id": "workflow_runtime",
+      "type": "implements",
+      "basis": "extracted",
+      "confidence": "verified",
+      "source_refs": ["workflow_contract", "agent_contract"]
+    },
+    {
+      "relation_id": "runtime_operated_by_runbook",
+      "source_node_id": "workflow_runtime",
+      "target_node_id": "workflow_operations",
+      "type": "operated_by",
+      "basis": "inferred",
+      "confidence": "medium",
+      "source_refs": ["agent_contract", "operating_contract"]
+    },
+    {
+      "relation_id": "runtime_evaluated_by_suite",
+      "source_node_id": "workflow_runtime",
+      "target_node_id": "workflow_evaluation",
+      "type": "evaluated_by",
+      "basis": "extracted",
+      "confidence": "high",
+      "source_refs": ["agent_contract", "evaluation_contract"]
+    }
+  ],
+  "usage": {
+    "allowed_purposes": ["navigation", "design_review", "change_impact", "onboarding"],
+    "prohibited_purposes": ["authorization", "effect_authorization", "completion_proof", "policy_definition", "unbounded_memory"],
+    "access_classification": "internal",
+    "retention": "Retain only while the bound source revisions and access classification remain valid.",
+    "query_logging": "metadata_only"
+  },
+  "freshness": {
+    "last_verified_at": "2026-08-08T16:00:00Z",
+    "objective": "Rebuild or review the map before a material source, ownership, interface, policy, or runtime change is promoted.",
+    "invalidation_triggers": [
+      "bound source revision changes",
+      "owner or classification changes",
+      "coverage becomes partial"
+    ],
+    "owner": "technical-owner",
+    "stale_behavior": "block_material_change_review"
+  },
+  "control_ids": ["CTX-001", "CTX-002", "CTX-004", "OPS-007"]
+}

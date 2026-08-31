@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/pattern-catalog.schema.json",
+  "title": "Agent engineering pattern catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "patterns"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "title", "status", "maturity", "applies_when", "implementation", "control_ids", "failure_signals", "verification", "evidence", "reviewed_at", "review_due"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^(PAT|ANTI)-[0-9]{3}$" },
+          "kind": { "enum": ["pattern", "anti_pattern"] },
+          "title": { "type": "string", "minLength": 5 },
+          "status": { "enum": ["draft", "accepted", "deprecated"] },
+          "maturity": { "enum": ["emerging", "field_tested", "normative"] },
+          "applies_when": { "$ref": "#/$defs/nonEmptyStrings" },
+          "implementation": { "$ref": "#/$defs/nonEmptyStrings" },
+          "control_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+          },
+          "failure_signals": { "$ref": "#/$defs/nonEmptyStrings" },
+          "verification": { "$ref": "#/$defs/nonEmptyStrings" },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^(R26-[0-9]{2}|internal-[a-z0-9-]+)$" }
+          },
+          "reviewed_at": { "type": "string", "format": "date" },
+          "review_due": { "type": "string", "format": "date" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 4 }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run FDE Engagement"
+  short_description: "Keep one live FDE engagement coherent and source-linked"
+  default_prompt: "Use $run-fde-engagement to assess this engagement's current evidence, route the next consequential decision, and leave one accountable next move."

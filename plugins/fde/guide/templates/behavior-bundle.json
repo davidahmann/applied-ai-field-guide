@@ -1,0 +1,92 @@
+{
+  "$schema": "../schemas/behavior-bundle.schema.json",
+  "schema_version": "1.0.0",
+  "bundle_id": "workflow_behavior_bundle",
+  "version": "0.1.0",
+  "status": "candidate",
+  "components": [
+    {
+      "component_id": "workflow_model_route",
+      "role": "model_route",
+      "version": "0.1.0",
+      "configuration": {
+        "provider": "deployment-selected",
+        "model": "evaluation-selected",
+        "routing_policy": "one explicitly evaluated route"
+      }
+    },
+    {
+      "component_id": "workflow_prompt_bundle",
+      "role": "prompt_bundle",
+      "version": "0.1.0",
+      "configuration": {
+        "system_instruction": "Produce only typed proposals from authorized evidence; never claim authorization or completion.",
+        "output_contract": "application-defined closed schema"
+      }
+    },
+    {
+      "component_id": "workflow_harness",
+      "role": "harness",
+      "version": "0.1.0",
+      "configuration": {
+        "entrypoint": "runWorkflow",
+        "execution_model": "fail-closed canonical skeleton",
+        "runtime_uri": "reference-runtime.mjs",
+        "runtime_digest": "sha256:c7fa90936171f0fc6036bfa98976d1c26480c813f6693f1b964b15f57162d22d"
+      }
+    },
+    {
+      "component_id": "workflow_context_policy",
+      "role": "context_policy",
+      "version": "0.1.0",
+      "configuration": {
+        "untrusted_content": "data_only",
+        "freshness": "source-contract enforced",
+        "policy_uri": "authorization-policy.mjs",
+        "policy_digest": "sha256:94d1613d8de02f02be155fcdd6bfa145808ea4dfd314fb6b4271ea92819f274e"
+      }
+    },
+    {
+      "component_id": "workflow_tool_bundle",
+      "role": "tool_bundle",
+      "version": "0.1.0",
+      "configuration": {
+        "selection": "explicit exact members",
+        "authority": "intersect capability, agent, caller, tenant, and policy"
+      }
+    },
+    {
+      "component_id": "workflow_guardrail_policy",
+      "role": "guardrail_policy",
+      "version": "0.1.0",
+      "configuration": {
+        "policy_enforcement": "outside model generation",
+        "completion_proof": "source-of-truth readback",
+        "policy_uri": "authorization-policy.mjs",
+        "policy_digest": "sha256:94d1613d8de02f02be155fcdd6bfa145808ea4dfd314fb6b4271ea92819f274e",
+        "threat_model_uri": "threat-model.json",
+        "threat_model_digest": "sha256:901aa5a5a4d91b5fc2ccfde0fe7c32988244b5133082d8753388c8f0c3144633"
+      }
+    }
+  ],
+  "tool_members": [
+    {
+      "tool_id": "stage_proposal",
+      "contract_uri": "tool-contract.json",
+      "contract_version": "0.1.0",
+      "contract_schema_version": "1.1.0",
+      "contract_digest": "sha256:6f589f84fdd8aa1fd3b68e7f3cbf11f79c8b5ec3a29961aec2f68ffcba88b17c",
+      "capability_manifest_uri": "capability-manifest.json",
+      "capability_id": "stage_proposal_capability",
+      "capability_version": "0.1.0",
+      "capability_manifest_digest": "sha256:4fe9e3f8ddb9a904f0e85889699369179dd66e0123600ef16167e5d415fded74",
+      "authority_digest": "sha256:d371b41984a773e7c6166e62067c55718fc71e1cb097632eac5fa76c18959f9c"
+    }
+  ],
+  "control_ids": [
+    "ARC-002",
+    "TOL-006",
+    "SEC-007",
+    "OPS-007"
+  ]
+}

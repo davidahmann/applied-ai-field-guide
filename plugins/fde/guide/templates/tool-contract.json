@@ -1,0 +1,125 @@
+{
+  "$schema": "../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "stage_proposal",
+  "version": "0.1.0",
+  "owner": "domain-platform",
+  "purpose": "Create a non-binding proposal after validation and policy authorization",
+  "kind": "stage_write",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "business_operation_id", "work_item_id", "source_revision", "proposal"],
+    "properties": {
+      "tenant_id": { "type": "string" },
+      "business_operation_id": { "type": "string", "minLength": 1 },
+      "work_item_id": { "type": "string" },
+      "source_revision": { "type": "string" },
+      "proposal": { "type": "object" }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["proposal_id", "status", "proposal_digest"],
+    "properties": {
+      "proposal_id": { "type": "string" },
+      "status": { "const": "staged" },
+      "proposal_digest": { "type": "string" }
+    }
+  },
+  "error_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["code", "message", "retryable"],
+    "properties": {
+      "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+      "message": { "type": "string", "minLength": 1 },
+      "retryable": { "type": "boolean" }
+    }
+  },
+  "authorization": {
+    "agent_principal": "workflow-agent",
+    "caller_context_required": true,
+    "required_scopes": ["proposal:stage"],
+    "policy_decision_point": "tool-gateway",
+    "tenant_binding": true,
+    "fail_mode": "closed"
+  },
+  "data_access": {
+    "reads_data": false,
+    "classifications": [],
+    "maximum_sensitivity": "none",
+    "scope_fields": [],
+    "max_records": 0,
+    "max_response_bytes": 0,
+    "open_world": false,
+    "approval_policy": "none",
+    "request_fields": [
+      { "field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["proposal_service"], "purpose": "bind the proposal to the authorized tenant" },
+      { "field": "business_operation_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["proposal_service"], "purpose": "anchor retries to one stable business operation" },
+      { "field": "work_item_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["proposal_service"], "purpose": "identify the bounded work item" },
+      { "field": "source_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["proposal_service"], "purpose": "enforce the source revision precondition" },
+      { "field": "proposal", "classification": "confidential", "source": "generated", "allowed_sink_service_ids": ["proposal_service"], "purpose": "stage the validated non-binding proposal" }
+    ]
+  },
+  "execution": {
+    "timeout_ms": 5000,
+    "max_attempts": 2,
+    "retryable_errors": ["TIMEOUT", "UNAVAILABLE"],
+    "idempotency": {
+      "required": true,
+      "key_fields": ["tenant_id", "business_operation_id"],
+      "enforced_by": "proposal-service"
+    }
+  },
+  "side_effects": {
+    "class": "staged",
+    "resources": ["resolution-proposal"],
+    "compensation": "discard staged proposal"
+  },
+  "approval": {
+    "required": false,
+    "role": null,
+    "proposal_digest_required": false,
+    "expires_seconds": null
+  },
+  "network": {
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "proposal_service",
+        "scheme": "https",
+        "authority": "proposal-service.internal",
+        "port": 443,
+        "path_prefix": "/v1/proposals"
+      }
+    ],
+    "allowed_operations": ["stage_proposal"],
+    "allowed_methods": ["POST"],
+    "redirect_policy": "deny",
+    "address_resolution_policy": "pinned_service_identity",
+    "private_address_policy": "explicit_allowlist",
+    "server_fetch_policy": "deny",
+    "target_account_binding": true,
+    "tenant_binding": true,
+    "request_max_bytes": 262144,
+    "response_max_bytes": 32768,
+    "credential_broker": "workload-identity-gateway",
+    "public_gateway_capability": null
+  },
+  "failure_modes": [
+    { "code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "INVALID_PROPOSAL", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false },
+    { "code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false }
+  ],
+  "observability": {
+    "span_name": "agent.tool.stage_proposal",
+    "audit_event": "proposal.staged",
+    "redacted_fields": ["proposal.sensitive_notes"],
+    "postcondition_readback": true
+  },
+  "invariants": ["at most one active proposal per work item and source revision"],
+  "control_ids": ["TOL-001", "TOL-003", "IAM-002", "IAM-003", "SEC-006", "REL-001", "STA-002"]
+}

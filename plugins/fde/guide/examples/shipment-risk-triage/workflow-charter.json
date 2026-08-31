@@ -1,0 +1,111 @@
+{
+  "$schema": "../../schemas/workflow-charter.schema.json",
+  "schema_version": "1.2.0",
+  "workflow_id": "shipment_risk_triage",
+  "version": "0.1.0",
+  "status": "pilot",
+  "owners": {
+    "executive_sponsor": "logistics-sponsor",
+    "operational": "dispatch-operations",
+    "technical": "logistics-platform",
+    "risk": "transportation-risk",
+    "receiving_service_owner": "dispatch-service-owner",
+    "domain_experts": ["dispatch-coordinator", "carrier-operations-analyst"]
+  },
+  "problem": {
+    "decision_or_job": "Prioritize in-transit shipments for timely coordinator review before their promised arrival",
+    "affected_users": ["dispatch coordinators"],
+    "trigger": "eligible shipment receives a carrier-status update",
+    "current_state": "Coordinators manually scan a time-ordered queue and combine carrier status with local judgment",
+    "pain_evidence": ["Illustrative teaching scenario; validate observed review delays and exception patterns with dispatch coordinators"]
+  },
+  "functional_requirement": {
+    "user": "dispatch coordinator",
+    "interface": "persistent shipment-risk review queue",
+    "decision": "Decide whether an eligible shipment needs a coordinator review now",
+    "inputs": ["current shipment snapshot", "current carrier signals", "approved risk-score version", "routing-policy revision"],
+    "action": "Create a non-binding review case only when deterministic policy requires coordinator attention",
+    "accepted_outcome": "Coordinator accepts or rejects a correctly routed review case with current evidence"
+  },
+  "scope": {
+    "in_scope": ["single-tenant in-transit shipment triage", "non-binding coordinator review cases", "typed evidence and explanation"],
+    "out_of_scope": ["autonomous shipment intervention", "carrier contract changes", "cross-tenant routing", "model training"],
+    "initial_segment": "in-transit shipments promised to arrive within 72 hours and carrying current carrier signals",
+    "autonomy_ceiling": "recommend",
+    "maximum_effect": "staged"
+  },
+  "outcome": {
+    "accepted_event": "Coordinator accepts or rejects a correctly routed review case with current evidence",
+    "verifier": "Dispatch review record links the case to current shipment evidence and a coordinator disposition",
+    "primary_metric": {
+      "metric_id": "accepted_routing_rate",
+      "unit": "ratio",
+      "direction": "increase",
+      "eligible_population": {
+        "definition": "Single-tenant in-transit shipments within 72 hours of promise time and with complete current signals",
+        "denominator_event": "eligible shipment status update enters the triage workflow",
+        "exclusions": ["missing or stale evidence", "shipments outside pilot tenant", "shipments already in a manual escalation"],
+        "source": "shipment-event and dispatch-review records"
+      },
+      "baseline": {
+        "status": "illustrative_fixture",
+        "value": 0.62,
+        "source": "teaching placeholder; replace with observed coordinator-routing sample",
+        "as_of": "2026-08-08"
+      },
+      "target": 0.8,
+      "measurement_window_days": 28,
+      "owner": "dispatch-operations"
+    },
+    "guardrail_metrics": [
+      {"metric_id": "stale_evidence_route_rate", "operator": "eq", "threshold": 0, "owner": "logistics-platform"},
+      {"metric_id": "unsupported_explanation_rate", "operator": "eq", "threshold": 0, "owner": "dispatch-enablement"},
+      {"metric_id": "cost_per_accepted_decision_usd", "operator": "lte", "threshold": 6, "owner": "dispatch-operations"},
+      {"metric_id": "coordinator_override_rate", "operator": "lte", "threshold": 0.25, "owner": "dispatch-operations"}
+    ]
+  },
+  "value_case": {
+    "annual_eligible_volume": 24000,
+    "adoption_rate": 0.7,
+    "value_per_accepted_outcome_usd": 18,
+    "annual_avoided_loss_usd": 241920,
+    "annual_expected_residual_loss_usd": null,
+    "implementation_cost_usd": 85000,
+    "annual_fixed_operating_cost_usd": 24000,
+    "annual_variable_operating_cost_usd": 9600,
+    "annual_human_review_cost_usd": 28800,
+    "annual_recovery_cost_usd": 3600,
+    "max_cost_per_accepted_outcome_usd": 6,
+    "attribution_method": "Illustrative pilot compares an eligible shadow cohort with coordinator-accepted routing and reconciles downstream delivery outcomes",
+    "confidence": "low",
+    "review_cadence": "monthly"
+  },
+  "readiness": {
+    "workflow": {"score": 3, "evidence": "Illustrative review sequence and exception boundaries are documented; validate with dispatch observation"},
+    "context": {"score": 2, "evidence": "Shipment and carrier evidence contracts are defined, but production freshness coverage is unmeasured"},
+    "verifier": {"score": 3, "evidence": "Coordinator disposition can verify route acceptance; intervention outcomes need agreed reconciliation"},
+    "integration": {"score": 2, "evidence": "Reference contracts cover reads and review-case creation only"},
+    "adoption": {"score": 1, "evidence": "No coordinator usability study is included in the local reference"},
+    "operations": {"score": 1, "evidence": "Service-review design is documented but no deployed service is operated"},
+    "risk": {"score": 3, "evidence": "No autonomous shipment action and representative routing failures are executable"},
+    "constraints": ["Illustrative example only", "Do not use the placeholder economics or score threshold for a customer decision"]
+  },
+  "stop_conditions": [
+    "Any route uses stale, missing, or cross-tenant evidence",
+    "Coordinator review burden or cost per accepted decision exceeds the charter ceiling",
+    "Calibration, adoption, or support evidence is insufficient for the selected segment"
+  ],
+  "decision": {
+    "disposition": "pilot",
+    "rationale": "The reference demonstrates bounded hybrid routing but cannot establish customer value, calibrated model performance, or operating readiness",
+    "approvers": [
+      {"role": "operational", "principal": "dispatch-operations", "approved_at": "2026-08-08T15:00:00Z"},
+      {"role": "risk", "principal": "transportation-risk", "approved_at": "2026-08-08T15:05:00Z"}
+    ],
+    "review_due": null
+  },
+  "assumptions": [
+    {"assumption_id": "signal_availability", "statement": "Current carrier signals can be attributed to the correct tenant and shipment", "owner": "logistics-data-platform", "validation_method": "Compare a pilot signal sample with shipment-system records", "status": "open"},
+    {"assumption_id": "human_review_value", "statement": "Dispatch coordinators can act on a review case before its promised arrival time", "owner": "dispatch-operations", "validation_method": "Observe queue latency and coordinator disposition during shadow operation", "status": "open"}
+  ]
+}

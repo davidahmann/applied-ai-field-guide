@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assess AI Change Impact"
+  short_description: "Trace material changes through declared dependencies"
+  default_prompt: "Use $assess-ai-change-impact to find direct and transitive consequences, validation work, and rollback conditions for this exact change."

@@ -1,0 +1,120 @@
+{
+  "$schema": "../schemas/workflow-charter.schema.json",
+  "schema_version": "1.2.0",
+  "workflow_id": "candidate_workflow",
+  "version": "0.1.0",
+  "status": "discovery",
+  "owners": {
+    "executive_sponsor": "business-sponsor",
+    "operational": "workflow-owner",
+    "technical": "delivery-lead",
+    "risk": "risk-owner",
+    "receiving_service_owner": "service-owner",
+    "domain_experts": ["frontline-operator"]
+  },
+  "problem": {
+    "decision_or_job": "Resolve one bounded operational decision with auditable evidence",
+    "affected_users": ["frontline operators"],
+    "trigger": "validated work item enters the target queue",
+    "current_state": "Operators gather context across systems and resolve the item manually",
+    "pain_evidence": ["baseline measurement is scheduled during discovery"]
+  },
+  "functional_requirement": {
+    "user": "frontline operator",
+    "interface": "persistent workflow review workspace",
+    "decision": "Select the permitted resolution for one eligible work item",
+    "inputs": ["current work-item record", "applicable policy evidence"],
+    "action": "Stage an evidence-backed resolution for accountable review",
+    "accepted_outcome": "Operational owner accepts a verified workflow result"
+  },
+  "scope": {
+    "in_scope": ["one named workflow segment", "evidence-backed recommendation", "staged proposal artifact"],
+    "out_of_scope": ["unbounded work", "irreversible autonomous effects"],
+    "initial_segment": "one low-risk workflow segment",
+    "autonomy_ceiling": "recommend",
+    "maximum_effect": "staged"
+  },
+  "outcome": {
+    "accepted_event": "Operational owner accepts a verified workflow result",
+    "verifier": "Independent rule, source-of-truth readback, or named reviewer confirms completion",
+    "primary_metric": {
+      "metric_id": "accepted_outcome_rate",
+      "unit": "ratio",
+      "direction": "increase",
+      "eligible_population": {
+        "definition": "All work items entering the named low-risk workflow segment",
+        "denominator_event": "eligible work item enters the target queue",
+        "exclusions": ["items outside the approved segment"],
+        "source": "versioned workflow event stream"
+      },
+      "baseline": {
+        "status": "illustrative_fixture",
+        "value": 0,
+        "source": "canonical template fixture; replace with target-environment evidence",
+        "as_of": "2026-08-07"
+      },
+      "target": 0.95,
+      "measurement_window_days": 28,
+      "owner": "workflow-owner"
+    },
+    "guardrail_metrics": [
+      {
+        "metric_id": "unauthorized_effect_rate",
+        "operator": "eq",
+        "threshold": 0,
+        "owner": "risk-owner"
+      },
+      {
+        "metric_id": "duplicate_effect_rate",
+        "operator": "eq",
+        "threshold": 0,
+        "owner": "delivery-lead"
+      }
+    ]
+  },
+  "value_case": {
+    "annual_eligible_volume": null,
+    "adoption_rate": null,
+    "value_per_accepted_outcome_usd": null,
+    "annual_avoided_loss_usd": null,
+    "annual_expected_residual_loss_usd": null,
+    "implementation_cost_usd": null,
+    "annual_fixed_operating_cost_usd": null,
+    "annual_variable_operating_cost_usd": null,
+    "annual_human_review_cost_usd": null,
+    "annual_recovery_cost_usd": null,
+    "max_cost_per_accepted_outcome_usd": 0.75,
+    "attribution_method": "Compare the eligible workflow segment against its measured baseline",
+    "confidence": "unknown",
+    "review_cadence": "monthly"
+  },
+  "readiness": {
+    "workflow": { "score": 1, "evidence": "Trigger and owner identified" },
+    "context": { "score": 0, "evidence": "Source audit not yet completed" },
+    "verifier": { "score": 1, "evidence": "Candidate verifier identified" },
+    "integration": { "score": 0, "evidence": "Tool readiness not yet assessed" },
+    "adoption": { "score": 0, "evidence": "Operator workflow not yet observed" },
+    "operations": { "score": 0, "evidence": "Production ownership not yet assigned" },
+    "risk": { "score": 0, "evidence": "Threat and policy review not yet completed" },
+    "constraints": ["Remain in discovery until baseline and verifier evidence are complete"]
+  },
+  "stop_conditions": [
+    "No trustworthy verifier or accountable owner can be established",
+    "Required source access or effect controls cannot meet the declared risk ceiling"
+  ],
+  "decision": {
+    "disposition": "discover",
+    "rationale": "The candidate needs measured value, context, integration, and adoption evidence",
+    "approvers": [],
+    "review_due": null
+  },
+  "assumptions": [
+    {
+      "assumption_id": "operator_adoption",
+      "statement": "Operators will use the proposed workflow surface for eligible work",
+      "owner": "workflow-owner",
+      "validation_method": "Observe representative cases and run a measured pilot",
+      "status": "open"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "$schema": "../../../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "stage_resolution",
+  "version": "3.0.0",
+  "owner": "accounts-payable-platform",
+  "purpose": "Create a non-binding invoice-resolution proposal for review without mutating the ledger",
+  "kind": "stage_write",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["operation_id", "release_digest", "tenant_id", "business_operation_id", "invoice_id", "invoice_revision", "policy_revision", "policy_decision_id", "proposal", "proposal_digest", "idempotency_key"],
+    "properties": {
+      "operation_id": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "release_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "tenant_id": { "type": "string" },
+      "business_operation_id": { "type": "string", "minLength": 8, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+      "invoice_id": { "type": "string" },
+      "invoice_revision": { "type": "string" },
+      "policy_revision": { "type": "string" },
+      "policy_decision_id": { "type": "string", "format": "uuid" },
+      "proposal": { "type": "object" },
+      "proposal_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "idempotency_key": { "type": "string" }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["proposal_id", "proposal_digest", "status"],
+    "properties": {
+      "proposal_id": { "type": "string" },
+      "proposal_digest": { "type": "string" },
+      "status": { "const": "staged" }
+    }
+  },
+  "error_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["code", "message", "retryable"],
+    "properties": {
+      "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+      "message": { "type": "string", "minLength": 1 },
+      "retryable": { "type": "boolean" }
+    }
+  },
+  "authorization": {
+    "agent_principal": "invoice-exception-workload",
+    "caller_context_required": true,
+    "required_scopes": ["invoice-resolution:stage"],
+    "policy_decision_point": "tool-gateway",
+    "tenant_binding": true,
+    "fail_mode": "closed"
+  },
+  "data_access": {
+    "reads_data": false,
+    "classifications": [],
+    "maximum_sensitivity": "none",
+    "scope_fields": [],
+    "max_records": 0,
+    "max_response_bytes": 0,
+    "open_world": false,
+    "approval_policy": "none",
+    "request_fields": [
+      { "field": "operation_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["resolution_service"], "purpose": "bind retries to one business operation" },
+      { "field": "release_digest", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["resolution_service"], "purpose": "bind staging to the currently admitted release" },
+      { "field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["resolution_service"], "purpose": "bind the proposal to the authorized tenant" },
+      { "field": "business_operation_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["resolution_service"], "purpose": "identify one stable intended business effect across retries" },
+      { "field": "invoice_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["resolution_service"], "purpose": "identify the bounded invoice resource" },
+      { "field": "invoice_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["resolution_service"], "purpose": "enforce the invoice revision precondition" },
+      { "field": "policy_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["resolution_service"], "purpose": "bind the proposal to evaluated policy" },
+      { "field": "policy_decision_id", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["resolution_service"], "purpose": "bind staging to an admitted current authorization decision" },
+      { "field": "proposal", "classification": "confidential", "source": "generated", "allowed_sink_service_ids": ["resolution_service"], "purpose": "stage the validated resolution proposal" },
+      { "field": "proposal_digest", "classification": "internal", "source": "generated", "allowed_sink_service_ids": ["resolution_service"], "purpose": "bind later approval to exact proposal bytes" },
+      { "field": "idempotency_key", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["resolution_service"], "purpose": "deduplicate stage delivery" }
+    ]
+  },
+  "execution": {
+    "timeout_ms": 5000,
+    "max_attempts": 2,
+    "retryable_errors": ["TIMEOUT", "UNAVAILABLE"],
+    "idempotency": { "required": true, "key_fields": ["business_operation_id", "idempotency_key"], "enforced_by": "resolution-service" }
+  },
+  "side_effects": { "class": "staged", "resources": ["resolution-proposal"], "compensation": "discard resolution proposal" },
+  "approval": { "required": false, "role": null, "proposal_digest_required": false, "expires_seconds": null },
+  "network": {
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "resolution_service",
+        "scheme": "https",
+        "authority": "resolution-service.internal",
+        "port": 443,
+        "path_prefix": "/v1/resolutions/stage"
+      }
+    ],
+    "allowed_operations": ["stage_resolution"],
+    "allowed_methods": ["POST"],
+    "redirect_policy": "deny",
+    "address_resolution_policy": "pinned_service_identity",
+    "private_address_policy": "explicit_allowlist",
+    "server_fetch_policy": "deny",
+    "target_account_binding": true,
+    "tenant_binding": true,
+    "request_max_bytes": 262144,
+    "response_max_bytes": 32768,
+    "credential_broker": "workload-identity-gateway",
+    "public_gateway_capability": null
+  },
+  "failure_modes": [
+    { "code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "INVALID_PROPOSAL", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "DIGEST_MISMATCH", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false },
+    { "code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false }
+  ],
+  "observability": { "span_name": "agent.tool.stage_resolution", "audit_event": "invoice_resolution.staged", "redacted_fields": ["proposal.private_notes"], "postcondition_readback": true },
+  "invariants": ["no ledger mutation occurs", "one stable business operation reuses its staged proposal across retries"],
+  "control_ids": ["TOL-003", "IAM-002", "IAM-003", "SEC-006", "REL-001", "STA-002", "OPS-001"]
+}

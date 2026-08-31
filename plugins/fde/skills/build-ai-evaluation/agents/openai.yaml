@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build AI Evaluation"
+  short_description: "Build realistic release evidence and evals"
+  default_prompt: "Use $build-ai-evaluation to build a reproducible evaluation for this AI system."

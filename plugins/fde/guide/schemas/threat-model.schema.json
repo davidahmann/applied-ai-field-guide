@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/threat-model.schema.json",
+  "title": "Production agent threat model",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "system_id", "owner", "last_reviewed", "assets", "trust_boundaries", "assumptions", "threats"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "system_id": { "$ref": "#/$defs/id" },
+    "owner": { "type": "string", "minLength": 2 },
+    "last_reviewed": { "type": "string", "format": "date" },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "classification", "integrity_required", "availability_required"],
+        "properties": {
+          "asset_id": { "$ref": "#/$defs/id" },
+          "classification": { "enum": ["public", "internal", "confidential", "restricted"] },
+          "integrity_required": { "type": "boolean" },
+          "availability_required": { "type": "boolean" }
+        }
+      }
+    },
+    "trust_boundaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["boundary_id", "from", "to", "protocol", "authentication", "authorization", "encryption"],
+        "properties": {
+          "boundary_id": { "$ref": "#/$defs/id" },
+          "from": { "$ref": "#/$defs/id" },
+          "to": { "$ref": "#/$defs/id" },
+          "protocol": { "type": "string", "minLength": 2 },
+          "authentication": { "type": "string", "minLength": 2 },
+          "authorization": { "type": "string", "minLength": 2 },
+          "encryption": { "type": "string", "minLength": 2 }
+        }
+      }
+    },
+    "assumptions": { "$ref": "#/$defs/nonEmptyStrings" },
+    "threats": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["threat_id", "category", "scenario", "entry_points", "affected_assets", "likelihood", "impact", "preventive_controls", "detective_controls", "recovery_controls", "residual_risk", "test_case_ids", "owner", "status"],
+        "properties": {
+          "threat_id": { "type": "string", "pattern": "^THR-[0-9]{3}$" },
+          "category": {
+            "enum": ["prompt_injection", "confused_deputy", "credential_exposure", "data_exfiltration", "unauthorized_action", "persistence_poisoning", "supply_chain", "evaluator_tampering", "denial_of_wallet", "availability", "privacy", "duplicate_effect", "cross_tenant_access"]
+          },
+          "scenario": { "type": "string", "minLength": 10 },
+          "entry_points": { "$ref": "#/$defs/nonEmptyStrings" },
+          "affected_assets": { "$ref": "#/$defs/nonEmptyIds" },
+          "likelihood": { "enum": ["low", "medium", "high"] },
+          "impact": { "enum": ["low", "medium", "high", "critical"] },
+          "preventive_controls": { "$ref": "#/$defs/controlIds" },
+          "detective_controls": { "$ref": "#/$defs/controlIds" },
+          "recovery_controls": { "$ref": "#/$defs/controlIds" },
+          "residual_risk": { "enum": ["accepted", "low", "medium", "high"] },
+          "test_case_ids": { "$ref": "#/$defs/nonEmptyIds" },
+          "owner": { "type": "string", "minLength": 2 },
+          "status": { "enum": ["open", "mitigated", "accepted"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+    "nonEmptyIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    },
+    "controlIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+    }
+  }
+}

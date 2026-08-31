@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/capability-manifest.schema.json",
+  "title": "Agent capability supply-chain manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "capability_id", "version", "kind", "status", "owner", "provenance", "artifacts", "authority", "runtime", "lifecycle", "assurance", "control_ids"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.1.0" },
+    "capability_id": { "$ref": "#/$defs/id" },
+    "version": { "$ref": "#/$defs/version" },
+    "kind": { "enum": ["tool", "mcp_server", "skill", "cli", "code_package"] },
+    "status": { "enum": ["candidate", "approved", "disabled", "retired"] },
+    "owner": { "type": "string", "minLength": 2 },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_repository", "source_commit", "publisher", "publisher_verified", "build_attestation_digest", "artifact_digest", "attestation", "registry_record", "sbom_uri", "sbom_digest", "licenses"],
+      "properties": {
+        "source_repository": { "type": "string", "format": "uri", "pattern": "^https://[A-Za-z0-9.-]+/[^?#]+$" },
+        "source_commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "publisher": { "type": "string", "minLength": 2 },
+        "publisher_verified": { "type": "boolean" },
+        "build_attestation_digest": { "$ref": "#/$defs/digest", "$comment": "SHA-256 over the domain-separated canonical embedded attestation, enforced by repository validation." },
+        "artifact_digest": { "$ref": "#/$defs/digest" },
+        "attestation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["format", "algorithm", "key_id", "issuer", "subject_artifact_digest", "subject_tool_contract_digest", "predicate_type", "location", "signature"],
+          "properties": {
+            "format": { "const": "in_toto_statement" },
+            "algorithm": { "enum": ["Ed25519", "ECDSA_P256", "RSA_PSS_SHA256"] },
+            "key_id": { "$ref": "#/$defs/opaqueReference" },
+            "issuer": { "$ref": "#/$defs/opaqueReference" },
+            "subject_artifact_digest": { "$ref": "#/$defs/digest" },
+            "subject_tool_contract_digest": { "$ref": "#/$defs/digest" },
+            "predicate_type": { "type": "string", "format": "uri" },
+            "location": { "type": "string", "format": "uri", "pattern": "^https://" },
+            "signature": { "$ref": "#/$defs/base64url" }
+          }
+        },
+        "registry_record": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["registry_id", "decision", "capability_id", "capability_version", "artifact_digest", "tool_contract_digest", "authority_digest", "decision_digest", "verified_at", "expires_at"],
+          "properties": {
+            "registry_id": { "$ref": "#/$defs/opaqueReference" },
+            "decision": { "enum": ["candidate", "approved", "disabled", "retired"] },
+            "capability_id": { "$ref": "#/$defs/id" },
+            "capability_version": { "$ref": "#/$defs/version" },
+            "artifact_digest": { "$ref": "#/$defs/digest" },
+            "tool_contract_digest": { "$ref": "#/$defs/digest" },
+            "authority_digest": { "$ref": "#/$defs/digest" },
+            "decision_digest": { "$ref": "#/$defs/digest", "$comment": "SHA-256 over the domain-separated canonical registry record excluding decision_digest, enforced by repository validation." },
+            "verified_at": { "type": "string", "format": "date-time" },
+            "expires_at": { "type": "string", "format": "date-time" }
+          }
+        },
+        "sbom_uri": { "$ref": "#/$defs/localReference" },
+        "sbom_digest": { "$ref": "#/$defs/digest" },
+        "licenses": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entrypoint", "executable_uri", "instruction_digest", "executable_digest", "input_schema_digest", "output_schema_digest", "tool_contract"],
+      "properties": {
+        "entrypoint": { "type": "string", "minLength": 2 },
+        "executable_uri": {
+          "oneOf": [{ "$ref": "#/$defs/localReference" }, { "type": "null" }]
+        },
+        "instruction_digest": {
+          "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+        },
+        "executable_digest": { "$ref": "#/$defs/digest" },
+        "input_schema_digest": { "$ref": "#/$defs/digest" },
+        "output_schema_digest": { "$ref": "#/$defs/digest" },
+        "tool_contract": { "$ref": "#/$defs/toolContractBinding" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digest", "actor_modes", "scopes", "data_classes", "effect_ceiling", "egress", "destinations", "credential_mode", "tenant_binding"],
+      "properties": {
+        "digest": { "$ref": "#/$defs/digest", "$comment": "SHA-256 over the domain-separated canonical authority object excluding digest, enforced by repository validation." },
+        "actor_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["interactive_delegated", "unattended_workload", "mixed"] }
+        },
+        "scopes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^(?!.*\\*)[A-Za-z0-9][A-Za-z0-9:._/-]*$" }
+        },
+        "data_classes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["public", "internal", "confidential", "restricted"] }
+        },
+        "effect_ceiling": { "enum": ["none", "staged", "reversible", "irreversible"] },
+        "egress": { "enum": ["none", "allowlist"] },
+        "destinations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/destination" }
+        },
+        "credential_mode": { "enum": ["none", "short_lived_brokered"] },
+        "tenant_binding": { "type": "boolean" }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sandbox_profile", "network_policy", "resource_profile", "supported_harness_versions"],
+      "properties": {
+        "sandbox_profile": { "type": "string", "minLength": 2 },
+        "network_policy": { "type": "string", "minLength": 2 },
+        "resource_profile": { "type": "string", "minLength": 2 },
+        "supported_harness_versions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/version" }
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["introduced_at", "review_due", "eol_at", "disable_procedure", "rollback_version"],
+      "properties": {
+        "introduced_at": { "type": "string", "format": "date" },
+        "review_due": { "type": "string", "format": "date" },
+        "eol_at": { "type": ["string", "null"], "format": "date" },
+        "disable_procedure": { "type": "string", "minLength": 10 },
+        "rollback_version": {
+          "oneOf": [{ "$ref": "#/$defs/version" }, { "type": "null" }]
+        }
+      }
+    },
+    "assurance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["threat_model_uri", "evaluation_suite_uri", "negative_test_ids", "approved_by"],
+      "properties": {
+        "threat_model_uri": { "$ref": "#/$defs/localReference" },
+        "evaluation_suite_uri": { "$ref": "#/$defs/localReference" },
+        "negative_test_ids": { "$ref": "#/$defs/nonEmptyStrings" },
+        "approved_by": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 2 }
+        }
+      }
+    },
+    "control_ids": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "allOf": [
+        { "contains": { "const": "TOL-006" } },
+        { "contains": { "const": "SEC-007" } }
+      ],
+      "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "authority": { "type": "object", "properties": { "egress": { "const": "none" } }, "required": ["egress"] } },
+        "required": ["authority"]
+      },
+      "then": {
+        "properties": { "authority": { "type": "object", "properties": { "destinations": { "type": "array", "maxItems": 0 }, "credential_mode": { "const": "none" } } } }
+      },
+      "else": {
+        "properties": { "authority": { "type": "object", "properties": { "destinations": { "type": "array", "minItems": 1 }, "credential_mode": { "const": "short_lived_brokered" } } } }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "authority": {
+            "type": "object",
+            "anyOf": [
+              { "properties": { "effect_ceiling": { "not": { "const": "none" } } }, "required": ["effect_ceiling"] },
+              { "properties": { "data_classes": { "type": "array", "contains": { "enum": ["internal", "confidential", "restricted"] } } }, "required": ["data_classes"] }
+            ]
+          }
+        },
+        "required": ["authority"]
+      },
+      "then": {
+        "properties": {
+          "authority": {
+            "type": "object",
+            "properties": { "tenant_binding": { "const": true } }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "approved" } }, "required": ["status"] },
+      "then": {
+        "properties": {
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "publisher_verified": { "const": true },
+              "registry_record": {
+                "type": "object",
+                "properties": { "decision": { "const": "approved" } }
+              }
+            }
+          },
+          "artifacts": {
+            "type": "object",
+            "properties": { "executable_uri": { "$ref": "#/$defs/localReference" } }
+          },
+          "assurance": {
+            "type": "object",
+            "properties": { "approved_by": { "type": "array", "minItems": 2 } }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "base64url": { "type": "string", "minLength": 43, "maxLength": 1024, "pattern": "^[A-Za-z0-9_-]+$" },
+    "opaqueReference": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]*$" },
+    "localReference": { "type": "string", "minLength": 1, "pattern": "^(?![A-Za-z][A-Za-z0-9+.-]*:)(?!/)(?!.*\\\\).+$" },
+    "toolContractBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "tool_id", "version", "schema_version", "digest"],
+      "properties": {
+        "uri": { "$ref": "#/$defs/localReference" },
+        "tool_id": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/version" },
+        "schema_version": { "$ref": "#/$defs/version" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service_id", "scheme", "authority", "port", "path_prefix"],
+      "properties": {
+        "service_id": { "$ref": "#/$defs/id" },
+        "scheme": { "const": "https" },
+        "authority": { "type": "string", "maxLength": 253, "pattern": "^(?!.*\\*)(?!.*(?:^|\\.)localhost$)(?!169\\.254\\.169\\.254$)[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])$" },
+        "port": { "const": 443 },
+        "path_prefix": { "type": "string", "minLength": 2, "maxLength": 256, "pattern": "^/(?!/)(?!.*(?:\\.\\.|%2e|%2f|%5c|\\{|\\}))[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$" }
+      }
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    }
+  }
+}

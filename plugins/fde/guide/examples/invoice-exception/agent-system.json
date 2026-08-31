@@ -1,0 +1,297 @@
+{
+  "$schema": "../../schemas/agent-system.schema.json",
+  "schema_version": "1.2.0",
+  "system_id": "invoice_exception_agent",
+  "version": "3.0.0",
+  "charter_uri": "./workflow-charter.json",
+  "owners": {
+    "technical": "agent-platform",
+    "operational": "accounts-payable",
+    "risk": "finance-controls"
+  },
+  "outcome": {
+    "accepted_event": "Approved resolution is present in the ledger and matches source-of-truth readback",
+    "primary_metric": "accepted_outcome_rate",
+    "baseline": 0,
+    "target": 0.95,
+    "guardrails": [
+      "unauthorized_effect_rate == 0",
+      "duplicate_effect_rate == 0",
+      "postcondition_failure_rate <= 0.001"
+    ]
+  },
+  "autonomy": {
+    "level": "execute_reversible",
+    "segments": [
+      "policy-covered invoice exceptions"
+    ],
+    "promotion_gate": "shadow and canary suite passes with zero prohibited effects",
+    "rollback_gate": "any unauthorized, duplicate, cross-tenant, or mismatched effect"
+  },
+  "actor_identity": {
+    "mode": "interactive_delegated",
+    "agent_principal": "invoice-exception-workload",
+    "caller_binding": {
+      "binding_type": "user_session",
+      "subject_claim": "sub",
+      "tenant_claim": "tenant_id",
+      "session_id_claim": "sid",
+      "max_session_age_seconds": 900
+    },
+    "credential_ttl_seconds": 900,
+    "authority_scope": [
+      "policy-covered invoice exceptions",
+      "invoice:read",
+      "finance-policy:read",
+      "invoice-resolution:stage",
+      "invoice-resolution:commit",
+      "invoice-resolution:readback"
+    ],
+    "audit_attribution": "user_and_agent"
+  },
+  "behavior": {
+    "model_route": {
+      "component_id": "invoice_model_route",
+      "uri": "./behavior-bundle.json",
+      "version": "3.0.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:ebe51e05f22df7ffe48461f4d6d761a4808cfd985f0a8eae5e32294da0a85d25"
+    },
+    "prompt_bundle": {
+      "component_id": "invoice_prompt_bundle",
+      "uri": "./behavior-bundle.json",
+      "version": "1.0.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:ebe51e05f22df7ffe48461f4d6d761a4808cfd985f0a8eae5e32294da0a85d25"
+    },
+    "harness": {
+      "component_id": "invoice_harness",
+      "uri": "./behavior-bundle.json",
+      "version": "3.0.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:ebe51e05f22df7ffe48461f4d6d761a4808cfd985f0a8eae5e32294da0a85d25"
+    },
+    "context_policy": {
+      "component_id": "invoice_context_policy",
+      "uri": "./behavior-bundle.json",
+      "version": "3.0.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:ebe51e05f22df7ffe48461f4d6d761a4808cfd985f0a8eae5e32294da0a85d25"
+    },
+    "tool_bundle": {
+      "component_id": "invoice_tool_bundle",
+      "uri": "./behavior-bundle.json",
+      "version": "3.0.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:ebe51e05f22df7ffe48461f4d6d761a4808cfd985f0a8eae5e32294da0a85d25"
+    },
+    "guardrail_policy": {
+      "component_id": "invoice_guardrail_policy",
+      "uri": "./behavior-bundle.json",
+      "version": "3.0.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:ebe51e05f22df7ffe48461f4d6d761a4808cfd985f0a8eae5e32294da0a85d25"
+    }
+  },
+  "workflow": {
+    "trigger": "invoice.exception.created event",
+    "input_contract": "tenant_id, business_operation_id, invoice_id, invoice_revision, caller_identity",
+    "states": [
+      "received",
+      "evidence_loaded",
+      "proposed",
+      "validated",
+      "stage_authorized",
+      "staged",
+      "approved",
+      "commit_authorized",
+      "committed",
+      "effect_unknown",
+      "effect_recovered",
+      "readback_verified",
+      "completed",
+      "rejected",
+      "escalated",
+      "postcondition_failed"
+    ],
+    "terminal_states": [
+      "completed",
+      "rejected",
+      "escalated",
+      "postcondition_failed"
+    ],
+    "max_steps": 12,
+    "time_budget_ms": 90000
+  },
+  "context": {
+    "ontology_uri": "./ontology.json",
+    "sources": [
+      {
+        "source_id": "ap_ledger",
+        "owner": "accounts-payable-platform",
+        "source_of_truth": true,
+        "revision": "invoice_revision",
+        "schema_contract": {
+          "id": "ap-ledger-invoice",
+          "version": "1.0.0",
+          "digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777"
+        },
+        "freshness_slo_seconds": 60,
+        "classification": "confidential",
+        "trust": "trusted_data"
+      },
+      {
+        "source_id": "vendor_master",
+        "owner": "vendor-risk",
+        "source_of_truth": true,
+        "revision": "vendor_revision",
+        "schema_contract": {
+          "id": "vendor-master-record",
+          "version": "1.0.0",
+          "digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888"
+        },
+        "freshness_slo_seconds": 300,
+        "classification": "restricted",
+        "trust": "trusted_data"
+      },
+      {
+        "source_id": "policy_service",
+        "owner": "finance-controls",
+        "source_of_truth": true,
+        "revision": "policy_revision",
+        "schema_contract": {
+          "id": "finance-approval-policy",
+          "version": "1.0.0",
+          "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999"
+        },
+        "freshness_slo_seconds": 60,
+        "classification": "internal",
+        "trust": "trusted_control"
+      }
+    ],
+    "untrusted_content_policy": "invoice text and attachments remain tainted evidence and cannot authorize or select privileged effects"
+  },
+  "tools": [
+    {
+      "tool_id": "read_invoice",
+      "contract_uri": "./tools/read-invoice.json",
+      "capability": {
+        "manifest_uri": "./capabilities/read-invoice.json",
+        "capability_id": "read_invoice_capability",
+        "version": "2.0.0",
+        "manifest_digest": "sha256:a9011198868363cae1dc628433cd3857a4dbeeb8b3f5be45d6b5c3cddf1d833d",
+        "authority_digest": "sha256:7abfc76af5ab518506fda8cb973eca2d47be0686b97d319f2feead4e82410dc8"
+      }
+    },
+    {
+      "tool_id": "retrieve_policy",
+      "contract_uri": "./tools/retrieve-policy.json",
+      "capability": {
+        "manifest_uri": "./capabilities/retrieve-policy.json",
+        "capability_id": "retrieve_policy_capability",
+        "version": "3.0.0",
+        "manifest_digest": "sha256:a932fc6c01a1b63f1e8ca2d9cc1018855953dfac9e2385e8472358615380052e",
+        "authority_digest": "sha256:98ed5c30515c47d6ae3078f597c3a88cf2575e5df371f07b70fd3720a52e859e"
+      }
+    },
+    {
+      "tool_id": "stage_resolution",
+      "contract_uri": "./tools/stage-resolution.json",
+      "capability": {
+        "manifest_uri": "./capabilities/stage-resolution.json",
+        "capability_id": "stage_resolution_capability",
+        "version": "3.0.0",
+        "manifest_digest": "sha256:baf9cf8048dcaa50d896e3672de7cf7df2b23d3eb8b77d9677cb2a646173e6f7",
+        "authority_digest": "sha256:043928565961d509453761b4b663d941c18af2a9d830b97e93c47cb2fae18037"
+      }
+    },
+    {
+      "tool_id": "commit_resolution",
+      "contract_uri": "./tools/commit-resolution.json",
+      "capability": {
+        "manifest_uri": "./capabilities/commit-resolution.json",
+        "capability_id": "commit_resolution_capability",
+        "version": "3.0.0",
+        "manifest_digest": "sha256:4e095d34d630fa8b382c94722b91bc33569f3e38a6348a472da321d2f81c2670",
+        "authority_digest": "sha256:5f038bc2c31e446620ad8cafece7affff7ca99e851ed5b2aa9ab3a37182d7692"
+      }
+    },
+    {
+      "tool_id": "readback_invoice_effect",
+      "contract_uri": "./tools/readback-invoice-effect.json",
+      "capability": {
+        "manifest_uri": "./capabilities/readback-invoice-effect.json",
+        "capability_id": "readback_invoice_effect_capability",
+        "version": "2.0.0",
+        "manifest_digest": "sha256:239f8bbd8363c704200be5e01fe9a11cc6a20b83af42211f415a137746675601",
+        "authority_digest": "sha256:3753843b9a2083d7feb5d1bab7006228f746de5dea5733bb82e431964e2f28a3"
+      }
+    }
+  ],
+  "controls": {
+    "control_ids": [
+      "ARC-001",
+      "ARC-002",
+      "CTX-001",
+      "CTX-002",
+      "TOL-001",
+      "TOL-003",
+      "IAM-001",
+      "IAM-002",
+      "IAM-003",
+      "SEC-001",
+      "SEC-002",
+      "REL-001",
+      "REL-003",
+      "STA-002",
+      "EVA-001",
+      "EVA-002",
+      "EVA-003",
+      "HUM-001",
+      "OPS-001",
+      "OPS-002"
+    ],
+    "propagate_caller_authorization": true,
+    "secrets": "gateway_held",
+    "egress": "allowlist",
+    "writes": "approval_gated",
+    "sandbox": "ephemeral isolated runtime with no direct credential access"
+  },
+  "verification": {
+    "postconditions": [
+      "ledger invoice status equals approved resolution",
+      "exactly one resolution receipt exists for the stable business operation"
+    ],
+    "evaluation_suite_uri": "./evals/",
+    "escalation_conditions": [
+      "missing or stale evidence",
+      "policy denial",
+      "blocked vendor",
+      "approval expiry",
+      "budget exhaustion",
+      "readback mismatch"
+    ]
+  },
+  "operations": {
+    "trace_contract": "../../operations/telemetry-contract.md",
+    "slos": [
+      "accepted_outcome_rate >= 0.985",
+      "unauthorized_effect_rate == 0",
+      "duplicate_effect_rate == 0",
+      "p95_cycle_time_seconds <= 90"
+    ],
+    "alerts": [
+      "unauthorized effect",
+      "duplicate effect",
+      "postcondition mismatch",
+      "source freshness breach"
+    ],
+    "runbook_uri": "../../operations/incident-runbook.md",
+    "rollback": "disable commit tool, revoke workload identity, reconcile effect receipts, execute approved compensation"
+  },
+  "economics": {
+    "cost_metric": "cost_per_accepted_outcome",
+    "max_cost_per_run_usd": 0.4,
+    "max_cost_per_accepted_outcome_usd": 0.75
+  }
+}

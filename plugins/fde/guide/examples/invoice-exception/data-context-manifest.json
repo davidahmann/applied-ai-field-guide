@@ -1,0 +1,117 @@
+{
+  "$schema": "../../schemas/data-context-manifest.schema.json",
+  "schema_version": "1.0.0",
+  "context_manifest_id": "invoice_exception_context",
+  "version": "1.0.0",
+  "workflow_id": "invoice_exception_resolution",
+  "owner": "accounts-payable-platform",
+  "reviewed_at": "2026-08-12T12:00:00Z",
+  "decision_scope": "One tenant-bound invoice exception at one ledger revision",
+  "status": "conditionally_ready",
+  "data_planes": [
+    { "plane_id": "operational", "owner": "accounts-payable-platform", "purpose": "Current invoice and vendor state", "source_ids": ["ap_ledger", "vendor_master"], "allowed_uses": ["Eligibility, proposal, commit precondition, and readback"], "prohibited_uses": ["Training and unrelated finance analysis"], "retention": "Retain governed references and effect receipts only", "training_use": "prohibited" },
+    { "plane_id": "knowledge_context", "owner": "finance-controls", "purpose": "Effective approval policy and exception constraints", "source_ids": ["policy_service"], "allowed_uses": ["Policy decision and cited explanation"], "prohibited_uses": ["Granting identity or effect authority"], "retention": "Cache to the 60-second freshness objective", "training_use": "prohibited" },
+    { "plane_id": "evaluation_training", "owner": "evaluation-owner", "purpose": "Sanitized replay cases and independently approved expected results", "source_ids": ["evaluation_cases"], "allowed_uses": ["Release and regression evaluation"], "prohibited_uses": ["Runtime retrieval and answer-key access"], "retention": "Preserve with release evidence", "training_use": "explicit_approval_required" },
+    { "plane_id": "telemetry_feedback", "owner": "accounts-payable-operations", "purpose": "Outcome, guardrail, cost, data-health, and reconciliation events", "source_ids": ["outcome_events"], "allowed_uses": ["Service operation and owned regression learning"], "prohibited_uses": ["Silent labels or training"], "retention": "Retain allowlisted events for the service-review window", "training_use": "explicit_approval_required" }
+  ],
+  "sources": [
+    {
+      "source_id": "ap_ledger", "planes": ["operational"],
+      "location": { "system": "accounts-payable-ledger", "environment": "reference-world", "interface": "tenant-bound invoice read and readback", "residency": "in-memory synthetic fixture" },
+      "owner": "accounts-payable-platform", "source_of_truth": true, "purpose": "Invoice state, revision, amount, vendor, and committed resolution", "classification": "confidential", "trust": "trusted_data", "tenant_binding": true,
+      "population": { "definition": "Invoices in exception state for the admitted tenant and reference workflow", "grain": "one invoice revision", "entity_keys": ["tenant_id", "invoice_id", "invoice_revision"], "time_semantics": "revision observed at tool boundary; commit and readback times retained", "coverage_segments": ["standard-invoice-exception"] },
+      "contract": { "schema_id": "ap-ledger-invoice", "version": "1.0.0", "digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777", "revision": "invoice_revision", "freshness_slo_seconds": 60 },
+      "access": { "principals": ["invoice-resolution-workload"], "row_scope": "Current tenant and invoice", "field_scope": "Declared read-invoice output only", "purpose_limit": "Invoice exception resolution", "retention": "References retained with trace and receipt", "deletion": "Fixture resets between isolated worlds" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Closed synthetic fixture plus schema and revision checks", "sample_size": 1, "metrics": [{ "dimension": "completeness", "unit": "fraction", "threshold_operator": "=", "threshold": 1, "observed": 1, "status": "pass", "evidence": "Reference fixture satisfies the read contract" }, { "dimension": "timeliness", "unit": "seconds", "threshold_operator": "<=", "threshold": 60, "observed": 0, "status": "pass", "evidence": "Reference clock and revision are checked at each boundary" }] },
+      "failure_behavior": { "missing": "Escalate without proposal", "stale": "Refresh and reject stale commit", "conflicting": "Ledger state and signed readback govern the effect", "corrected": "Invalidate proposal and recompute against the new revision", "late_arriving": "Hold until the current revision is observable" }
+    },
+    {
+      "source_id": "vendor_master", "planes": ["operational"],
+      "location": { "system": "vendor-master", "environment": "reference-world", "interface": "tenant-bound vendor read", "residency": "in-memory synthetic fixture" },
+      "owner": "vendor-risk", "source_of_truth": true, "purpose": "Current vendor identity and risk state", "classification": "restricted", "trust": "trusted_data", "tenant_binding": true,
+      "population": { "definition": "Vendors referenced by admitted invoice exceptions", "grain": "one vendor revision", "entity_keys": ["tenant_id", "vendor_id", "vendor_revision"], "time_semantics": "current revision observed with invoice context", "coverage_segments": ["standard-vendor"] },
+      "contract": { "schema_id": "vendor-master-record", "version": "1.0.0", "digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888", "revision": "vendor_revision", "freshness_slo_seconds": 300 },
+      "access": { "principals": ["invoice-resolution-workload"], "row_scope": "Vendor referenced by the current tenant-bound invoice", "field_scope": "Minimum risk and identity fields", "purpose_limit": "Invoice exception resolution", "retention": "References retained with the decision trace", "deletion": "Fixture resets between isolated worlds" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Closed synthetic fixture and identifier reconciliation", "sample_size": 1, "metrics": [{ "dimension": "consistency", "unit": "fraction", "threshold_operator": "=", "threshold": 1, "observed": 1, "status": "pass", "evidence": "Invoice vendor ID reconciles to the tenant-bound master record" }] },
+      "failure_behavior": { "missing": "Escalate without proposal", "stale": "Refresh before proposal", "conflicting": "Vendor-risk owner adjudicates", "corrected": "Invalidate affected proposal", "late_arriving": "Hold the invoice" }
+    },
+    {
+      "source_id": "policy_service", "planes": ["knowledge_context"],
+      "location": { "system": "finance-policy-service", "environment": "reference-world", "interface": "tenant-bound policy retrieval", "residency": "in-memory synthetic fixture" },
+      "owner": "finance-controls", "source_of_truth": true, "purpose": "Effective approval policy and exception constraints", "classification": "internal", "trust": "trusted_control", "tenant_binding": true,
+      "population": { "definition": "Policies effective for the tenant and invoice class", "grain": "one policy revision", "entity_keys": ["tenant_id", "policy_id", "policy_revision"], "time_semantics": "effective and observed times retained separately", "coverage_segments": ["standard-invoice-exception"] },
+      "contract": { "schema_id": "finance-approval-policy", "version": "1.0.0", "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999", "revision": "policy_revision", "freshness_slo_seconds": 60 },
+      "access": { "principals": ["invoice-resolution-workload"], "row_scope": "Current tenant and invoice class", "field_scope": "Effective constraints and approval requirements", "purpose_limit": "Policy decision and explanation", "retention": "Revision-bound cache only", "deletion": "Invalidate superseded revisions" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Policy revision and constraint coverage check", "sample_size": 1, "metrics": [{ "dimension": "coverage", "unit": "fraction", "threshold_operator": "=", "threshold": 1, "observed": 1, "status": "pass", "evidence": "Reference policy covers the fixture amount and action" }] },
+      "failure_behavior": { "missing": "Deny action and escalate", "stale": "Retrieve the current effective revision", "conflicting": "Finance-controls owner adjudicates", "corrected": "Invalidate affected approvals and proposals", "late_arriving": "Apply only after admission of the new revision" }
+    },
+    {
+      "source_id": "evaluation_cases", "planes": ["evaluation_training"],
+      "location": { "system": "invoice-evaluation-suite", "environment": "isolated host process", "interface": "versioned JSON fixtures", "residency": "repository synthetic data" },
+      "owner": "evaluation-owner", "source_of_truth": true, "purpose": "Reference cases for release and regression decisions", "classification": "internal", "trust": "trusted_data", "tenant_binding": true,
+      "population": { "definition": "Synthetic normal, adversarial, timeout, authorization, replay, and drift cases", "grain": "one immutable case revision", "entity_keys": ["case_id", "case_revision"], "time_semantics": "fixed replay world and reviewed case time", "coverage_segments": ["happy-path", "authorization", "replay", "timeout", "injection"] },
+      "contract": { "schema_id": "evaluation-case", "version": "1.0.0", "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "revision": "invoice-suite-3.0.0", "freshness_slo_seconds": 604800 },
+      "access": { "principals": ["isolated-evaluator"], "row_scope": "Versioned invoice suite", "field_scope": "Synthetic inputs and protected expected results", "purpose_limit": "Evaluation only", "retention": "Preserve with release evidence", "deletion": "Retire by version without rewriting prior evidence" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Suite, grader, contamination, and mutation audit", "sample_size": 6, "metrics": [{ "dimension": "representativeness", "unit": "review-status", "threshold_operator": "=", "threshold": 1, "observed": 1, "status": "pass", "evidence": "Representative for the declared synthetic teaching claim only" }] },
+      "failure_behavior": { "missing": "Block evaluation", "stale": "Review the claim and failure slices", "conflicting": "Independent approver adjudicates", "corrected": "Version the case and preserve history", "late_arriving": "Add to the next owned regression cycle" }
+    },
+    {
+      "source_id": "outcome_events", "planes": ["telemetry_feedback"],
+      "location": { "system": "invoice-trace-stream", "environment": "reference-world", "interface": "closed trace and effect receipts", "residency": "in-memory synthetic fixture" },
+      "owner": "accounts-payable-operations", "source_of_truth": false, "purpose": "Run, state, effect, readback, cost, and incident evidence", "classification": "confidential", "trust": "trusted_data", "tenant_binding": true,
+      "population": { "definition": "Every reference run and effect receipt", "grain": "one immutable event or receipt", "entity_keys": ["tenant_hash", "run_id", "operation_id"], "time_semantics": "event, commit, and verification times", "coverage_segments": ["standard-invoice-exception"] },
+      "contract": { "schema_id": "invoice-trace-event", "version": "1.2.0", "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "revision": "reference-telemetry-3.0.0", "freshness_slo_seconds": 60 },
+      "access": { "principals": ["reference-runtime", "service-reviewer"], "row_scope": "Current tenant and admitted release", "field_scope": "Allowlisted opaque identifiers and operational measures", "purpose_limit": "Operations and governed learning", "retention": "Reference test duration", "deletion": "Fixture resets between isolated worlds" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Trace completeness and signed-receipt semantic validation", "sample_size": 1, "metrics": [{ "dimension": "completeness", "unit": "fraction", "threshold_operator": "=", "threshold": 1, "observed": 1, "status": "pass", "evidence": "Required reference events and bindings validate" }] },
+      "failure_behavior": { "missing": "Mark outcome or effect unknown and reconcile", "stale": "Wait for the bounded verification window", "conflicting": "Signed source readback governs", "corrected": "Append a superseding event", "late_arriving": "Recompute affected aggregates" }
+    }
+  ],
+  "preparation": {
+    "owner": "accounts-payable-platform", "lineage_store": "Reference trace binds source revisions, release, proposal, effect, and readback",
+    "steps": [
+      { "step_id": "bind_invoice_context", "kind": "join", "inputs": ["ap_ledger", "vendor_master", "policy_service"], "output_id": "invoice_decision_context", "owner": "accounts-payable-platform", "implementation": "Typed context loader", "version": "3.0.0", "deterministic": true, "transformations": ["Tenant-bound key reconciliation without raw-value mutation"], "validation": ["Caller, tenant, scope, revision, schema, and freshness checks"], "reversible": true, "lineage_event": "Bind exact source revisions to the run" },
+      { "step_id": "redact_trace_values", "kind": "redact", "inputs": ["outcome_events"], "output_id": "safe_outcome_events", "owner": "accounts-payable-operations", "implementation": "Telemetry allowlist and opaque-reference encoder", "version": "1.2.0", "deterministic": true, "transformations": ["Emit allowlisted hashes and opaque revisions"], "validation": ["Secret and sensitive-value rejection"], "reversible": false, "lineage_event": "Bind event contract and release digest" }
+    ]
+  },
+  "quality_contract": {
+    "decision_critical_fields": [
+      { "source_id": "ap_ledger", "field": "invoice_revision", "decision_use": "Stage and commit precondition", "required_dimensions": ["completeness", "timeliness"], "fallback": "Refresh or stop" },
+      { "source_id": "vendor_master", "field": "vendor_id", "decision_use": "Vendor identity and risk context", "required_dimensions": ["consistency"], "fallback": "Escalate" },
+      { "source_id": "policy_service", "field": "policy_revision", "decision_use": "Approval and action policy", "required_dimensions": ["coverage"], "fallback": "Deny and escalate" }
+    ],
+    "reconciliation_rules": [{ "rule_id": "invoice_vendor_policy", "source_ids": ["ap_ledger", "vendor_master", "policy_service"], "precedence": "Ledger governs invoice state, vendor master governs identity, and policy service governs permitted action", "conflict_owner": "accounts-payable-platform and finance-controls", "stop_condition": "Any required identity, state, or policy binding is unknown" }],
+    "segment_coverage": [{ "segment": "standard-invoice-exception", "eligible_count": 1, "observed_count": 1, "minimum_coverage": 1, "status": "pass" }],
+    "unresolved_conditions": ["Synthetic fixtures do not establish production source quality, representativeness, legal basis, or service economics"]
+  },
+  "label_contracts": [{ "label_id": "expected_terminal_state", "definition": "The authorized terminal state and stop reason for one source-bound replay case", "source_id": "evaluation_cases", "owner": "fixture-author", "independent_approver": "evaluation-reviewer", "source_revision": "invoice-suite-3.0.0", "adjudication": "Synthetic-invariant review with preserved negative cases", "agreement_measure": "Exact structured equality", "reviewed_at": "2026-08-12T12:00:00Z" }],
+  "output_records": [{ "output_id": "resolution_proposal", "owner": "accounts-payable-operations", "system_of_record": "proposal-service until committed in the AP ledger", "classification": "confidential", "durability": "reviewable_artifact", "provenance": "Invoice, vendor, policy, release, approval, operation, and idempotency bindings", "correction": "Supersede the proposal after source revision change; reconcile committed effects by signed readback", "downstream_uses": ["Human approval", "Commit service", "Audit"], "retention": "Reference-world lifetime", "deletion": "Fixture reset", "training_use": "prohibited" }],
+  "economics": {
+    "selected_option": "bounded_reference",
+    "options": [
+      { "option_id": "bounded_reference", "description": "Use synthetic typed fixtures to prove the controlled-write method", "one_time_cost_usd": 0, "annual_cost_usd": 0, "delay_days": 0, "residual_risk": "No claim about production data readiness", "owner": "maintainer" },
+      { "option_id": "production_profile", "description": "Profile and contract the target AP sources before a real pilot", "one_time_cost_usd": 0, "annual_cost_usd": 0, "delay_days": 0, "residual_risk": "Costs and lawful basis are target-specific", "owner": "target-data-owner" }
+    ],
+    "decision_basis": "Keep the example executable and honest; production use requires a target assessment and measured economics"
+  },
+  "operations": {
+    "monitors": [
+      { "monitor_id": "invoice_revision_freshness", "source_id": "ap_ledger", "dimension": "freshness", "threshold": "Recheck at read, stage, commit, and readback", "window": "Every run", "owner": "accounts-payable-platform", "response": "Stop or invalidate stale proposals" },
+      { "monitor_id": "policy_revision_binding", "source_id": "policy_service", "dimension": "schema", "threshold": "Exact effective policy revision", "window": "Every stage and commit", "owner": "finance-controls", "response": "Deny, invalidate approval, and reevaluate" }
+    ],
+    "drift_response": "Constrain the affected route and add a source-bound regression",
+    "rebaseline_trigger": "Invoice eligibility, source semantics, or accepted resolution metric changes",
+    "rollback_condition": "Any unauthorized, duplicate, cross-tenant, stale, or unverifiable effect",
+    "change_owner": "accounts-payable-platform"
+  },
+  "decision": {
+    "disposition": "constrain",
+    "rationale": "Ready only as a synthetic teaching and regression fixture",
+    "conditions": ["Run a target-specific assessment before production use"],
+    "approved_by": [
+      { "role": "data", "principal": "example-data-reviewer", "approved_at": "2026-08-12T12:00:00Z" },
+      { "role": "operational", "principal": "example-operations-reviewer", "approved_at": "2026-08-12T12:00:00Z" }
+    ],
+    "review_due": "2026-11-12"
+  },
+  "control_ids": ["CTX-006", "CTX-007", "CTX-008", "CTX-009"]
+}

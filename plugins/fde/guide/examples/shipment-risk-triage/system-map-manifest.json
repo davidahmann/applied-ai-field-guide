@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schemas/system-map-manifest.schema.json",
+  "schema_version": "1.0.0",
+  "map_id": "shipment_risk_triage_map",
+  "version": "0.1.0",
+  "status": "verified",
+  "map_kind": "combined",
+  "scope": {
+    "system_id": "shipment_risk_triage",
+    "description": "Illustrative software and operational relationships for the bounded shipment-risk review workflow.",
+    "in_scope": ["shipment triage workflow", "risk score", "routing policy", "review-case effect", "dispatch review surface"],
+    "out_of_scope": ["carrier operations platform", "autonomous shipment intervention", "model training pipeline"]
+  },
+  "sources": [
+    {"source_id": "charter", "kind": "documentation", "uri": "workflow-charter.json", "authority": "source_of_truth", "classification": "internal", "revision": "0.1.0", "owner": "dispatch-operations", "included": true},
+    {"source_id": "ontology", "kind": "policy", "uri": "ontology.json", "authority": "source_of_truth", "classification": "internal", "revision": "0.1.0", "owner": "logistics-platform", "included": true},
+    {"source_id": "design", "kind": "documentation", "uri": "design-record.md", "authority": "reference", "classification": "internal", "revision": "0.1.0", "owner": "logistics-platform", "included": true},
+    {"source_id": "risk_model", "kind": "code", "uri": "shipment-risk-triage.mjs", "authority": "source_of_truth", "classification": "internal", "revision": "0.1.0", "owner": "logistics-analytics", "included": true},
+    {"source_id": "read_tool", "kind": "interface", "uri": "tools/read-shipment-context.json", "authority": "source_of_truth", "classification": "internal", "revision": "0.1.0", "owner": "logistics-platform", "included": true},
+    {"source_id": "review_tool", "kind": "interface", "uri": "tools/create-review-case.json", "authority": "source_of_truth", "classification": "internal", "revision": "0.1.0", "owner": "dispatch-operations", "included": true},
+    {"source_id": "threat_model", "kind": "policy", "uri": "threat-model.json", "authority": "reference", "classification": "internal", "revision": "0.1.0", "owner": "transportation-risk", "included": true}
+  ],
+  "derivation": {
+    "method": "manual",
+    "producer": {"name": "shipment-risk-reference-maintainer", "version": "0.1.0", "configuration_digest": "sha256:c2cd5cc3451a2764d0e96cca956fe9051d4dff3a2b1b12adf71d0a43fafd4997"},
+    "input_revision": "shipment-risk-triage-v0.1.0",
+    "executed_at": "2026-08-08T16:00:00Z",
+    "coverage": {"status": "complete", "included_source_ids": ["charter", "ontology", "design", "risk_model", "read_tool", "review_tool", "threat_model"], "excluded_reason": null},
+    "semantic_processing": "none"
+  },
+  "nodes": [
+    {"node_id": "triage_workflow", "kind": "workflow_step", "owner": "dispatch-operations", "classification": "internal", "source_refs": ["charter", "ontology"]},
+    {"node_id": "shipment_context", "kind": "data_product", "owner": "logistics-platform", "classification": "internal", "source_refs": ["charter", "read_tool"]},
+    {"node_id": "risk_score", "kind": "model_route", "owner": "logistics-analytics", "classification": "internal", "source_refs": ["risk_model", "design"]},
+    {"node_id": "routing_policy", "kind": "policy", "owner": "dispatch-operations", "classification": "internal", "source_refs": ["ontology", "risk_model"]},
+    {"node_id": "review_case", "kind": "capability", "owner": "dispatch-operations", "classification": "internal", "source_refs": ["review_tool", "ontology"]},
+    {"node_id": "coordinator_surface", "kind": "user_surface", "owner": "dispatch-operations", "classification": "internal", "source_refs": ["charter", "design"]},
+    {"node_id": "routing_evaluation", "kind": "evaluation", "owner": "logistics-platform", "classification": "internal", "source_refs": ["threat_model", "design"]}
+  ],
+  "relations": [
+    {"relation_id": "context_to_triage", "source_node_id": "shipment_context", "target_node_id": "triage_workflow", "type": "uses", "basis": "extracted", "confidence": "verified", "source_refs": ["charter", "read_tool"]},
+    {"relation_id": "risk_to_policy", "source_node_id": "risk_score", "target_node_id": "routing_policy", "type": "uses", "basis": "extracted", "confidence": "verified", "source_refs": ["risk_model", "design"]},
+    {"relation_id": "policy_to_review", "source_node_id": "routing_policy", "target_node_id": "review_case", "type": "governed_by", "basis": "extracted", "confidence": "verified", "source_refs": ["ontology", "review_tool"]},
+    {"relation_id": "review_to_surface", "source_node_id": "review_case", "target_node_id": "coordinator_surface", "type": "exposes", "basis": "extracted", "confidence": "high", "source_refs": ["charter", "design"]},
+    {"relation_id": "evaluation_to_policy", "source_node_id": "routing_evaluation", "target_node_id": "routing_policy", "type": "evaluated_by", "basis": "inferred", "confidence": "medium", "source_refs": ["threat_model", "design"]}
+  ],
+  "usage": {
+    "allowed_purposes": ["navigation", "design_review", "change_impact", "onboarding"],
+    "prohibited_purposes": ["authorization", "effect_authorization", "completion_proof", "policy_definition", "unbounded_memory"],
+    "access_classification": "internal",
+    "retention": "Retain only alongside the versioned teaching reference; rebuild when source artifacts change.",
+    "query_logging": "metadata_only"
+  },
+  "freshness": {
+    "last_verified_at": "2026-08-08T16:00:00Z",
+    "objective": "Rebuild before any material change review and whenever an in-scope source revision changes.",
+    "invalidation_triggers": ["in-scope artifact revision changes", "owner or classification changes", "new tool or workflow state", "incident exposes missing dependency"],
+    "owner": "logistics-platform",
+    "stale_behavior": "block_material_change_review"
+  },
+  "control_ids": ["CTX-001", "CTX-002", "CTX-004", "OPS-007"]
+}

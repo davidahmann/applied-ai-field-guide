@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/handoff-envelope.schema.json",
+  "title": "Bounded agent handoff envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "handoff_id",
+    "envelope_digest",
+    "nonce",
+    "parent_handoff_id",
+    "parent_handoff_digest",
+    "issuer",
+    "attestation",
+    "replay_policy",
+    "created_at",
+    "expires_at",
+    "producer",
+    "recipient",
+    "objective",
+    "verified_state",
+    "provenance",
+    "unresolved_work",
+    "authority",
+    "budget",
+    "untrusted_payloads",
+    "terminal_reason",
+    "control_ids"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.1.0" },
+    "handoff_id": { "type": "string", "format": "uuid" },
+    "envelope_digest": { "$ref": "#/$defs/digest" },
+    "nonce": { "type": "string", "format": "uuid" },
+    "parent_handoff_id": {
+      "oneOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+      "$comment": "Null only for a root delegation from an authoritative non-handoff grant. Nested delegations bind the exact parent handoff ID."
+    },
+    "parent_handoff_digest": {
+      "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }],
+      "$comment": "Null only for a root delegation. Nested delegations bind the exact canonical parent envelope digest."
+    },
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal", "key_id", "trusted_key_registry"],
+      "properties": {
+        "principal": {
+          "$ref": "#/$defs/opaqueReference",
+          "$comment": "Immutable authenticated workload or delegated principal identity, not a display name."
+        },
+        "key_id": { "$ref": "#/$defs/opaqueReference" },
+        "trusted_key_registry": { "$ref": "#/$defs/opaqueReference" }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "subject_digest", "signature"],
+      "properties": {
+        "algorithm": { "const": "Ed25519" },
+        "subject_digest": { "$ref": "#/$defs/digest" },
+        "signature": { "$ref": "#/$defs/base64url" }
+      }
+    },
+    "replay_policy": { "const": "single_use" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "producer": { "$ref": "#/$defs/participant" },
+    "recipient": { "$ref": "#/$defs/participant" },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "acceptance_conditions"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 10 },
+        "acceptance_conditions": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "verified_state": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["state_id", "value_digest", "source", "source_revision", "verified_at", "verifier", "trust"],
+        "properties": {
+          "state_id": { "$ref": "#/$defs/id" },
+          "value_digest": { "$ref": "#/$defs/digest" },
+          "source": { "$ref": "#/$defs/opaqueReference" },
+          "source_revision": { "$ref": "#/$defs/opaqueReference" },
+          "verified_at": { "type": "string", "format": "date-time" },
+          "verifier": { "$ref": "#/$defs/opaqueReference" },
+          "trust": { "enum": ["trusted_control", "trusted_data", "untrusted_data"] }
+        }
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidence_id", "source_reference", "source_revision", "observed_at", "classification", "trust", "content_digest"],
+        "properties": {
+          "evidence_id": { "$ref": "#/$defs/id" },
+          "source_reference": { "$ref": "#/$defs/opaqueReference" },
+          "source_revision": { "$ref": "#/$defs/opaqueReference" },
+          "observed_at": { "type": "string", "format": "date-time" },
+          "classification": { "enum": ["public", "internal", "confidential", "restricted"] },
+          "trust": { "enum": ["trusted_control", "trusted_data", "untrusted_data"] },
+          "content_digest": { "$ref": "#/$defs/digest" }
+        }
+      }
+    },
+    "unresolved_work": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["work_id", "statement", "status", "owner", "blocking", "evidence_needed"],
+        "properties": {
+          "work_id": { "$ref": "#/$defs/id" },
+          "statement": { "type": "string", "minLength": 5 },
+          "status": { "enum": ["open", "blocked", "deferred"] },
+          "owner": { "type": "string", "minLength": 2 },
+          "blocking": { "type": "boolean" },
+          "evidence_needed": { "$ref": "#/$defs/nonEmptyStrings" }
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent_authority_id", "parent_state_revision", "tenant_hash", "caller_ceiling_hash", "parent_authority_digest", "parent_actions", "delegated_actions", "parent_scopes", "delegated_scopes", "parent_effect_ceiling", "delegated_effect_ceiling", "parent_actor_modes", "delegated_actor_mode", "parent_budget", "policy_revision", "maximum_depth", "parent_depth", "current_depth"],
+      "properties": {
+        "parent_authority_id": {
+          "$ref": "#/$defs/opaqueReference",
+          "$comment": "Lookup key for the authoritative parent grant or consumed parent handoff state."
+        },
+        "parent_state_revision": {
+          "$ref": "#/$defs/opaqueReference",
+          "$comment": "Authoritative parent-state revision that consume-time verification and the durable atomic replay-claim plus budget reservation transaction must compare."
+        },
+        "tenant_hash": { "$ref": "#/$defs/digest" },
+        "caller_ceiling_hash": { "$ref": "#/$defs/digest" },
+        "parent_authority_digest": {
+          "$ref": "#/$defs/digest",
+          "$comment": "Canonical digest of the declared parent ceiling. Consume-time verification must also recompute this digest from the authoritative current parent state."
+        },
+        "parent_actions": { "$ref": "#/$defs/nonEmptyIds" },
+        "delegated_actions": { "$ref": "#/$defs/nonEmptyIds" },
+        "parent_scopes": { "$ref": "#/$defs/nonEmptyStrings" },
+        "delegated_scopes": { "$ref": "#/$defs/nonEmptyStrings" },
+        "parent_effect_ceiling": { "$ref": "#/$defs/effect" },
+        "delegated_effect_ceiling": { "$ref": "#/$defs/effect" },
+        "parent_actor_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/actorMode" }
+        },
+        "delegated_actor_mode": { "$ref": "#/$defs/actorMode" },
+        "parent_budget": {
+          "$ref": "#/$defs/budget",
+          "$comment": "Parent allocation ceiling at parent_state_revision. One durable atomic transaction must claim both replay keys and reserve each child budget so aggregate sibling allocation cannot exceed this ceiling."
+        },
+        "policy_revision": { "$ref": "#/$defs/opaqueReference" },
+        "maximum_depth": { "type": "integer", "minimum": 0 },
+        "parent_depth": { "type": "integer", "minimum": 0 },
+        "current_depth": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "budget": {
+      "$ref": "#/$defs/budget",
+      "$comment": "Requested child allocation. It is not spendable until consume-time authoritative verification and one durable atomic replay-claim plus parent-budget reservation transaction succeeds."
+    },
+    "untrusted_payloads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "content_digest", "storage_reference", "classification", "instruction_authority"],
+        "properties": {
+          "label": { "type": "string", "minLength": 2 },
+          "content_digest": { "$ref": "#/$defs/digest" },
+          "storage_reference": { "$ref": "#/$defs/opaqueReference" },
+          "classification": { "enum": ["public", "internal", "confidential", "restricted"] },
+          "instruction_authority": { "const": false }
+        }
+      }
+    },
+    "terminal_reason": { "enum": ["completed", "partial", "blocked", "failed", "cancelled", "budget_exhausted", "context_reset"] },
+    "control_ids": {
+      "type": "array",
+      "contains": { "const": "CTX-005" },
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "authority": {
+            "type": "object",
+            "properties": { "parent_depth": { "const": 0 } },
+            "required": ["parent_depth"]
+          }
+        },
+        "required": ["authority"]
+      },
+      "then": {
+        "properties": {
+          "parent_handoff_id": { "type": "null" },
+          "parent_handoff_digest": { "type": "null" }
+        }
+      },
+      "else": {
+        "properties": {
+          "parent_handoff_id": { "type": "string", "format": "uuid" },
+          "parent_handoff_digest": { "$ref": "#/$defs/digest" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "base64url": { "type": "string", "minLength": 43, "maxLength": 128, "pattern": "^[A-Za-z0-9_-]+$" },
+    "opaqueReference": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]*$" },
+    "effect": { "enum": ["none", "staged", "reversible", "irreversible"] },
+    "actorMode": { "enum": ["interactive_delegated", "unattended_workload", "mixed"] },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["steps_remaining", "tool_calls_remaining", "time_remaining_ms", "tokens_remaining", "cost_remaining_usd"],
+      "properties": {
+        "steps_remaining": { "type": "integer", "minimum": 0 },
+        "tool_calls_remaining": { "type": "integer", "minimum": 0 },
+        "time_remaining_ms": { "type": "integer", "minimum": 0 },
+        "tokens_remaining": { "type": "integer", "minimum": 0 },
+        "cost_remaining_usd": { "type": "number", "minimum": 0 }
+      }
+    },
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal", "system_id", "worker_role", "run_id", "actor_mode"],
+      "properties": {
+        "principal": {
+          "$ref": "#/$defs/opaqueReference",
+          "$comment": "Immutable authenticated workload or delegated principal identity, not a display name."
+        },
+        "system_id": { "$ref": "#/$defs/id" },
+        "worker_role": { "$ref": "#/$defs/id" },
+        "run_id": { "type": "string", "format": "uuid" },
+        "actor_mode": { "$ref": "#/$defs/actorMode" }
+      }
+    },
+    "nonEmptyIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    }
+  }
+}

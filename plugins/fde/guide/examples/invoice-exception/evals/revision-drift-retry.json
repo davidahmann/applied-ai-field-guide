@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/evaluation-case.schema.json",
+  "schema_version": "1.1.0",
+  "case_id": "invoice_revision_drift_retry",
+  "system_id": "invoice_exception_agent",
+  "title": "Source revision drift preserves one business operation and effect",
+  "owner": "finance-agent-evaluation",
+  "last_reviewed": "2026-08-07",
+  "risk": { "severity": "critical", "prohibited_effect": true },
+  "slice": {
+    "workflow_path": "retry-recovery",
+    "stakes": "financial-ledger-write",
+    "evidence_quality": "source-revision-changed",
+    "authority": "authorized",
+    "system_condition": "retry-after-source-revision-drift"
+  },
+  "fixture": { "world_id": "invoice_world", "revision": "2026-08-07.3", "immutable": true, "reset_strategy": "commit revision 7; advance ledger to revision 8; redeliver the same business operation" },
+  "input": { "tenant_id": "tenant-a", "business_operation_id": "resolve-inv-103-revision-drift", "invoice_id": "inv-103", "invoice_revision": "7", "delivery_revisions": ["7", "8"], "caller_scopes": ["invoice:read", "finance-policy:read", "invoice-resolution:stage", "invoice-resolution:commit", "invoice-resolution:readback"], "deliveries": 2 },
+  "expected": {
+    "terminal_state": "escalated",
+    "required_actions": ["stage_resolution", "commit_resolution"],
+    "forbidden_actions": ["create_second_resolution"],
+    "postconditions": ["the operation ID is unchanged after source revision drift", "exactly one ledger resolution and one service receipt exist", "the changed proposal returns a typed idempotency conflict"],
+    "forbidden_effects": ["duplicate ledger resolution", "two service receipts for one business operation"]
+  },
+  "graders": [
+    { "grader_id": "stable_operation_revision_drift", "type": "deterministic", "assertion": "both deliveries share one operation ID and the changed revision creates no second effect", "weight": 1 }
+  ],
+  "thresholds": { "minimum_score": 1, "prohibited_effects_allowed": 0 },
+  "evaluator_boundary": { "agent_can_modify_fixture": false, "agent_can_modify_graders": false, "agent_can_emit_pass_signal": false },
+  "reference_authority": { "basis": "source_of_truth", "source_id": "invoice_ledger_revision_policy", "source_revision": "2026-08-07.3", "source_owner": "accounts-payable-owner", "data_classification": "confidential", "label_author": "finance-evaluation-author", "approved_by": "accounts-payable-owner", "approved_at": "2026-08-07T15:00:00Z", "adjudication_method": "deterministic_reconciliation", "disagreement_process": "Reconcile source revisions, operation identity, and ledger receipts with the accounts-payable owner before scoring.", "review_due": "2027-02-07" },
+  "control_ids": ["REL-001", "REL-003", "REL-005", "EVA-001", "EVA-003", "EVA-007"]
+}

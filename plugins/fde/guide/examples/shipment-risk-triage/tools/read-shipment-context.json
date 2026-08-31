@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "read_shipment_context",
+  "version": "1.0.0",
+  "owner": "logistics-data-platform",
+  "purpose": "Read one tenant-bound shipment and current carrier evidence for a routing decision",
+  "kind": "query",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "shipment_id"],
+    "properties": {"tenant_id": {"type": "string"}, "shipment_id": {"type": "string"}}
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "shipment_id", "revision", "status", "shipment_value_usd", "promised_arrival", "observed_at", "carrier_signals"],
+    "properties": {
+      "tenant_id": {"type": "string"}, "shipment_id": {"type": "string"}, "revision": {"type": "string"}, "status": {"const": "in_transit"}, "shipment_value_usd": {"type": "number", "minimum": 0}, "promised_arrival": {"type": "string", "format": "date-time"}, "observed_at": {"type": "string", "format": "date-time"}, "carrier_signals": {"type": "object"}
+    }
+  },
+  "error_schema": {"type": "object", "additionalProperties": false, "required": ["code", "message", "retryable"], "properties": {"code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"}, "message": {"type": "string", "minLength": 1}, "retryable": {"type": "boolean"}}},
+  "authorization": {"agent_principal": "shipment-risk-triage-workload", "caller_context_required": true, "required_scopes": ["shipment:read"], "policy_decision_point": "tool-gateway", "tenant_binding": true, "fail_mode": "closed"},
+  "data_access": {
+    "reads_data": true,
+    "classifications": ["confidential", "internal"],
+    "maximum_sensitivity": "confidential",
+    "scope_fields": ["tenant_id", "shipment_id"],
+    "max_records": 1,
+    "max_response_bytes": 32768,
+    "open_world": false,
+    "approval_policy": "policy",
+    "request_fields": [
+      {"field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["shipment_context_service"], "purpose": "bind the read to the authorized tenant"},
+      {"field": "shipment_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["shipment_context_service"], "purpose": "select one authorized shipment"}
+    ]
+  },
+  "execution": {"timeout_ms": 3000, "max_attempts": 2, "retryable_errors": ["TIMEOUT", "UNAVAILABLE"], "idempotency": {"required": false, "key_fields": [], "enforced_by": "not-applicable"}},
+  "side_effects": {"class": "none", "resources": [], "compensation": null},
+  "approval": {"required": false, "role": null, "proposal_digest_required": false, "expires_seconds": null},
+  "network": {"egress": "allowlist", "destinations": [{"service_id": "shipment_context_service", "scheme": "https", "authority": "shipment-context.internal", "port": 443, "path_prefix": "/v1/shipments/context"}], "allowed_operations": ["read_shipment_context"], "allowed_methods": ["POST"], "redirect_policy": "deny", "address_resolution_policy": "pinned_service_identity", "private_address_policy": "explicit_allowlist", "server_fetch_policy": "deny", "target_account_binding": true, "tenant_binding": true, "request_max_bytes": 8192, "response_max_bytes": 32768, "credential_broker": "workload-identity-gateway", "public_gateway_capability": null},
+  "failure_modes": [
+    {"code": "NOT_FOUND", "class": "escalation", "retry": false, "retry_safety": "never", "escalate": true},
+    {"code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true},
+    {"code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false},
+    {"code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false}
+  ],
+  "observability": {"span_name": "hybrid.tool.read_shipment_context", "audit_event": "shipment.context_read", "redacted_fields": ["shipment_value_usd"], "postcondition_readback": false},
+  "invariants": ["returned tenant_id equals authorized tenant_id", "returned revision identifies the exact evidence snapshot"],
+  "control_ids": ["CTX-001", "TOL-001", "TOL-005", "IAM-002", "IAM-003", "SEC-001", "SEC-002"]
+}

@@ -1,0 +1,149 @@
+{
+  "$schema": "../../schemas/operational-ontology.schema.json",
+  "schema_version": "1.1.0",
+  "ontology_id": "invoice_exception",
+  "version": "1.0.0",
+  "domain": "accounts payable invoice exceptions",
+  "owners": ["accounts-payable-operations", "finance-data-platform"],
+  "entities": [
+    {
+      "entity_id": "invoice",
+      "layer": "core",
+      "stewardship": { "owner": "accounts-payable-operations", "change_authority": "finance-data-governance", "retention_policy": "finance-record-retention" },
+      "source_of_truth": "accounts-payable-ledger",
+      "identity_keys": ["tenant_id", "invoice_id"],
+      "attributes": [
+        { "name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "invoice_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "amount", "type": "decimal", "required": true, "classification": "confidential", "temporal": true },
+        { "name": "status", "type": "string", "required": true, "classification": "confidential", "temporal": true },
+        { "name": "revision", "type": "string", "required": true, "classification": "internal", "temporal": true }
+      ],
+      "lifecycle_states": ["received", "matched", "exception", "resolution_staged", "resolved"],
+      "lifecycle_transitions": [
+        { "transition_id": "invoice_exception_to_resolved", "from_state": "exception", "to_state": "resolved", "trigger": "commit_resolution succeeds", "guard": "approved current proposal and policy", "owner": "accounts-payable-operations" }
+      ]
+    },
+    {
+      "entity_id": "vendor",
+      "layer": "core",
+      "stewardship": { "owner": "vendor-operations", "change_authority": "vendor-data-governance", "retention_policy": "vendor-master-retention" },
+      "source_of_truth": "vendor-master",
+      "identity_keys": ["tenant_id", "vendor_id"],
+      "attributes": [
+        { "name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "vendor_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "risk_status", "type": "string", "required": true, "classification": "restricted", "temporal": true }
+      ],
+      "lifecycle_states": ["active", "on_hold", "blocked"],
+      "lifecycle_transitions": []
+    },
+    {
+      "entity_id": "approval_policy",
+      "layer": "core",
+      "stewardship": { "owner": "finance-risk", "change_authority": "finance-policy-governance", "retention_policy": "policy-audit-retention" },
+      "source_of_truth": "finance-policy-service",
+      "identity_keys": ["tenant_id", "policy_id", "revision"],
+      "attributes": [
+        { "name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "policy_id", "type": "string", "required": true, "classification": "internal", "temporal": false },
+        { "name": "revision", "type": "string", "required": true, "classification": "internal", "temporal": true },
+        { "name": "effective_at", "type": "datetime", "required": true, "classification": "internal", "temporal": true }
+      ],
+      "lifecycle_states": ["draft", "active", "superseded"],
+      "lifecycle_transitions": []
+    },
+    {
+      "entity_id": "resolution_proposal",
+      "layer": "use_case",
+      "stewardship": { "owner": "accounts-payable-operations", "change_authority": "agent-platform", "retention_policy": "workflow-audit-retention" },
+      "source_of_truth": "agent-workflow-store",
+      "identity_keys": ["tenant_id", "proposal_id"],
+      "attributes": [
+        { "name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "proposal_id", "type": "string", "required": true, "classification": "confidential", "temporal": false },
+        { "name": "business_operation_id", "type": "string", "required": true, "classification": "internal", "temporal": false },
+        { "name": "invoice_revision", "type": "string", "required": true, "classification": "internal", "temporal": false },
+        { "name": "proposal_digest", "type": "string", "required": true, "classification": "internal", "temporal": false },
+        { "name": "action", "type": "string", "required": true, "classification": "confidential", "temporal": false }
+      ],
+      "lifecycle_states": ["absent", "staged", "approved", "rejected", "expired", "committed", "discarded"],
+      "lifecycle_transitions": [
+        { "transition_id": "create_resolution_proposal", "from_state": "absent", "to_state": "staged", "trigger": "stage_resolution succeeds", "guard": "invoice and policy revisions are current", "owner": "accounts-payable-operations" },
+        { "transition_id": "proposal_approved_to_committed", "from_state": "approved", "to_state": "committed", "trigger": "commit_resolution succeeds", "guard": "approval digest and policy revision match", "owner": "accounts-payable-operations" }
+      ]
+    }
+  ],
+  "relationships": [
+    { "relationship_id": "invoice_vendor", "from": "invoice", "to": "vendor", "cardinality": "many_to_one", "source_of_truth": "accounts-payable-ledger" },
+    { "relationship_id": "invoice_resolution", "from": "invoice", "to": "resolution_proposal", "cardinality": "one_to_many", "source_of_truth": "agent-workflow-store" }
+  ],
+  "actions": [
+    {
+      "action_id": "stage_resolution",
+      "actor_types": ["agent"],
+      "input_entities": ["invoice", "vendor", "approval_policy"],
+      "output_entities": ["resolution_proposal"],
+      "permitted_transitions": ["create_resolution_proposal"],
+      "decision_contract": {
+        "decision_id": "stage_invoice_resolution",
+        "evidence_types": ["invoice_snapshot", "vendor_snapshot", "policy_snapshot"],
+        "deterministic_checks": ["invoice revision is current", "vendor is not blocked", "policy is active"],
+        "uncertainty_policy": "Escalate when evidence is missing, stale, or contradictory",
+        "owner": "accounts-payable-operations"
+      },
+      "preconditions": ["invoice.status == exception", "vendor.risk_status != blocked", "approval_policy.lifecycle_state == active"],
+      "postconditions": ["resolution_proposal.lifecycle_state == staged", "resolution_proposal.business_operation_id and invoice_revision are immutable"],
+      "authorization_policy": "resolution_stage_policy",
+      "side_effect": "staged",
+      "idempotency_scope": "tenant_id + business_operation_id",
+      "feedback": { "accepted_event": "approver accepts the staged resolution", "outcome_source": "agent-workflow-store", "reconciliation_slo_seconds": 60, "metric_id": "accepted_outcome_rate" }
+    },
+    {
+      "action_id": "commit_resolution",
+      "actor_types": ["agent", "ap_approver"],
+      "input_entities": ["invoice", "resolution_proposal", "approval_policy"],
+      "output_entities": ["invoice"],
+      "permitted_transitions": ["invoice_exception_to_resolved", "proposal_approved_to_committed"],
+      "decision_contract": {
+        "decision_id": "commit_invoice_resolution",
+        "evidence_types": ["invoice_snapshot", "policy_snapshot"],
+        "deterministic_checks": ["approval is current and digest-bound", "caller and tenant remain authorized", "business operation has not committed"],
+        "uncertainty_policy": "Deny commit and reconcile from the ledger on uncertainty",
+        "owner": "accounts-payable-operations"
+      },
+      "preconditions": ["resolution_proposal.lifecycle_state == approved", "approval.proposal_digest == resolution_proposal.proposal_digest", "invoice.status == exception", "invoice.revision == resolution_proposal.invoice_revision"],
+      "postconditions": ["invoice.status == resolved", "resolution_commits(tenant_id, business_operation_id) == 1"],
+      "authorization_policy": "resolution_commit_policy",
+      "side_effect": "reversible",
+      "idempotency_scope": "tenant_id + business_operation_id",
+      "feedback": { "accepted_event": "ledger readback matches the approved resolution", "outcome_source": "accounts-payable-ledger", "reconciliation_slo_seconds": 60, "metric_id": "accepted_outcome_rate" }
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "resolution_stage_policy",
+      "decision": "allow_with_obligations",
+      "inputs": ["agent_identity", "caller_identity", "invoice", "approval_policy"],
+      "enforcement_point": "tool-gateway",
+      "fail_mode": "closed"
+    },
+    {
+      "policy_id": "resolution_commit_policy",
+      "decision": "allow_with_obligations",
+      "inputs": ["agent_identity", "caller_identity", "invoice", "resolution_proposal", "approval_policy"],
+      "enforcement_point": "commit-service",
+      "fail_mode": "closed"
+    }
+  ],
+  "invariants": [
+    { "invariant_id": "single_resolution", "expression": "resolution_commits(tenant_id, business_operation_id) <= 1", "enforcement": "accounts-payable-ledger", "severity": "critical" },
+    { "invariant_id": "tenant_isolation", "expression": "caller.tenant_id == invoice.tenant_id", "enforcement": "tool-gateway", "severity": "critical" },
+    { "invariant_id": "approval_binding", "expression": "commit.proposal_digest == approval.proposal_digest", "enforcement": "commit-service", "severity": "critical" }
+  ],
+  "evidence_types": [
+    { "evidence_id": "invoice_snapshot", "source": "accounts-payable-ledger", "owner": "accounts-payable-operations", "source_of_truth": true, "revision_contract": "ledger row revision", "schema_contract": "invoice snapshot v1", "freshness_slo_seconds": 60, "classification": "confidential" },
+    { "evidence_id": "vendor_snapshot", "source": "vendor-master", "owner": "vendor-operations", "source_of_truth": true, "revision_contract": "vendor master revision", "schema_contract": "vendor risk snapshot v1", "freshness_slo_seconds": 300, "classification": "restricted" },
+    { "evidence_id": "policy_snapshot", "source": "finance-policy-service", "owner": "finance-risk", "source_of_truth": true, "revision_contract": "effective policy revision", "schema_contract": "approval policy snapshot v1", "freshness_slo_seconds": 60, "classification": "internal" }
+  ]
+}

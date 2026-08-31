@@ -1,0 +1,558 @@
+{
+  "$schema": "../schemas/control-catalog.schema.json",
+  "schema_version": "1.0.0",
+  "controls": [
+    {
+      "id": "ARC-001",
+      "domain": "architecture",
+      "level": "MUST",
+      "requirement": "Each agent system MUST implement one bounded workflow with a named accepted outcome and accountable owners.",
+      "evidence": ["R26-14", "R26-22"],
+      "release_gates": ["design"]
+    },
+    {
+      "id": "ARC-002",
+      "domain": "architecture",
+      "level": "MUST",
+      "requirement": "Deterministic rules, policy enforcement, state transitions, and privileged effects MUST execute outside model generation.",
+      "evidence": ["R26-03", "R26-15", "R26-20"],
+      "release_gates": ["design", "sandbox"]
+    },
+    {
+      "id": "ARC-003",
+      "domain": "architecture",
+      "level": "SHOULD",
+      "requirement": "Multi-agent decomposition SHOULD require distinct context, permission, latency, or specialization boundaries.",
+      "evidence": ["R26-29", "R26-31"],
+      "release_gates": ["design"]
+    },
+    {
+      "id": "ARC-004",
+      "domain": "architecture",
+      "level": "MUST",
+      "requirement": "Each system design MUST document the deterministic, single-call, and coded-workflow baseline and justify model-directed agency through measured ambiguity, environmental feedback, or exception load.",
+      "evidence": ["R26-40", "R26-56"],
+      "release_gates": ["design"]
+    },
+    {
+      "id": "ARC-005",
+      "domain": "architecture",
+      "level": "MUST",
+      "requirement": "Each consequential decision step MUST identify the selected deterministic, optimization, statistical or ML, foundation-model, agent, or human mechanism as applicable; justify it as the smallest sufficient option; and name its version, authority ceiling, evaluation evidence, cost allocation, monitor, fallback, and retirement trigger.",
+      "evidence": ["R26-40", "R26-56", "R26-63"],
+      "release_gates": ["design", "shadow", "operations"]
+    },
+    {
+      "id": "FDE-001",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "Each use case MUST name the user, working interface, operational decision, decision inputs, permitted action, accepted outcome, sponsor, process knower, operator, disposition authority, owner, and independent verifier before solution design begins; one person MAY hold multiple roles only with a separate basis for each.",
+      "evidence": ["R26-37", "R26-41"],
+      "release_gates": ["design"]
+    },
+    {
+      "id": "FDE-002",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "Discovery MUST include representative workflow observations, artifacts, exceptions, workarounds, and validation by operators or domain experts; reconcile consequential sold, stated, observed, system-enforced, and policy-authorized claims while minimizing and governing sensitive evidence.",
+      "evidence": ["R26-37", "R26-41", "R26-54"],
+      "release_gates": ["design"]
+    },
+    {
+      "id": "FDE-003",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "A pilot MUST keep technical performance, operator acceptance, adoption, business-value evidence, economics, and production readiness as separate gates with explicit stop conditions.",
+      "evidence": ["R26-37", "R26-38", "R26-45"],
+      "release_gates": ["design", "shadow", "canary"]
+    },
+    {
+      "id": "FDE-004",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "Recurring field observations, operator corrections, adoption barriers, and production failure patterns MUST enter a governed learning register with evidence, confidentiality, owner, disposition, destination, and validation outcome.",
+      "evidence": ["R26-37", "R26-45", "R26-46"],
+      "release_gates": ["operations"]
+    },
+    {
+      "id": "FDE-005",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "When field evidence materially contradicts an inherited commitment, the team MUST preserve the sources and prior state, identify the affected boundary and disposition authority, provide a safe fallback, record a scoped human disposition, and propagate only dependent changes.",
+      "evidence": ["R26-37", "R26-41", "R26-44"],
+      "release_gates": ["design", "shadow"]
+    },
+    {
+      "id": "VAL-001",
+      "domain": "value",
+      "level": "MUST",
+      "requirement": "Each workflow MUST define a metric owner, measured or explicitly unmeasured baseline, target, eligible population, measurement window, attribution method, and guardrail metrics.",
+      "evidence": ["R26-39", "R26-41"],
+      "release_gates": ["design", "shadow"]
+    },
+    {
+      "id": "VAL-002",
+      "domain": "value",
+      "level": "MUST",
+      "requirement": "Realized value MUST be calculated from eligible adopted use, independently accepted outcomes, avoided loss or unit value, residual loss not already netted from either benefit term, and full delivery and operating cost rather than activity or token volume. Unit value, avoided loss, and residual loss MUST use non-overlapping definitions so the same outcome or exposure is not counted twice.",
+      "evidence": ["R26-22", "R26-37", "R26-39"],
+      "release_gates": ["canary", "operations"]
+    },
+    {
+      "id": "VAL-003",
+      "domain": "value",
+      "level": "SHOULD",
+      "requirement": "The use-case portfolio SHOULD apply readiness and risk gates before impact-effort ranking and SHOULD retire or defer candidates without an owner, verifier, accessible context, or plausible adoption path.",
+      "evidence": ["R26-39", "R26-41", "R26-45"],
+      "release_gates": ["design", "operations"]
+    },
+    {
+      "id": "ADP-001",
+      "domain": "adoption",
+      "level": "MUST",
+      "requirement": "The production workflow MUST expose work, evidence, uncertainty, state, and permitted actions in a persistent surface that target users can inspect, correct, interrupt, and resume.",
+      "evidence": ["R26-43", "R26-54"],
+      "release_gates": ["shadow", "canary", "operations"]
+    },
+    {
+      "id": "ADP-002",
+      "domain": "adoption",
+      "level": "MUST",
+      "requirement": "Autonomy or segment expansion MUST require a named customer service owner plus demonstrated support, training, access, release, incident, and change-management capability.",
+      "evidence": ["R26-37", "R26-45"],
+      "release_gates": ["canary", "autonomy", "operations"]
+    },
+    {
+      "id": "DEL-001",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "Each production candidate MUST version its compatible data, domain model, policy, evaluation, runtime, user surface, operations, rollout, and rollback evidence as one reviewable release. When model or agent behavior is selected, the agent system, behavior bundle, tools, and capability manifests MUST also be bound by the solution-release contract; deterministic, optimization, or classical-ML-only systems MUST use equivalent target software-release evidence until this guide provides a generalized system-release schema.",
+      "evidence": ["R26-44", "R26-51", "R26-52"],
+      "release_gates": ["shadow", "canary", "autonomy"]
+    },
+    {
+      "id": "DEL-002",
+      "domain": "delivery",
+      "level": "MUST",
+      "requirement": "Cross-resource solution changes MUST be tested in an isolated branch or environment, reviewed as a compatible unit, and promoted separately from merge with explicit migration and rollback evidence.",
+      "evidence": ["R26-44"],
+      "release_gates": ["sandbox", "shadow", "canary"]
+    },
+    {
+      "id": "CTX-001",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Every decision-bearing source MUST declare an owner, source-of-truth status, classification, revision, and freshness objective.",
+      "evidence": ["R26-14", "R26-16"],
+      "release_gates": ["design", "shadow"]
+    },
+    {
+      "id": "CTX-002",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Retrieved, user-supplied, tool-returned, and external content MUST remain data and MUST NOT acquire instruction authority.",
+      "evidence": ["R26-09", "R26-18"],
+      "release_gates": ["sandbox", "shadow", "canary"]
+    },
+    {
+      "id": "CTX-003",
+      "domain": "context",
+      "level": "SHOULD",
+      "requirement": "Adaptive retrieval SHOULD use an explicit evidence-sufficiency check and a bounded query-rewrite budget.",
+      "evidence": ["R26-16", "R26-23"],
+      "release_gates": ["shadow"]
+    },
+    {
+      "id": "CTX-004",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Persisted memory and shared conclusions MUST retain provenance, trust labels, validation state, and invalidation rules.",
+      "evidence": ["R26-06", "R26-28"],
+      "release_gates": ["design", "autonomy"]
+    },
+    {
+      "id": "CTX-005",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Every model, workflow, worker, or context-reset handoff MUST use a versioned closed schema carrying objective, verified state, provenance, unresolved work, authority, budget, and terminal reason while free-form content remains untrusted data.",
+      "evidence": ["R26-48", "R26-54", "R26-56"],
+      "release_gates": ["design", "sandbox", "shadow"]
+    },
+    {
+      "id": "CTX-006",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Every consequential workflow MUST bind its eligible population and decision to a versioned data-context manifest that separates operational, knowledge/context, evaluation/training, and telemetry/feedback uses and records source location, owner, purpose, authority, grain, keys, time semantics, schema, revision, freshness, access, retention, deletion, and output-data obligations.",
+      "evidence": ["R26-14", "R26-67"],
+      "release_gates": ["design", "shadow", "canary", "operations"]
+    },
+    {
+      "id": "CTX-007",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Decision-critical data MUST be profiled against owned thresholds for completeness, validity, uniqueness, consistency, timeliness, eligible-population coverage, and representativeness as applicable, with explicit behavior for missing, stale, conflicting, corrected, and late-arriving data and segment-level constraints when thresholds fail.",
+      "evidence": ["R26-14", "R26-47"],
+      "release_gates": ["design", "shadow", "canary", "operations"]
+    },
+    {
+      "id": "CTX-008",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Preparation, reconciliation, indexing, feature, and label pipelines MUST retain source and transformation lineage, exact implementation versions, validation and correction behavior, reference authority, and independent label approval where applicable; derived data MUST NOT silently become source-of-truth policy, authorization, runtime instruction, or training consent.",
+      "evidence": ["R26-47", "R26-53", "R26-67"],
+      "release_gates": ["design", "sandbox", "shadow", "canary", "operations"]
+    },
+    {
+      "id": "CTX-009",
+      "domain": "context",
+      "level": "MUST",
+      "requirement": "Production operation MUST monitor decision-critical source, schema, permission, freshness, quality, coverage, lineage, correction, output-record, and drift conditions by applicable segment and MUST route breaches to owned stop, fallback, reconciliation, replay, rollback, or rebaseline behavior.",
+      "evidence": ["R26-07", "R26-17", "R26-51"],
+      "release_gates": ["shadow", "canary", "operations"]
+    },
+    {
+      "id": "TOL-001",
+      "domain": "tools",
+      "level": "MUST",
+      "requirement": "Every model-visible tool MUST have a narrow typed contract, explicit owner, effect class, and failure taxonomy.",
+      "evidence": ["R26-02", "R26-13", "R26-27"],
+      "release_gates": ["design", "sandbox"]
+    },
+    {
+      "id": "TOL-002",
+      "domain": "tools",
+      "level": "SHOULD",
+      "requirement": "Large capability catalogs SHOULD expose progressive search, describe, and execute interfaces instead of loading all tools.",
+      "evidence": ["R26-02"],
+      "release_gates": ["sandbox", "shadow"]
+    },
+    {
+      "id": "TOL-003",
+      "domain": "tools",
+      "level": "MUST",
+      "requirement": "Read, stage, commit, administrative, and destructive operations MUST use distinct tools and authorization policies.",
+      "evidence": ["R26-03", "R26-26"],
+      "release_gates": ["design", "sandbox"]
+    },
+    {
+      "id": "TOL-004",
+      "domain": "tools",
+      "level": "MUST",
+      "requirement": "Tool output MUST include structured status and typed errors; natural-language success claims MUST NOT prove completion.",
+      "evidence": ["R26-20", "R26-35"],
+      "release_gates": ["sandbox", "shadow"]
+    },
+    {
+      "id": "TOL-005",
+      "domain": "tools",
+      "level": "MUST",
+      "requirement": "Every read-capable tool MUST declare data classification, tenant and resource scope, result cardinality and size limits, open-world or egress capability, and approval policy; read-only effect status MUST NOT imply low disclosure risk.",
+      "evidence": ["R26-49", "R26-50"],
+      "release_gates": ["design", "sandbox", "shadow"]
+    },
+    {
+      "id": "TOL-006",
+      "domain": "tools",
+      "level": "MUST",
+      "requirement": "Every admitted tool, MCP server, skill, CLI, or code package MUST bind a verified publisher, pinned source and artifact digests, build provenance, interface digests, authority, sandbox profile, assurance evidence, owner, disable path, and lifecycle state.",
+      "evidence": ["R26-13", "R26-18", "R26-36", "R26-58", "R26-59"],
+      "release_gates": ["design", "sandbox", "operations"]
+    },
+    {
+      "id": "IAM-001",
+      "domain": "identity",
+      "level": "MUST",
+      "requirement": "Every run MUST have an unambiguous actor identity: unattended agents use distinct non-human workload identities, while interactive delegated agents may use short-lived user-bound sessions only with server-side authorization, scoped authority, mutation policy or approval, and user-plus-agent audit attribution.",
+      "evidence": ["R26-11", "R26-15", "R26-27", "R26-57"],
+      "release_gates": ["design", "sandbox"]
+    },
+    {
+      "id": "IAM-002",
+      "domain": "identity",
+      "level": "MUST",
+      "requirement": "Delegated actions MUST intersect agent capability with the initiating caller's current authorization and tenant scope; every hop MUST preserve verifiable caller, workload, logical-agent, and recipient attribution, bind the delegated grant to its intended recipient, purpose, scope, expiry, and policy revision, and fail closed when that lineage or authority is missing, invalid, stale, truncated, replayed, revoked, or widened.",
+      "evidence": ["R26-11", "R26-15", "R26-80"],
+      "release_gates": ["sandbox", "shadow", "autonomy"]
+    },
+    {
+      "id": "IAM-003",
+      "domain": "identity",
+      "level": "MUST",
+      "requirement": "Authorization MUST be evaluated at the action boundary and MUST fail closed on missing or stale policy context.",
+      "evidence": ["R26-15", "R26-32"],
+      "release_gates": ["sandbox", "shadow", "autonomy"]
+    },
+    {
+      "id": "SEC-001",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Secrets MUST remain behind a trusted broker and MUST NOT enter model context, tool output, logs, or sandbox storage.",
+      "evidence": ["R26-03", "R26-08"],
+      "release_gates": ["sandbox", "operations"]
+    },
+    {
+      "id": "SEC-002",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Runtime network egress MUST be denied by default and constrained by destination, protocol, method, and agent identity.",
+      "evidence": ["R26-08", "R26-18"],
+      "release_gates": ["sandbox", "canary", "operations"]
+    },
+    {
+      "id": "SEC-003",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Model-generated code and general-purpose execution MUST run in an isolated environment with bounded CPU, memory, time, filesystem, and network.",
+      "evidence": ["R26-02", "R26-08", "R26-12"],
+      "release_gates": ["sandbox"]
+    },
+    {
+      "id": "SEC-004",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Each high-severity threat MUST map to preventive, detective, recovery, and executable negative-test controls.",
+      "evidence": ["R26-18", "R26-21"],
+      "release_gates": ["design", "shadow", "operations"]
+    },
+    {
+      "id": "SEC-005",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Tenant identifiers MUST bind authorization, retrieval, caches, durable state, encryption context, and tool requests.",
+      "evidence": ["R26-11", "internal-invariant"],
+      "release_gates": ["sandbox", "shadow", "autonomy"]
+    },
+    {
+      "id": "SEC-006",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Allowed egress MUST bind destination and resolved address to protocol, method, path or operation, redirect and server-fetch policy, credential provenance, target account and tenant, agent identity, and request and response limits.",
+      "evidence": ["R26-36", "R26-49"],
+      "release_gates": ["sandbox", "canary", "operations"]
+    },
+    {
+      "id": "SEC-007",
+      "domain": "security",
+      "level": "MUST",
+      "requirement": "Capability admission and invocation MUST fail closed when publisher, signature, provenance, policy, or registry validation is unavailable, and a disabled artifact digest MUST remain denied even when its name or semantic version is reused.",
+      "evidence": ["R26-13", "R26-18", "R26-36", "R26-58", "R26-59"],
+      "release_gates": ["sandbox", "canary", "operations"]
+    },
+    {
+      "id": "REL-001",
+      "domain": "reliability",
+      "level": "MUST",
+      "requirement": "Every side-effecting operation MUST use service-enforced idempotency keyed to the stable business operation.",
+      "evidence": ["R26-10", "R26-31", "R26-60"],
+      "release_gates": ["sandbox", "shadow", "autonomy"]
+    },
+    {
+      "id": "REL-002",
+      "domain": "reliability",
+      "level": "MUST",
+      "requirement": "Loops MUST bound steps, elapsed time, retries, tool calls, model cost, and parallel workers with explicit terminal reasons.",
+      "evidence": ["R26-29", "R26-31", "R26-35"],
+      "release_gates": ["sandbox", "shadow"]
+    },
+    {
+      "id": "REL-003",
+      "domain": "reliability",
+      "level": "MUST",
+      "requirement": "Consequential effects MUST be followed by source-of-truth readback that verifies the declared business postcondition.",
+      "evidence": ["R26-07", "R26-20"],
+      "release_gates": ["shadow", "canary", "autonomy"]
+    },
+    {
+      "id": "REL-004",
+      "domain": "reliability",
+      "level": "MUST",
+      "requirement": "Parallel work MUST define fan-out, capacity, cancellation, idempotency, merge, conflict, and partial-failure semantics.",
+      "evidence": ["R26-10", "R26-29", "R26-31"],
+      "release_gates": ["design", "shadow", "autonomy"]
+    },
+    {
+      "id": "REL-005",
+      "domain": "reliability",
+      "level": "MUST",
+      "requirement": "Preflight validation MUST NOT authorize or prove an effect; the commit boundary MUST recheck actor, authority, current state, business invariants, approval freshness, and idempotency before execution and source-of-truth readback.",
+      "evidence": ["R26-20", "R26-42", "R26-54"],
+      "release_gates": ["sandbox", "shadow", "canary", "autonomy"]
+    },
+    {
+      "id": "STA-001",
+      "domain": "state",
+      "level": "MUST",
+      "requirement": "Workflow state MUST be explicit, versioned, replayable, and independent from model context and transport sessions.",
+      "evidence": ["R26-06", "R26-28", "R26-31"],
+      "release_gates": ["design", "shadow"]
+    },
+    {
+      "id": "STA-002",
+      "domain": "state",
+      "level": "MUST",
+      "requirement": "State MUST be committed only after its validation, authorization, and approval gate succeeds.",
+      "evidence": ["R26-06", "R26-28"],
+      "release_gates": ["sandbox", "autonomy"]
+    },
+    {
+      "id": "STA-003",
+      "domain": "state",
+      "level": "MUST",
+      "requirement": "Each state class MUST declare storage boundary, classification, retention, recovery point, and deletion behavior.",
+      "evidence": ["R26-06", "R26-31"],
+      "release_gates": ["design", "operations"]
+    },
+    {
+      "id": "EVA-001",
+      "domain": "evaluation",
+      "level": "MUST",
+      "requirement": "Release evaluation MUST cover contracts, components, trajectories, artifacts, external effects, safety, and operating budgets.",
+      "evidence": ["R26-01", "R26-07", "R26-24"],
+      "release_gates": ["shadow", "canary", "autonomy"]
+    },
+    {
+      "id": "EVA-002",
+      "domain": "evaluation",
+      "level": "MUST",
+      "requirement": "Evaluation fixtures, graders, tests, and pass signals MUST be isolated from agent-controlled code and write paths.",
+      "evidence": ["R26-25"],
+      "release_gates": ["sandbox", "shadow"]
+    },
+    {
+      "id": "EVA-003",
+      "domain": "evaluation",
+      "level": "MUST",
+      "requirement": "High-risk slices and prohibited effects MUST have separate thresholds that aggregate performance cannot offset.",
+      "evidence": ["R26-23", "R26-25", "R26-36"],
+      "release_gates": ["shadow", "canary", "autonomy"]
+    },
+    {
+      "id": "EVA-004",
+      "domain": "evaluation",
+      "level": "MUST",
+      "requirement": "Each production incident and diagnosed behavior cluster MUST produce a replayable regression case before closure.",
+      "evidence": ["R26-17", "R26-20"],
+      "release_gates": ["operations"]
+    },
+    {
+      "id": "EVA-005",
+      "domain": "evaluation",
+      "level": "SHOULD",
+      "requirement": "Semantic judges SHOULD be calibrated against expert labels with agreement, drift, and slice-level error tracking.",
+      "evidence": ["R26-01", "R26-20"],
+      "release_gates": ["shadow", "operations"]
+    },
+    {
+      "id": "EVA-006",
+      "domain": "evaluation",
+      "level": "MUST",
+      "requirement": "Each evaluation report MUST declare its tested claim, complete component and environment versions, resource budgets, trial count, product-appropriate consistency or best-of metric, uncertainty, limitations, and contamination controls.",
+      "evidence": ["R26-47", "R26-52", "R26-53"],
+      "release_gates": ["shadow", "canary", "autonomy", "operations"]
+    },
+    {
+      "id": "EVA-007",
+      "domain": "evaluation",
+      "level": "MUST",
+      "requirement": "Every expected result or human-authored reference label MUST declare its evidence basis, source and revision, accountable owner, data classification, independent approver, approval time, adjudication and disagreement process, and review due date.",
+      "evidence": ["R26-47", "R26-53", "R26-73"],
+      "release_gates": ["sandbox", "shadow", "operations"]
+    },
+    {
+      "id": "HUM-001",
+      "domain": "human_review",
+      "level": "MUST",
+      "requirement": "Approval interfaces MUST expose proposed effect, evidence, uncertainty, policy decision, postcondition, and available alternatives.",
+      "evidence": ["R26-21", "R26-22"],
+      "release_gates": ["shadow", "canary"]
+    },
+    {
+      "id": "HUM-002",
+      "domain": "human_review",
+      "level": "MUST",
+      "requirement": "Humans MUST be able to pause, reject, edit, escalate, and resume work without losing trace or state integrity.",
+      "evidence": ["R26-21", "R26-28"],
+      "release_gates": ["shadow", "operations"]
+    },
+    {
+      "id": "HUM-003",
+      "domain": "human_review",
+      "level": "MUST",
+      "requirement": "Approval controls MUST be risk-tiered and measure acceptance, denial, override, decision latency, and sampled unsafe approvals; automated approval classification MUST NOT be the sole gate for high-stakes effects.",
+      "evidence": ["R26-50", "R26-54"],
+      "release_gates": ["shadow", "canary", "operations"]
+    },
+    {
+      "id": "OPS-001",
+      "domain": "operations",
+      "level": "MUST",
+      "requirement": "Each run MUST emit versioned trace data for identity, context, tools, policy, approvals, state, effects, readback, cost, and stop reason.",
+      "evidence": ["R26-19", "R26-34"],
+      "release_gates": ["shadow", "operations"]
+    },
+    {
+      "id": "OPS-002",
+      "domain": "operations",
+      "level": "MUST",
+      "requirement": "Production systems MUST provide kill switches for new work, writes, identities, egress, and individual capability bundles.",
+      "evidence": ["R26-21", "R26-30"],
+      "release_gates": ["canary", "operations"]
+    },
+    {
+      "id": "OPS-003",
+      "domain": "operations",
+      "level": "MUST",
+      "requirement": "Each severe failure mode MUST have a detection query, containment step, readback, recovery procedure, owner, and regression link.",
+      "evidence": ["R26-21", "R26-30"],
+      "release_gates": ["operations"]
+    },
+    {
+      "id": "OPS-004",
+      "domain": "operations",
+      "level": "MUST",
+      "requirement": "Service objectives MUST include accepted outcomes, prohibited effects, duplicate effects, cycle time, cost, and recovery success.",
+      "evidence": ["R26-21", "R26-22"],
+      "release_gates": ["canary", "operations"]
+    },
+    {
+      "id": "OPS-005",
+      "domain": "operations",
+      "level": "SHOULD",
+      "requirement": "Durable workflows SHOULD support checkpoints, replay, version migration, cancellation propagation, and dead-letter recovery.",
+      "evidence": ["R26-28", "R26-31"],
+      "release_gates": ["shadow", "operations"]
+    },
+    {
+      "id": "OPS-006",
+      "domain": "operations",
+      "level": "MUST",
+      "requirement": "Production monitoring MUST cover data health, dependencies, workflow state, model and tool behavior, policy decisions, external effects, user adoption, accepted outcomes, cost, and tested alert routes.",
+      "evidence": ["R26-04", "R26-46"],
+      "release_gates": ["canary", "operations"]
+    },
+    {
+      "id": "OPS-007",
+      "domain": "operations",
+      "level": "MUST",
+      "requirement": "Model, prompt, tool-description, routing, context-policy, guardrail, evaluator, runtime, policy, or capability changes MUST carry a versioned diff or digest, assessed workflow, data, identity, evaluation, operations, and user-surface impacts, per-route evaluation, soak or canary plan, rollback trigger, and dependency end-of-life review.",
+      "evidence": ["R26-51", "R26-52", "R26-55", "R26-65", "R26-66", "R26-67"],
+      "release_gates": ["shadow", "canary", "operations"]
+    },
+    {
+      "id": "CST-001",
+      "domain": "cost",
+      "level": "MUST",
+      "requirement": "Cost MUST be attributed per accepted outcome across model, tool, compute, storage, wait, retry, and human-review components.",
+      "evidence": ["R26-22"],
+      "release_gates": ["shadow", "operations"]
+    },
+    {
+      "id": "CST-002",
+      "domain": "cost",
+      "level": "MUST",
+      "requirement": "Every run MUST enforce cost and resource budgets with a terminal budget-exhausted state and escalation policy.",
+      "evidence": ["R26-22", "R26-29"],
+      "release_gates": ["sandbox", "shadow"]
+    }
+  ]
+}

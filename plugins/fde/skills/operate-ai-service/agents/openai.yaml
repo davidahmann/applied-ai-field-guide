@@ -1,0 +1,4 @@
+interface:
+  display_name: "Operate AI Service"
+  short_description: "Run value, reliability, safety, and change"
+  default_prompt: "Use $operate-ai-service to establish the operating model for this production AI service."

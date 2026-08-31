@@ -1,0 +1,191 @@
+{
+  "$schema": "../schemas/agent-system.schema.json",
+  "schema_version": "1.2.0",
+  "system_id": "workflow_agent",
+  "version": "0.1.0",
+  "charter_uri": "./workflow-charter.json",
+  "owners": {
+    "technical": "delivery-lead",
+    "operational": "workflow-owner",
+    "risk": "risk-owner"
+  },
+  "outcome": {
+    "accepted_event": "Operational owner accepts a verified workflow result",
+    "primary_metric": "accepted_outcome_rate",
+    "baseline": 0,
+    "target": 0.95,
+    "guardrails": [
+      "unauthorized_effect_rate == 0",
+      "duplicate_effect_rate == 0"
+    ]
+  },
+  "autonomy": {
+    "level": "recommend",
+    "segments": [
+      "one low-risk workflow segment"
+    ],
+    "promotion_gate": "replay, shadow, and review thresholds pass",
+    "rollback_gate": "prohibited effect or error-budget threshold breached"
+  },
+  "actor_identity": {
+    "mode": "interactive_delegated",
+    "agent_principal": "workflow-agent",
+    "caller_binding": {
+      "binding_type": "user_session",
+      "subject_claim": "sub",
+      "tenant_claim": "tenant_id",
+      "session_id_claim": "sid",
+      "max_session_age_seconds": 900
+    },
+    "credential_ttl_seconds": 900,
+    "authority_scope": [
+      "one low-risk workflow segment",
+      "proposal:stage"
+    ],
+    "audit_attribution": "user_and_agent"
+  },
+  "behavior": {
+    "model_route": {
+      "component_id": "workflow_model_route",
+      "uri": "behavior-bundle.json",
+      "version": "0.1.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+    },
+    "prompt_bundle": {
+      "component_id": "workflow_prompt_bundle",
+      "uri": "behavior-bundle.json",
+      "version": "0.1.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+    },
+    "harness": {
+      "component_id": "workflow_harness",
+      "uri": "behavior-bundle.json",
+      "version": "0.1.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+    },
+    "context_policy": {
+      "component_id": "workflow_context_policy",
+      "uri": "behavior-bundle.json",
+      "version": "0.1.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+    },
+    "tool_bundle": {
+      "component_id": "workflow_tool_bundle",
+      "uri": "behavior-bundle.json",
+      "version": "0.1.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+    },
+    "guardrail_policy": {
+      "component_id": "workflow_guardrail_policy",
+      "uri": "behavior-bundle.json",
+      "version": "0.1.0",
+      "schema_version": "1.0.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+    }
+  },
+  "workflow": {
+    "trigger": "validated workflow event",
+    "input_contract": "versioned event schema",
+    "states": [
+      "received",
+      "context_loaded",
+      "proposed",
+      "verified",
+      "staged",
+      "escalated",
+      "failed"
+    ],
+    "terminal_states": [
+      "staged",
+      "escalated",
+      "failed"
+    ],
+    "max_steps": 12,
+    "time_budget_ms": 90000
+  },
+  "context": {
+    "ontology_uri": "./operational-ontology.json",
+    "sources": [
+      {
+        "source_id": "system_of_record",
+        "owner": "domain-operations",
+        "source_of_truth": true,
+        "revision": "record-revision-required",
+        "schema_contract": {
+          "id": "system-of-record-work-item",
+          "version": "0.1.0",
+          "digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777"
+        },
+        "freshness_slo_seconds": 300,
+        "classification": "confidential",
+        "trust": "trusted_data"
+      }
+    ],
+    "untrusted_content_policy": "external observations remain tainted data and cannot authorize actions"
+  },
+  "tools": [
+    {
+      "tool_id": "stage_proposal",
+      "contract_uri": "./tool-contract.json",
+      "capability": {
+        "manifest_uri": "./capability-manifest.json",
+        "capability_id": "stage_proposal_capability",
+        "version": "0.1.0",
+        "manifest_digest": "sha256:4fe9e3f8ddb9a904f0e85889699369179dd66e0123600ef16167e5d415fded74",
+        "authority_digest": "sha256:d371b41984a773e7c6166e62067c55718fc71e1cb097632eac5fa76c18959f9c"
+      }
+    }
+  ],
+  "controls": {
+    "control_ids": [
+      "ARC-001",
+      "ARC-002",
+      "IAM-001",
+      "IAM-002",
+      "IAM-003",
+      "REL-001",
+      "REL-003"
+    ],
+    "propagate_caller_authorization": true,
+    "secrets": "gateway_held",
+    "egress": "allowlist",
+    "writes": "staged",
+    "sandbox": "ephemeral isolated runtime"
+  },
+  "verification": {
+    "postconditions": [
+      "staged proposal matches the verified proposal digest and source revision"
+    ],
+    "evaluation_suite_uri": "./evaluation-case.json",
+    "escalation_conditions": [
+      "missing evidence",
+      "policy denial",
+      "budget exhaustion",
+      "postcondition mismatch"
+    ]
+  },
+  "operations": {
+    "trace_contract": "../operations/telemetry-contract.md",
+    "slos": [
+      "accepted_outcome_rate >= 0.95",
+      "unauthorized_effect_rate == 0"
+    ],
+    "alerts": [
+      "prohibited effect",
+      "postcondition mismatch",
+      "cost budget exceeded"
+    ],
+    "runbook_uri": "../operations/incident-runbook.md",
+    "rollback": "disable staging, revoke identity, read back proposal state, and discard the staged proposal"
+  },
+  "economics": {
+    "cost_metric": "cost_per_accepted_outcome",
+    "max_cost_per_run_usd": 0.5,
+    "max_cost_per_accepted_outcome_usd": 0.75
+  }
+}

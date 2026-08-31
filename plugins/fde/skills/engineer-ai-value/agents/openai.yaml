@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineer AI Value"
+  short_description: "Decide value for a bounded or live AI workflow"
+  default_prompt: "Use $engineer-ai-value and the AI Value Engineering Scorecard to decide the value case for this bounded workflow or its continued live operation."

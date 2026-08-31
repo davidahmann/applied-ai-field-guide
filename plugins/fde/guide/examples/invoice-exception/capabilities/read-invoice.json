@@ -1,0 +1,114 @@
+{
+  "$schema": "../../../schemas/capability-manifest.schema.json",
+  "schema_version": "1.1.0",
+  "capability_id": "read_invoice_capability",
+  "version": "2.0.0",
+  "kind": "tool",
+  "status": "candidate",
+  "owner": "accounts-payable-platform",
+  "provenance": {
+    "source_repository": "https://github.com/davidahmann/production-agent-engineering",
+    "source_commit": "c4b1d525b8a5ac6f2cc7fafad9639bd08f0de786",
+    "publisher": "reference-example-unverified",
+    "publisher_verified": false,
+    "build_attestation_digest": "sha256:62119e0a83ed57ef8d6e853b3d9d3397cd159ed49ccc61f65d8b65dcc4313f0d",
+    "artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+    "attestation": {
+      "format": "in_toto_statement",
+      "algorithm": "Ed25519",
+      "key_id": "unverified-reference-builder-key",
+      "issuer": "reference-build-example",
+      "subject_artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+      "subject_tool_contract_digest": "sha256:8e39ddea00848c41cc26ef88ff78ca5365828552c71bdf07a8d5c7e911722cd6",
+      "predicate_type": "https://slsa.dev/provenance/v1",
+      "location": "https://attestations.example.invalid/read_invoice_capability/2.0.0",
+      "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "registry_record": {
+      "registry_id": "reference-capability-registry",
+      "decision": "candidate",
+      "capability_id": "read_invoice_capability",
+      "capability_version": "2.0.0",
+      "artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+      "tool_contract_digest": "sha256:8e39ddea00848c41cc26ef88ff78ca5365828552c71bdf07a8d5c7e911722cd6",
+      "authority_digest": "sha256:7abfc76af5ab518506fda8cb973eca2d47be0686b97d319f2feead4e82410dc8",
+      "verified_at": "2026-08-07T15:00:00Z",
+      "expires_at": "2026-08-08T15:00:00Z",
+      "decision_digest": "sha256:6b756b5e793ad472e4861f56b232ea8e17280d56cf7c23b33d8f2f68f57fdded"
+    },
+    "sbom_uri": "invoice-reference-sbom.spdx",
+    "sbom_digest": "sha256:8d3816722ddad1557dc5293c629b7f4ea56dfcc978ad2d11960eee1d9d7ff8cb",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "artifacts": {
+    "entrypoint": "invoice-world-fixture/read_invoice",
+    "executable_uri": "../invoice-world-fixture.mjs",
+    "instruction_digest": null,
+    "executable_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+    "input_schema_digest": "sha256:201ebf0efd57700c116777f82835419e72730faff74889d3b6d32332d579e9dd",
+    "output_schema_digest": "sha256:f61bd32670bca4d3005594a8d6e42b7329986b91cb52be9a34a207739c7f5306",
+    "tool_contract": {
+      "uri": "../tools/read-invoice.json",
+      "tool_id": "read_invoice",
+      "version": "2.0.0",
+      "schema_version": "1.1.0",
+      "digest": "sha256:8e39ddea00848c41cc26ef88ff78ca5365828552c71bdf07a8d5c7e911722cd6"
+    }
+  },
+  "authority": {
+    "digest": "sha256:7abfc76af5ab518506fda8cb973eca2d47be0686b97d319f2feead4e82410dc8",
+    "actor_modes": [
+      "interactive_delegated"
+    ],
+    "scopes": [
+      "invoice:read"
+    ],
+    "data_classes": [
+      "confidential",
+      "internal"
+    ],
+    "effect_ceiling": "none",
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "ap_ledger",
+        "scheme": "https",
+        "authority": "ap-ledger.internal",
+        "port": 443,
+        "path_prefix": "/v1/invoices/read"
+      }
+    ],
+    "credential_mode": "short_lived_brokered",
+    "tenant_binding": true
+  },
+  "runtime": {
+    "sandbox_profile": "isolated-reference-world",
+    "network_policy": "operation-scoped-allowlist",
+    "resource_profile": "cpu-1-memory-512mb-time-90s",
+    "supported_harness_versions": [
+      "3.0.0"
+    ]
+  },
+  "lifecycle": {
+    "introduced_at": "2026-08-07",
+    "review_due": "2026-11-07",
+    "eol_at": null,
+    "disable_procedure": "Disable read_invoice_capability by exact manifest and executable digest.",
+    "rollback_version": null
+  },
+  "assurance": {
+    "threat_model_uri": "../threat-model.json",
+    "evaluation_suite_uri": "../evals",
+    "negative_test_ids": [
+      "read_invoice-authority-denial",
+      "read_invoice-digest-mismatch"
+    ],
+    "approved_by": []
+  },
+  "control_ids": [
+    "TOL-006",
+    "SEC-007"
+  ]
+}

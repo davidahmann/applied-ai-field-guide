@@ -1,0 +1,116 @@
+{
+  "$schema": "../schemas/handoff-envelope.schema.json",
+  "schema_version": "1.1.0",
+  "handoff_id": "00000000-0000-4000-8000-000000000010",
+  "envelope_digest": "sha256:06507694462ce88ef84b312498ae8dfe43885ece8fa9f64eb2e8255c89cc4ac1",
+  "nonce": "00000000-0000-4000-8000-000000000013",
+  "parent_handoff_id": null,
+  "parent_handoff_digest": null,
+  "issuer": {
+    "principal": "workflow-agent-workload",
+    "key_id": "workflow-agent-ed25519-1",
+    "trusted_key_registry": "agent-identity-registry"
+  },
+  "attestation": {
+    "algorithm": "Ed25519",
+    "subject_digest": "sha256:06507694462ce88ef84b312498ae8dfe43885ece8fa9f64eb2e8255c89cc4ac1",
+    "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  },
+  "replay_policy": "single_use",
+  "created_at": "2026-08-07T16:00:00Z",
+  "expires_at": "2026-08-07T16:15:00Z",
+  "producer": {
+    "principal": "workflow-agent-context-worker",
+    "system_id": "workflow_agent",
+    "worker_role": "context_worker",
+    "run_id": "00000000-0000-4000-8000-000000000011",
+    "actor_mode": "interactive_delegated"
+  },
+  "recipient": {
+    "principal": "workflow-agent-decision-worker",
+    "system_id": "workflow_agent",
+    "worker_role": "decision_worker",
+    "run_id": "00000000-0000-4000-8000-000000000012",
+    "actor_mode": "interactive_delegated"
+  },
+  "objective": {
+    "statement": "Evaluate the bounded work item using only the verified evidence and delegated authority.",
+    "acceptance_conditions": ["Return a typed recommendation or an explicit escalation reason"]
+  },
+  "verified_state": [
+    {
+      "state_id": "source_revision",
+      "value_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "source": "system-of-record",
+      "source_revision": "revision-42",
+      "verified_at": "2026-08-07T16:00:00Z",
+      "verifier": "context-contract-validator",
+      "trust": "trusted_data"
+    }
+  ],
+  "provenance": [
+    {
+      "evidence_id": "source_record",
+      "source_reference": "system-of-record/work-item",
+      "source_revision": "revision-42",
+      "observed_at": "2026-08-07T15:59:55Z",
+      "classification": "internal",
+      "trust": "trusted_data",
+      "content_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "unresolved_work": [
+    {
+      "work_id": "confirm_exception_reason",
+      "statement": "Confirm the exception reason from the bounded evidence set.",
+      "status": "open",
+      "owner": "decision-worker",
+      "blocking": true,
+      "evidence_needed": ["source_record"]
+    }
+  ],
+  "authority": {
+    "parent_authority_id": "interactive-session-grant-42",
+    "parent_state_revision": "grant-revision-5",
+    "tenant_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+    "caller_ceiling_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+    "parent_authority_digest": "sha256:551125d51840f576a3d53cf9ada471f55c36ba683143e813f71fee6a96710d2b",
+    "parent_actions": ["read_work_item", "recommend_resolution"],
+    "delegated_actions": ["read_work_item", "recommend_resolution"],
+    "parent_scopes": ["work-item:read", "resolution:recommend"],
+    "delegated_scopes": ["work-item:read", "resolution:recommend"],
+    "parent_effect_ceiling": "none",
+    "delegated_effect_ceiling": "none",
+    "parent_actor_modes": ["interactive_delegated"],
+    "delegated_actor_mode": "interactive_delegated",
+    "parent_budget": {
+      "steps_remaining": 5,
+      "tool_calls_remaining": 4,
+      "time_remaining_ms": 45000,
+      "tokens_remaining": 10000,
+      "cost_remaining_usd": 0.25
+    },
+    "policy_revision": "policy-3.2.1",
+    "maximum_depth": 2,
+    "parent_depth": 0,
+    "current_depth": 1
+  },
+  "budget": {
+    "steps_remaining": 4,
+    "tool_calls_remaining": 3,
+    "time_remaining_ms": 30000,
+    "tokens_remaining": 8000,
+    "cost_remaining_usd": 0.2
+  },
+  "untrusted_payloads": [
+    {
+      "label": "operator_attachment",
+      "content_digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "storage_reference": "evidence-store/object-7",
+      "classification": "confidential",
+      "instruction_authority": false
+    }
+  ],
+  "terminal_reason": "partial",
+  "control_ids": ["CTX-002", "CTX-005", "IAM-002", "REL-002", "REL-004"]
+}

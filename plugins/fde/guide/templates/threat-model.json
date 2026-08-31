@@ -1,0 +1,51 @@
+{
+  "$schema": "../schemas/threat-model.schema.json",
+  "schema_version": "1.0.0",
+  "system_id": "workflow_agent",
+  "owner": "domain-security",
+  "last_reviewed": "2026-08-07",
+  "assets": [
+    {
+      "asset_id": "system_of_record",
+      "classification": "confidential",
+      "integrity_required": true,
+      "availability_required": true
+    },
+    {
+      "asset_id": "workload_credential",
+      "classification": "restricted",
+      "integrity_required": true,
+      "availability_required": true
+    }
+  ],
+  "trust_boundaries": [
+    {
+      "boundary_id": "agent_to_tool_gateway",
+      "from": "agent_runtime",
+      "to": "tool_gateway",
+      "protocol": "HTTPS",
+      "authentication": "short-lived workload identity",
+      "authorization": "caller-agent intersection policy",
+      "encryption": "TLS 1.3"
+    }
+  ],
+  "assumptions": ["the identity broker and policy decision point are outside the agent trust boundary"],
+  "threats": [
+    {
+      "threat_id": "THR-001",
+      "category": "prompt_injection",
+      "scenario": "Untrusted retrieved content instructs the agent to stage an unauthorized proposal",
+      "entry_points": ["retrieved document", "tool output"],
+      "affected_assets": ["system_of_record"],
+      "likelihood": "high",
+      "impact": "critical",
+      "preventive_controls": ["CTX-002", "IAM-003", "TOL-003"],
+      "detective_controls": ["OPS-001", "SEC-004"],
+      "recovery_controls": ["OPS-002", "OPS-003"],
+      "residual_risk": "low",
+      "test_case_ids": ["workflow_authorization_denied"],
+      "owner": "domain-security",
+      "status": "mitigated"
+    }
+  ]
+}
