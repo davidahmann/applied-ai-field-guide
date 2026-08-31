@@ -316,6 +316,33 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Bounded interaction-workflow review](../research/2026-08-30--fde-interaction-workflow-ergonomics.md), field interaction capture, engagement isolation, task-interface routing, and sponsor readouts.
 - **Caution:** The repository does not independently prove customer outcomes or task-routing quality. Its thirty-method taxonomy, local client folder, trust score, staleness heuristic, and CLI/dashboard surface are product choices, not Guide requirements. No source code or method text is copied.
 
+<a id="s32"></a>
+## S32 — Varick: portfolio workflow consolidation
+
+- **Evidence:** Full text of *Private Equity Underestimates AI* supplied without a canonical article URL or publication date; reviewed 2026-08-31
+- **Author/publisher:** Varick, as named in the supplied article
+- **Contribution:** The article surfaces workflow variation across teams, regions, products, systems, and portfolio companies as a constraint on repeatable deployment, and proposes classifying comparable workflows before attempting shared implementation.
+- **Use in this library:** [Operational-redesign practice note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), portfolio variant inventory, cohort comparison, and standardization eligibility.
+- **Caution:** Workflow counts, efficiency, EBITDA, exit-multiple, holding-period, IRR, deployment-scale, and commercial claims are vendor assertions without inspectable methodology. Standardization may erase necessary policy, segment, role, or system differences; it is not a default objective.
+
+<a id="s33"></a>
+## S33 — Rohit Ghumare: AI Engineering from Scratch
+
+- **Evidence:** [Direct open-source curriculum](https://github.com/rohitg00/ai-engineering-from-scratch) and [Forward-Deployed AI Engineer route](https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/forward-deployed-ai-engineer.json), inspected at commit [`a56b4b8`](https://github.com/rohitg00/ai-engineering-from-scratch/commit/a56b4b8ad43a3767c771953d217036813f697bc7) on 2026-08-31
+- **Author/publisher:** Rohit Ghumare and repository contributors; MIT License
+- **Contribution:** The curriculum uses goal-based role routes, explicit artifact outcomes at each stage, runnable exercises, automated tests, quizzes, and a bounded completion claim. Its FDE route explicitly labels stakeholder facilitation, enterprise integration and security, and live production operation as partial or outside-course coverage.
+- **Use in this library:** Optional technical companion in the [capability roadmap](../guide/capability-roadmap.md) and educational mechanics for evidence-backed practice.
+- **Caution:** Course work is not live field experience, target-system approval, production readiness, or accepted-value evidence. The route's required RAG lesson does not make retrieval or RAG necessary for every workflow. No source prose or code was copied into this repository.
+
+<a id="s34"></a>
+## S34 — Mark Ajzenstadt: portfolio AI operating account
+
+- **Evidence:** Full practitioner post text supplied without a stable permalink or publication date; reviewed 2026-08-31
+- **Author:** Mark Ajzenstadt, `@mardehaym`, as identified in the supplied material
+- **Contribution:** The account describes a direct technical diagnostic that reads code and tests data pipelines before selecting use cases, followed by governed deployment, early adoption and cost measurement, receiving-team ownership, and cross-company review.
+- **Use in this library:** [Operational-redesign practice note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), technical reality checks, binding-constraint allocation, operating transfer, and portfolio learning.
+- **Caution:** Readiness scores, survey percentages, timelines, outcome gains, and cross-company implementation-speed claims are self-reported and not independently inspectable. The proposed scoring method is not a release gate, portfolio target, or substitute for direct target evidence.
+
 ## Cross-source convergence
 
 The most repeated ideas are:
@@ -344,3 +371,6 @@ The most repeated ideas are:
 22. Delegated authority remains verifiable only when caller, workload, logical-agent, recipient, scope, tenant, expiry, and policy lineage survive every hop.
 23. Model context should be compiled as a versioned decision-scoped projection, and privacy should be tested on the final outbound payload across every supported route.
 24. Durable, governed single-workflow operation should precede agent-to-agent coordination; topology is not a maturity measure.
+25. Reuse begins by classifying workflow variation and comparable cohorts; standardization cannot erase target-specific policy or validation.
+26. Questionnaires, maturity scores, and curricula can organize investigation and practice, but direct target evidence governs readiness.
+27. Portfolio resources should address the first unresolved hard gate rather than a composite average that hides binding constraints.

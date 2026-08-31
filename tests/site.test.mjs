@@ -113,6 +113,24 @@ test("the capability roadmap is a bounded secondary entry layer", async () => {
   }
   assert.match(source, /not a certification, hiring standard, fixed curriculum/);
   assert.match(source, /does not substitute for production experience, user acceptance, or target-system approval/);
+  assert.match(source, /## Optional technical companion/);
+  assert.match(source, /AI Engineering from Scratch/);
+  assert.match(source, /does not make retrieval, RAG, a model call, or an agent mandatory/i);
+  assert.match(source, /Course artifacts and quiz results show practice, not production readiness/i);
+});
+
+test("the public guides require direct technical evidence without turning maturity into a gate", async () => {
+  const [shortGuide, conciseGuide] = await Promise.all([
+    readFile(path.join(root, "guide", "fde-guide-in-five-minutes.md"), "utf8"),
+    readFile(path.join(root, "guide", "README.md"), "utf8"),
+  ]);
+  for (const source of [shortGuide, conciseGuide]) {
+    assert.match(source, /code or configuration/i);
+    assert.match(source, /maturity score/i);
+    assert.match(source, /(?:can't|don't) prove (?:technical )?readiness/i);
+  }
+  assert.match(conciseGuide, /policy-required, segment-specific, role-specific, system-constrained, or accidental dysfunction/i);
+  assert.match(conciseGuide, /first unresolved hard gate/i);
 });
 
 test("the AI value scorecard is a portable assessment rather than a second framework", async () => {

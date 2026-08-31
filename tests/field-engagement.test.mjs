@@ -105,6 +105,29 @@ test("the repository keeps one canonical engagement chain instead of duplicating
   assert.doesNotMatch(shipment, /engagement\/adoption-and-handoff\.md/);
 });
 
+test("discovery tests the inherited story against direct technical evidence", async () => {
+  const [playbook, discovery, synthesis, research] = await Promise.all([
+    readFile(path.join(root, "playbooks", "01-discovery-and-value.md"), "utf8"),
+    readFile(path.join(root, "templates", "fde-discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "library", "10-fde-and-production-agent-synthesis.md"), "utf8"),
+    readFile(path.join(root, "research", "2026-08-08--operational-redesign-and-applied-ai-practice.md"), "utf8"),
+  ]);
+
+  for (const body of [playbook, discovery]) {
+    assert.match(body, /Technical reality check|Check the technical reality directly/i);
+    assert.match(body, /code or configuration/i);
+    assert.match(body, /data pipeline/i);
+    assert.match(body, /identity, permission/i);
+    assert.match(body, /representative execution/i);
+    assert.match(body, /questionnaire/i);
+    assert.match(body, /maturity score/i);
+  }
+  assert.match(playbook, /keep the claim `unknown`/i);
+  assert.match(synthesis, /Interview assistants, voice capture, transcript extraction, prototype generation, and automated feedback summaries/i);
+  assert.match(synthesis, /do not replace observation, operator validation, conflict resolution, source authority, or the scoped human disposition/i);
+  assert.match(research, /No new lifecycle, score, module, or control family is created/i);
+});
+
 test("field interactions close through an isolated reviewed append loop and a derived readout", async () => {
   const [playbook, observation, discovery, serviceReview, example, research] = await Promise.all([
     readFile(path.join(root, "playbooks", "00-field-engagement-and-reframing.md"), "utf8"),

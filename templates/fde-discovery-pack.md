@@ -85,6 +85,20 @@ The sponsor readout is a projection of these dated receipts and the current gove
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | | | | | | | | | |
 
+## Technical reality check
+
+Use direct evidence to test the stated workflow before assigning readiness or proposing architecture. A questionnaire, interview, diagram, or maturity score organizes hypotheses; it does not prove the target environment is ready.
+
+| Surface inspected | Exact target / revision / environment | Owner | Evidence observed | Claim supported or contradicted | Gap, consequence, and next test |
+| --- | --- | --- | --- | --- | --- |
+| Code or configuration | | | | | |
+| Data pipeline, source seam, or reconciliation | | | | | |
+| Identity, permission, tenant, credential, or network boundary | | | | | |
+| Representative execution, telemetry, failure, or recovery path | | | | | |
+| Release, rollback, support, or dependency constraint | | | | | |
+
+Mark an uninspected decision-bearing surface `unknown`. Do not infer readiness from document completeness or replace missing target access with a higher confidence score.
+
 ## Decision decomposition
 
 | Decision | Deterministic rule | Agent judgment | Human accountability | Required evidence | Postcondition |

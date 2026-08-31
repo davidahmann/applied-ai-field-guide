@@ -59,6 +59,18 @@ Agree the accounting boundary with the owning finance or portfolio role. Include
 
 A falling customer-specific effort ratio is useful only when accepted outcomes, adoption, safety, supportability, and full cost remain healthy. Capacity gains that depend on hidden operator or customer work are not improvements.
 
+## Workflow variation and standardization eligibility
+
+Inventory the variation before treating several workflows as one reusable deployment. Classify each material difference as `policy-required`, `segment-specific`, `role-specific`, `system-constrained`, or `accidental dysfunction`. The first four may require a retained branch or separate cohort; the last is a candidate for repair, not a behavior to encode because it recurs.
+
+| Workflow / target | Comparable decision and accepted outcome | Observed variation | Variation class | Source, owner, and consequence | Standardization eligibility | Local validation retained |
+| --- | --- | --- | --- | --- | --- | --- |
+| — | — | — | Policy-required / segment-specific / role-specific / system-constrained / accidental dysfunction | — | Ineligible / comparable cohort / after remediation | Policy / data / evaluation / release / adoption / ownership |
+
+Cluster only workflows whose decision, accepted outcome, policy boundary, source semantics, effect class, and operating conditions are genuinely comparable. A shared pattern may reduce delivery work; it does not erase target-specific policy, data, security, evaluation, release, adoption, support, or ownership gates.
+
+Allocate the next unit of attention to the first unresolved hard gate or binding constraint in each workflow—not to the lowest composite or average maturity score. Portfolio scoring may help sort questions, but it cannot make an unverified target ready or turn unlike variants into one deployment.
+
 ## Reuse and field-to-product learning
 
 | Candidate | Comparable recurrence | Current target-specific effort | Reused governed artifact and validation | Ownership and reuse-rights status | Productization cost and owner | Expected future effect | Decision |

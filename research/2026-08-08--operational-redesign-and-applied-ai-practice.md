@@ -1,6 +1,6 @@
 # Operational Redesign and Applied-AI Practice Note
 
-**Reviewed:** 2026-08-08
+**Reviewed:** 2026-08-31
 **Use:** Qualitative context for discovery, productization, and adoption. This note does not create controls, universal ROI targets, or release criteria.
 
 ## Material reviewed
@@ -11,6 +11,9 @@
 | Varick, *How to Transform a Company With AI* | Full text supplied; also indexed as [S22](../library/05-source-index.md#s22) | Observe real work, separate context layers, redesign incrementally, and use shadow/supervised operation | Vendor self-description; outcome, efficiency, and accuracy figures are not validated here |
 | Aaron Levie, applied-AI layer post | Full text supplied; also indexed as [S23](../library/05-source-index.md#s23) | Workflow-specific context capture, tools, review surfaces, model routing, and change expertise are product concerns | Executive viewpoint; not a technical specification or market proof |
 | Mike Fishbein, context-extraction post | Full text supplied; indexed as [S13](../library/05-source-index.md#s13) | FDE spans consulting, product, and engineering; context extraction precedes implementation | Market and fundraising claims are excluded from the guide's recommendations |
+| Varick, *Private Equity Underestimates AI* | Full text supplied; indexed as [S32](../library/05-source-index.md#s32) | Inventory workflow variation before standardization; distinguish comparable deployment cohorts from target-specific work | Portfolio counts, return effects, holding-period claims, and repeatability claims are vendor assertions without inspectable evidence |
+| Rohit Ghumare, *AI Engineering from Scratch* | [Repository](https://github.com/rohitg00/ai-engineering-from-scratch) and [FDE route](https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/forward-deployed-ai-engineer.json) inspected at commit [`a56b4b8`](https://github.com/rohitg00/ai-engineering-from-scratch/commit/a56b4b8ad43a3767c771953d217036813f697bc7); indexed as [S33](../library/05-source-index.md#s33) | Goal-based routing, explicit stage artifacts, runnable exercises, tests, and review questions as optional technical-learning mechanics | Curriculum completion is not field or production proof; its required RAG lesson is route-specific and is not adopted as a Guide default; no source prose or code was copied |
+| Mark Ajzenstadt, portfolio operating-partner account | Full post text supplied without a stable permalink or publication date; indexed as [S34](../library/05-source-index.md#s34) | Direct code and data-pipeline diagnostics before deployment, early outcome measurement, operating transfer, and portfolio learning | Maturity scores, survey statistics, timelines, gains, and cross-company speed claims are self-reported; a score does not replace target evidence or a hard gate |
 | OpenExO, *The Organizational Singularity* | [Direct external reference](https://openexo.com/organizational-singularity) | Human-readable operational narrative plus machine-readable schemas; governed feedback loops; data and workflow architecture as first-class transformation concerns | Prescriptive organizational framework containing forecasts and broad claims; use only the bounded document-design and governance observations |
 
 ## Portable synthesis
@@ -22,6 +25,11 @@
 5. **Separate customer context from reusable practice.** Customer data, policies, thresholds, and local workarounds remain with their owner. Reusable interfaces, delivery methods, evaluation mechanics, and failure classes must be sanitized, recurrence-tested, and released through normal product controls. [R26-45](2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-45)
 6. **Modernize operationally before migrating by default.** Build around governed systems of record where feasible; make broken data ownership, identity, authorization, auditability, or support capacity explicit remediation work rather than hiding them under an AI layer.
 7. **Measure two forms of value.** An operating sponsor needs a measurable outcome and economic case. Operators need a better, controllable workday. Neither proxy proves the other; both require evidence before expansion.
+8. **Keep assisted discovery subordinate to accountable fieldwork.** Voice interviews, transcript extraction, prototype generation, and automated feedback summaries may stage candidate claims. Observation, operator validation, source authority, conflict resolution, and scoped human disposition still determine what becomes an operating requirement.
+9. **Inspect the technical reality.** Read or test the decision-bearing code and configuration, data pipelines and reconciliation seams, identity boundaries, representative executions, and release or support constraints where applicable. A questionnaire or maturity score is an investigation aid, not readiness evidence.
+10. **Standardize only comparable variation.** Classify variants as policy-required, segment-specific, role-specific, system-constrained, or accidental dysfunction. Preserve necessary differences, repair dysfunction, and retain local validation even when a reusable pattern is justified.
+11. **Allocate against binding gates.** Direct the next unit of attention to the first unresolved owner, verifier, lawful-data, safety, adoption, or service-ownership constraint. A composite score or portfolio average cannot compensate for a failed gate.
+12. **Keep technical practice optional and claim-bounded.** Goal-based routes, stage artifacts, runnable exercises, tests, and review questions can deepen implementation skill. They do not make one mechanism mandatory or turn course completion into customer or production evidence.
 
 ## What this note does not support
 
@@ -30,7 +38,9 @@
 - Treating a transcript of tribal knowledge as a safe policy, memory, or training corpus
 - Broad predictions about the future structure of firms or the durability of competitive moats
 - Replacing ordinary production-software disciplines with an organizational framework
+- Treating portfolio standardization as permission to flatten policy, segment, role, or system constraints
+- Treating a course route, questionnaire, maturity score, or portfolio average as production evidence
 
 ## Repository impact
 
-The synthesis is implemented in the [FDE and applied AI engineering guide](../library/10-fde-and-production-agent-synthesis.md), [field engagement and reframing playbook](../playbooks/00-field-engagement-and-reframing.md), [discovery and value playbook](../playbooks/01-discovery-and-value.md), [solution design and delivery playbook](../playbooks/02-solution-and-delivery.md), [FDE discovery pack](../templates/fde-discovery-pack.md), and [delivery and adoption plan](../templates/delivery-and-adoption-plan.md). The canonical controls are `FDE-001` through `FDE-005`, `ARC-004`, `ARC-005`, `ADP-001`, `CTX-001`, and `CTX-002`.
+The synthesis is implemented in the [FDE and applied AI engineering guide](../library/10-fde-and-production-agent-synthesis.md), [capability roadmap](../guide/capability-roadmap.md), [field engagement and reframing playbook](../playbooks/00-field-engagement-and-reframing.md), [discovery and value playbook](../playbooks/01-discovery-and-value.md), [solution design and delivery playbook](../playbooks/02-solution-and-delivery.md), [operate and scale playbook](../playbooks/03-operate-and-scale.md), [FDE discovery pack](../templates/fde-discovery-pack.md), [portfolio review](../templates/fde-portfolio-review.md), [field-learning register](../templates/field-learning-register.md), and [delivery and adoption plan](../templates/delivery-and-adoption-plan.md). No new lifecycle, score, module, or control family is created. The canonical controls remain `FDE-001` through `FDE-005`, `ARC-004`, `ARC-005`, `ADP-001`, `CTX-001`, and `CTX-002`.

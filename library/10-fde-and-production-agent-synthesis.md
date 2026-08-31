@@ -42,6 +42,10 @@ This is context extraction as verification rather than transcription. Interviews
 
 Modernize the work around systems of record before requiring a replacement platform. Connect to existing authoritative systems when their data, identity, and change boundaries are sound; treat broken data ownership, permissions, or auditability as readiness blockers rather than features to automate around. This preserves a practical path to value without pretending that brittle foundations are safe to build upon. `FDE-002`, `CTX-001`, `IAM-003`.
 
+Test that story against the target environment. Inspect the decision-bearing code or configuration, data pipelines and reconciliation seams, identity and permission boundaries, representative executions and failures, and release or support constraints that actually exist. Questionnaires and maturity scores can locate questions; they do not establish technical readiness. Missing direct evidence remains an explicit unknown or blocker. `FDE-002`, `CTX-001`, `OPS-006`.
+
+Interview assistants, voice capture, transcript extraction, prototype generation, and automated feedback summaries can reduce discovery friction. Treat them as experimental aids that stage claims for review. They do not replace observation, operator validation, conflict resolution, source authority, or the scoped human disposition required when evidence changes the brief.
+
 ## Build the applied product in three connected layers
 
 | Layer | What it contains | Design question |
@@ -76,6 +80,8 @@ For an internal deployment, “customer” below means the business unit or oper
 | Workflow-specific domain entities, thresholds, integrations, value assumptions, evaluations, and support procedures | Abstracted decision archetypes, discovery questions, reusable contract shapes, generic evaluation slices, and product gaps validated across independent contexts |
 
 The boundary matters. Field learning should improve the product without extracting customer data or turning one customer's accidental workaround into a universal feature. A candidate pattern becomes reusable only after it is sanitized, recurrence is evidenced without cross-customer data transfer, an owner accepts it, and the normal design, evaluation, release, and rollback gates are satisfied. Use the [field-learning register](../templates/field-learning-register.md) to make that decision explicit. `FDE-004`.
+
+Before standardizing a repeated workflow, classify its material variants as policy-required, segment-specific, role-specific, system-constrained, or accidental dysfunction. Cluster only workflows with comparable decisions, outcomes, policy boundaries, source semantics, effect classes, and operating conditions. Preserve the first four differences where they remain necessary; repair the last rather than encoding it. Shared capability can reduce repeated work, but every target retains its own data, security, evaluation, release, adoption, support, and ownership gates.
 
 ## Give every field contribution an owned destination
 
@@ -168,6 +174,7 @@ These are professional-practice boundaries over the guide's existing value, secu
 - Self-review, monitoring, guardrails, and human approval do not replace authorization or source-of-truth verification.
 - A successful bootcamp, benchmark, or pilot is not production readiness or realized value.
 - A practitioner's claimed ROI, efficiency gain, or organizational forecast is not a portfolio target or release criterion without local measurement.
+- A questionnaire, maturity score, or portfolio average is not direct technical evidence and cannot override the first unresolved hard gate in a target workflow.
 - A vendor-reported accuracy, SLA, or deployment volume is not a reusable threshold, and one vertical field report does not establish a new industry profile.
 - Renewal, funding, sponsor activity, delivery throughput, or reuse is not accepted-outcome or realized-value evidence.
 - “AI-native” is not a reason to replace systems of record, remove accountable human judgment, or weaken ordinary software-engineering disciplines.
