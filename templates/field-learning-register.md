@@ -45,6 +45,10 @@ Use one record per candidate learning. Store source evidence in its governed sys
 | First divergent state or violated invariant | — |
 | Sanitized replay/regression case | — |
 | Comparable deployment or workflow cohort | — |
+| Observed workflow variant and comparator | — |
+| Variant class | Policy-required / segment-specific / role-specific / system-constrained / accidental dysfunction |
+| Standardization eligibility | Ineligible / comparable cohort / candidate after remediation |
+| Local constraints and validation that must remain | Policy / data / security / evaluation / release / adoption / support / ownership |
 | Target-specific delivery and support effort | — |
 | Customer-specific effort ratio and prior comparable result | — |
 | Existing governed artifact reused and target validation | — |
@@ -110,5 +114,7 @@ Do not move raw customer data, proprietary policy, credentials, identifiers, or 
 An accepted learning changes production only through its destination's normal architecture, security, review, compatible-release, evaluation, approval, support, and rollback gates. The learning record is evidence for a decision; it is not release authorization. Recurrence does not establish ownership, license, confidentiality clearance, or reuse permission.
 
 A lower customer-specific effort ratio is useful only when outcomes, adoption, safety, supportability, and full cost remain healthy across comparable contexts. Template reuse, copied customer policy, or skipped local validation does not establish product leverage.
+
+Standardization is a field-learning disposition, not permission to flatten variation. Preserve policy-required, segment-specific, role-specific, and system-constrained differences. Repair accidental dysfunction before treating the result as a reusable pattern, and retain every target's normal validation and release gates.
 
 Evidence: [R26-37](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-37), [R26-45](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-45), [R26-54](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-54), [R26-70](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-70), and [R26-71](../research/2026-02-07--2026-08-07-production-agent-source-ledger.md#r26-71).

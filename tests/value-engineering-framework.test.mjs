@@ -98,6 +98,15 @@ test("engagement, service, and portfolio artifacts keep value, continuation, cap
   assert.match(portfolio, /portfolio average to override a workflow's value, safety, release, or retirement gate/i);
   assert.match(portfolio, /not profit/i);
   assert.match(portfolio, /External delivery \/ internal applied-AI team \/ mixed/);
+  assert.match(portfolio, /Workflow variation and standardization eligibility/);
+  for (const variant of ["policy-required", "segment-specific", "role-specific", "system-constrained", "accidental dysfunction"]) {
+    assert.match(portfolio, new RegExp(variant, "i"));
+    assert.match(learning, new RegExp(variant, "i"));
+  }
+  assert.match(portfolio, /first unresolved hard gate or binding constraint/i);
+  assert.match(portfolio, /does not erase target-specific policy, data, security, evaluation, release, adoption, support, or ownership gates/i);
+  assert.match(learning, /Standardization eligibility/);
+  assert.match(learning, /retain every target's normal validation and release gates/i);
 
   for (const body of [learning, operations]) {
     assert.match(body, /customer-specific effort ratio/i);
@@ -107,6 +116,7 @@ test("engagement, service, and portfolio artifacts keep value, continuation, cap
   assert.match(synthesis, /Keep engagement, service, and portfolio evidence separate/);
   assert.match(synthesis, /Professional practice boundaries/);
   assert.match(synthesis, /do not manufacture dependence/i);
+  assert.match(synthesis, /Cluster only workflows with comparable decisions, outcomes, policy boundaries, source semantics, effect classes, and operating conditions/i);
 
   const catalog = JSON.parse(catalogText);
   assert.equal(

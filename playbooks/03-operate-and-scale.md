@@ -51,6 +51,10 @@ Use five core measures before adding more:
 
 Optional external contribution or renewal measures belong in the portfolio review only with a declared accounting definition. For internal teams, use the equivalent funding, sponsorship, capacity, and value-to-full-cost decision. Contract value, budget, sponsor activity, reuse, or throughput alone is not realized value.
 
+Before choosing `standardize`, inventory material workflow variants and classify them as policy-required, segment-specific, role-specific, system-constrained, or accidental dysfunction. Cluster only genuinely comparable workflows. Retain necessary local branches and repair accidental dysfunction before extracting a shared pattern; do not standardize a workaround merely because several teams use it.
+
+Direct resources to the first unresolved hard gate or binding constraint for each workflow. A readiness or maturity score may order investigation, but a portfolio average cannot compensate for missing authority, verifier, lawful data, safety, adoption, or service ownership. Any reused capability still crosses the target workflow's policy, data, security, evaluation, release, adoption, support, and ownership gates.
+
 Controls: `FDE-003`, `FDE-004`, `VAL-002`, `VAL-003`, `ADP-002`, `OPS-004`, `CST-001`.
 
 ## 3. Monitor the full decision system
@@ -238,6 +242,8 @@ Controls: `FDE-004`, `ADP-002`, `DEL-001`, `OPS-002`, `OPS-007`.
 - Use-case count treated as operating maturity
 - Permanent customer dependence on the FDE
 - Portfolio averages hiding a failed workflow or exhausted delivery team
+- Standardization flattening policy-required, segment-specific, role-specific, or system-constrained variation
+- Maturity scores substituting for direct target evidence or the first unresolved hard gate
 - Renewal, funding, sponsor activity, or reuse presented as realized value
 - Falling custom effort achieved by skipping target-specific policy, evaluation, or handoff work
 - Zombie agent with no value owner, service owner, or retirement trigger

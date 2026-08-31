@@ -55,6 +55,12 @@ flowchart LR
 
 Breadth matters, but no one must be the deepest specialist in every domain. A strong practitioner recognizes missing expertise, assigns owners, exposes assumptions, and prevents an unowned gap from becoming hidden production risk.
 
+## Optional technical companion
+
+If you need more runnable software and AI-engineering practice, use Rohit Ghumare's MIT-licensed [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) and its [Forward-Deployed AI Engineer route](https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/forward-deployed-ai-engineer.json) as an external companion. Its goal-based route, artifact for each stage, runnable exercises, tests, and review questions are useful learning mechanics. The source and limits of this recommendation are recorded in [S33](../library/05-source-index.md#s33).
+
+The companion is optional. Its route-specific inclusion of retrieval and RAG does not make retrieval, RAG, a model call, or an agent mandatory in this Guide. Course artifacts and quiz results show practice, not production readiness, live customer experience, target-system approval, or accepted value. Use this roadmap for field judgment and accountability; use the companion when you need more implementation repetition.
+
 ## Five practice missions
 
 Use these missions in order when learning the method. On real work, enter at the current lifecycle stage and preserve prior evidence. A repository exercise demonstrates reasoning and implementation technique; it does not substitute for production experience, user acceptance, or target-system approval.

@@ -93,6 +93,20 @@ Keep customer-specific policies and data with their owner. Promote only an abstr
 
 Control: `FDE-002`.
 
+### Check the technical reality directly
+
+Before assigning a readiness score or proposing an architecture, inspect enough of the target environment to test the workflow story. The relevant evidence depends on the boundary, but it commonly includes:
+
+- Current code or configuration that implements the decision path
+- Data pipelines, source seams, transformations, and reconciliation behavior
+- Identity, permission, tenant, credential, and network boundaries
+- Telemetry from representative executions, failures, retries, and recovery
+- Release, rollback, support, and dependency constraints in the target environment
+
+Record what was inspected, its revision and environment, who owns it, which claim it supports or contradicts, and what remains inaccessible. A questionnaire, interview, architecture diagram, or maturity score can organize hypotheses; none proves workflow, data, integration, security, or production readiness. If direct evidence is unavailable, keep the claim `unknown` and make the missing access or test a readiness dependency rather than filling the gap with confidence.
+
+Controls: `FDE-002`, `CTX-001`, `IAM-003`, `OPS-006`.
+
 ## 4. Establish the baseline
 
 Separate four kinds of evidence:
@@ -192,6 +206,7 @@ Permitted decisions are discover, pilot, defer, do not build, promote, pause, or
 ## Discovery exit gate
 
 - [ ] Representative work and exceptions were observed.
+- [ ] Decision-bearing code, configuration, data seams, identity boundaries, and representative execution evidence were inspected where applicable, or the missing access is recorded as a blocker.
 - [ ] Operator and operational owner validated the current-state map.
 - [ ] The workflow requirement names user, interface, decision, inputs, action, and outcome.
 - [ ] The baseline is measured or explicitly unmeasured with a measurement plan.
@@ -204,6 +219,7 @@ Permitted decisions are discover, pilot, defer, do not build, promote, pause, or
 ## Discovery anti-patterns
 
 - Executive-only requirements with no operator observation
+- Questionnaire or maturity score treated as direct technical evidence
 - Technology, data source, or interface named as the business problem
 - Demo success treated as adoption, value, or production readiness
 - Average handling time used without eligible volume, quality, or downstream impact

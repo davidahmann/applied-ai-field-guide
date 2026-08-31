@@ -66,6 +66,8 @@ The hard conversation can be plain:
 
 The point isn't to embarrass the sponsor. It is to make the consequence decidable. Don't soften the cited evidence, ask a sponsor to overrule an operating owner, or let silence become approval.
 
+Test the story against the target environment too. Inspect the decision-bearing code or configuration, data and reconciliation seams, identity and permission boundaries, and representative execution or failure evidence. Questionnaires, diagrams, and maturity scores help organize investigation; they don't prove readiness. Missing access stays visible as an unknown or blocker.
+
 Use [Field Engagement and Accountable Reframing](../playbooks/00-field-engagement-and-reframing.md#put-the-conflict-in-the-room), the [observation log](../templates/field-observation-log.md), and the [engagement-reframe record](../templates/engagement-reframe.json). The [worked invoice evidence](../examples/invoice-exception/engagement/field-evidence.md) keeps sold, observed, policy, system, and human-decision sources separate.
 
 ## 4. Engineer the value contract
@@ -173,6 +175,8 @@ The compounding advantage is not reusable customer data or a pile of custom code
 Keep policy, thresholds, identities, permissions, confidential sources, and operating decisions customer-specific. Before building, classify the work as **customer configuration**, a **target-owned extension**, a **shared product or platform** capability, a **time-bounded experiment**, or prohibited/deferred work. Don't leave a field-owned parallel service as a **shadow product**.
 
 Productize only after recurrence appears in independent contexts, the candidate is sanitized, reuse rights and transfer rights are clear, an owner and destination exist, and target validation succeeds. Preserve negative evidence. Never manufacture dependence.
+
+Before standardizing, classify recurring differences as policy-required, segment-specific, role-specific, system-constrained, or accidental dysfunction. Preserve necessary differences, repair dysfunction, compare only like cohorts, and keep each target's own gates. Put the next unit of effort into the first unresolved hard gate—not the lowest average maturity score.
 
 Use the [field-learning register](../templates/field-learning-register.md) and [product-capability guide](../library/10-fde-and-production-agent-synthesis.md).
 

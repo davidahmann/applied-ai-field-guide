@@ -4,6 +4,14 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.30.0] - 2026-08-31
+
+- Add a direct technical-reality check to discovery so code and configuration, data and reconciliation seams, identity boundaries, representative executions, and release constraints test the inherited workflow story before readiness is claimed.
+- Make portfolio standardization conditional on explicit workflow-variation classes, comparable cohorts, target-specific gates, and attention to the first unresolved hard gate instead of a composite maturity score.
+- Keep assisted discovery subordinate to operator validation and human disposition, and add AI Engineering from Scratch as an attributed optional technical companion without making RAG, agents, or course completion Guide defaults.
+- Record bounded portfolio, diagnostic, and curriculum evidence with exact source limits, while adding no lifecycle, score, module, control family, or net new file under `guide/`, `library/`, `templates/`, or `blueprints/`.
+- Rebind canonical and worked-example evaluation and solution-release evidence to the v1.30.0 dependency lock and its complete digest chain.
+
 ## [1.29.0] - 2026-08-30
 
 - Close every consequential field interaction through one engagement-bound stage, propose, preview, confirm, and append loop that preserves raw sources, rejected proposals, review receipts, chronology, and target-specific storage policy.

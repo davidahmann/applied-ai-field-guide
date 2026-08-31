@@ -28,7 +28,7 @@ Start with the closest row.
 
 Find the person who knows the work because they do it, repair it, or get blamed when it goes wrong. Recent exceptions are a better trail than the org chart. Ask for one actual case. Watch the handoffs, judgment calls, policy checks, and quiet workarounds.
 
-Keep the kinds of evidence separate. “The sponsor said” is not the same as “the operator did.” Neither is the same as system-enforced behavior or policy-authorized behavior. Dates and source revisions matter. So do the gaps.
+Keep evidence separate: what sponsors say, operators do, systems enforce, and policy authorizes. Inspect relevant code or configuration, data, permissions, and one representative execution. Questionnaires and maturity scores don't prove readiness.
 
 Now write the conflict in plain English. For example:
 
