@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schemas/threat-model.schema.json",
+  "schema_version": "1.0.0",
+  "system_id": "shipment_risk_triage",
+  "owner": "transportation-risk",
+  "last_reviewed": "2026-08-08",
+  "assets": [
+    {"asset_id": "shipment_context", "classification": "confidential", "integrity_required": true, "availability_required": true},
+    {"asset_id": "risk_score", "classification": "internal", "integrity_required": true, "availability_required": true},
+    {"asset_id": "review_case", "classification": "confidential", "integrity_required": true, "availability_required": true},
+    {"asset_id": "evaluation_system", "classification": "internal", "integrity_required": true, "availability_required": true}
+  ],
+  "trust_boundaries": [
+    {"boundary_id": "coordinator_to_workflow", "from": "dispatch_coordinator", "to": "triage_workflow", "protocol": "HTTPS", "authentication": "enterprise identity", "authorization": "tenant and workflow scope", "encryption": "TLS 1.3"},
+    {"boundary_id": "workflow_to_context", "from": "triage_workflow", "to": "shipment_context_service", "protocol": "HTTPS", "authentication": "short-lived workload identity", "authorization": "tenant-bound read policy", "encryption": "mTLS"},
+    {"boundary_id": "workflow_to_review", "from": "triage_workflow", "to": "dispatch_review_service", "protocol": "HTTPS", "authentication": "short-lived workload identity", "authorization": "staged-case policy", "encryption": "mTLS"}
+  ],
+  "assumptions": ["Risk scoring and explanation components cannot reach shipment-operation credentials", "Review-case service enforces tenant binding and idempotency", "Human coordinators make all shipment interventions in their existing system"],
+  "threats": [
+    {
+      "threat_id": "THR-001",
+      "category": "unauthorized_action",
+      "scenario": "A prediction or explanation attempts to create or justify an autonomous shipment intervention",
+      "entry_points": ["risk-score output", "explanation output"],
+      "affected_assets": ["review_case", "shipment_context"],
+      "likelihood": "medium",
+      "impact": "high",
+      "preventive_controls": ["ARC-002", "ARC-005", "TOL-003"],
+      "detective_controls": ["OPS-001", "SEC-004"],
+      "recovery_controls": ["OPS-002", "OPS-003"],
+      "residual_risk": "low",
+      "test_case_ids": ["shipment_explanation_cannot_change_route"],
+      "owner": "transportation-risk",
+      "status": "mitigated"
+    },
+    {
+      "threat_id": "THR-002",
+      "category": "privacy",
+      "scenario": "A caller obtains shipment evidence from a different tenant or an unbounded shipment set",
+      "entry_points": ["shipment context request", "review case request"],
+      "affected_assets": ["shipment_context", "review_case"],
+      "likelihood": "medium",
+      "impact": "high",
+      "preventive_controls": ["TOL-005", "IAM-002", "IAM-003", "SEC-005"],
+      "detective_controls": ["OPS-001", "SEC-004"],
+      "recovery_controls": ["OPS-002", "OPS-003"],
+      "residual_risk": "low",
+      "test_case_ids": ["shipment_cross_tenant_denied"],
+      "owner": "logistics-data-platform",
+      "status": "mitigated"
+    },
+    {
+      "threat_id": "THR-003",
+      "category": "denial_of_wallet",
+      "scenario": "Repeated explanation calls consume budget without creating accepted coordinator value",
+      "entry_points": ["high-risk routing path", "retry delivery"],
+      "affected_assets": ["review_case", "evaluation_system"],
+      "likelihood": "medium",
+      "impact": "medium",
+      "preventive_controls": ["CST-001", "CST-002", "ARC-005"],
+      "detective_controls": ["OPS-001", "CST-002"],
+      "recovery_controls": ["OPS-002"],
+      "residual_risk": "low",
+      "test_case_ids": ["shipment_budget_escalates"],
+      "owner": "logistics-platform",
+      "status": "mitigated"
+    }
+  ]
+}

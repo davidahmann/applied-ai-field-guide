@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schemas/workflow-charter.schema.json",
+  "schema_version": "1.2.0",
+  "workflow_id": "invoice_exception_resolution",
+  "version": "0.1.0",
+  "status": "pilot",
+  "owners": {
+    "executive_sponsor": "finance-sponsor",
+    "operational": "accounts-payable",
+    "technical": "agent-platform",
+    "risk": "finance-controls",
+    "receiving_service_owner": "accounts-payable-service",
+    "domain_experts": ["accounts-payable-reviewer"]
+  },
+  "problem": {
+    "decision_or_job": "Resolve a bounded invoice exception against the current approval policy",
+    "affected_users": ["accounts payable reviewers"],
+    "trigger": "invoice enters the exception queue",
+    "current_state": "A reviewer inspects the invoice and policy before recording a resolution",
+    "pain_evidence": ["illustrative fixture; no external performance claim"]
+  },
+  "functional_requirement": {
+    "user": "accounts-payable reviewer",
+    "interface": "persistent invoice-exception review queue",
+    "decision": "Select the policy-covered resolution for one invoice exception",
+    "inputs": ["current invoice revision", "vendor risk status", "active approval policy"],
+    "action": "Stage a resolution for approval and commit only the approved proposal digest",
+    "accepted_outcome": "Approved resolution is present in the ledger and matches source-of-truth readback"
+  },
+  "scope": {
+    "in_scope": ["single-tenant invoice exception", "reversible ledger resolution"],
+    "out_of_scope": ["payment execution", "vendor-master changes", "cross-tenant access"],
+    "initial_segment": "policy-covered invoice exceptions",
+    "autonomy_ceiling": "execute_reversible",
+    "maximum_effect": "reversible"
+  },
+  "outcome": {
+    "accepted_event": "Approved resolution is present in the ledger and matches source-of-truth readback",
+    "verifier": "Ledger readback matches the approved proposal digest and invoice revision",
+    "primary_metric": {
+      "metric_id": "accepted_outcome_rate",
+      "unit": "ratio",
+      "direction": "increase",
+      "eligible_population": {
+        "definition": "Policy-covered invoice exceptions in the approved tenant segment",
+        "denominator_event": "invoice enters the eligible exception queue",
+        "exclusions": ["blocked vendors", "payment execution", "cross-tenant work"],
+        "source": "accounts-payable-ledger exception events"
+      },
+      "baseline": {
+        "status": "illustrative_fixture",
+        "value": 0,
+        "source": "in-memory reference fixture",
+        "as_of": "2026-08-07"
+      },
+      "target": 0.95,
+      "measurement_window_days": 28,
+      "owner": "accounts-payable"
+    },
+    "guardrail_metrics": [
+      {
+        "metric_id": "unauthorized_effect_rate",
+        "operator": "eq",
+        "threshold": 0,
+        "owner": "finance-controls"
+      },
+      {
+        "metric_id": "duplicate_effect_rate",
+        "operator": "eq",
+        "threshold": 0,
+        "owner": "agent-platform"
+      },
+      {
+        "metric_id": "postcondition_failure_rate",
+        "operator": "lte",
+        "threshold": 0.001,
+        "owner": "agent-platform"
+      }
+    ]
+  },
+  "value_case": {
+    "annual_eligible_volume": null,
+    "adoption_rate": null,
+    "value_per_accepted_outcome_usd": null,
+    "annual_avoided_loss_usd": null,
+    "annual_expected_residual_loss_usd": null,
+    "implementation_cost_usd": null,
+    "annual_fixed_operating_cost_usd": null,
+    "annual_variable_operating_cost_usd": null,
+    "annual_human_review_cost_usd": null,
+    "annual_recovery_cost_usd": null,
+    "max_cost_per_accepted_outcome_usd": 0.75,
+    "attribution_method": "Teaching fixture only; replace with a measured baseline and eligible comparison group",
+    "confidence": "unknown",
+    "review_cadence": "monthly"
+  },
+  "readiness": {
+    "workflow": { "score": 3, "evidence": "Bounded trigger, states, and terminal outcomes are executable" },
+    "context": { "score": 3, "evidence": "Invoice and policy revisions are explicit fixture inputs" },
+    "verifier": { "score": 4, "evidence": "Ledger readback verifies the committed proposal" },
+    "integration": { "score": 2, "evidence": "Tool contracts are executable against an in-memory service boundary" },
+    "adoption": { "score": 0, "evidence": "No real operators or production interface are included" },
+    "operations": { "score": 1, "evidence": "Trace and incident contracts exist but no deployed service is operated" },
+    "risk": { "score": 3, "evidence": "Threat paths, policy denials, and adversarial cases are executable in the fixture" },
+    "constraints": ["Do not treat this teaching fixture as production evidence"]
+  },
+  "stop_conditions": [
+    "Any unauthorized, duplicate, cross-tenant, or unverified effect occurs",
+    "The current policy or source revision cannot be verified before commit"
+  ],
+  "decision": {
+    "disposition": "pilot",
+    "rationale": "The fixture demonstrates controlled writes but cannot establish customer value or production readiness",
+    "approvers": [
+      {
+        "role": "operational",
+        "principal": "accounts-payable",
+        "approved_at": "2026-08-07T16:00:00Z"
+      },
+      {
+        "role": "risk",
+        "principal": "finance-controls",
+        "approved_at": "2026-08-07T16:05:00Z"
+      }
+    ],
+    "review_due": null
+  },
+  "assumptions": [
+    {
+      "assumption_id": "policy_coverage",
+      "statement": "A current policy can determine the eligible invoice-exception segment",
+      "owner": "finance-controls",
+      "validation_method": "Replay representative policy and exception cases",
+      "status": "open"
+    }
+  ]
+}

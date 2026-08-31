@@ -1,0 +1,170 @@
+{
+  "$schema": "../../../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "readback_invoice_effect",
+  "version": "2.0.0",
+  "owner": "accounts-payable-platform",
+  "purpose": "Read the minimal source-of-truth state and signed effect evidence for one authorized invoice-resolution operation",
+  "kind": "query",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["run_id", "readback_request_id", "requested_at", "tenant_id", "invoice_id", "operation_id", "release_digest", "caller_principal_hash", "policy_decision_id"],
+    "properties": {
+      "run_id": { "type": "string", "format": "uuid" },
+      "readback_request_id": { "type": "string", "format": "uuid" },
+      "requested_at": { "type": "string", "format": "date-time" },
+      "tenant_id": { "type": "string" },
+      "invoice_id": { "type": "string" },
+      "operation_id": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "release_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "caller_principal_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "policy_decision_id": { "type": "string", "format": "uuid" }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "invoice_id", "revision", "status", "resolution_count", "last_effect", "readback_attestation"],
+    "properties": {
+      "tenant_id": { "type": "string" },
+      "invoice_id": { "type": "string" },
+      "revision": { "type": "string" },
+      "status": { "type": "string" },
+      "resolution_count": { "type": "integer", "minimum": 0 },
+      "last_effect": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["effect_id", "service_receipt", "status"],
+        "properties": {
+          "effect_id": { "type": "string", "format": "uuid" },
+          "service_receipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["algorithm", "key_id", "issuer", "subject", "subject_digest", "signature"],
+            "properties": {
+              "algorithm": { "const": "Ed25519" },
+              "key_id": { "type": "string" },
+              "issuer": { "const": "accounts-payable-ledger" },
+              "subject": { "type": "object" },
+              "subject_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "signature": { "type": "string", "pattern": "^[A-Za-z0-9_-]{43,128}$" }
+            }
+          },
+          "status": { "const": "committed" }
+        }
+      },
+      "readback_attestation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["algorithm", "key_id", "issuer", "subject", "subject_digest", "signature"],
+        "properties": {
+          "algorithm": { "const": "Ed25519" },
+          "key_id": { "type": "string" },
+          "issuer": { "const": "accounts-payable-ledger" },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "readback_request_id", "requested_at", "effect_id", "operation_id", "resource_hash", "source", "source_revision", "expected_postcondition_digest", "observed_postcondition_digest", "verified_at"],
+            "properties": {
+              "run_id": { "type": "string", "format": "uuid" },
+              "readback_request_id": { "type": "string", "format": "uuid" },
+              "requested_at": { "type": "string", "format": "date-time" },
+              "effect_id": { "type": "string", "format": "uuid" },
+              "operation_id": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "resource_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "source": { "const": "accounts-payable-ledger" },
+              "source_revision": { "type": "string" },
+              "expected_postcondition_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "observed_postcondition_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "verified_at": { "type": "string", "format": "date-time" }
+            }
+          },
+          "subject_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "signature": { "type": "string", "pattern": "^[A-Za-z0-9_-]{43,128}$" }
+        }
+      }
+    }
+  },
+  "error_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["code", "message", "retryable"],
+    "properties": {
+      "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+      "message": { "type": "string", "minLength": 1 },
+      "retryable": { "type": "boolean" }
+    }
+  },
+  "authorization": {
+    "agent_principal": "invoice-exception-workload",
+    "caller_context_required": true,
+    "required_scopes": ["invoice-resolution:readback"],
+    "policy_decision_point": "verification-gateway",
+    "tenant_binding": true,
+    "fail_mode": "closed"
+  },
+  "data_access": {
+    "reads_data": true,
+    "classifications": ["confidential"],
+    "maximum_sensitivity": "confidential",
+    "scope_fields": ["tenant_id", "invoice_id", "operation_id"],
+    "max_records": 1,
+    "max_response_bytes": 65536,
+    "open_world": false,
+    "approval_policy": "policy",
+    "request_fields": [
+      { "field": "run_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind the readback evidence to the requesting run" },
+      { "field": "readback_request_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "prevent reuse of signed readback evidence across requests" },
+      { "field": "requested_at", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind verification time to the current readback request" },
+      { "field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind readback to the authorized tenant" },
+      { "field": "invoice_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind readback to the committed invoice" },
+      { "field": "operation_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "select the exact committed business operation" },
+      { "field": "release_digest", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind readback to the admitted release" },
+      { "field": "caller_principal_hash", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind readback to authenticated caller context" },
+      { "field": "policy_decision_id", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind readback to the admitted commit decision" }
+    ]
+  },
+  "execution": {
+    "timeout_ms": 3000,
+    "max_attempts": 2,
+    "retryable_errors": ["TIMEOUT", "UNAVAILABLE"],
+    "idempotency": { "required": false, "key_fields": [], "enforced_by": "not-applicable" }
+  },
+  "side_effects": { "class": "none", "resources": [], "compensation": null },
+  "approval": { "required": false, "role": null, "proposal_digest_required": false, "expires_seconds": null },
+  "network": {
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "ap_ledger",
+        "scheme": "https",
+        "authority": "ap-ledger.internal",
+        "port": 443,
+        "path_prefix": "/v1/resolutions/readback"
+      }
+    ],
+    "allowed_operations": ["readback_invoice_effect"],
+    "allowed_methods": ["POST"],
+    "redirect_policy": "deny",
+    "address_resolution_policy": "pinned_service_identity",
+    "private_address_policy": "explicit_allowlist",
+    "server_fetch_policy": "deny",
+    "target_account_binding": true,
+    "tenant_binding": true,
+    "request_max_bytes": 8192,
+    "response_max_bytes": 65536,
+    "credential_broker": "workload-identity-gateway",
+    "public_gateway_capability": null
+  },
+  "failure_modes": [
+    { "code": "NOT_FOUND", "class": "escalation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "DIGEST_MISMATCH", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false },
+    { "code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false }
+  ],
+  "observability": { "span_name": "agent.tool.readback_invoice_effect", "audit_event": "invoice_resolution.readback", "redacted_fields": ["service_receipt.subject"], "postcondition_readback": false },
+  "invariants": ["request authority and tuple match the admitted commit", "returned effect matches operation_id", "response contains only minimal reconciliation data"],
+  "control_ids": ["CTX-001", "TOL-001", "TOL-005", "IAM-002", "IAM-003", "REL-003", "SEC-005", "SEC-006", "OPS-002"]
+}

@@ -1,0 +1,173 @@
+{
+  "$schema": "../schemas/data-context-manifest.schema.json",
+  "schema_version": "1.0.0",
+  "context_manifest_id": "candidate_workflow_context",
+  "version": "0.1.0",
+  "workflow_id": "candidate_workflow",
+  "owner": "data-product-owner",
+  "reviewed_at": "2026-08-12T12:00:00Z",
+  "decision_scope": "One bounded workflow decision for one eligible segment",
+  "status": "draft",
+  "data_planes": [
+    {
+      "plane_id": "operational",
+      "owner": "domain-operations",
+      "purpose": "Supply current work-item state and source-of-truth identifiers",
+      "source_ids": ["system_of_record"],
+      "allowed_uses": ["Eligibility and current-state verification"],
+      "prohibited_uses": ["Training or unrelated analytics"],
+      "retention": "Read at decision time; retain only governed references",
+      "training_use": "prohibited"
+    },
+    {
+      "plane_id": "knowledge_context",
+      "owner": "policy-owner",
+      "purpose": "Supply approved rules and explanatory evidence",
+      "source_ids": ["policy_context"],
+      "allowed_uses": ["Policy retrieval and cited explanation"],
+      "prohibited_uses": ["Granting authority or overriding operational state"],
+      "retention": "Cache only to the declared freshness objective",
+      "training_use": "prohibited"
+    },
+    {
+      "plane_id": "evaluation_training",
+      "owner": "evaluation-owner",
+      "purpose": "Evaluate the declared workflow claim on source-bound cases",
+      "source_ids": ["evaluation_cases"],
+      "allowed_uses": ["Release and regression evaluation"],
+      "prohibited_uses": ["Runtime retrieval or answer-key exposure"],
+      "retention": "Version with the evaluated release claim",
+      "training_use": "explicit_approval_required"
+    },
+    {
+      "plane_id": "telemetry_feedback",
+      "owner": "service-owner",
+      "purpose": "Measure accepted outcomes, guardrails, data health, and drift",
+      "source_ids": ["outcome_events"],
+      "allowed_uses": ["Service monitoring and governed regression learning"],
+      "prohibited_uses": ["Silent training, labeling, or authority expansion"],
+      "retention": "Retain aggregates and governed event references per service policy",
+      "training_use": "explicit_approval_required"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "system_of_record",
+      "planes": ["operational"],
+      "location": { "system": "workflow-system", "environment": "target", "interface": "scoped-read-api", "residency": "customer-controlled region" },
+      "owner": "domain-operations",
+      "source_of_truth": true,
+      "purpose": "Current work-item state for eligibility and readback",
+      "classification": "confidential",
+      "trust": "trusted_data",
+      "tenant_binding": true,
+      "population": { "definition": "Items admitted to the bounded workflow", "grain": "one row per work item revision", "entity_keys": ["tenant_id", "work_item_id", "source_revision"], "time_semantics": "effective and observed times retained separately", "coverage_segments": ["pilot-segment"] },
+      "contract": { "schema_id": "system-of-record-work-item", "version": "0.1.0", "digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777", "revision": "record-revision-required", "freshness_slo_seconds": 300 },
+      "access": { "principals": ["workflow-reader"], "row_scope": "Current tenant and admitted segment", "field_scope": "Minimum fields required by the decision", "purpose_limit": "Bounded workflow decision only", "retention": "Identifiers and cited fields for the release audit window", "deletion": "Delete derived copies when the engagement or retention window ends" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Replace with the reproducible profile query and sample frame", "sample_size": 1, "metrics": [{ "dimension": "completeness", "unit": "fraction", "threshold_operator": ">=", "threshold": 0.99, "observed": null, "status": "unknown", "evidence": "Profile not yet executed" }] },
+      "failure_behavior": { "missing": "Stop and route to the workflow owner", "stale": "Refresh from source before deciding", "conflicting": "Prefer the source of truth and record the conflict", "corrected": "Invalidate derived context and replay affected cases", "late_arriving": "Hold the item until the declared reconciliation window closes" }
+    },
+    {
+      "source_id": "policy_context",
+      "planes": ["knowledge_context"],
+      "location": { "system": "policy-repository", "environment": "target", "interface": "versioned-document-api", "residency": "customer-controlled region" },
+      "owner": "policy-owner",
+      "source_of_truth": true,
+      "purpose": "Approved rules and interpretation guidance",
+      "classification": "internal",
+      "trust": "trusted_control",
+      "tenant_binding": true,
+      "population": { "definition": "Policies effective for the admitted segment", "grain": "one policy revision", "entity_keys": ["policy_id", "policy_revision"], "time_semantics": "effective-from and superseded-at", "coverage_segments": ["pilot-segment"] },
+      "contract": { "schema_id": "policy-record", "version": "1.0.0", "digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888", "revision": "replace-with-approved-policy-revision", "freshness_slo_seconds": 3600 },
+      "access": { "principals": ["policy-reader"], "row_scope": "Policies for the admitted tenant and segment", "field_scope": "Approved policy content and metadata", "purpose_limit": "Decision support and cited explanation", "retention": "Version-bound cache only", "deletion": "Invalidate and delete superseded cached content" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Replace with policy coverage and revision audit", "sample_size": 1, "metrics": [{ "dimension": "coverage", "unit": "fraction", "threshold_operator": "=", "threshold": 1, "observed": null, "status": "unknown", "evidence": "Coverage audit not yet executed" }] },
+      "failure_behavior": { "missing": "Do not infer policy; escalate", "stale": "Retrieve the current effective revision", "conflicting": "Stop for policy-owner adjudication", "corrected": "Invalidate cached policy and rerun affected decisions", "late_arriving": "Apply only after effective time and release review" }
+    },
+    {
+      "source_id": "evaluation_cases",
+      "planes": ["evaluation_training"],
+      "location": { "system": "evaluation-repository", "environment": "isolated-evaluation", "interface": "versioned-fixture-bundle", "residency": "approved evaluation environment" },
+      "owner": "evaluation-owner",
+      "source_of_truth": true,
+      "purpose": "Representative release and regression cases",
+      "classification": "confidential",
+      "trust": "trusted_data",
+      "tenant_binding": true,
+      "population": { "definition": "Adjudicated cases sampled from the eligible population and failure history", "grain": "one immutable case revision", "entity_keys": ["case_id", "case_revision"], "time_semantics": "case observation and adjudication time", "coverage_segments": ["pilot-segment", "known-failures"] },
+      "contract": { "schema_id": "evaluation-case", "version": "1.0.0", "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999", "revision": "replace-with-suite-digest", "freshness_slo_seconds": 604800 },
+      "access": { "principals": ["isolated-evaluator"], "row_scope": "Approved evaluation suite", "field_scope": "Sanitized case inputs and protected expected results", "purpose_limit": "Evaluation only", "retention": "Preserve with release evidence", "deletion": "Follow source-data deletion and case-retirement policy" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Replace with coverage, label, contamination, and leakage audit", "sample_size": 1, "metrics": [{ "dimension": "representativeness", "unit": "review-status", "threshold_operator": "=", "threshold": 1, "observed": null, "status": "unknown", "evidence": "Suite review not yet complete" }] },
+      "failure_behavior": { "missing": "Block release evidence", "stale": "Review population and failure slices before reuse", "conflicting": "Adjudicate labels independently", "corrected": "Version the case; preserve prior evidence", "late_arriving": "Add to the next owned regression cycle" }
+    },
+    {
+      "source_id": "outcome_events",
+      "planes": ["telemetry_feedback"],
+      "location": { "system": "service-telemetry", "environment": "target", "interface": "governed-event-stream", "residency": "customer-controlled region" },
+      "owner": "service-owner",
+      "source_of_truth": false,
+      "purpose": "Outcome, guardrail, adoption, cost, and data-health measurement",
+      "classification": "confidential",
+      "trust": "trusted_data",
+      "tenant_binding": true,
+      "population": { "definition": "Every admitted run and linked verified outcome", "grain": "one immutable event", "entity_keys": ["tenant_hash", "run_id", "operation_id"], "time_semantics": "event, observed, and verified times", "coverage_segments": ["pilot-segment"] },
+      "contract": { "schema_id": "outcome-event", "version": "1.0.0", "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "revision": "replace-with-event-contract-digest", "freshness_slo_seconds": 300 },
+      "access": { "principals": ["telemetry-writer", "service-reviewer"], "row_scope": "Current tenant and admitted release", "field_scope": "Allowlisted identifiers, measures, and stop reasons", "purpose_limit": "Operations and governed learning", "retention": "Per service telemetry policy", "deletion": "Delete or aggregate at retention expiry" },
+      "quality": { "profiled_at": "2026-08-12T12:00:00Z", "method": "Replace with event completeness and reconciliation audit", "sample_size": 1, "metrics": [{ "dimension": "consistency", "unit": "fraction", "threshold_operator": "=", "threshold": 1, "observed": null, "status": "unknown", "evidence": "Reconciliation not yet executed" }] },
+      "failure_behavior": { "missing": "Mark the run outcome unknown and open reconciliation", "stale": "Delay service decision until the window closes", "conflicting": "Prefer source-of-truth readback", "corrected": "Append a superseding event", "late_arriving": "Recompute affected aggregates and annotate the service review" }
+    }
+  ],
+  "preparation": {
+    "owner": "data-product-owner",
+    "lineage_store": "Versioned run, dataset, and transformation events",
+    "steps": [
+      { "step_id": "normalize_work_items", "kind": "normalize", "inputs": ["system_of_record"], "output_id": "normalized_work_items", "owner": "workflow-system-owner", "implementation": "Versioned deterministic normalization job", "version": "0.1.0", "deterministic": true, "transformations": ["Normalize identifiers and timestamps without changing source values"], "validation": ["Schema, key, and revision checks"], "reversible": true, "lineage_event": "Record input revision, implementation version, output digest, and run time" },
+      { "step_id": "index_decision_policy", "kind": "index", "inputs": ["policy_context"], "output_id": "policy_index", "owner": "policy-owner", "implementation": "Versioned policy parser and indexer", "version": "0.1.0", "deterministic": true, "transformations": ["Chunk by governed section boundaries and retain citations"], "validation": ["Revision, section count, and retrieval coverage checks"], "reversible": true, "lineage_event": "Bind index revision to policy source revision and parser version" }
+    ]
+  },
+  "quality_contract": {
+    "decision_critical_fields": [
+      { "source_id": "system_of_record", "field": "source_revision", "decision_use": "Prevent a decision against stale work-item state", "required_dimensions": ["completeness", "validity", "timeliness"], "fallback": "Refresh or stop" },
+      { "source_id": "policy_context", "field": "policy_revision", "decision_use": "Bind the recommendation to the effective rule set", "required_dimensions": ["completeness", "coverage", "timeliness"], "fallback": "Escalate to the policy owner" }
+    ],
+    "reconciliation_rules": [
+      { "rule_id": "policy_vs_state", "source_ids": ["system_of_record", "policy_context"], "precedence": "Operational state determines facts; approved policy determines permitted interpretation", "conflict_owner": "workflow-and-policy owners", "stop_condition": "Required fact or effective policy cannot be established" }
+    ],
+    "segment_coverage": [
+      { "segment": "pilot-segment", "eligible_count": 0, "observed_count": 0, "minimum_coverage": 0.9, "status": "unknown" }
+    ],
+    "unresolved_conditions": ["Replace illustrative source revisions, profiles, coverage, and cost assumptions with target evidence"]
+  },
+  "label_contracts": [],
+  "output_records": [
+    { "output_id": "decision_artifact", "owner": "workflow-owner", "system_of_record": "review-workbench", "classification": "confidential", "durability": "reviewable_artifact", "provenance": "Bind sources, revisions, transformations, release, and decision trace", "correction": "Supersede visibly; never overwrite accepted history", "downstream_uses": ["Human review", "Release evaluation"], "retention": "Retain through the audit and service-review window", "deletion": "Delete with the source workflow record unless preservation is required", "training_use": "prohibited" }
+  ],
+  "economics": {
+    "selected_option": "profile_then_pilot",
+    "options": [
+      { "option_id": "profile_then_pilot", "description": "Profile the bounded slice, remediate decision-critical gaps, then pilot", "one_time_cost_usd": 0, "annual_cost_usd": 0, "delay_days": 0, "residual_risk": "Unknown until target measurements replace template values", "owner": "data-product-owner" },
+      { "option_id": "defer_workflow", "description": "Defer automation and preserve the current workflow", "one_time_cost_usd": 0, "annual_cost_usd": 0, "delay_days": 0, "residual_risk": "Current workflow cost and error exposure remain", "owner": "workflow-owner" }
+    ],
+    "decision_basis": "Compare remediation cost and delay with the workflow value ceiling; do not hide data work inside model experimentation"
+  },
+  "operations": {
+    "monitors": [
+      { "monitor_id": "work_item_freshness", "source_id": "system_of_record", "dimension": "freshness", "threshold": "Within the declared source freshness objective", "window": "Every admitted decision", "owner": "workflow-system-owner", "response": "Stop, refresh, and reconcile affected runs" },
+      { "monitor_id": "policy_revision", "source_id": "policy_context", "dimension": "schema", "threshold": "Exact admitted policy and parser revisions", "window": "Every release and policy change", "owner": "policy-owner", "response": "Invalidate derived context and rerun affected evaluations" }
+    ],
+    "drift_response": "Segment the change, diagnose the first divergent source or transformation, and constrain the affected route",
+    "rebaseline_trigger": "The eligible population, source semantics, or accepted-outcome measurement changes materially",
+    "rollback_condition": "A critical source contract fails, outcome linkage breaks, or guardrail loss crosses its approved threshold",
+    "change_owner": "service-owner"
+  },
+  "decision": {
+    "disposition": "remediate",
+    "rationale": "The contract is a starter and contains unknown target measurements",
+    "conditions": ["Replace all illustrative revisions, profiles, coverage, and economics with target evidence"],
+    "approved_by": [
+      { "role": "data", "principal": "data-product-owner", "approved_at": "2026-08-12T12:00:00Z" },
+      { "role": "operational", "principal": "workflow-owner", "approved_at": "2026-08-12T12:00:00Z" }
+    ],
+    "review_due": "2026-09-12"
+  },
+  "control_ids": ["CTX-006", "CTX-007", "CTX-008", "CTX-009"]
+}

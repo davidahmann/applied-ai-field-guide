@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/ai-value-engineering-scorecard.schema.json",
+  "schema_version": "1.0.0",
+  "assessment_id": "workflow_value_assessment",
+  "workflow_charter_uri": "workflow-charter.json",
+  "assessed_at": "2026-08-11T12:00:00Z",
+  "assessor": "value-owner",
+  "evidence_stage": "forecast",
+  "hard_gates": {
+    "owned_outcome": { "status": "unknown", "owner": "outcome-owner", "evidence": [], "rationale": "Confirm the owned operational outcome and target population." },
+    "independent_verifier": { "status": "unknown", "owner": "evaluation-owner", "evidence": [], "rationale": "Name a verifier that can reject the produced result." },
+    "bounded_authority_and_loss": { "status": "unknown", "owner": "risk-owner", "evidence": [], "rationale": "Bound authority, expected loss, recovery, and stop conditions." },
+    "positive_value_after_full_cost": { "status": "unknown", "owner": "value-owner", "evidence": [], "rationale": "Complete base and downside economics after lifecycle cost and residual loss." }
+  },
+  "factors": [
+    { "factor_number": 1, "factor_id": "observe_real_work", "factor_name": "Observe the real work", "score": 0, "owner": "workflow-owner", "evidence": [], "next_evidence": "Observe representative normal, exception, and recovery paths." },
+    { "factor_number": 2, "factor_id": "own_outcome", "factor_name": "Own the outcome", "score": 0, "owner": "outcome-owner", "evidence": [], "next_evidence": "Name the accepted outcome, population, target, source, and owner." },
+    { "factor_number": 3, "factor_id": "bound_eligible_work", "factor_name": "Bound the eligible work", "score": 0, "owner": "workflow-owner", "evidence": [], "next_evidence": "Declare eligibility, exclusions, segments, volume, and denominator event." },
+    { "factor_number": 4, "factor_id": "establish_counterfactual", "factor_name": "Establish the counterfactual", "score": 0, "owner": "value-owner", "evidence": [], "next_evidence": "Measure the baseline and document comparison limits and confounders." },
+    { "factor_number": 5, "factor_id": "name_verifier", "factor_name": "Name the verifier", "score": 0, "owner": "evaluation-owner", "evidence": [], "next_evidence": "Define independent acceptance, rejection, and escalation evidence." },
+    { "factor_number": 6, "factor_id": "engineer_workflow_and_adoption", "factor_name": "Engineer the workflow and adoption", "score": 0, "owner": "adoption-owner", "evidence": [], "next_evidence": "Test entry, review, exception, support, override, and abandonment paths." },
+    { "factor_number": 7, "factor_id": "use_smallest_sufficient_intelligence", "factor_name": "Use the smallest sufficient intelligence", "score": 0, "owner": "technical-owner", "evidence": [], "next_evidence": "Compare mechanisms for each consequential decision and record fallback." },
+    { "factor_number": 8, "factor_id": "bound_authority_and_loss", "factor_name": "Bound authority and loss", "score": 0, "owner": "risk-owner", "evidence": [], "next_evidence": "Define permissions, effects, approval, loss ceiling, recovery, and stop paths." },
+    { "factor_number": 9, "factor_id": "price_whole_service", "factor_name": "Price the whole service", "score": 0, "owner": "value-owner", "evidence": [], "next_evidence": "Model delivery, change, operation, review, support, recovery, and maintenance cost." },
+    { "factor_number": 10, "factor_id": "prove_representative_work", "factor_name": "Prove it on representative work", "score": 0, "owner": "evaluation-owner", "evidence": [], "next_evidence": "Run representative, adversarial, dependency, recovery, and capacity cases." },
+    { "factor_number": 11, "factor_id": "measure_attributable_realized_value", "factor_name": "Measure attributable realized value", "score": 0, "owner": "value-owner", "evidence": [], "next_evidence": "Measure adoption, accepted outcomes, attribution, actual cost, and realized loss." },
+    { "factor_number": 12, "factor_id": "expand_constrain_or_retire", "factor_name": "Expand, constrain, or retire from evidence", "score": 0, "owner": "service-owner", "evidence": [], "next_evidence": "Define the lifecycle decision, limits, reversal conditions, and next review." }
+  ],
+  "decision": {
+    "disposition": "defer",
+    "owner": "outcome-owner",
+    "decided_at": "2026-08-11T12:00:00Z",
+    "rationale": "The four hard gates remain unknown, so the workflow stays in evidence gathering.",
+    "reversal_conditions": ["All four hard gates pass with inspectable evidence for the named population."],
+    "next_review": "2026-09-11"
+  },
+  "control_ids": ["FDE-001", "FDE-002", "FDE-003", "VAL-001", "VAL-002", "VAL-003", "ARC-004", "ARC-005", "CST-001", "CST-002", "EVA-001", "REL-003", "IAM-003", "SEC-004", "ADP-001", "ADP-002", "OPS-004", "OPS-006", "OPS-007"]
+}

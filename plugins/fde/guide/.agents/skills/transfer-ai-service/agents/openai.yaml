@@ -1,0 +1,4 @@
+interface:
+  display_name: "Transfer AI Service"
+  short_description: "Prove the operating team can own the service"
+  default_prompt: "Use $transfer-ai-service to plan and verify the transfer of this AI service."

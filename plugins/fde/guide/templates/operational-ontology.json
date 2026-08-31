@@ -1,0 +1,144 @@
+{
+  "$schema": "../schemas/operational-ontology.schema.json",
+  "schema_version": "1.1.0",
+  "ontology_id": "workflow_domain",
+  "version": "0.1.0",
+  "domain": "workflow domain",
+  "owners": ["domain-operations", "data-platform"],
+  "entities": [
+    {
+      "entity_id": "work_item",
+      "layer": "core",
+      "stewardship": {
+        "owner": "domain-operations",
+        "change_authority": "domain-data-governance",
+        "retention_policy": "domain-record-policy"
+      },
+      "source_of_truth": "system-of-record",
+      "identity_keys": ["work_item_id"],
+      "attributes": [
+        {
+          "name": "work_item_id",
+          "type": "string",
+          "required": true,
+          "classification": "internal",
+          "temporal": false
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "classification": "internal",
+          "temporal": true
+        }
+      ],
+      "lifecycle_states": ["open", "staged"],
+      "lifecycle_transitions": [
+        {
+          "transition_id": "work_item_open_to_staged",
+          "from_state": "open",
+          "to_state": "staged",
+          "trigger": "a proposal passes deterministic validation",
+          "guard": "work item source revision is current",
+          "owner": "domain-operations"
+        }
+      ]
+    },
+    {
+      "entity_id": "proposal",
+      "layer": "use_case",
+      "stewardship": {
+        "owner": "workflow-owner",
+        "change_authority": "agent-platform",
+        "retention_policy": "workflow-audit-policy"
+      },
+      "source_of_truth": "workflow-state-store",
+      "identity_keys": ["proposal_id"],
+      "attributes": [
+        {
+          "name": "proposal_id",
+          "type": "string",
+          "required": true,
+          "classification": "internal",
+          "temporal": false
+        }
+      ],
+      "lifecycle_states": ["absent", "staged"],
+      "lifecycle_transitions": [
+        {
+          "transition_id": "create_staged_proposal",
+          "from_state": "absent",
+          "to_state": "staged",
+          "trigger": "stage_proposal is accepted",
+          "guard": "one active proposal invariant holds",
+          "owner": "workflow-owner"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "work_item_has_proposal",
+      "from": "work_item",
+      "to": "proposal",
+      "cardinality": "one_to_many",
+      "source_of_truth": "workflow-state-store"
+    }
+  ],
+  "actions": [
+    {
+      "action_id": "stage_proposal",
+      "actor_types": ["agent"],
+      "input_entities": ["work_item"],
+      "output_entities": ["proposal"],
+      "permitted_transitions": ["work_item_open_to_staged", "create_staged_proposal"],
+      "decision_contract": {
+        "decision_id": "stage_work_item_proposal",
+        "evidence_types": ["source_record"],
+        "deterministic_checks": ["source revision is current", "one active proposal invariant holds"],
+        "uncertainty_policy": "Escalate when required evidence is missing or contradictory",
+        "owner": "workflow-owner"
+      },
+      "preconditions": ["work_item.status == open"],
+      "postconditions": ["proposal.status == staged"],
+      "authorization_policy": "stage_policy",
+      "side_effect": "staged",
+      "idempotency_scope": "stable_business_operation_id",
+      "feedback": {
+        "accepted_event": "operational owner accepts the verified proposal",
+        "outcome_source": "system-of-record",
+        "reconciliation_slo_seconds": 300,
+        "metric_id": "accepted_outcome_rate"
+      }
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "stage_policy",
+      "decision": "allow_with_obligations",
+      "inputs": ["agent_identity", "caller_identity", "work_item"],
+      "enforcement_point": "tool-gateway",
+      "fail_mode": "closed"
+    }
+  ],
+  "invariants": [
+    {
+      "invariant_id": "one_active_proposal",
+      "expression": "active_proposals(work_item_id) <= 1",
+      "enforcement": "workflow-state-store",
+      "severity": "high"
+    }
+  ],
+  "evidence_types": [
+    {
+      "evidence_id": "source_record",
+      "source": "system-of-record",
+      "owner": "domain-operations",
+      "source_of_truth": true,
+      "revision_contract": "monotonic source record revision",
+      "schema_contract": "versioned domain record schema",
+      "freshness_slo_seconds": 300,
+      "classification": "internal"
+    }
+  ]
+}

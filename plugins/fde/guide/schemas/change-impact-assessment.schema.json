@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/change-impact-assessment.schema.json",
+  "title": "Versioned change-impact assessment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "assessment_id", "version", "status", "system_map", "change", "impact_summary", "impacted_elements", "validation_plan", "promotion", "control_ids"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "assessment_id": { "$ref": "#/$defs/id" },
+    "version": { "$ref": "#/$defs/version" },
+    "status": { "enum": ["draft", "reviewed", "accepted", "stale"] },
+    "system_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "version", "digest", "status"],
+      "properties": {
+        "uri": { "$ref": "#/$defs/localReference" },
+        "version": { "$ref": "#/$defs/version" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "status": { "const": "verified" }
+      }
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["change_id", "summary", "classes", "before_revision", "after_revision", "owner", "materiality"],
+      "properties": {
+        "change_id": { "$ref": "#/$defs/id" },
+        "summary": { "type": "string", "minLength": 20 },
+        "classes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["documentation", "infrastructure", "data", "policy", "capability", "behavior", "runtime", "evaluation", "user_surface", "operations"] }
+        },
+        "before_revision": { "type": "string", "minLength": 1 },
+        "after_revision": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 2 },
+        "materiality": { "enum": ["none", "low", "material", "critical"] }
+      }
+    },
+    "impact_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_coverage", "unmapped_change_references", "impact_count"],
+      "properties": {
+        "scope_coverage": { "enum": ["complete", "partial"] },
+        "unmapped_change_references": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 4 } },
+        "impact_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "impacted_elements": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/impact" }
+    },
+    "validation_plan": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/validation" }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approval_required", "review_roles", "decision", "unresolved_impact_ids", "rationale"],
+      "properties": {
+        "approval_required": { "type": "boolean" },
+        "review_roles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["technical", "operational", "risk", "service", "data"] }
+        },
+        "decision": { "enum": ["block", "ready_for_review", "ready_for_promotion"] },
+        "unresolved_impact_ids": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "rationale": { "type": "string", "minLength": 20 }
+      }
+    },
+    "control_ids": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "change": {
+            "type": "object",
+            "properties": { "materiality": { "enum": ["material", "critical"] } },
+            "required": ["materiality"]
+          }
+        },
+        "required": ["change"]
+      },
+      "then": {
+        "properties": {
+          "impact_summary": {
+            "type": "object",
+            "properties": { "scope_coverage": { "const": "complete" } },
+            "required": ["scope_coverage"]
+          },
+          "promotion": {
+            "type": "object",
+            "properties": {
+              "approval_required": { "const": true },
+              "review_roles": {
+                "type": "array",
+                "minItems": 3,
+                "allOf": [
+                  { "contains": { "const": "technical" }, "minContains": 1 },
+                  { "contains": { "const": "operational" }, "minContains": 1 },
+                  { "contains": { "const": "risk" }, "minContains": 1 }
+                ]
+              }
+            },
+            "required": ["approval_required", "review_roles"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "localReference": { "type": "string", "minLength": 1, "pattern": "^(?![A-Za-z][A-Za-z0-9+.-]*:)(?!/)(?!.*\\\\).+$" },
+    "impact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["impact_id", "element_id", "kind", "relationship", "confidence", "disposition", "owner", "evidence"],
+      "properties": {
+        "impact_id": { "$ref": "#/$defs/id" },
+        "element_id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["workflow", "software", "data", "identity", "policy", "capability", "model", "evaluation", "operations", "user_surface"] },
+        "relationship": { "enum": ["direct", "transitive", "unmapped"] },
+        "confidence": { "enum": ["extracted", "inferred", "confirmed"] },
+        "disposition": { "enum": ["no_action", "update_artifact", "retest", "review", "block"] },
+        "owner": { "type": "string", "minLength": 2 },
+        "evidence": { "type": "string", "minLength": 4 }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validation_id", "action", "owner", "completion_criterion"],
+      "properties": {
+        "validation_id": { "$ref": "#/$defs/id" },
+        "action": { "type": "string", "minLength": 10 },
+        "owner": { "type": "string", "minLength": 2 },
+        "completion_criterion": { "type": "string", "minLength": 10 }
+      }
+    }
+  }
+}

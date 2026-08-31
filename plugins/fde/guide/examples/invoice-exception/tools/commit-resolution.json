@@ -1,0 +1,165 @@
+{
+  "$schema": "../../../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "commit_resolution",
+  "version": "3.0.0",
+  "owner": "accounts-payable-platform",
+  "purpose": "Commit an approved invoice-resolution proposal and return a ledger effect receipt",
+  "kind": "commit_write",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["run_id", "operation_id", "release_digest", "tenant_id", "business_operation_id", "invoice_id", "invoice_revision", "proposal_id", "proposal_digest", "approval_id", "policy_revision", "policy_decision_id", "idempotency_key", "expected_postcondition_digest"],
+    "properties": {
+      "run_id": { "type": "string", "format": "uuid" },
+      "operation_id": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "release_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+      "tenant_id": { "type": "string" },
+      "business_operation_id": { "type": "string", "minLength": 8, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+      "invoice_id": { "type": "string" },
+      "invoice_revision": { "type": "string" },
+      "proposal_id": { "type": "string" },
+      "proposal_digest": { "type": "string" },
+      "approval_id": { "type": "string" },
+      "policy_revision": { "type": "string" },
+      "policy_decision_id": { "type": "string", "format": "uuid" },
+      "idempotency_key": { "type": "string" },
+      "expected_postcondition_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["effect_id", "service_receipt", "status"],
+    "properties": {
+      "effect_id": { "type": "string" },
+      "service_receipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["algorithm", "key_id", "issuer", "subject", "subject_digest", "signature"],
+        "properties": {
+          "algorithm": { "const": "Ed25519" },
+          "key_id": { "type": "string" },
+          "issuer": { "const": "accounts-payable-ledger" },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["receipt_id", "effect_id", "run_id", "operation_id", "release_digest", "tenant_hash", "account_hash", "agent_principal_hash", "caller_principal_hash", "action", "effect_class", "resource_hash", "source_revision", "proposal_digest", "idempotency_key_hash", "policy_decision_id", "policy_revision", "approval_id", "expected_postcondition_digest", "committed_at"],
+            "properties": {
+              "receipt_id": { "type": "string" },
+              "effect_id": { "type": "string", "format": "uuid" },
+              "run_id": { "type": "string", "format": "uuid" },
+              "operation_id": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "release_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "tenant_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "account_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "agent_principal_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "caller_principal_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "action": { "const": "commit_resolution" },
+              "effect_class": { "const": "reversible" },
+              "resource_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "source_revision": { "type": "string" },
+              "proposal_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "idempotency_key_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "policy_decision_id": { "type": "string", "format": "uuid" },
+              "policy_revision": { "type": "string" },
+              "approval_id": { "type": "string", "format": "uuid" },
+              "expected_postcondition_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+              "committed_at": { "type": "string", "format": "date-time" }
+            }
+          },
+          "subject_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "signature": { "type": "string", "pattern": "^[A-Za-z0-9_-]{43,128}$" }
+        }
+      },
+      "status": { "const": "committed" }
+    }
+  },
+  "error_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["code", "message", "retryable"],
+    "properties": {
+      "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+      "message": { "type": "string", "minLength": 1 },
+      "retryable": { "type": "boolean" }
+    }
+  },
+  "authorization": {
+    "agent_principal": "invoice-exception-workload",
+    "caller_context_required": true,
+    "required_scopes": ["invoice-resolution:commit", "invoice-resolution:readback"],
+    "policy_decision_point": "commit-service",
+    "tenant_binding": true,
+    "fail_mode": "closed"
+  },
+  "data_access": {
+    "reads_data": false,
+    "classifications": [],
+    "maximum_sensitivity": "none",
+    "scope_fields": [],
+    "max_records": 0,
+    "max_response_bytes": 0,
+    "open_world": false,
+    "approval_policy": "none",
+    "request_fields": [
+      { "field": "run_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind the service receipt to the originating run" },
+      { "field": "operation_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind retries to one business operation" },
+      { "field": "release_digest", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind the effect to the exact solution release" },
+      { "field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind the commit to the authorized tenant" },
+      { "field": "business_operation_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "identify one stable intended business effect across retries" },
+      { "field": "invoice_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "identify the bounded invoice resource" },
+      { "field": "invoice_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "enforce the current invoice revision" },
+      { "field": "proposal_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "identify the staged proposal" },
+      { "field": "proposal_digest", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind commit to the approved proposal" },
+      { "field": "approval_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "prove current proposal-bound approval" },
+      { "field": "policy_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "recheck the authorizing policy revision" },
+      { "field": "policy_decision_id", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind the effect receipt to the policy decision" },
+      { "field": "idempotency_key", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "deduplicate commit delivery" },
+      { "field": "expected_postcondition_digest", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["ap_ledger"], "purpose": "bind the effect to the expected business postcondition" }
+    ]
+  },
+  "execution": {
+    "timeout_ms": 8000,
+    "max_attempts": 2,
+    "retryable_errors": ["TIMEOUT", "UNAVAILABLE"],
+    "idempotency": { "required": true, "key_fields": ["business_operation_id", "idempotency_key"], "enforced_by": "accounts-payable-ledger" }
+  },
+  "side_effects": { "class": "reversible", "resources": ["invoice", "resolution-receipt"], "compensation": "restore invoice revision using finance-approved compensation" },
+  "approval": { "required": true, "role": "accounts-payable-approver", "proposal_digest_required": true, "expires_seconds": 3600 },
+  "network": {
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "ap_ledger",
+        "scheme": "https",
+        "authority": "ap-ledger.internal",
+        "port": 443,
+        "path_prefix": "/v1/resolutions/commit"
+      }
+    ],
+    "allowed_operations": ["commit_resolution"],
+    "allowed_methods": ["POST"],
+    "redirect_policy": "deny",
+    "address_resolution_policy": "pinned_service_identity",
+    "private_address_policy": "explicit_allowlist",
+    "server_fetch_policy": "deny",
+    "target_account_binding": true,
+    "tenant_binding": true,
+    "request_max_bytes": 32768,
+    "response_max_bytes": 32768,
+    "credential_broker": "workload-identity-gateway",
+    "public_gateway_capability": null
+  },
+  "failure_modes": [
+    { "code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "APPROVAL_EXPIRED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "DIGEST_MISMATCH", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false },
+    { "code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false },
+    { "code": "READBACK_MISMATCH", "class": "escalation", "retry": false, "retry_safety": "never", "escalate": true }
+  ],
+  "observability": { "span_name": "agent.tool.commit_resolution", "audit_event": "invoice_resolution.committed", "redacted_fields": [], "postcondition_readback": true },
+  "invariants": ["approval binds proposal digest", "caller authorization is current", "source invoice remains in the permitted exception state", "one resolution commit per stable business operation", "completion requires ledger readback"],
+  "control_ids": ["TOL-003", "IAM-002", "IAM-003", "SEC-006", "REL-001", "REL-003", "HUM-001", "OPS-001"]
+}

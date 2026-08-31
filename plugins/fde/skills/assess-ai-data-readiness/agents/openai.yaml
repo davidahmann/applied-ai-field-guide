@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assess AI Data Readiness"
+  short_description: "Prove data fit for one bounded workflow decision"
+  default_prompt: "Use $assess-ai-data-readiness to test source authority, quality, preparation, lineage, privacy, economics, and failure behavior for this bounded decision."

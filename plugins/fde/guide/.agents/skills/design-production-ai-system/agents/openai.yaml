@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Production AI System"
+  short_description: "Create a coherent production system design"
+  default_prompt: "Use $design-production-ai-system to turn this approved workflow into a production design packet."

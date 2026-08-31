@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/change-impact-assessment.schema.json",
+  "schema_version": "1.0.0",
+  "assessment_id": "routing_threshold_impact",
+  "version": "0.1.0",
+  "status": "draft",
+  "system_map": {
+    "uri": "system-map-manifest.json",
+    "version": "0.1.0",
+    "digest": "sha256:0fb152ab40816c7319d79d4360cd86927f7d87437a34924bffde19e94b1b6df3",
+    "status": "verified"
+  },
+  "change": {
+    "change_id": "routing_threshold_revision",
+    "summary": "Illustrative routing-threshold revision that could alter review volume, coordinator workload, and accepted routing outcomes.",
+    "classes": ["policy", "behavior", "user_surface", "operations"],
+    "before_revision": "routing-policy-0.1.0",
+    "after_revision": "routing-policy-0.2.0-candidate",
+    "owner": "dispatch-operations",
+    "materiality": "material"
+  },
+  "impact_summary": {
+    "scope_coverage": "complete",
+    "unmapped_change_references": [],
+    "impact_count": 4
+  },
+  "impacted_elements": [
+    {"impact_id": "policy_route", "element_id": "routing_policy", "kind": "policy", "relationship": "direct", "confidence": "confirmed", "disposition": "retest", "owner": "dispatch-operations", "evidence": "The candidate changes the deterministic selection threshold."},
+    {"impact_id": "review_volume", "element_id": "review_case", "kind": "capability", "relationship": "direct", "confidence": "confirmed", "disposition": "review", "owner": "dispatch-operations", "evidence": "A threshold change can alter review-case volume and coordinator load."},
+    {"impact_id": "user_workflow", "element_id": "coordinator_surface", "kind": "user_surface", "relationship": "transitive", "confidence": "inferred", "disposition": "review", "owner": "dispatch-enablement", "evidence": "Review volume may change the queue experience and override behavior; confirm with coordinators."},
+    {"impact_id": "route_evaluation", "element_id": "routing_evaluation", "kind": "evaluation", "relationship": "transitive", "confidence": "confirmed", "disposition": "retest", "owner": "logistics-platform", "evidence": "Threshold behavior requires representative, stale-evidence, and cross-tenant regression coverage."}
+  ],
+  "validation_plan": [
+    {"validation_id": "routing_replay", "action": "Run the named shipment-risk evaluation cases and compare candidate routing with the baseline policy.", "owner": "logistics-platform", "completion_criterion": "All safety cases remain denied or escalated and the accepted-routing metric is reported by the declared segment."},
+    {"validation_id": "coordinator_review", "action": "Review projected queue volume, override burden, and evidence clarity with dispatch coordinators in shadow use.", "owner": "dispatch-operations", "completion_criterion": "The pilot guardrails for review burden, cost, and override rate have named evidence and no unresolved blocker."}
+  ],
+  "promotion": {
+    "approval_required": true,
+    "review_roles": ["technical", "operational", "risk"],
+    "decision": "ready_for_review",
+    "unresolved_impact_ids": [],
+    "rationale": "This teaching artifact shows the review evidence required before a material policy change can enter the normal release process."
+  },
+  "control_ids": ["CTX-001", "CTX-002", "EVA-006", "OPS-007"]
+}

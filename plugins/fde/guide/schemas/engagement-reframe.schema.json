@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/engagement-reframe.schema.json",
+  "title": "Evidence-backed engagement reframe",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "record_id", "workflow_id", "version", "status", "inherited_brief", "roles", "representative_case", "claims", "conflicts", "proposal", "disposition", "downstream_impacts", "chronology", "control_ids"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "#/$defs/id" },
+    "workflow_id": { "$ref": "#/$defs/id" },
+    "version": { "$ref": "#/$defs/version" },
+    "status": { "enum": ["draft", "current", "superseded"] },
+    "inherited_brief": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "source_refs", "state", "limitations"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 20 },
+        "source_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "state": { "enum": ["hypothesis", "confirmed", "superseded"] },
+        "limitations": { "type": "string", "minLength": 10 }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sponsor", "process_knower", "operator", "disposition_authority", "verifier"],
+      "properties": {
+        "sponsor": { "$ref": "#/$defs/role" },
+        "process_knower": { "$ref": "#/$defs/role" },
+        "operator": { "$ref": "#/$defs/role" },
+        "disposition_authority": { "$ref": "#/$defs/role" },
+        "verifier": { "$ref": "#/$defs/role" }
+      }
+    },
+    "representative_case": { "$ref": "#/$defs/representativeCase" },
+    "claims": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/claim" }
+    },
+    "conflicts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/conflict" }
+    },
+    "proposal": { "$ref": "#/$defs/proposal" },
+    "disposition": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/disposition" }
+      ]
+    },
+    "downstream_impacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/impact" }
+    },
+    "chronology": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "control_ids": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 4 }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "status", "basis", "evidence_refs"],
+      "properties": {
+        "identity": { "type": ["string", "null"], "minLength": 2 },
+        "status": { "enum": ["verified", "unverified", "unknown"] },
+        "basis": { "type": "string", "minLength": 10 },
+        "evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 4 }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "verified" } }, "required": ["status"] },
+          "then": {
+            "properties": {
+              "identity": { "type": "string", "minLength": 2 },
+              "evidence_refs": { "type": "array", "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "unknown" } }, "required": ["status"] },
+          "then": { "properties": { "identity": { "type": "null" } } }
+        }
+      ]
+    },
+    "representativeCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "observed_at", "population_scope", "process_knower", "evidence_refs", "limitations"],
+      "properties": {
+        "case_id": { "$ref": "#/$defs/id" },
+        "observed_at": { "$ref": "#/$defs/timestamp" },
+        "population_scope": { "type": "string", "minLength": 10 },
+        "process_knower": { "type": "string", "minLength": 2 },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "limitations": { "type": "string", "minLength": 10 }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "class", "statement", "owner", "scope", "evidence_refs", "currency"],
+      "properties": {
+        "claim_id": { "$ref": "#/$defs/id" },
+        "class": { "enum": ["sold", "stated", "observed", "system_enforced", "policy_authorized"] },
+        "statement": { "type": "string", "minLength": 15 },
+        "owner": { "type": "string", "minLength": 2 },
+        "scope": { "type": "string", "minLength": 8 },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "currency": { "enum": ["current", "superseded"] }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_id", "claim_ids", "affected_boundary", "affected_outcomes", "authority_needed", "state"],
+      "properties": {
+        "conflict_id": { "$ref": "#/$defs/id" },
+        "claim_ids": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "affected_boundary": { "type": "string", "minLength": 10 },
+        "affected_outcomes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 5 } },
+        "authority_needed": { "type": "string", "minLength": 2 },
+        "state": { "enum": ["open", "resolved", "superseded"] }
+      }
+    },
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposal_id", "statement", "safe_fallback", "next_field_move", "affected_boundary", "required_authority", "status"],
+      "properties": {
+        "proposal_id": { "$ref": "#/$defs/id" },
+        "statement": { "type": "string", "minLength": 20 },
+        "safe_fallback": { "type": "string", "minLength": 20 },
+        "next_field_move": { "type": "string", "minLength": 15 },
+        "affected_boundary": { "type": "string", "minLength": 10 },
+        "required_authority": { "type": "string", "minLength": 2 },
+        "status": { "enum": ["open", "accepted", "rejected", "deferred", "superseded"] }
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "actor", "authority_basis", "scope", "evidence_ref", "source_passage", "rationale", "decided_at"],
+      "properties": {
+        "decision": { "enum": ["continue_discovery", "bounded_kickoff", "defer", "stop"] },
+        "actor": { "type": "string", "minLength": 2 },
+        "authority_basis": { "type": "string", "minLength": 10 },
+        "scope": { "type": "string", "minLength": 10 },
+        "evidence_ref": { "type": "string", "minLength": 4 },
+        "source_passage": { "type": "string", "minLength": 10 },
+        "rationale": { "type": "string", "minLength": 15 },
+        "decided_at": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "impact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "depends_on_claim_ids", "action", "reason", "owner"],
+      "properties": {
+        "artifact_id": { "$ref": "#/$defs/id" },
+        "depends_on_claim_ids": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "action": { "enum": ["no_change", "review_required", "supersede"] },
+        "reason": { "type": "string", "minLength": 10 },
+        "owner": { "type": "string", "minLength": 2 }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "type", "occurred_at", "actor", "summary", "evidence_refs"],
+      "properties": {
+        "event_id": { "$ref": "#/$defs/id" },
+        "type": { "enum": ["brief_recorded", "case_observed", "conflict_opened", "proposal_recorded", "disposition_recorded", "downstream_reviewed"] },
+        "occurred_at": { "$ref": "#/$defs/timestamp" },
+        "actor": { "type": "string", "minLength": 2 },
+        "summary": { "type": "string", "minLength": 10 },
+        "evidence_refs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 4 } }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": { "proposal": { "type": "object", "properties": { "status": { "const": "accepted" } }, "required": ["status"] } },
+        "required": ["proposal"]
+      },
+      "then": { "type": "object", "properties": { "disposition": { "$ref": "#/$defs/disposition" } } }
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "../../schemas/operational-ontology.schema.json",
+  "schema_version": "1.1.0",
+  "ontology_id": "shipment_risk_triage",
+  "version": "0.1.0",
+  "domain": "dispatch shipment-risk triage",
+  "owners": ["dispatch-operations", "logistics-data-platform"],
+  "entities": [
+    {
+      "entity_id": "shipment",
+      "layer": "core",
+      "stewardship": {"owner": "dispatch-operations", "change_authority": "shipment-data-governance", "retention_policy": "shipment-record-retention"},
+      "source_of_truth": "shipment-system",
+      "identity_keys": ["tenant_id", "shipment_id"],
+      "attributes": [
+        {"name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false},
+        {"name": "shipment_id", "type": "string", "required": true, "classification": "confidential", "temporal": false},
+        {"name": "revision", "type": "string", "required": true, "classification": "internal", "temporal": true},
+        {"name": "promised_arrival", "type": "datetime", "required": true, "classification": "internal", "temporal": true},
+        {"name": "shipment_value_usd", "type": "decimal", "required": true, "classification": "confidential", "temporal": true},
+        {"name": "status", "type": "string", "required": true, "classification": "internal", "temporal": true}
+      ],
+      "lifecycle_states": ["in_transit", "delivered", "cancelled"],
+      "lifecycle_transitions": []
+    },
+    {
+      "entity_id": "delay_risk_assessment",
+      "layer": "use_case",
+      "stewardship": {"owner": "logistics-analytics", "change_authority": "model-governance", "retention_policy": "model-evidence-retention"},
+      "source_of_truth": "risk-scoring-service",
+      "identity_keys": ["tenant_id", "assessment_id"],
+      "attributes": [
+        {"name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false},
+        {"name": "assessment_id", "type": "string", "required": true, "classification": "internal", "temporal": false},
+        {"name": "shipment_id", "type": "string", "required": true, "classification": "confidential", "temporal": false},
+        {"name": "model_version", "type": "string", "required": true, "classification": "internal", "temporal": false},
+        {"name": "risk_score", "type": "decimal", "required": true, "classification": "internal", "temporal": true},
+        {"name": "observed_at", "type": "datetime", "required": true, "classification": "internal", "temporal": true}
+      ],
+      "lifecycle_states": ["scored", "invalid", "stale"],
+      "lifecycle_transitions": []
+    },
+    {
+      "entity_id": "review_case",
+      "layer": "use_case",
+      "stewardship": {"owner": "dispatch-operations", "change_authority": "dispatch-service-owner", "retention_policy": "dispatch-review-retention"},
+      "source_of_truth": "dispatch-review-service",
+      "identity_keys": ["tenant_id", "review_case_id"],
+      "attributes": [
+        {"name": "tenant_id", "type": "string", "required": true, "classification": "confidential", "temporal": false},
+        {"name": "review_case_id", "type": "string", "required": true, "classification": "internal", "temporal": false},
+        {"name": "shipment_id", "type": "string", "required": true, "classification": "confidential", "temporal": false},
+        {"name": "route", "type": "string", "required": true, "classification": "internal", "temporal": false},
+        {"name": "evidence_revision", "type": "string", "required": true, "classification": "internal", "temporal": false},
+        {"name": "coordinator_disposition", "type": "string", "required": false, "classification": "internal", "temporal": true}
+      ],
+      "lifecycle_states": ["absent", "staged", "accepted", "rejected", "expired"],
+      "lifecycle_transitions": [
+        {"transition_id": "create_review_case", "from_state": "absent", "to_state": "staged", "trigger": "routing policy requires review", "guard": "current evidence, valid score, and policy route are present", "owner": "dispatch-operations"}
+      ]
+    }
+  ],
+  "relationships": [
+    {"relationship_id": "shipment_has_risk_assessment", "from": "shipment", "to": "delay_risk_assessment", "cardinality": "one_to_many", "source_of_truth": "risk-scoring-service"},
+    {"relationship_id": "shipment_has_review_case", "from": "shipment", "to": "review_case", "cardinality": "one_to_many", "source_of_truth": "dispatch-review-service"}
+  ],
+  "actions": [
+    {
+      "action_id": "stage_shipment_review",
+      "actor_types": ["workflow"],
+      "input_entities": ["shipment", "delay_risk_assessment"],
+      "output_entities": ["review_case"],
+      "permitted_transitions": ["create_review_case"],
+      "decision_contract": {
+        "decision_id": "route_shipment_for_review",
+        "evidence_types": ["shipment_snapshot", "carrier_signal_snapshot", "risk_score_snapshot"],
+        "deterministic_checks": ["shipment evidence is current", "risk score is within range", "routing threshold and value criteria are met", "review budget remains available"],
+        "uncertainty_policy": "Escalate to manual triage when evidence or score is missing, stale, invalid, or contradictory",
+        "owner": "dispatch-operations"
+      },
+      "preconditions": ["shipment.status == in_transit", "shipment.evidence is current", "delay_risk_assessment.lifecycle_state == scored"],
+      "postconditions": ["review_case.lifecycle_state == staged", "no shipment operation is executed"],
+      "authorization_policy": "review_case_stage_policy",
+      "side_effect": "staged",
+      "idempotency_scope": "tenant_id + shipment_id + routing_policy_revision",
+      "feedback": {"accepted_event": "coordinator accepts or rejects the review case with current evidence", "outcome_source": "dispatch-review-service", "reconciliation_slo_seconds": 300, "metric_id": "accepted_routing_rate"}
+    }
+  ],
+  "policies": [
+    {"policy_id": "review_case_stage_policy", "decision": "allow_with_obligations", "inputs": ["workflow_identity", "tenant_identity", "shipment", "delay_risk_assessment", "routing_policy"], "enforcement_point": "dispatch-review-gateway", "fail_mode": "closed"}
+  ],
+  "invariants": [
+    {"invariant_id": "no_autonomous_intervention", "expression": "shipment_operations(workflow_id) == 0", "enforcement": "shipment-operation-gateway", "severity": "critical"},
+    {"invariant_id": "current_evidence_only", "expression": "review_case.evidence_revision == shipment.revision", "enforcement": "dispatch-review-gateway", "severity": "high"},
+    {"invariant_id": "one_active_review_case", "expression": "active_review_cases(tenant_id, shipment_id, routing_policy_revision) <= 1", "enforcement": "dispatch-review-service", "severity": "high"}
+  ],
+  "evidence_types": [
+    {"evidence_id": "shipment_snapshot", "source": "shipment-system", "owner": "dispatch-operations", "source_of_truth": true, "revision_contract": "monotonic shipment revision", "schema_contract": "shipment snapshot v1", "freshness_slo_seconds": 300, "classification": "confidential"},
+    {"evidence_id": "carrier_signal_snapshot", "source": "carrier-event-service", "owner": "carrier-operations", "source_of_truth": true, "revision_contract": "carrier signal observation timestamp", "schema_contract": "carrier signal snapshot v1", "freshness_slo_seconds": 300, "classification": "internal"},
+    {"evidence_id": "risk_score_snapshot", "source": "risk-scoring-service", "owner": "logistics-analytics", "source_of_truth": true, "revision_contract": "model version plus feature snapshot revision", "schema_contract": "delay risk score v1", "freshness_slo_seconds": 300, "classification": "internal"}
+  ]
+}

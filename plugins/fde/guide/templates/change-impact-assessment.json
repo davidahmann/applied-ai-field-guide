@@ -1,0 +1,81 @@
+{
+  "$schema": "../schemas/change-impact-assessment.schema.json",
+  "schema_version": "1.0.0",
+  "assessment_id": "workflow_change_impact",
+  "version": "0.1.0",
+  "status": "draft",
+  "system_map": {
+    "uri": "system-map-manifest.json",
+    "version": "0.1.0",
+    "digest": "sha256:b283911caa391c463a8e8f70b4c7b1386362970b91f466939587ecbd6a5d085f",
+    "status": "verified"
+  },
+  "change": {
+    "change_id": "workflow_behavior_change",
+    "summary": "Replace with the specific change and the decision, interface, or operating behavior it can alter.",
+    "classes": ["behavior", "operations"],
+    "before_revision": "replace-with-current-immutable-revision",
+    "after_revision": "replace-with-candidate-immutable-revision",
+    "owner": "change-owner",
+    "materiality": "material"
+  },
+  "impact_summary": {
+    "scope_coverage": "complete",
+    "unmapped_change_references": [],
+    "impact_count": 3
+  },
+  "impacted_elements": [
+    {
+      "impact_id": "decision_impact",
+      "element_id": "workflow_decision",
+      "kind": "workflow",
+      "relationship": "direct",
+      "confidence": "confirmed",
+      "disposition": "review",
+      "owner": "workflow-owner",
+      "evidence": "Bound decision and acceptance criteria reviewed against the candidate change."
+    },
+    {
+      "impact_id": "evaluation_impact",
+      "element_id": "workflow_evaluation",
+      "kind": "evaluation",
+      "relationship": "direct",
+      "confidence": "extracted",
+      "disposition": "retest",
+      "owner": "evaluation-owner",
+      "evidence": "Behavioral configuration change requires route-specific representative replay."
+    },
+    {
+      "impact_id": "operations_impact",
+      "element_id": "workflow_operations",
+      "kind": "operations",
+      "relationship": "transitive",
+      "confidence": "inferred",
+      "disposition": "update_artifact",
+      "owner": "service-owner",
+      "evidence": "Confirm alert, rollback, and support procedures cover the changed route."
+    }
+  ],
+  "validation_plan": [
+    {
+      "validation_id": "route_replay",
+      "action": "Run representative and adversarial replay cases for every changed route.",
+      "owner": "evaluation-owner",
+      "completion_criterion": "Independent evaluation meets the declared threshold and all negative controls remain denied."
+    },
+    {
+      "validation_id": "operating_review",
+      "action": "Review the operator surface, alerting, rollback, and support consequences.",
+      "owner": "service-owner",
+      "completion_criterion": "Affected operating artifacts have a named owner, compatible version, and exercised rollback path."
+    }
+  ],
+  "promotion": {
+    "approval_required": true,
+    "review_roles": ["technical", "operational", "risk"],
+    "decision": "ready_for_review",
+    "unresolved_impact_ids": [],
+    "rationale": "Material changes require evidence-backed review before the compatible release can be approved."
+  },
+  "control_ids": ["CTX-001", "CTX-002", "EVA-006", "OPS-007"]
+}

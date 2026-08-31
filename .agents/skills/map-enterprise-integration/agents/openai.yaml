@@ -1,0 +1,4 @@
+interface:
+  display_name: "Map Enterprise Integration"
+  short_description: "Open legacy, identity, execution, and operating seams"
+  default_prompt: "Use $map-enterprise-integration to inspect the target system seams that could invalidate this approved workflow or delivery slice."

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title description">
+  <title id="title">The FDE Guide delivery path</title>
+  <desc id="description">A value-engineering path from discovery through design, governance, release, and operating outcomes.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071a2a"/>
+      <stop offset="1" stop-color="#12314a"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#54d6bb"/>
+      <stop offset="1" stop-color="#7ab8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="20" fill="url(#background)"/>
+  <g opacity="0.12" fill="none" stroke="#d8f6ff">
+    <path d="M-30 64C180 14 318 136 505 69s347 17 725-36"/>
+    <path d="M-30 244c184-57 318 49 493-16s360 24 767-48"/>
+  </g>
+  <text x="64" y="68" fill="#d8f6ff" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="24" font-weight="700" letter-spacing="3">THE FDE GUIDE</text>
+  <text x="64" y="108" fill="#ffffff" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="32" font-weight="600">From customer workflow to measurable, operated outcome.</text>
+  <path d="M110 174H1090" stroke="url(#line)" stroke-width="4" stroke-linecap="round"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" text-anchor="middle">
+    <g transform="translate(110 174)"><circle r="13" fill="#54d6bb"/><text y="42" fill="#ffffff" font-size="16" font-weight="600">Discover value</text></g>
+    <g transform="translate(355 174)"><circle r="13" fill="#68d0cf"/><text y="42" fill="#ffffff" font-size="16" font-weight="600">Design the system</text></g>
+    <g transform="translate(600 174)"><circle r="13" fill="#83c8dd"/><text y="42" fill="#ffffff" font-size="16" font-weight="600">Govern decisions</text></g>
+    <g transform="translate(845 174)"><circle r="13" fill="#9bbef2"/><text y="42" fill="#ffffff" font-size="16" font-weight="600">Release safely</text></g>
+    <g transform="translate(1090 174)"><circle r="13" fill="#b6b7ff"/><text y="42" fill="#ffffff" font-size="16" font-weight="600">Operate outcomes</text></g>
+  </g>
+  <text x="64" y="270" fill="#b9d6e3" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="15" letter-spacing="1.2">ARCHITECTURE   ·   DATA   ·   SECURITY   ·   ECONOMICS   ·   EVIDENCE   ·   ADOPTION</text>
+</svg>

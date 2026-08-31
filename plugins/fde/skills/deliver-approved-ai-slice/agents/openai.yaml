@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver Approved AI Slice"
+  short_description: "Ship one bounded slice through proof and ownership"
+  default_prompt: "Use $deliver-approved-ai-slice to implement and validate the smallest approved workflow slice without expanding scope or authority."

@@ -1,0 +1,20 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: bounded-workflow-tool-0.1.0
+DocumentNamespace: https://sbom.example.invalid/bounded-workflow-tool/0.1.0
+Creator: Tool: production-agent-engineering-fixture
+Created: 2026-08-07T15:00:00Z
+
+##### Package: bounded-workflow-tool
+
+PackageName: bounded-workflow-tool
+SPDXID: SPDXRef-Package-bounded-workflow-tool
+PackageVersion: 0.1.0
+PackageSupplier: Organization: approved-internal-publisher
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageChecksum: SHA256: 3333333333333333333333333333333333333333333333333333333333333333
+PackageLicenseConcluded: Apache-2.0
+PackageLicenseDeclared: Apache-2.0
+PackageCopyrightText: NOASSERTION

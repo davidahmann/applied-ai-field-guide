@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/effect-receipt.schema.json",
+  "title": "Verified external-effect receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "effect_id",
+    "run_id",
+    "operation_id",
+    "release_digest",
+    "tenant_hash",
+    "account_hash",
+    "agent_principal_hash",
+    "caller_principal_hash",
+    "action",
+    "effect_class",
+    "resource_hash",
+    "source_revision",
+    "proposal_digest",
+    "idempotency_key_hash",
+    "policy_decision_id",
+    "policy_revision",
+    "approval_id",
+    "expected_postcondition_digest",
+    "service_receipt",
+    "committed_at",
+    "readback",
+    "compensation"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.2.0" },
+    "effect_id": { "type": "string", "format": "uuid" },
+    "run_id": { "type": "string", "format": "uuid" },
+    "operation_id": { "$ref": "#/$defs/digest" },
+    "release_digest": { "$ref": "#/$defs/digest" },
+    "tenant_hash": { "$ref": "#/$defs/digest" },
+    "account_hash": { "$ref": "#/$defs/digest" },
+    "agent_principal_hash": { "$ref": "#/$defs/digest" },
+    "caller_principal_hash": { "$ref": "#/$defs/digest" },
+    "action": { "$ref": "#/$defs/id" },
+    "effect_class": { "enum": ["staged", "reversible", "irreversible"] },
+    "resource_hash": { "$ref": "#/$defs/digest" },
+    "source_revision": { "$ref": "#/$defs/opaqueReference" },
+    "proposal_digest": { "$ref": "#/$defs/digest" },
+    "idempotency_key_hash": { "$ref": "#/$defs/digest" },
+    "policy_decision_id": { "type": "string", "format": "uuid" },
+    "policy_revision": { "$ref": "#/$defs/opaqueReference" },
+    "approval_id": { "type": "string", "format": "uuid" },
+    "expected_postcondition_digest": { "$ref": "#/$defs/digest" },
+    "service_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "key_id", "issuer", "subject", "subject_digest", "signature"],
+      "properties": {
+        "algorithm": { "const": "Ed25519" },
+        "key_id": { "$ref": "#/$defs/opaqueReference" },
+        "issuer": { "$ref": "#/$defs/opaqueReference" },
+        "subject": { "$ref": "#/$defs/serviceSubject" },
+        "subject_digest": { "$ref": "#/$defs/digest" },
+        "signature": { "$ref": "#/$defs/base64url" }
+      }
+    },
+    "committed_at": { "type": "string", "format": "date-time" },
+    "readback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "readback_request_id", "requested_at", "status", "source", "revision", "verified_at", "verifier", "expected_postcondition_digest", "observed_postcondition_digest", "attestation"],
+      "properties": {
+        "run_id": { "type": "string", "format": "uuid" },
+        "readback_request_id": { "type": "string", "format": "uuid" },
+        "requested_at": { "type": "string", "format": "date-time" },
+        "status": { "enum": ["matched", "mismatched", "unknown"] },
+        "source": { "$ref": "#/$defs/opaqueReference" },
+        "revision": { "$ref": "#/$defs/opaqueReference" },
+        "verified_at": { "type": "string", "format": "date-time" },
+        "verifier": { "$ref": "#/$defs/opaqueReference" },
+        "expected_postcondition_digest": { "$ref": "#/$defs/digest" },
+        "observed_postcondition_digest": { "$ref": "#/$defs/digest" },
+        "attestation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["algorithm", "key_id", "issuer", "subject_digest", "signature"],
+          "properties": {
+            "algorithm": { "const": "Ed25519" },
+            "key_id": { "$ref": "#/$defs/opaqueReference" },
+            "issuer": { "$ref": "#/$defs/opaqueReference" },
+            "subject_digest": { "$ref": "#/$defs/digest" },
+            "signature": { "$ref": "#/$defs/base64url" }
+          }
+        }
+      }
+    },
+    "compensation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reference"],
+      "properties": {
+        "status": { "enum": ["none", "available", "requested", "completed", "failed"] },
+        "reference": {
+          "oneOf": [
+            { "$ref": "#/$defs/opaqueReference" },
+            { "type": "null" }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "opaqueReference": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]*$" },
+    "base64url": { "type": "string", "minLength": 43, "maxLength": 128, "pattern": "^[A-Za-z0-9_-]+$" },
+    "serviceSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_id", "effect_id", "run_id", "operation_id", "release_digest", "tenant_hash", "account_hash", "agent_principal_hash", "caller_principal_hash", "action", "effect_class", "resource_hash", "source_revision", "proposal_digest", "idempotency_key_hash", "policy_decision_id", "policy_revision", "approval_id", "expected_postcondition_digest", "committed_at"],
+      "properties": {
+        "receipt_id": { "$ref": "#/$defs/opaqueReference" },
+        "effect_id": { "type": "string", "format": "uuid" },
+        "run_id": { "type": "string", "format": "uuid" },
+        "operation_id": { "$ref": "#/$defs/digest" },
+        "release_digest": { "$ref": "#/$defs/digest" },
+        "tenant_hash": { "$ref": "#/$defs/digest" },
+        "account_hash": { "$ref": "#/$defs/digest" },
+        "agent_principal_hash": { "$ref": "#/$defs/digest" },
+        "caller_principal_hash": { "$ref": "#/$defs/digest" },
+        "action": { "$ref": "#/$defs/id" },
+        "effect_class": { "enum": ["staged", "reversible", "irreversible"] },
+        "resource_hash": { "$ref": "#/$defs/digest" },
+        "source_revision": { "$ref": "#/$defs/opaqueReference" },
+        "proposal_digest": { "$ref": "#/$defs/digest" },
+        "idempotency_key_hash": { "$ref": "#/$defs/digest" },
+        "policy_decision_id": { "type": "string", "format": "uuid" },
+        "policy_revision": { "$ref": "#/$defs/opaqueReference" },
+        "approval_id": { "type": "string", "format": "uuid" },
+        "expected_postcondition_digest": { "$ref": "#/$defs/digest" },
+        "committed_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

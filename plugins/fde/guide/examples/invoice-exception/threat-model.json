@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schemas/threat-model.schema.json",
+  "schema_version": "1.0.0",
+  "system_id": "invoice_exception_agent",
+  "owner": "finance-security",
+  "last_reviewed": "2026-08-07",
+  "assets": [
+    { "asset_id": "ap_ledger", "classification": "confidential", "integrity_required": true, "availability_required": true },
+    { "asset_id": "vendor_data", "classification": "restricted", "integrity_required": true, "availability_required": true },
+    { "asset_id": "workload_credential", "classification": "restricted", "integrity_required": true, "availability_required": true },
+    { "asset_id": "evaluation_system", "classification": "internal", "integrity_required": true, "availability_required": true }
+  ],
+  "trust_boundaries": [
+    { "boundary_id": "caller_to_agent", "from": "caller", "to": "agent_runtime", "protocol": "HTTPS", "authentication": "enterprise identity", "authorization": "workflow ingress policy", "encryption": "TLS 1.3" },
+    { "boundary_id": "agent_to_gateway", "from": "agent_runtime", "to": "tool_gateway", "protocol": "HTTPS", "authentication": "short-lived workload identity", "authorization": "caller-agent intersection", "encryption": "mTLS" },
+    { "boundary_id": "gateway_to_ledger", "from": "tool_gateway", "to": "ap_ledger", "protocol": "HTTPS", "authentication": "audience-bound service credential", "authorization": "resource and tenant policy", "encryption": "mTLS" }
+  ],
+  "assumptions": ["identity, policy, credential broker, and evaluator execute outside the agent runtime", "ledger enforces idempotency and tenant isolation"],
+  "threats": [
+    {
+      "threat_id": "THR-001",
+      "category": "prompt_injection",
+      "scenario": "Malicious invoice content attempts to redirect data or bypass approval",
+      "entry_points": ["invoice attachment", "vendor note"],
+      "affected_assets": ["ap_ledger", "vendor_data", "workload_credential"],
+      "likelihood": "high",
+      "impact": "critical",
+      "preventive_controls": ["CTX-002", "IAM-003", "SEC-001", "SEC-002"],
+      "detective_controls": ["OPS-001", "SEC-004"],
+      "recovery_controls": ["OPS-002", "OPS-003"],
+      "residual_risk": "low",
+      "test_case_ids": ["invoice_prompt_injection"],
+      "owner": "finance-security",
+      "status": "mitigated"
+    },
+    {
+      "threat_id": "THR-002",
+      "category": "confused_deputy",
+      "scenario": "Read-only caller attempts to use the agent workload identity to commit a resolution",
+      "entry_points": ["workflow request", "delegated task"],
+      "affected_assets": ["ap_ledger"],
+      "likelihood": "medium",
+      "impact": "critical",
+      "preventive_controls": ["IAM-001", "IAM-002", "IAM-003", "SEC-005"],
+      "detective_controls": ["OPS-001", "SEC-004"],
+      "recovery_controls": ["OPS-002", "OPS-003"],
+      "residual_risk": "low",
+      "test_case_ids": ["invoice_unauthorized_write"],
+      "owner": "finance-security",
+      "status": "mitigated"
+    },
+    {
+      "threat_id": "THR-003",
+      "category": "duplicate_effect",
+      "scenario": "Retry after an ambiguous timeout creates a second financial ledger resolution",
+      "entry_points": ["event redelivery", "tool retry"],
+      "affected_assets": ["ap_ledger"],
+      "likelihood": "medium",
+      "impact": "critical",
+      "preventive_controls": ["REL-001", "REL-003"],
+      "detective_controls": ["OPS-001", "OPS-004"],
+      "recovery_controls": ["OPS-002", "OPS-003"],
+      "residual_risk": "low",
+      "test_case_ids": ["invoice_duplicate_retry"],
+      "owner": "accounts-payable-platform",
+      "status": "mitigated"
+    }
+  ]
+}

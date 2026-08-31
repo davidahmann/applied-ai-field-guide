@@ -1,0 +1,109 @@
+{
+  "$schema": "../../../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "retrieve_policy",
+  "version": "3.0.0",
+  "owner": "finance-controls",
+  "purpose": "Retrieve the current tenant-bound invoice-resolution policy and decision constraints",
+  "kind": "query",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "policy_id", "as_of", "release_digest"],
+    "properties": {
+      "tenant_id": { "type": "string" },
+      "policy_id": { "type": "string" },
+      "as_of": { "type": "string", "format": "date-time" },
+      "release_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "policy_id", "revision", "effective_at", "constraints", "observed_at"],
+    "properties": {
+      "tenant_id": { "type": "string" },
+      "policy_id": { "type": "string" },
+      "revision": { "type": "string" },
+      "effective_at": { "type": "string", "format": "date-time" },
+      "constraints": { "type": "object" },
+      "observed_at": { "type": "string", "format": "date-time" }
+    }
+  },
+  "error_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["code", "message", "retryable"],
+    "properties": {
+      "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+      "message": { "type": "string", "minLength": 1 },
+      "retryable": { "type": "boolean" }
+    }
+  },
+  "authorization": {
+    "agent_principal": "invoice-exception-workload",
+    "caller_context_required": true,
+    "required_scopes": ["finance-policy:read"],
+    "policy_decision_point": "tool-gateway",
+    "tenant_binding": true,
+    "fail_mode": "closed"
+  },
+  "data_access": {
+    "reads_data": true,
+    "classifications": ["internal"],
+    "maximum_sensitivity": "internal",
+    "scope_fields": ["tenant_id", "policy_id", "as_of"],
+    "max_records": 1,
+    "max_response_bytes": 65536,
+    "open_world": false,
+    "approval_policy": "policy",
+    "request_fields": [
+      { "field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["finance_policy"], "purpose": "bind the policy read to the authorized tenant" },
+      { "field": "policy_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["finance_policy"], "purpose": "select the governed policy resource" },
+      { "field": "as_of", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["finance_policy"], "purpose": "select the policy revision effective for the decision" },
+      { "field": "release_digest", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["finance_policy"], "purpose": "bind the read to the currently admitted release" }
+    ]
+  },
+  "execution": {
+    "timeout_ms": 3000,
+    "max_attempts": 2,
+    "retryable_errors": ["TIMEOUT", "UNAVAILABLE"],
+    "idempotency": { "required": false, "key_fields": [], "enforced_by": "not-applicable" }
+  },
+  "side_effects": { "class": "none", "resources": [], "compensation": null },
+  "approval": { "required": false, "role": null, "proposal_digest_required": false, "expires_seconds": null },
+  "network": {
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "finance_policy",
+        "scheme": "https",
+        "authority": "finance-policy.internal",
+        "port": 443,
+        "path_prefix": "/v1/policies/read"
+      }
+    ],
+    "allowed_operations": ["retrieve_policy"],
+    "allowed_methods": ["POST"],
+    "redirect_policy": "deny",
+    "address_resolution_policy": "pinned_service_identity",
+    "private_address_policy": "explicit_allowlist",
+    "server_fetch_policy": "deny",
+    "target_account_binding": true,
+    "tenant_binding": true,
+    "request_max_bytes": 8192,
+    "response_max_bytes": 65536,
+    "credential_broker": "workload-identity-gateway",
+    "public_gateway_capability": null
+  },
+  "failure_modes": [
+    { "code": "STALE_POLICY", "class": "escalation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "DIGEST_MISMATCH", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true },
+    { "code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false },
+    { "code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false }
+  ],
+  "observability": { "span_name": "agent.tool.retrieve_policy", "audit_event": "finance_policy.read", "redacted_fields": [], "postcondition_readback": false },
+  "invariants": ["policy revision is active at as_of", "policy tenant equals authorized tenant"],
+  "control_ids": ["CTX-001", "TOL-001", "TOL-005", "IAM-002", "IAM-003", "SEC-005", "SEC-006"]
+}

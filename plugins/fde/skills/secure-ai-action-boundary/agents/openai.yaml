@@ -1,0 +1,4 @@
+interface:
+  display_name: "Secure AI Action Boundary"
+  short_description: "Secure reads, tools, and real-world effects"
+  default_prompt: "Use $secure-ai-action-boundary to review and harden this AI action boundary."

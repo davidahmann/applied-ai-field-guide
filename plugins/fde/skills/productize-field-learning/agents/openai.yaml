@@ -1,0 +1,4 @@
+interface:
+  display_name: "Productize Field Learning"
+  short_description: "Turn recurring delivery evidence into capability"
+  default_prompt: "Use $productize-field-learning to decide whether and how this field learning should become reusable capability."

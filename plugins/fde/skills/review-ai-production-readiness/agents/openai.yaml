@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review AI Production Readiness"
+  short_description: "Make an evidence-backed release decision"
+  default_prompt: "Use $review-ai-production-readiness to review this exact release and its claimed autonomy."

@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/trace-event.schema.json",
+  "title": "Agent state-transition trace event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_name",
+    "occurred_at",
+    "run_id",
+    "trace_id",
+    "span_id",
+    "parent_span_id",
+    "operation_id",
+    "release_digest",
+    "component_versions",
+    "actor_mode",
+    "state",
+    "details",
+    "telemetry",
+    "retention_class"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.2.0" },
+    "event_name": { "const": "agent.state.transition" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "run_id": { "type": "string", "format": "uuid" },
+    "trace_id": { "type": "string", "pattern": "^[a-f0-9]{32}$" },
+    "span_id": { "type": "string", "pattern": "^[a-f0-9]{16}$" },
+    "parent_span_id": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "pattern": "^[a-f0-9]{16}$" }
+      ]
+    },
+    "operation_id": { "$ref": "#/$defs/digest" },
+    "release_digest": { "$ref": "#/$defs/digest" },
+    "component_versions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_system", "workflow", "ontology", "policy_bundle", "prompt_bundle", "model_route", "tool_bundle", "runtime"],
+      "properties": {
+        "agent_system": { "$ref": "#/$defs/versionedComponent" },
+        "workflow": { "$ref": "#/$defs/versionedComponent" },
+        "ontology": { "$ref": "#/$defs/versionedComponent" },
+        "policy_bundle": { "$ref": "#/$defs/versionedComponent" },
+        "prompt_bundle": { "$ref": "#/$defs/versionedComponent" },
+        "model_route": { "$ref": "#/$defs/versionedComponent" },
+        "tool_bundle": { "$ref": "#/$defs/versionedComponent" },
+        "runtime": { "$ref": "#/$defs/versionedComponent" }
+      }
+    },
+    "actor_mode": { "enum": ["interactive_delegated", "unattended_workload", "mixed"] },
+    "state": { "$ref": "#/$defs/id" },
+    "stop_reason": { "$ref": "#/$defs/id" },
+    "details": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source_revisions": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sourceRevision" }
+        },
+        "decision_references": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/decisionReference" }
+        },
+        "artifact_references": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/artifactReference" }
+        },
+        "effect_reference": { "$ref": "#/$defs/effectReference" },
+        "error": { "$ref": "#/$defs/errorReference" }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent.run.id",
+        "agent.operation.id",
+        "agent.release.digest",
+        "agent.system.id",
+        "agent.system.version",
+        "agent.workflow.id",
+        "agent.workflow.state",
+        "agent.tenant.hash",
+        "agent.principal.id_hash",
+        "agent.actor.mode",
+        "agent.autonomy.level",
+        "agent.steps.count"
+      ],
+      "properties": {
+        "agent.run.id": { "type": "string", "format": "uuid" },
+        "agent.operation.id": { "$ref": "#/$defs/digest" },
+        "agent.release.digest": { "$ref": "#/$defs/digest" },
+        "agent.system.id": { "$ref": "#/$defs/id" },
+        "agent.system.version": { "$ref": "#/$defs/version" },
+        "agent.workflow.id": { "$ref": "#/$defs/id" },
+        "agent.workflow.state": { "$ref": "#/$defs/id" },
+        "agent.tenant.hash": { "$ref": "#/$defs/digest" },
+        "agent.principal.id_hash": { "$ref": "#/$defs/digest" },
+        "agent.caller.id_hash": { "$ref": "#/$defs/digest" },
+        "agent.actor.mode": { "enum": ["interactive_delegated", "unattended_workload", "mixed"] },
+        "agent.autonomy.level": { "enum": ["observe", "recommend", "execute_reversible", "execute_bounded", "coordinate"] },
+        "agent.stop.reason": { "$ref": "#/$defs/id" },
+        "agent.steps.count": { "type": "integer", "minimum": 1 },
+        "agent.cost.usd": { "type": "number", "minimum": 0 },
+        "agent.accepted_outcome": { "type": "boolean" }
+      }
+    },
+    "retention_class": { "enum": ["standard", "write_audit", "security_incident", "legal_hold"] }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "actor_mode": { "enum": ["interactive_delegated", "mixed"] } },
+        "required": ["actor_mode"]
+      },
+      "then": {
+        "properties": {
+          "telemetry": {
+            "type": "object",
+            "required": ["agent.caller.id_hash"],
+            "properties": { "agent.caller.id_hash": true }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "stop_reason": true },
+        "required": ["stop_reason"]
+      },
+      "then": {
+        "properties": {
+          "telemetry": {
+            "type": "object",
+            "required": ["agent.stop.reason", "agent.cost.usd", "agent.accepted_outcome"],
+            "properties": {
+              "agent.stop.reason": true,
+              "agent.cost.usd": true,
+              "agent.accepted_outcome": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "sourceRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "revision_digest"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" },
+        "revision_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "decisionReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_type", "decision_id"],
+      "properties": {
+        "decision_type": { "$ref": "#/$defs/id" },
+        "decision_id": { "type": "string", "format": "uuid" }
+      }
+    },
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_type", "artifact_id_hash", "content_digest"],
+      "properties": {
+        "artifact_type": { "$ref": "#/$defs/id" },
+        "artifact_id_hash": { "$ref": "#/$defs/digest" },
+        "content_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "effectReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effect_id", "service_receipt_digest"],
+      "properties": {
+        "effect_id": { "type": "string", "format": "uuid" },
+        "service_receipt_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "errorReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+        "validation_codes": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" }
+        }
+      }
+    },
+    "versionedComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "digest"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/version" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

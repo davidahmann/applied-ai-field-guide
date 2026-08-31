@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/davidahmann/fde-guide/schemas/ai-value-engineering-scorecard.schema.json",
+  "title": "AI value engineering scorecard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "assessment_id", "workflow_charter_uri", "assessed_at", "assessor", "evidence_stage", "hard_gates", "factors", "decision", "control_ids"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "assessment_id": { "$ref": "#/$defs/id" },
+    "workflow_charter_uri": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "assessed_at": { "type": "string", "format": "date-time" },
+    "assessor": { "type": "string", "minLength": 2, "maxLength": 128 },
+    "evidence_stage": { "enum": ["forecast", "demonstrated", "realized"] },
+    "hard_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owned_outcome", "independent_verifier", "bounded_authority_and_loss", "positive_value_after_full_cost"],
+      "properties": {
+        "owned_outcome": { "$ref": "#/$defs/gate" },
+        "independent_verifier": { "$ref": "#/$defs/gate" },
+        "bounded_authority_and_loss": { "$ref": "#/$defs/gate" },
+        "positive_value_after_full_cost": { "$ref": "#/$defs/gate" }
+      }
+    },
+    "factors": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/factor" }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "owner", "decided_at", "rationale", "reversal_conditions", "next_review"],
+      "properties": {
+        "disposition": { "enum": ["discover", "pilot", "defer", "do_not_build", "continue", "constrain", "pause", "retire"] },
+        "owner": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "decided_at": { "type": "string", "format": "date-time" },
+        "rationale": { "type": "string", "minLength": 10, "maxLength": 1000 },
+        "reversal_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 5, "maxLength": 300 }
+        },
+        "next_review": { "type": "string", "format": "date" }
+      }
+    },
+    "control_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]{2,63}$" },
+    "evidence": {
+      "type": "array",
+      "maxItems": 20,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "owner", "evidence", "rationale"],
+      "properties": {
+        "status": { "enum": ["pass", "fail", "unknown"] },
+        "owner": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "rationale": { "type": "string", "minLength": 5, "maxLength": 500 }
+      }
+    },
+    "factor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factor_number", "factor_id", "factor_name", "score", "owner", "evidence", "next_evidence"],
+      "properties": {
+        "factor_number": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "factor_id": { "$ref": "#/$defs/id" },
+        "factor_name": { "type": "string", "minLength": 5, "maxLength": 100 },
+        "score": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "owner": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "next_evidence": { "type": "string", "minLength": 5, "maxLength": 500 }
+      }
+    }
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "../schemas/engagement-reframe.schema.json",
+  "schema_version": "1.0.0",
+  "record_id": "invoice_exception_reframe",
+  "workflow_id": "invoice_exception_resolution",
+  "version": "1.0.0",
+  "status": "current",
+  "inherited_brief": {
+    "statement": "Automatically resolve and post eligible invoice exceptions without a separate accounts-payable review.",
+    "source_refs": ["commercial-brief.md#automatic-resolution"],
+    "state": "superseded",
+    "limitations": "The brief did not identify approval policy, exception ownership, or the recovery path."
+  },
+  "roles": {
+    "sponsor": {
+      "identity": "Finance transformation lead",
+      "status": "verified",
+      "basis": "Named outcome sponsor in the commercial brief.",
+      "evidence_refs": ["commercial-brief.md#owner"]
+    },
+    "process_knower": {
+      "identity": "Accounts-payable exception lead",
+      "status": "verified",
+      "basis": "Owns the exception queue and resolves policy escalations.",
+      "evidence_refs": ["observation-log.md#process-knower"]
+    },
+    "operator": {
+      "identity": "Accounts-payable reviewer",
+      "status": "verified",
+      "basis": "Performed the observed review and correction steps.",
+      "evidence_refs": ["observation-log.md#representative-case"]
+    },
+    "disposition_authority": {
+      "identity": "Accounts-payable service owner",
+      "status": "verified",
+      "basis": "Owns the invoice-exception operating boundary and accepted the constrained kickoff.",
+      "evidence_refs": ["decision-record.md#authority"]
+    },
+    "verifier": {
+      "identity": "Finance controls manager",
+      "status": "verified",
+      "basis": "Independently verifies correction accuracy and posting controls.",
+      "evidence_refs": ["controls-policy.md#verification"]
+    }
+  },
+  "representative_case": {
+    "case_id": "invoice_case_1042",
+    "observed_at": "2026-08-20T14:00:00Z",
+    "population_scope": "Domestic supplier invoices routed to the documented price-variance exception queue.",
+    "process_knower": "Accounts-payable exception lead",
+    "evidence_refs": ["observation-log.md#invoice-case-1042"],
+    "limitations": "One recent case proves the path occurred but does not establish population frequency."
+  },
+  "claims": [
+    {
+      "claim_id": "claim_auto_post",
+      "class": "sold",
+      "statement": "The proposed service automatically posts resolved invoice exceptions.",
+      "owner": "Finance transformation lead",
+      "scope": "Eligible invoice exceptions in the commercial brief.",
+      "evidence_refs": ["commercial-brief.md#automatic-resolution"],
+      "currency": "superseded"
+    },
+    {
+      "claim_id": "claim_reviewer_approval",
+      "class": "policy_authorized",
+      "statement": "A designated accounts-payable reviewer must approve every correction before posting.",
+      "owner": "Finance controls manager",
+      "scope": "All invoice corrections covered by the current controls policy.",
+      "evidence_refs": ["controls-policy.md#posting-approval"],
+      "currency": "current"
+    },
+    {
+      "claim_id": "claim_observed_review",
+      "class": "observed",
+      "statement": "The reviewer inspected evidence, corrected the exception, and approved posting in the observed case.",
+      "owner": "Accounts-payable exception lead",
+      "scope": "Observed invoice case 1042 only.",
+      "evidence_refs": ["observation-log.md#invoice-case-1042"],
+      "currency": "current"
+    }
+  ],
+  "conflicts": [
+    {
+      "conflict_id": "conflict_posting_authority",
+      "claim_ids": ["claim_auto_post", "claim_reviewer_approval", "claim_observed_review"],
+      "affected_boundary": "Whether the service may post a correction or only prepare it for human approval.",
+      "affected_outcomes": ["posting correctness", "control compliance", "cycle time"],
+      "authority_needed": "Accounts-payable service owner",
+      "state": "resolved"
+    }
+  ],
+  "proposal": {
+    "proposal_id": "proposal_recommend_only",
+    "statement": "Classify the exception, assemble cited evidence, and stage a correction while retaining reviewer approval and posting authority.",
+    "safe_fallback": "Continue the existing manual queue while collecting recommendation-only shadow evidence.",
+    "next_field_move": "Observe ten eligible cases and measure recommendation accuracy, reviewer effort, and exception coverage.",
+    "affected_boundary": "Recommendation and staging are in scope; approval and posting remain human-controlled.",
+    "required_authority": "Accounts-payable service owner",
+    "status": "accepted"
+  },
+  "disposition": {
+    "decision": "bounded_kickoff",
+    "actor": "Accounts-payable service owner",
+    "authority_basis": "Accountable owner for the invoice-exception workflow boundary.",
+    "scope": "Recommendation-only pilot for domestic price-variance exceptions.",
+    "evidence_ref": "decision-record.md#bounded-kickoff",
+    "source_passage": "Proceed with recommendation and staging only; reviewer approval and posting remain unchanged.",
+    "rationale": "The bounded path tests value without weakening the current posting control.",
+    "decided_at": "2026-08-20T16:30:00Z"
+  },
+  "downstream_impacts": [
+    {
+      "artifact_id": "workflow_charter",
+      "depends_on_claim_ids": ["claim_auto_post", "claim_reviewer_approval"],
+      "action": "supersede",
+      "reason": "The accepted boundary removes automated approval and posting.",
+      "owner": "Delivery lead"
+    },
+    {
+      "artifact_id": "evaluation_plan",
+      "depends_on_claim_ids": ["claim_auto_post", "claim_observed_review"],
+      "action": "review_required",
+      "reason": "Evaluation must measure recommendation quality and reviewer effort rather than autonomous posting.",
+      "owner": "Evaluation lead"
+    },
+    {
+      "artifact_id": "data_context_manifest",
+      "depends_on_claim_ids": [],
+      "action": "no_change",
+      "reason": "The source population and access boundary are unchanged by this disposition.",
+      "owner": "Data owner"
+    }
+  ],
+  "chronology": [
+    {
+      "event_id": "event_brief_recorded",
+      "type": "brief_recorded",
+      "occurred_at": "2026-08-20T13:00:00Z",
+      "actor": "Delivery lead",
+      "summary": "Recorded the inherited automatic-posting brief without rewriting it.",
+      "evidence_refs": ["commercial-brief.md#automatic-resolution"]
+    },
+    {
+      "event_id": "event_case_observed",
+      "type": "case_observed",
+      "occurred_at": "2026-08-20T14:00:00Z",
+      "actor": "FDE",
+      "summary": "Observed reviewer-controlled correction and posting for invoice case 1042.",
+      "evidence_refs": ["observation-log.md#invoice-case-1042"]
+    },
+    {
+      "event_id": "event_conflict_opened",
+      "type": "conflict_opened",
+      "occurred_at": "2026-08-20T14:30:00Z",
+      "actor": "FDE",
+      "summary": "Opened the conflict between automatic posting and reviewer authority.",
+      "evidence_refs": ["commercial-brief.md#automatic-resolution", "controls-policy.md#posting-approval"]
+    },
+    {
+      "event_id": "event_proposal_recorded",
+      "type": "proposal_recorded",
+      "occurred_at": "2026-08-20T15:30:00Z",
+      "actor": "Delivery lead",
+      "summary": "Proposed a recommendation-only boundary with a manual fallback.",
+      "evidence_refs": ["decision-record.md#proposal"]
+    },
+    {
+      "event_id": "event_disposition_recorded",
+      "type": "disposition_recorded",
+      "occurred_at": "2026-08-20T16:30:00Z",
+      "actor": "Accounts-payable service owner",
+      "summary": "Accepted a bounded kickoff while retaining reviewer approval and posting authority.",
+      "evidence_refs": ["decision-record.md#bounded-kickoff"]
+    }
+  ],
+  "control_ids": ["FDE-001", "FDE-002", "FDE-005", "CTX-001", "CTX-004", "DEL-002"]
+}

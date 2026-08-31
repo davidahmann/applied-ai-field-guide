@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../schemas/tool-contract.schema.json",
+  "schema_version": "1.1.0",
+  "tool_id": "create_review_case",
+  "version": "1.0.0",
+  "owner": "dispatch-operations",
+  "purpose": "Create one idempotent non-binding shipment review case for a dispatch coordinator",
+  "kind": "stage_write",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tenant_id", "business_operation_id", "shipment_id", "shipment_revision", "routing_policy_version", "route", "risk_score", "model_version", "evidence_revision", "proposal_digest", "explanation"],
+    "properties": {
+      "tenant_id": {"type": "string"}, "business_operation_id": {"type": "string", "minLength": 1}, "shipment_id": {"type": "string"}, "shipment_revision": {"type": "string"}, "routing_policy_version": {"type": "string"}, "route": {"const": "review_required"}, "risk_score": {"type": "number", "minimum": 0, "maximum": 1}, "model_version": {"type": "string"}, "evidence_revision": {"type": "string"}, "proposal_digest": {"type": "string"}, "explanation": {"type": "object"}
+    }
+  },
+  "output_schema": {"type": "object", "additionalProperties": false, "required": ["proposal_id", "proposal_digest", "status"], "properties": {"proposal_id": {"type": "string"}, "proposal_digest": {"type": "string"}, "status": {"const": "staged"}}},
+  "error_schema": {"type": "object", "additionalProperties": false, "required": ["code", "message", "retryable"], "properties": {"code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"}, "message": {"type": "string", "minLength": 1}, "retryable": {"type": "boolean"}}},
+  "authorization": {"agent_principal": "shipment-risk-triage-workload", "caller_context_required": true, "required_scopes": ["shipment-review:stage"], "policy_decision_point": "dispatch-review-gateway", "tenant_binding": true, "fail_mode": "closed"},
+  "data_access": {
+    "reads_data": false,
+    "classifications": [],
+    "maximum_sensitivity": "none",
+    "scope_fields": [],
+    "max_records": 0,
+    "max_response_bytes": 0,
+    "open_world": false,
+    "approval_policy": "none",
+    "request_fields": [
+      {"field": "tenant_id", "classification": "internal", "source": "caller", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "bind the case to the authorized tenant"},
+      {"field": "business_operation_id", "classification": "internal", "source": "workflow_state", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "deduplicate one staged review case"},
+      {"field": "shipment_id", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "identify the bounded shipment"},
+      {"field": "shipment_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "enforce the shipment evidence precondition"},
+      {"field": "routing_policy_version", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "bind the case to the evaluated policy"},
+      {"field": "route", "classification": "internal", "source": "generated", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "record the deterministic route"},
+      {"field": "risk_score", "classification": "internal", "source": "untrusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "show the bounded prediction as review evidence"},
+      {"field": "model_version", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "identify the scoring contract"},
+      {"field": "evidence_revision", "classification": "internal", "source": "trusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "bind the review case to current evidence"},
+      {"field": "proposal_digest", "classification": "internal", "source": "generated", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "bind the staged case to the exact evidence and route"},
+      {"field": "explanation", "classification": "internal", "source": "untrusted_source", "allowed_sink_service_ids": ["dispatch_review_service"], "purpose": "attach a non-authoritative review aid"}
+    ]
+  },
+  "execution": {"timeout_ms": 5000, "max_attempts": 2, "retryable_errors": ["TIMEOUT", "UNAVAILABLE"], "idempotency": {"required": true, "key_fields": ["tenant_id", "business_operation_id"], "enforced_by": "dispatch-review-service"}},
+  "side_effects": {"class": "staged", "resources": ["shipment-review-case"], "compensation": "discard the staged review case"},
+  "approval": {"required": false, "role": null, "proposal_digest_required": false, "expires_seconds": null},
+  "network": {"egress": "allowlist", "destinations": [{"service_id": "dispatch_review_service", "scheme": "https", "authority": "dispatch-review.internal", "port": 443, "path_prefix": "/v1/review-cases"}], "allowed_operations": ["create_review_case"], "allowed_methods": ["POST"], "redirect_policy": "deny", "address_resolution_policy": "pinned_service_identity", "private_address_policy": "explicit_allowlist", "server_fetch_policy": "deny", "target_account_binding": true, "tenant_binding": true, "request_max_bytes": 32768, "response_max_bytes": 8192, "credential_broker": "workload-identity-gateway", "public_gateway_capability": null},
+  "failure_modes": [
+    {"code": "POLICY_DENIED", "class": "authorization", "retry": false, "retry_safety": "never", "escalate": true},
+    {"code": "STALE_EVIDENCE", "class": "validation", "retry": false, "retry_safety": "never", "escalate": true},
+    {"code": "TIMEOUT", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false},
+    {"code": "UNAVAILABLE", "class": "retryable", "retry": true, "retry_safety": "idempotent_replay", "escalate": false}
+  ],
+  "observability": {"span_name": "hybrid.tool.create_review_case", "audit_event": "shipment_review_case.staged", "redacted_fields": ["explanation.summary"], "postcondition_readback": true},
+  "invariants": ["the case has no shipment-operation authority", "at most one active case exists per tenant, shipment, and policy version"],
+  "control_ids": ["ARC-002", "TOL-001", "TOL-003", "IAM-002", "IAM-003", "REL-001", "STA-002"]
+}

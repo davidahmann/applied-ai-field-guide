@@ -1,0 +1,4 @@
+interface:
+  display_name: "Select AI Mechanism"
+  short_description: "Choose the smallest sufficient mechanism"
+  default_prompt: "Use $select-ai-mechanism to choose the smallest sufficient mechanism for each decision."

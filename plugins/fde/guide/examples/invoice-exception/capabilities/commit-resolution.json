@@ -1,0 +1,114 @@
+{
+  "$schema": "../../../schemas/capability-manifest.schema.json",
+  "schema_version": "1.1.0",
+  "capability_id": "commit_resolution_capability",
+  "version": "3.0.0",
+  "kind": "tool",
+  "status": "candidate",
+  "owner": "accounts-payable-platform",
+  "provenance": {
+    "source_repository": "https://github.com/davidahmann/production-agent-engineering",
+    "source_commit": "c4b1d525b8a5ac6f2cc7fafad9639bd08f0de786",
+    "publisher": "reference-example-unverified",
+    "publisher_verified": false,
+    "build_attestation_digest": "sha256:42adfc9b87dfaa019618cace60eb3085aba022226a519149450be829408a2f26",
+    "artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+    "attestation": {
+      "format": "in_toto_statement",
+      "algorithm": "Ed25519",
+      "key_id": "unverified-reference-builder-key",
+      "issuer": "reference-build-example",
+      "subject_artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+      "subject_tool_contract_digest": "sha256:6aa7a9e0f333683b964c71a2f5dc6c8cf97a3e07ed9243adc0a3e828dc36a2f1",
+      "predicate_type": "https://slsa.dev/provenance/v1",
+      "location": "https://attestations.example.invalid/commit_resolution_capability/3.0.0",
+      "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "registry_record": {
+      "registry_id": "reference-capability-registry",
+      "decision": "candidate",
+      "capability_id": "commit_resolution_capability",
+      "capability_version": "3.0.0",
+      "artifact_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+      "tool_contract_digest": "sha256:6aa7a9e0f333683b964c71a2f5dc6c8cf97a3e07ed9243adc0a3e828dc36a2f1",
+      "authority_digest": "sha256:5f038bc2c31e446620ad8cafece7affff7ca99e851ed5b2aa9ab3a37182d7692",
+      "verified_at": "2026-08-07T15:00:00Z",
+      "expires_at": "2026-08-08T15:00:00Z",
+      "decision_digest": "sha256:2ed1812926a208300ae4358b54ce6c8c35afadbe26e8df2a0123e4388def463d"
+    },
+    "sbom_uri": "invoice-reference-sbom.spdx",
+    "sbom_digest": "sha256:8d3816722ddad1557dc5293c629b7f4ea56dfcc978ad2d11960eee1d9d7ff8cb",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "artifacts": {
+    "entrypoint": "invoice-world-fixture/commit_resolution",
+    "executable_uri": "../invoice-world-fixture.mjs",
+    "instruction_digest": null,
+    "executable_digest": "sha256:55e3d2f651125025fd3f1af149a946c04e39c00a91e5aa4dd9b3e191ce938ab0",
+    "input_schema_digest": "sha256:ad7282e2a65e823f1f9a7181d43a7a4cb223749bd5136609a3d33cb3379613c5",
+    "output_schema_digest": "sha256:8dedcae4eb18d20f1dfa49eeef608b70d5313b6e8624523c8568170bb1eb37d8",
+    "tool_contract": {
+      "uri": "../tools/commit-resolution.json",
+      "tool_id": "commit_resolution",
+      "version": "3.0.0",
+      "schema_version": "1.1.0",
+      "digest": "sha256:6aa7a9e0f333683b964c71a2f5dc6c8cf97a3e07ed9243adc0a3e828dc36a2f1"
+    }
+  },
+  "authority": {
+    "digest": "sha256:5f038bc2c31e446620ad8cafece7affff7ca99e851ed5b2aa9ab3a37182d7692",
+    "actor_modes": [
+      "interactive_delegated"
+    ],
+    "scopes": [
+      "invoice-resolution:commit",
+      "invoice-resolution:readback"
+    ],
+    "data_classes": [
+      "internal"
+    ],
+    "effect_ceiling": "reversible",
+    "egress": "allowlist",
+    "destinations": [
+      {
+        "service_id": "ap_ledger",
+        "scheme": "https",
+        "authority": "ap-ledger.internal",
+        "port": 443,
+        "path_prefix": "/v1/resolutions/commit"
+      }
+    ],
+    "credential_mode": "short_lived_brokered",
+    "tenant_binding": true
+  },
+  "runtime": {
+    "sandbox_profile": "isolated-reference-world",
+    "network_policy": "operation-scoped-allowlist",
+    "resource_profile": "cpu-1-memory-512mb-time-90s",
+    "supported_harness_versions": [
+      "3.0.0"
+    ]
+  },
+  "lifecycle": {
+    "introduced_at": "2026-08-07",
+    "review_due": "2026-11-07",
+    "eol_at": null,
+    "disable_procedure": "Disable commit_resolution_capability by exact manifest and executable digest.",
+    "rollback_version": null
+  },
+  "assurance": {
+    "threat_model_uri": "../threat-model.json",
+    "evaluation_suite_uri": "../evals",
+    "negative_test_ids": [
+      "commit_resolution-authority-denial",
+      "commit_resolution-digest-mismatch"
+    ],
+    "approved_by": []
+  },
+  "control_ids": [
+    "TOL-006",
+    "SEC-007"
+  ]
+}

@@ -8,28 +8,38 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const skillsRoot = path.join(root, ".agents", "skills");
 
 const expectedSkills = new Map([
+  ["assess-ai-change-impact", ["direct", "transitive", "rollback"]],
+  ["assess-ai-data-readiness", ["source authority", "quality", "lineage"]],
   ["build-ai-evaluation", ["evaluation", "adversarial", "report"]],
+  ["deliver-approved-ai-slice", ["vertical slice", "adoption", "release"]],
   ["design-production-ai-system", ["architecture", "system", "production"]],
   ["engineer-ai-value", ["value", "cost", "adoption"]],
+  ["map-enterprise-integration", ["legacy", "reconciliation", "durable execution"]],
   ["operate-ai-service", ["slo", "incident", "cost"]],
   ["productize-field-learning", ["customer-specific", "recurrence", "reusable"]],
   ["qualify-ai-workflow", ["discovery", "workflow", "verifier"]],
   ["reframe-ai-engagement", ["inherited", "process knower", "disposition"]],
   ["review-ai-production-readiness", ["release", "evidence", "rollback"]],
+  ["run-fde-engagement", ["engagement", "next accountable", "continuity"]],
   ["secure-ai-action-boundary", ["identity", "authorization", "idempotency"]],
   ["select-ai-mechanism", ["deterministic", "ml", "agent"]],
   ["transfer-ai-service", ["handoff", "owner", "retire"]],
 ]);
 
 const expectedProgressiveRoutes = new Map([
+  ["assess-ai-change-impact", ["../../../solutions/README.md", "not a substitute for target dependencies or release evidence"]],
+  ["assess-ai-data-readiness", ["../../../solutions/README.md", "not target evidence"]],
   ["build-ai-evaluation", ["../../../solutions/README.md", "not evaluation evidence"]],
+  ["deliver-approved-ai-slice", ["../../../solutions/README.md", "Read only the artifacts that apply"]],
   ["design-production-ai-system", ["../../../solutions/README.md", "not target evidence"]],
   ["engineer-ai-value", ["../../../library/14-twelve-factors-ai-value-engineering.md", "../../../solutions/README.md"]],
+  ["map-enterprise-integration", ["../../../solutions/README.md", "not observed target architecture"]],
   ["operate-ai-service", ["../../../library/14-twelve-factors-ai-value-engineering.md", "../../../solutions/README.md"]],
   ["productize-field-learning", ["../../../solutions/README.md", "when evidence suggests that destination"]],
   ["qualify-ai-workflow", ["../../../library/14-twelve-factors-ai-value-engineering.md", "../../../solutions/business-flows/README.md"]],
   ["reframe-ai-engagement", ["../../../solutions/README.md", "not target evidence"]],
   ["review-ai-production-readiness", ["../../../solutions/README.md", "not release evidence"]],
+  ["run-fde-engagement", ["../../../solutions/README.md", "not target evidence"]],
   ["secure-ai-action-boundary", ["../../../solutions/README.md", "not authorization policy"]],
   ["select-ai-mechanism", ["../../../solutions/README.md", "not target policy or evidence"]],
   ["transfer-ai-service", ["../../../solutions/README.md", "not exercised evidence or acceptance"]],
@@ -52,7 +62,7 @@ function quotedYamlValue(body, key) {
   return match[1];
 }
 
-test("the repository exposes exactly eleven focused FDE and AI engineering skills", async () => {
+test("the repository exposes exactly sixteen focused FDE and AI engineering skills", async () => {
   const directories = (await readdir(skillsRoot, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
@@ -110,6 +120,15 @@ test("skills progressively route through the value framework and selected soluti
     const hardLinkedCases = skillBody.match(/solutions\/(?:business-flows|verticals)\/(?!README\.md)[^)\s]+\.md/g) ?? [];
     assert.deepEqual(hardLinkedCases, [], `${skillName} hard-links individual solution cases`);
   }
+});
+
+test("the engagement conductor can reach every focused lifecycle route", async () => {
+  const conductor = await readFile(path.join(skillsRoot, "run-fde-engagement", "SKILL.md"), "utf8");
+  for (const skillName of expectedSkills.keys()) {
+    if (skillName === "run-fde-engagement") continue;
+    assert.ok(conductor.includes(`$${skillName}`), `run-fde-engagement cannot route to ${skillName}`);
+  }
+  assert.match(conductor, /reads governed data or can stage or execute an effect/);
 });
 
 test("data readiness is progressively routed through the lifecycle skills", async () => {
@@ -185,12 +204,17 @@ test("qualification, engagement reframing, and value engineering have distinct f
 
 test("skill interfaces expose situation-first routing cases without claiming host behavior", async () => {
   const cases = [
+    { skill: "run-fde-engagement", prompt: "Keep this live engagement coherent and tell me the next accountable move from the recorded evidence.", terms: ["engagement", "next accountable"] },
     { skill: "qualify-ai-workflow", prompt: "We have a candidate workflow but have not observed it or named the verifier.", terms: ["workflow", "before value modeling"] },
     { skill: "reframe-ai-engagement", prompt: "The brief is wrong; the sponsor and operator disagree about what may ship.", terms: ["brief is wrong", "sponsor and operator disagree"] },
     { skill: "engineer-ai-value", prompt: "The workflow is bounded. Is it worth funding once adoption and full cost are counted?", terms: ["bounded", "cost"] },
+    { skill: "assess-ai-data-readiness", prompt: "The workflow is bounded; prove whether its data and context are fit for the decision.", terms: ["source authority", "quality"] },
     { skill: "select-ai-mechanism", prompt: "Should this decision use rules, retrieval, ML, an agent, or a person?", terms: ["smallest sufficient mechanism", "human review"] },
+    { skill: "map-enterprise-integration", prompt: "Map the legacy, reconciliation, identity, execution, and operating seams around this approved workflow.", terms: ["legacy", "reconciliation"] },
     { skill: "design-production-ai-system", prompt: "The workflow and mechanism are approved; design the production system.", terms: ["production ai-enabled system", "architecture"] },
+    { skill: "deliver-approved-ai-slice", prompt: "The decisions are accepted; deliver one bounded vertical slice through validation and operating ownership.", terms: ["vertical slice", "adoption"] },
     { skill: "build-ai-evaluation", prompt: "Build realistic cases and graders for this production AI release.", terms: ["evaluations", "graders"] },
+    { skill: "assess-ai-change-impact", prompt: "This material dependency changed; trace direct and transitive impact before promotion.", terms: ["direct", "transitive"] },
     { skill: "secure-ai-action-boundary", prompt: "Secure this tool call with identity, authorization, idempotency, and readback.", terms: ["authorization", "readback"] },
     { skill: "review-ai-production-readiness", prompt: "This exact release needs a production readiness decision and rollback conditions.", terms: ["release", "rollback"] },
     { skill: "operate-ai-service", prompt: "The service is live; review SLOs, incidents, cost, and whether to retire it.", terms: ["slo", "retirement"] },

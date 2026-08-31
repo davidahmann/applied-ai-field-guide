@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qualify AI Workflow"
+  short_description: "Qualify a workflow before value modeling and design"
+  default_prompt: "Use $qualify-ai-workflow to observe and bound this candidate workflow before value modeling or solution design."
