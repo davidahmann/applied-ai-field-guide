@@ -1,6 +1,6 @@
-# FDE and Applied-AI Portfolio Review
+# FDE and Applied-AI Workflow Portfolio Review
 
-Use this review above the individual [production service reviews](production-service-review.md) when a delivery organization operates more than one customer or internal workflow. It compares investment, continuation, capacity, and reuse without allowing a portfolio average to override a workflow's value, safety, release, or retirement gate.
+Use this review above the individual [production service reviews](production-service-review.md) when a company, program, or delivery organization operates more than one AI-enabled workflow. It compares investment, continuation, capacity, operating ownership, and reuse without allowing a portfolio average to override a workflow's value, safety, release, or retirement gate.
 
 For an external provider, continuation may mean a paid deployment, renewal, or expansion decision. For an internal team, it may mean continued sponsorship, funding, or roadmap commitment. These are operating signals—not proof that value occurred.
 
@@ -8,15 +8,34 @@ For an external provider, continuation may mean a paid deployment, renewal, or e
 
 | Field | Value |
 | --- | --- |
-| Portfolio and review period | — |
-| Portfolio owner and decision forum | — |
-| Operating model | External delivery / internal applied-AI team / mixed |
+| Workflow portfolio/program and review period | — |
+| Company/program owner and decision forum | — |
+| Delivery context | External delivery / internal applied-AI team / mixed |
+| Capability topology | Central enablement / federated service teams / external delivery / mixed |
 | Evidence cutoff and source revisions | — |
 | Included workflows and cohort rule | — |
 | Exclusions and comparability limits | — |
 | Decision required | Invest / continue / transfer / standardize / productize / constrain / exit |
 
 Freeze stage definitions, cohort boundaries, time windows, currencies, and cost-allocation rules before comparing workflows. Preserve prior definitions when they change.
+
+## Operating-model and decision-rights health
+
+Centralize reusable rails where that creates leverage; keep outcome, source, policy, effect, service, and retirement accountability with named workflow owners. Record temporary delivery capacity as temporary. A shared team, platform, model, or budget does not inherit target authority.
+
+| Role or capability | Accountable owner | Boundary | Decision authority | Last exercised evidence | Substitution or continuity gap | Action |
+| --- | --- | --- | --- | --- | --- | --- |
+| Executive sponsor or program owner | — | Shared | Priority, funding boundary, and sequencing | — | — | — |
+| Workflow owner | — | Workflow-local | Process, accepted outcome, exclusions, and exceptions | — | — | — |
+| Business metric owner and independent verifier | — | Workflow-local | Baseline, attribution, acceptance event, and value readback | — | — | — |
+| AI service owner | — | Workflow-local | Service lifecycle, support, change, and retirement | — | — | — |
+| Operational owner | — | Workflow-local | Day-to-day operation, on-call, incident coordination, reviewer capacity, and degraded-service decisions | — | — | — |
+| Shared platform owner | — | Shared | Reusable identity, runtime, evaluation, telemetry, routing, and capability rails | — | — | — |
+| Data, policy, security, or risk owner | — | Shared and workflow-local as declared | Source authority, permitted use, controls, loss limits, and escalation | — | — | — |
+| Delivery or FDE team | — | Temporary | Discovery, bounded proof, first slice, and transfer | — | — | — |
+| Operator or reviewer | — | Workflow-local | Correction, exception, escalation, and stop path | — | — | — |
+
+An unowned row is a capability gap, not a reason for the central AI or delivery team to absorb authority silently. Record the independent backup for consequential roles and the deadline for removing any temporary substitution. One person may hold the service and operational roles only when both assignments are explicit and required independent approvals remain separate.
 
 ## Stage flow and pilot graduation
 
@@ -34,6 +53,26 @@ Freeze stage definitions, cohort boundaries, time windows, currencies, and cost-
 
 Do not call the first accepted outcome “value” until its business effect and attribution are measured. Do not interpret conversion as quality without reviewing which candidates were admitted, stopped, or excluded.
 
+### Proof-to-operation decision
+
+Predeclare each proof's maximum duration, evidence cutoff, decision owner, receiving service owner, and separate graduation gates. The review may use a local 30-day decision deadline, but it makes no universal 30-day production promise.
+
+| Workflow | Proof limit and evidence cutoff | Gate | Accountable owner | Current target-specific evidence and revision | Status | Blocking issue or next proof |
+| --- | --- | --- | --- | --- | --- | --- |
+| — | — | Technical performance | — | — | Pass / fail / unknown | — |
+| — | — | Operator acceptance | — | — | Pass / fail / unknown | — |
+| — | — | Adoption | — | — | Pass / fail / unknown | — |
+| — | — | Business value | — | — | Pass / fail / unknown | — |
+| — | — | Full economics | — | — | Pass / fail / unknown | — |
+| — | — | Data, policy, security, and risk | — | — | Pass / fail / unknown | — |
+| — | — | Production readiness | — | Include support, release, incident, rollback, and retirement evidence | Pass / fail / unknown | — |
+
+| Workflow | Decision owner | Receiving service owner | Disposition | Evidence-backed basis |
+| --- | --- | --- | --- | --- |
+| — | — | — | Stop / reshape / continue proving / bounded production | — |
+
+A proof enters bounded production only when every applicable mandatory gate passes with current target-specific evidence. Time-bounded remediation is allowed only for an explicitly non-blocking residual; it cannot satisfy a failed, unknown, missing, or stale required gate. A composite score, strong demo, model result, or temporary delivery team cannot compensate for a failed gate or substitute for exercised receiving-team capability.
+
 ## Outcome, adoption, and continuation
 
 | Workflow | Accepted outcome and segment | Realized net value / confidence | Adoption / guardrail | Service health | Continuation mechanism, owner, and date | Decision |
@@ -44,7 +83,7 @@ Record sponsor or business-owner continuity separately from system health. A sig
 
 ## Full delivery economics
 
-Agree the accounting boundary with the owning finance or portfolio role. Include discovery, unpaid or allocated pilot work, implementation, change, assurance, travel, tooling, support, incidents, recovery, and ongoing maintenance where they belong. Keep booked contract value, recognized revenue, internal allocation, contribution, and profit distinct.
+Agree the accounting boundary with the owning finance, program, or delivery role. Include discovery, unpaid or allocated pilot work, implementation, change, assurance, travel, tooling, support, incidents, recovery, and ongoing maintenance where they belong. Keep booked contract value, recognized revenue, internal allocation, contribution, and profit distinct.
 
 | Measure | Cohort and period | Current | Prior | Definition / allocation | Guardrail | Owner |
 | --- | --- | ---: | ---: | --- | --- | --- |

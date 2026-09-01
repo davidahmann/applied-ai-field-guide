@@ -26,10 +26,12 @@ Use a [selection record](../templates/intelligence-selection-record.md) for each
 
 At minimum, create these four views in an [architecture decision record](../templates/architecture-decision-record.md):
 
-1. **System context:** users, working surface, upstream sources, downstream systems, external parties, and outcome owner.
-2. **Container/component view:** user surface, workflow runtime, domain/state service, context assembly, selected decision mechanisms, capability gateway, evaluation, and operations.
+1. **System context:** initiating actor, applicable scope, trigger, working surface, upstream sources, downstream systems, durable result destination, external parties, and outcome owner.
+2. **Container/component view:** user surface, bounded orchestration and state, domain/state service, governed context assembly, selected decision mechanisms, capability gateway, evaluation, and operations.
 3. **Decision and state view:** decision inputs, state owner, invariants, allowed transitions, effects, postconditions, and recovery.
 4. **Deployment and trust view:** identities, tenancy, credentials, network/egress, isolation, data classification, observability, release, and rollback.
+
+Read the four views as one operating path, not as a layer count: an authenticated trigger enters a bounded workflow; governed context and the smallest sufficient mechanism produce a typed proposal; deterministic software and people retain the declared authority; evaluation, abstention, and escalation constrain behavior; and the verified result lands in a named durable destination. A model route is one replaceable component along that path.
 
 The [operational ontology](../templates/operational-ontology.json) owns business objects, state, rules, actions, and evidence. The system design owns workflow behavior and authority. When a foundation-model or agent workflow is selected, the [agent-system](../templates/agent-system.json) records that route and the current model/agent behavior, evaluation, and release contracts bind it into the deployable system. Deterministic, optimization, or classical-ML-only routes retain equivalent target software design, evaluation, release, rollback, and retirement evidence.
 

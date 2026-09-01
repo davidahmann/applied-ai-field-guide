@@ -8,14 +8,14 @@ Controls: `ARC-001`, `ARC-002`, `ARC-004`, `ARC-005`, `VAL-002`, `CST-001`, `CST
 
 | Component | Responsibility | Authority boundary |
 | --- | --- | --- |
-| Professional work surface | Shows evidence, uncertainty, alternatives, and permitted actions | Users inspect, correct, pause, and approve through this surface |
-| Workflow orchestrator | Owns trigger, durable state, budgets, retries, stop conditions, and routing | Cannot bypass policy or source-of-truth verification |
+| Professional work surface | Receives the authenticated initiating actor, applicable scope, and trigger; shows evidence, uncertainty, alternatives, and permitted actions; returns the result to its durable destination | Users inspect, correct, pause, and approve through this surface |
+| Workflow orchestrator | Owns bounded orchestration and state, budgets, retries, stop conditions, and routing | Cannot bypass policy or source-of-truth verification |
 | Deterministic policy and validation | Applies rules, constraints, and business invariants | Runs outside model generation; rejects invalid state/action |
 | Optimizer or classical ML model | Produces a bounded score, ranking, forecast, or plan | Versioned input/output contract, threshold, and fallback |
 | Aggregation, feature, or calibration component when justified | Produces bounded model inputs or corrects systematic error | Versioned data, slice, freshness, compatibility, and rollback contract; cannot invent missing evidence |
-| Retrieval and foundation-model component | Interprets unstructured evidence or produces a typed proposal | Cannot authorize or commit an action |
+| Retrieval and foundation-model component | Interprets governed context or produces a typed proposal | Cannot authorize or commit an action |
 | Tool and effect gateway | Reads or changes an external system under current policy | Enforces identity, scope, tenant, idempotency, approval, and readback |
-| Human reviewer | Resolves ambiguity, exceptions, or high-stakes decisions | Accountable for decisions reserved to people |
+| Human reviewer | Provides evaluation, abstention, and escalation where automated evidence is insufficient, and resolves ambiguity, exceptions, or high-stakes decisions | Accountable for decisions reserved to people |
 | Evidence and operations plane | Retains trace, versions, evaluation, outcomes, and cost | Separate from model-controlled context and evaluators |
 
 ## Decision routing

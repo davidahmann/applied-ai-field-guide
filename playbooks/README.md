@@ -57,8 +57,8 @@ The [production implementation playbook](../library/07-production-implementation
 | [System map and change impact](../templates/system-map-manifest.json) and [assessment](../templates/change-impact-assessment.json) | Optional derived navigation and material-change evidence for complex, changing systems; never a substitute for authority or release evidence |
 | [Delivery and adoption plan](../templates/delivery-and-adoption-plan.md) | Coordinate the vertical slice, acceptance, rollout, and enablement |
 | [Production handoff](../templates/customer-enablement-handoff.md) | Prove the customer can operate, change, support, and retire the service |
-| [Production service review](../templates/production-service-review.md) | Review outcomes, SLOs, adoption, risk, cost, change, and ownership |
-| [FDE and applied-AI portfolio review](../templates/fde-portfolio-review.md) | Compare stage flow, accepted value, continuation, full delivery economics, reuse, and capacity across multiple workflows without overriding service gates |
+| [Production service review](../templates/production-service-review.md) | Review decision rights, outcomes, SLOs, adoption, risk, cost, change, and receiving-team ownership |
+| [FDE and applied-AI workflow portfolio review](../templates/fde-portfolio-review.md) | Map company decision rights and shared-versus-workflow capabilities; compare stage flow, proof gates, accepted value, economics, reuse, and capacity without overriding service gates |
 | [Field-learning register](../templates/field-learning-register.md) | Route validated field evidence into customer configuration, product change, shared pattern, or retirement |
 
 Controls `FDE-001` through `FDE-005`, `VAL-001` through `VAL-003`, `ADP-001` through `ADP-002`, and `DEL-001` through `DEL-002` define the lifecycle baseline within this guide.

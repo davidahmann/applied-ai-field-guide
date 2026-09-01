@@ -17,6 +17,40 @@ Before launch, name:
 
 Control: `ADP-002`.
 
+## Company operating model: centralize rails, preserve workflow accountability
+
+A company adopting agents should operate AI-enabled services, not a headcount of agents. A service may use deterministic code, optimization, classical ML, retrieval, a foundation-model call, a bounded agent, human review, or a hybrid. The operating model should remain stable when the selected mechanism changes.
+
+**Centralize reusable rails:** identity, access, capability admission, evaluation infrastructure, telemetry, model and provider benchmarking, security policy, cost accounting, incident standards, and approved delivery paths. **Preserve workflow accountability:** the accepted outcome, source and policy authority, exception handling, effect approval, operating support, and retirement decision stay with named owners close to the workflow. A central AI team may provide infrastructure and assurance; it does not become a shadow source of truth or acquire authority over every business effect.
+
+| Role | Owns | Must not substitute for |
+| --- | --- | --- |
+| Executive sponsor or program owner | Priorities, funding boundary, risk appetite, and cross-workflow sequencing | Workflow acceptance, release approval, or evidence that value occurred |
+| Workflow owner | Process boundary, accepted outcome, exclusions, exceptions, and operating change | Independent verification or technical service ownership |
+| Business metric owner and independent verifier | Baseline, denominator, attribution, acceptance event, and value readback | Sponsor enthusiasm, usage, or model scores |
+| AI service owner | End-to-end service lifecycle, SLOs, support, incidents, changes, and retirement | Source, policy, risk, or business-effect authority owned elsewhere |
+| Operational owner | Day-to-day operation, on-call, incident coordination, reviewer capacity, and degraded-service decisions | Workflow acceptance, source or policy authority, or independent release and risk approval |
+| Shared platform owner | Reusable identity, runtime, evaluation, telemetry, model-routing, and capability-distribution rails | Target-specific evaluation, adoption, or production admission |
+| Data, policy, security, or risk owner | Source authority, permitted use, controls, loss limits, and escalation | Day-to-day workflow ownership or blanket approval of future changes |
+| Delivery or FDE team | Field discovery, bounded proof, first slice, evidence packaging, and transfer | Permanent domain, service, support, or acceptance ownership |
+| Operator or reviewer | Corrections, exceptions, escalation, unsafe-condition detection, and stop authority | Silent training data, anonymous ground truth, or responsibility for system defects |
+
+### Use a proof-to-operation gate
+
+Predeclare the proof's maximum duration, evidence cutoff, decision owner, and separate technical, operator, adoption, value, economics, data/risk, and production-readiness gates. The decision is `stop`, `reshape`, `continue proving`, or `bounded production`; a successful demonstration cannot average away a failed gate. A 30-day review may be a useful local deadline, but it is not a universal production promise.
+
+The receiving team must be named before the proof begins. Entry to bounded production requires every applicable mandatory gate to pass with current target-specific evidence, including the accepted outcome and economics thresholds plus exercised receiving-team support, evaluation, release, incident, rollback, change, and retirement capability. Time-bounded remediation is allowed only for an explicitly non-blocking residual; it does not satisfy a required gate. Temporary delivery capacity may support an exercise, but its availability or performance does not prove receiving-team capability.
+
+### Earn authority by effect class
+
+Progress from `observe` to `recommend`, `act with approval`, and `bounded autonomous action` separately for each segment and effect class. Every step records the permitted effect, identity, evidence, guardrails, loss limit, verification, rollback, owner, and review date. Success in one route does not grant general autonomy to an agent, team, model, or platform.
+
+Use the [production service review](../templates/production-service-review.md) for exercised workflow ownership and the [FDE and applied-AI workflow portfolio review](../templates/fde-portfolio-review.md) for shared-versus-local capability, investment, capacity, and reuse decisions. The [operational-redesign research note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md) records the supporting sources and the limits of maturity lists and rapid-proof claims.
+
+One person may hold the service and operational roles only when both assignments are explicit and every required independent verifier, release, risk, and receiving-service approval remains separate.
+
+Controls: `FDE-003`, `VAL-001`, `VAL-003`, `ADP-002`, `OPS-001` through `OPS-007`, `CST-001`.
+
 ## 2. Run a layered operating cadence
 
 | Cadence | Review | Required decisions |
@@ -27,7 +61,7 @@ Control: `ADP-002`.
 | Monthly | Accepted outcomes, adoption, value realization, full cost, evaluator calibration, sponsor continuity, continuation timing, model/tool/policy changes | Expand, constrain, reprioritize, or retire |
 | Quarterly | Portfolio value, stage flow, full delivery economics, target-specific effort, reuse, operating maturity, dependency lifecycle, receiving-team capability, and delivery capacity | Invest, standardize, productize, transfer, or exit |
 
-Use the [production service review](../templates/production-service-review.md) for one workflow and the [FDE and applied-AI portfolio review](../templates/fde-portfolio-review.md) across multiple workflows. Governance is a recurring set of decision rights and feedback loops, not a launch checklist. [R26-45]
+Use the [production service review](../templates/production-service-review.md) for one workflow and the [FDE and applied-AI workflow portfolio review](../templates/fde-portfolio-review.md) across multiple workflows. Governance is a recurring set of decision rights and feedback loops, not a launch checklist. [R26-45]
 
 ### Review the delivery portfolio without hiding weak services
 
@@ -157,9 +191,9 @@ Review the transitions separately: eligible to exposed, exposed to completed, co
 
 Control: `VAL-002`.
 
-## 8. Maintain the customer operating capability
+## 8. Maintain the receiving-team operating capability
 
-Open the [customer enablement handoff](../templates/customer-enablement-handoff.md) at pilot entry. The customer team demonstrates that it can:
+Open the [customer enablement handoff](../templates/customer-enablement-handoff.md) at pilot entry. The receiving customer or internal team demonstrates that it can:
 
 - Explain the workflow, controls, architecture, and limits
 - Manage users, roles, sources, tools, policies, and vendor dependencies

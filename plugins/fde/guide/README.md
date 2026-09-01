@@ -4,7 +4,7 @@
 
 ![The FDE Guide: Discover value, design the system, govern decisions, release safely, operate outcomes](assets/fde-guide-banner.svg)
 
-An independent, open-source guide for forward-deployed engineers, applied-AI teams, and operators who need to turn messy work into an accepted, operated outcome.
+Open-source guidance for FDEs, applied-AI teams, and operators turning messy work into accepted, operated outcomes.
 
 [![Repository validation](https://github.com/davidahmann/fde-guide/actions/workflows/validate.yml/badge.svg)](https://github.com/davidahmann/fde-guide/actions/workflows/validate.yml)
 [![Latest release](https://img.shields.io/github/v/release/davidahmann/fde-guide)](https://github.com/davidahmann/fde-guide/releases/latest)
@@ -14,7 +14,7 @@ An independent, open-source guide for forward-deployed engineers, applied-AI tea
 
 ## Start with what went wrong
 
-Pick the situation in front of you. You don't need to learn the repository first.
+Pick the situation in front of you; don't learn the repository first.
 
 | What happened | Start here | Leave with |
 | --- | --- | --- |
@@ -23,6 +23,7 @@ Pick the situation in front of you. You don't need to learn the repository first
 | **The sponsor, operator, and policy disagree** | [Bound the conflict](playbooks/00-field-engagement-and-reframing.md#5-bound-the-conflict) and use the [reframe record](templates/engagement-reframe.json) | Cited evidence and an accepted, rejected, or deferred reframe |
 | **The team needs to prove one safe slice** | [Discovery and Value](playbooks/01-discovery-and-value.md), then [build one vertical slice](playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice) | An accepted outcome, verifier, exclusions, maximum effect, and test cases |
 | **Something was built, but acceptance or ownership is stuck** | [Production readiness](templates/production-service-readiness.md) and [customer handoff](templates/customer-enablement-handoff.md) | The missing evidence or capability, its owner, and a repair, transfer, pause, or retirement decision |
+| **Agent pilots are multiplying without a clear operating model** | [Company operating model](playbooks/03-operate-and-scale.md#company-operating-model-centralize-rails-preserve-workflow-accountability) and [workflow portfolio review](templates/fde-portfolio-review.md) | Named decision rights, shared rails, workflow-local accountability, proof gates, and temporary dependencies |
 
 ## Choose your depth
 
@@ -32,7 +33,7 @@ Pick the situation in front of you. You don't need to learn the repository first
 | **Handbook** | Running a live engagement | [Lifecycle playbooks](playbooks/README.md) |
 | **Engineering Kit** | Contracts, controls, architecture, evaluations, operations, and executable evidence | [Templates](templates/README.md), [controls](controls/control-catalog.json), and [examples](examples/invoice-exception/README.md) |
 
-They are not separate frameworks. Start shallow; follow a link only when the next decision requires it. The [capability roadmap](guide/capability-roadmap.md) is a learning route, not a certification.
+They are not separate frameworks. The [capability roadmap](guide/capability-roadmap.md) is a learning route, not a certification.
 
 ## The core idea
 
@@ -57,7 +58,7 @@ npm run test:hybrid
 
 These are in-memory teaching systems. Passing tests proves only the declared local behavior—not customer value, production readiness, or deployment approval.
 
-Before adapting either one, use [Enterprise Integration and Scale Reality](library/17-enterprise-integration-and-scale-reality.md) to replace teaching conveniences with target evidence for sources, identity, state, audit, reconciliation, load, and recovery.
+Before adapting them, use [Enterprise Integration and Scale Reality](library/17-enterprise-integration-and-scale-reality.md) to replace teaching conveniences with target evidence.
 
 ## Who this is for
 

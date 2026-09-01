@@ -89,6 +89,7 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 
 ### Operator workflow, adoption, and review capacity
 
+- Exercise the complete operating path: initiating actor, applicable scope and trigger, bounded orchestration and state, governed context, selected mechanisms, evaluation, abstention and escalation, controlled effect, source-of-truth readback, and durable result destination.
 - Exercise the final persistent surface with representative operators: find the work, inspect evidence and uncertainty, correct, reject, escalate, interrupt, and resume without losing state or audit history.
 - Reconcile eligible, exposed, completed, independently accepted, and business-effect events to the frozen adoption contract. Sample non-use and abandonment by reason rather than treating logins or runs as adoption.
 - Name access, training, support, domain-review, and escalation owners. Exercise expected reviewer/support load, queue and wait limits, overflow, degraded operation, and the manual fallback for the proposed cohort.

@@ -118,7 +118,7 @@ export const pages = [
     navTitle: "FDE operating model",
     title: "The FDE Operating Model for Applied AI Delivery",
     description:
-      "A practical operating model for forward deployed and internal applied-AI teams: discovery, value, delivery, adoption, operation, and learning.",
+      "A practical operating model for forward deployed and internal applied-AI teams: discovery, value, delivery, company adoption, operation, and learning.",
   },
   {
     route: "/ai-value-engineering/",
@@ -222,7 +222,7 @@ export const pages = [
     navTitle: "Production operations",
     title: "Operating Production AI Systems",
     description:
-      "A production operating model for AI systems covering telemetry, SLOs, incidents, behavior, cost, change, recovery, and retirement.",
+      "A company operating model for accountable AI services: decision rights, shared rails, workflow ownership, proof gates, telemetry, cost, recovery, and retirement.",
   },
   {
     route: "/reference-implementations/invoice-exception/",

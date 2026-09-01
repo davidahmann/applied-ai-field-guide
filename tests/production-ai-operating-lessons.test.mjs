@@ -118,3 +118,70 @@ test("delegated authority preserves verifiable per-hop identity and has fail-clo
   assert.match(governanceTests, /rejects invented parents and replays by handoff ID or nonce/);
   assert.match(governanceTests, /authenticates the exact current recipient before atomic claim/);
 });
+
+test("company agent adoption centralizes rails without centralizing workflow authority", async () => {
+  const [playbook, portfolioReview, serviceReview, operations, skill, research] = await Promise.all([
+    read("playbooks/03-operate-and-scale.md"),
+    read("templates/fde-portfolio-review.md"),
+    read("templates/production-service-review.md"),
+    read("operations/README.md"),
+    read(".agents/skills/operate-ai-service/SKILL.md"),
+    read("research/2026-08-08--operational-redesign-and-applied-ai-practice.md"),
+  ]);
+
+  for (const phrase of [
+    "AI-enabled services, not a headcount of agents",
+    "Centralize reusable rails",
+    "Preserve workflow accountability",
+    "Earn authority by effect class",
+  ]) assert.match(playbook, new RegExp(phrase, "i"));
+
+  for (const role of [
+    "Executive sponsor or program owner",
+    "Workflow owner",
+    "Business metric owner and independent verifier",
+    "AI service owner",
+    "Operational owner",
+    "Shared platform owner",
+    "Data, policy, security, or risk owner",
+    "Delivery or FDE team",
+    "Operator or reviewer",
+  ]) assert.match(`${playbook}\n${portfolioReview}`, new RegExp(role, "i"));
+
+  assert.match(portfolioReview, /Stop \/ reshape \/ continue proving \/ bounded production/);
+  for (const gate of ["Technical performance", "Operator acceptance", "Adoption", "Business value", "Full economics", "Production readiness"]) {
+    assert.match(portfolioReview, new RegExp(`\\| ${gate} \\|`, "i"));
+  }
+  assert.match(portfolioReview, /no universal 30-day production promise/i);
+  assert.match(`${playbook}\n${portfolioReview}\n${skill}`, /every applicable mandatory gate (?:to )?pass/i);
+  assert.match(`${playbook}\n${portfolioReview}\n${skill}`, /non-blocking residual/i);
+  assert.match(`${playbook}\n${portfolioReview}`, /does not prove receiving-team capability|substitute for exercised receiving-team capability/i);
+  assert.match(serviceReview, /Receiving-team operating capability/);
+  assert.match(operations, /shared-versus-workflow capability boundary/i);
+  assert.match(skill, /shared enablement, workflow-local accountability, and temporary delivery capacity/i);
+  assert.match(research, /thirty-feature list/i);
+  assert.match(research, /single centralized intelligence layer/i);
+});
+
+test("system design follows the complete operating path without adopting a layer-count heuristic", async () => {
+  const [architecture, blueprint, readiness, skill, research] = await Promise.all([
+    read("library/12-software-architecture-and-intelligence-selection.md"),
+    read("blueprints/hybrid-intelligence-system.md"),
+    read("templates/production-service-readiness.md"),
+    read(".agents/skills/design-production-ai-system/SKILL.md"),
+    read("research/2026-08-08--operational-redesign-and-applied-ai-practice.md"),
+  ]);
+
+  for (const phrase of [
+    "initiating actor",
+    "applicable scope",
+    "durable result destination",
+    "bounded orchestration and state",
+    "governed context",
+    "evaluation, abstention, and escalation",
+  ]) assert.match(`${architecture}\n${blueprint}\n${readiness}\n${skill}`, new RegExp(phrase, "i"));
+
+  assert.match(research, /not a seven-layer maturity model/i);
+  assert.match(research, /“80%” context claim/i);
+  assert.match(research, /private model instance per tenant/i);
+});

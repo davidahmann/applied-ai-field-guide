@@ -104,8 +104,8 @@ Run it with `--profile starter`. As evidence matures, add fields from the canoni
 | [Solution release](solution-release.json) | Which compatible model- or agent-system artifact bundle is approved for which segment and rollout |
 | [Production service readiness](production-service-readiness.md) | Which target-specific service boundaries are required, designed, tested, operational, unresolved, or inapplicable before rollout or handoff |
 | [Customer enablement handoff](customer-enablement-handoff.md) | Whether the receiving team can operate, change, recover, and retire the service |
-| [Production service review](production-service-review.md) | Whether to expand, constrain, pause, improve, or retire the live workflow |
-| [FDE and applied-AI portfolio review](fde-portfolio-review.md) | How to compare stage flow, accepted value, continuation, full delivery economics, reuse, and capacity across multiple workflows without overriding service gates |
+| [Production service review](production-service-review.md) | Whether named workflow and service owners can continue, expand, constrain, pause, improve, or retire the live workflow |
+| [FDE and applied-AI workflow portfolio review](fde-portfolio-review.md) | How to map decision rights and shared-versus-workflow capabilities, then compare proof gates, accepted value, economics, reuse, and capacity without overriding service gates |
 | [Field-learning register](field-learning-register.md) | Which recurring field signal becomes a customer fix, platform change, documented pattern, or rejected proposal |
 
 The current evaluation-report and solution-release JSON contracts are model/agent release profiles. A deterministic, optimization, or classical-ML-only system should use the target software release process with equivalent versioned data, model/code, policy, evaluation, operations, rollout, rollback, and ownership evidence; do not invent an agent system merely to satisfy these templates.

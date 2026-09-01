@@ -129,7 +129,7 @@ The same workflow appears in three different decision views. Do not merge them i
 | --- | --- | --- |
 | Pilot or engagement | Did this bounded workflow pass its declared graduation gates by the evidence cutoff? | [Delivery and adoption plan](../templates/delivery-and-adoption-plan.md), separate technical, operator, adoption, value, economics, and production-readiness gates |
 | Production service | Should this workflow continue, improve, expand, constrain, pause, or retire? | [Production service review](../templates/production-service-review.md), accepted outcomes, attributable value, adoption, SLOs, cost, ownership, and recovery |
-| Delivery portfolio | Where should the organization invest, transfer, productize, build capacity, or exit? | [FDE and applied-AI portfolio review](../templates/fde-portfolio-review.md), cohort stage flow, time to accepted value, full delivery economics, target-specific effort, reuse, continuation, and capacity |
+| Workflow portfolio | Where should the organization invest, transfer, productize, build capacity, or exit? | [FDE and applied-AI workflow portfolio review](../templates/fde-portfolio-review.md), decision rights, proof gates, cohort stage flow, time to accepted value, full delivery economics, target-specific effort, reuse, continuation, and capacity |
 
 For an external FDE organization, continuation may be a paid deployment, renewal, or expansion decision. For an internal applied-AI team, it may be continued sponsorship, funding, or roadmap commitment. These signals matter operationally, but they do not prove accepted outcomes or realized value. A portfolio decision does not override a failing workflow gate. `FDE-003`, `VAL-002`, `VAL-003`, `OPS-004`.
 

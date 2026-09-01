@@ -162,11 +162,13 @@ Use the [evaluation guide](../library/04-production-evaluation-and-governance.md
 
 Production is a recurring decision, not the last deployment step. Monitor accepted outcomes, value, adoption, source health, behavior versions, reliability, cost, prohibited effects, reviewer load, support, and owner continuity. Then decide whether to continue, improve, expand, constrain, pause, or retire.
 
+For company-wide adoption, centralize reusable identity, evaluation, telemetry, security, cost, and delivery rails while keeping outcome, source, policy, effect, service, and retirement accountability with each workflow. Operate AI-enabled services rather than counting agents. Grant authority separately by segment and effect class, and require every bounded proof to name its evidence cutoff, decision owner, receiving owner, separate graduation gates, and stop or reshape path.
+
 Any new population, authority level, action, model route, or environment is a new evidence and release decision.
 
 Transfer is complete when the receiving team can operate, change, recover, support, and retire the service without delivery-team heroics. Use FDE capacity while ambiguity is producing consequential evidence. When the remaining work becomes ordinary implementation, transfer it. Continued delivery-team involvement needs new learning or an explicit support contract, not convenience.
 
-Use [Operate and Scale](../playbooks/03-operate-and-scale.md), the [service review](../templates/production-service-review.md), and the [handoff template](../templates/customer-enablement-handoff.md).
+Use [Operate and Scale](../playbooks/03-operate-and-scale.md), the [service review](../templates/production-service-review.md), the [workflow portfolio review](../templates/fde-portfolio-review.md) when several services share funding or enablement, and the [handoff template](../templates/customer-enablement-handoff.md).
 
 ## 11. Turn field learning into product capability
 

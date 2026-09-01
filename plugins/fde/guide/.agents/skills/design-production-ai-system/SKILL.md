@@ -17,9 +17,9 @@ Translate an approved workflow into the smallest coherent software system. Prese
 
 ## Workflow
 
-1. Record the selected solution composition or `none`, target-specific deviations, customer-specific decisions, and non-claims; then define the system boundary, trust boundaries, users, service owners, deployment topology, dependencies, and persistent user surface.
+1. Record the selected solution composition or `none`, target-specific deviations, customer-specific decisions, and non-claims; then define the initiating actor, applicable scope, trigger, durable result destination, system and trust boundaries, users, service owners, deployment topology, dependencies, and persistent user surface.
 2. Model domain objects, lifecycle states, actions, policies, evidence, identity, and sources of truth in the operational ontology. Bind the four data planes, decision-critical quality, preparation lineage, label authority, output ownership, failure behavior, economics, and drift response in the data-context manifest.
-3. Map each decision to its selected mechanism. Define explicit state, retries, deadlines, cancellation, failure, escalation, rollback, and retirement behavior.
+3. Map each decision to its selected mechanism. Define bounded orchestration and state, retries, deadlines, cancellation, failure, evaluation, abstention, escalation, rollback, and retirement behavior; bind every context input to its authority, purpose, freshness, and least-privilege access contract.
 4. When model behavior is selected, bind its model route, prompt, harness, context policy, guardrails, runtime compatibility, tools, and capability manifests in one versioned behavior bundle.
 5. Give every read or effect a narrow typed boundary. Separate read, stage, commit, administrative, and destructive operations.
 6. Draft the threat model and evaluation cases together. Design persistent review surfaces and start adoption and handoff work during the pilot.
