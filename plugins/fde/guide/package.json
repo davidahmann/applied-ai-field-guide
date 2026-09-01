@@ -68,8 +68,8 @@
   "devDependencies": {
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
-    "markdown-it": "15.0.0",
+    "markdown-it": "15.0.1",
     "markdown-it-anchor": "9.2.1",
-    "mermaid": "11.16.1"
+    "mermaid": "11.17.2"
   }
 }
