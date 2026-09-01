@@ -1,6 +1,6 @@
 {
   "name": "fde",
-  "version": "1.31.0",
+  "version": "1.32.0",
   "description": "A local-first FDE copilot for source-linked fieldwork, delivery decisions, and production AI assurance.",
   "author": {
     "name": "David Ahmann",

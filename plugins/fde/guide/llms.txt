@@ -36,7 +36,7 @@ Read [AGENTS.md](AGENTS.md) before modifying this repository.
 - Evidence graphs and change intelligence: [library/13-evidence-graphs-and-change-intelligence.md](library/13-evidence-graphs-and-change-intelligence.md)
 - Solution design and delivery: [playbooks/02-solution-and-delivery.md](playbooks/02-solution-and-delivery.md)
 - Operate and scale: [playbooks/03-operate-and-scale.md](playbooks/03-operate-and-scale.md)
-- Multi-workflow portfolio review: [templates/fde-portfolio-review.md](templates/fde-portfolio-review.md)
+- Company adoption and multi-workflow operating review: [templates/fde-portfolio-review.md](templates/fde-portfolio-review.md)
 - Design starting point: [library/00-start-here.md](library/00-start-here.md)
 - Product, workflow, and adoption design: [library/01-product-process-and-ux.md](library/01-product-process-and-ux.md)
 - Complete implementation sequence: [library/07-production-implementation-playbook.md](library/07-production-implementation-playbook.md)

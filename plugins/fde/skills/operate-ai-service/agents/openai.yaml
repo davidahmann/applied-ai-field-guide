@@ -1,4 +1,4 @@
 interface:
   display_name: "Operate AI Service"
-  short_description: "Run value, reliability, safety, and change"
-  default_prompt: "Use $operate-ai-service to establish the operating model for this production AI service."
+  short_description: "Run accountable AI services and adoption programs"
+  default_prompt: "Use $operate-ai-service to establish accountable decision rights, shared rails, workflow ownership, and operating evidence for this AI service or adoption program."

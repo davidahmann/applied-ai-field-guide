@@ -169,7 +169,7 @@ Expand when accepted outcomes, adoption, economics, reliability, ownership, and 
 
 A stronger benchmark, larger model, or higher usage number does not automatically justify more authority.
 
-When several workflows compete for investment, an [FDE and applied-AI portfolio review](../templates/fde-portfolio-review.md) may compare stage flow, time to accepted outcome and value, full delivery economics, continuation health, capacity, and responsible reuse. Portfolio evidence routes attention; it never overrides an individual workflow's value, safety, release, ownership, or retirement gate.
+When several workflows compete for investment, an [FDE and applied-AI workflow portfolio review](../templates/fde-portfolio-review.md) may compare decision rights, proof gates, stage flow, time to accepted outcome and value, full delivery economics, continuation health, capacity, and responsible reuse. Portfolio evidence routes attention; it never overrides an individual workflow's value, safety, release, ownership, or retirement gate.
 
 **Evidence:** [Service review](../templates/production-service-review.md), expansion decision, constraint triggers, [change assessment](../templates/change-impact-assessment.json), rollback evidence, and retirement plan. `VAL-003`, `ADP-002`, `OPS-007`.
 

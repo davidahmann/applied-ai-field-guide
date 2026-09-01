@@ -13,6 +13,23 @@
 | Continuation mechanism, owner, and decision date | External renewal / internal funding or sponsorship / other |
 | Decision required | Expand, continue, improve, constrain, pause, or retire |
 
+## Operating responsibility
+
+Record who can make each decision and the latest evidence that the role can exercise it. Shared platform or delivery capacity can support these owners; it does not silently absorb their authority.
+
+| Role | Named owner and backup | Decision authority | Last exercised evidence | Open gap or temporary substitution | Action and due date |
+| --- | --- | --- | --- | --- | --- |
+| Workflow owner | — | Process boundary, accepted outcome, exclusions, and exceptions | — | — | — |
+| Business metric owner and independent verifier | — | Baseline, denominator, attribution, acceptance, and value readback | — | — | — |
+| AI service owner | — | Service lifecycle, SLO, support, change, and retirement | — | — | — |
+| Operational owner | — | Day-to-day operation, on-call, incident coordination, reviewer capacity, and degraded-service decisions | — | — | — |
+| Technical owner | — | Architecture, implementation, dependencies, and recovery | — | — | — |
+| Data, policy, security, and risk owners | — | Source authority, permitted use, control, loss, and escalation decisions | — | — | — |
+| Release, rollback, and kill-switch authorities | — | Exact release promotion, containment, and recovery | — | — | — |
+| Operator, reviewer, and support route | — | Correction, exception, escalation, and stop path | — | — | — |
+
+One person may hold the service and operational roles only when both assignments are explicit and every required independent verifier, release, risk, and receiving-service approval remains separate.
+
 ## Current sponsor readout
 
 Generate this view from dated interaction receipts, effect or evaluation evidence, and the current governed records. Freeze the evidence cutoff and source digests. Do not maintain a parallel status narrative.
@@ -126,7 +143,7 @@ Trace-derived papercuts may create sanitized replay cases and candidate skill, p
 | --- | --- | --- | --- | --- | --- |
 | — | — | — | — | — | — |
 
-## Customer operating capability
+## Receiving-team operating capability
 
 | Capability | Receiving owner | Last exercise/evidence | Open gap | Exit or remediation decision |
 | --- | --- | --- | --- | --- |
@@ -138,7 +155,7 @@ Trace-derived papercuts may create sanitized replay cases and candidate skill, p
 | Cost, value, and capacity review | — | — | — | — |
 | Retirement and state disposition | — | — | — | — |
 
-Compare open gaps with the [customer enablement handoff](customer-enablement-handoff.md). A recurring gap needs an owner, exercise, and due date; delivery-team availability is not a substitute for customer operating capability.
+Compare open gaps with the [customer enablement handoff](customer-enablement-handoff.md). A recurring gap needs an owner, exercise, and due date; delivery-team availability is not a substitute for the receiving customer's or internal team's operating capability.
 
 ## Continuation and sponsor resilience
 
@@ -150,7 +167,7 @@ Compare open gaps with the [customer enablement handoff](customer-enablement-han
 | External renewal or internal funding readiness | — | — | — | — |
 | Delivery-team dependency and exit readiness | — | — | — | — |
 
-Continuation signals route attention and planning. A contract, budget, sponsor, reference, or high usage level does not independently prove an accepted outcome or realized value. If this workflow is part of a multi-service program, link its evidence into the [FDE and applied-AI portfolio review](fde-portfolio-review.md) without replacing this service-level decision.
+Continuation signals route attention and planning. A contract, budget, sponsor, reference, or high usage level does not independently prove an accepted outcome or realized value. If this workflow is part of a multi-service program, link its evidence into the [FDE and applied-AI workflow portfolio review](fde-portfolio-review.md) without replacing this service-level decision.
 
 ## Incidents and reconciliation
 

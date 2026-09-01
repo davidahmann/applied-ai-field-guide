@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-08-31",
+  "updated": "2026-09-01",
   "artifacts": [
     {
       "id": "guide.five-minute",
@@ -127,7 +127,7 @@
       "id": "template.fde-portfolio-review",
       "type": "template",
       "path": "templates/fde-portfolio-review.md",
-      "tags": ["fde", "portfolio", "value", "operations"]
+      "tags": ["fde", "portfolio", "operating-model", "decision-rights", "operations"]
     },
     {
       "id": "template.field-learning-register",
@@ -745,7 +745,7 @@
       "id": "evidence.operational-redesign",
       "type": "evidence",
       "path": "research/2026-08-08--operational-redesign-and-applied-ai-practice.md",
-      "tags": ["sources", "2026", "operational-redesign", "applied-ai"]
+      "tags": ["sources", "2026", "operational-redesign", "applied-ai", "operating-model"]
     },
     {
       "id": "evidence.evidence-graphs",

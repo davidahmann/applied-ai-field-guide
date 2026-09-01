@@ -4,6 +4,16 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.32.0] - 2026-09-01
+
+- Add a company adoption operating model that treats agents as replaceable components of accountable AI-enabled services, centralizes reusable identity, evaluation, telemetry, security, cost, and delivery rails, and preserves workflow-local outcome, source, policy, effect, support, and retirement authority.
+- Make executive, workflow, metric/verifier, service, operational, platform, risk, delivery, and operator decision rights inspectable in the operating playbook and workflow-portfolio review without turning shared enablement into a shadow source of truth or approval layer.
+- Add a bounded proof-to-operation gate with a predeclared duration, evidence cutoff, receiving owner, separate technical, operator, adoption, value, economics, data/risk, and production-readiness decisions, plus explicit stop, reshape, continue-proving, and bounded-production dispositions.
+- Make autonomy earned by segment and effect class; strengthen the service review, operations route, and `$operate-ai-service` skill around receiving-team capability, temporary substitutions, and central-versus-local operating ownership.
+- Make the complete operating path explicit from authenticated trigger and durable state through governed context, mechanism selection, evaluation, abstention, escalation, verified effect, and durable result delivery, without introducing a seven-layer stack or topology mandate.
+- Record the supporting practitioner and advisory evidence while rejecting a thirty-feature maturity checklist, single intelligence layer, universal rapid-production promise, or citizen-development bypass as Guide defaults.
+- Add no file under `guide/`, `library/`, `templates/`, or `blueprints`; this release deepens the existing operating lifecycle, reviews, and skill rather than creating another framework, module, score, or control family.
+
 ## [1.31.0] - 2026-08-31
 
 - Add five focused skills for live engagement continuity, decision-scoped data readiness, enterprise integration, material change impact, and approved-slice delivery while keeping the Guide's existing lifecycle and canonical artifacts unchanged.
@@ -252,7 +262,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.31.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.32.0...HEAD
+[1.32.0]: https://github.com/davidahmann/fde-guide/compare/v1.31.0...v1.32.0
 [1.31.0]: https://github.com/davidahmann/fde-guide/compare/v1.30.0...v1.31.0
 [1.30.0]: https://github.com/davidahmann/fde-guide/compare/v1.29.0...v1.30.0
 [1.29.0]: https://github.com/davidahmann/fde-guide/compare/v1.28.0...v1.29.0
