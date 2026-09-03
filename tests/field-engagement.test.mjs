@@ -128,6 +128,30 @@ test("discovery tests the inherited story against direct technical evidence", as
   assert.match(research, /No new lifecycle, score, module, or control family is created/i);
 });
 
+test("discovery reconciles strategy, operating reality, and the candidate value surface", async () => {
+  const [playbook, discovery, sourceIndex, research] = await Promise.all([
+    readFile(path.join(root, "playbooks", "01-discovery-and-value.md"), "utf8"),
+    readFile(path.join(root, "templates", "fde-discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "library", "05-source-index.md"), "utf8"),
+    readFile(path.join(root, "research", "2026-08-08--operational-redesign-and-applied-ai-practice.md"), "utf8"),
+  ]);
+
+  for (const body of [playbook, discovery]) {
+    assert.match(body, /strategic and operating apertures/i);
+    assert.match(body, /customer-visible interaction/i);
+    assert.match(body, /internal enablement/i);
+    assert.match(body, /cost or capacity/i);
+    assert.match(body, /risk and control/i);
+    assert.match(body, /not (?:a )?(?:universal priority rule|fixed interview script)/i);
+  }
+  assert.match(playbook, /surveys and transcripts may stage hypotheses/i);
+  assert.match(playbook, /customer visibility is a useful candidate-generation lens, not a universal priority rule/i);
+  assert.match(discovery, /do not treat executive sponsorship, interview volume, a survey, or a roadmap as proof/i);
+  assert.match(sourceIndex, /## S36 — Alex Lieberman: AI roadmap field account/);
+  assert.match(sourceIndex, /## S37 — Mark Ajzenstadt: customer-interaction use-case lens/);
+  assert.match(research, /requiring a customer-visible use case first/i);
+});
+
 test("field interactions close through an isolated reviewed append loop and a derived readout", async () => {
   const [playbook, observation, discovery, serviceReview, example, research] = await Promise.all([
     readFile(path.join(root, "playbooks", "00-field-engagement-and-reframing.md"), "utf8"),

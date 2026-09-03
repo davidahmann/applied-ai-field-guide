@@ -47,6 +47,22 @@ Do not infer the process knower, operator, disposition authority, or verifier fr
 
 Use the machine-readable [workflow-charter template](workflow-charter.json) for the governed decision after discovery.
 
+## Strategic and operating apertures
+
+Use this as a reconciliation pass, not a fixed interview script. Begin with the widest relevant view that is available, inspect the work and its technical seams, then return unresolved differences to the people who hold the relevant decision rights.
+
+| Aperture | Goal, blocker, workflow claim, or interaction | Exact source and owner | Evidence to inspect next | Conflict, limitation, or accountable next move |
+| --- | --- | --- | --- | --- |
+| Strategic intent | | | | |
+| Operating reality | | | | |
+| Customer-visible effect, if any | | | | |
+
+| Candidate value surface | Current experience or exposure | Proposed observable change | Acceptance evidence and verifier | Why this candidate now |
+| --- | --- | --- | --- | --- |
+| Customer-visible interaction / internal enablement / cost or capacity / risk and control | | | | |
+
+Do not require a customer-visible effect when an internal safety, control, or operating decision is more consequential. Do not treat executive sponsorship, interview volume, a survey, or a roadmap as proof of the workflow or permission to proceed.
+
 ## Field evidence register
 
 | Evidence ID | Method | Case/segment | Date | Source owner | Redaction/classification | Observation supported | Limitation |

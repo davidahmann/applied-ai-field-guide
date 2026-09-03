@@ -343,6 +343,33 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Operational-redesign practice note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), technical reality checks, binding-constraint allocation, operating transfer, and portfolio learning.
 - **Caution:** Readiness scores, survey percentages, timelines, outcome gains, and cross-company implementation-speed claims are self-reported and not independently inspectable. The proposed scoring method is not a release gate, portfolio target, or substitute for direct target evidence.
 
+<a id="s35"></a>
+## S35 — K-Dense AI: Arbor skill
+
+- **Evidence:** [Direct open-source skill](https://github.com/K-Dense-AI/scientific-agent-skills/blob/1e5eeffbdad3749125afe7ab48a39694e27f181c/skills/arbor/SKILL.md) and its hypothesis-tree reference implementation, inspected at commit [`1e5eeff`](https://github.com/K-Dense-AI/scientific-agent-skills/commit/1e5eeffbdad3749125afe7ab48a39694e27f181c) on 2026-09-03
+- **Author/publisher:** K-Dense AI and repository contributors; MIT License declared by the skill
+- **Contribution:** The skill binds a mutable artifact, objective, development evaluator, and held-out evaluator; preserves hypothesis, result, insight, and artifact references across repeated isolated experiments; and separates search feedback from a held-out admission check.
+- **Use in this library:** [Evaluation corpus and review loops](09-evaluation-corpus-and-review-loops.md), [change management](../operations/change-management.md), and the `$build-ai-evaluation` task route for long-horizon optimization with a runnable artifact and governed evaluators.
+- **Caution:** The tree topology, autonomous coordinator/executor arrangement, branch count, depth, budget, and reported benchmark gains are not Guide defaults. A held-out score does not grant merge, deployment, action, safety, or business authority, and no source code or prose is copied into this repository.
+
+<a id="s36"></a>
+## S36 — Alex Lieberman: AI roadmap field account
+
+- **Evidence:** Full practitioner post text supplied without a stable permalink or publication date; reviewed 2026-09-03
+- **Author:** Alex Lieberman, `@businessbarista`, as identified in the supplied material
+- **Contribution:** The account separates broad leadership goals and blockers from a later, opportunity-specific pass over workflows, organization, data, and technology, then connects recommendations to full costs and explicit initiative dispositions.
+- **Use in this library:** [Operational-redesign practice note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), strategic-versus-operating discovery, and evidence-led candidate sequencing.
+- **Caution:** The claimed engagement count, CEO-first preference, interview order, survey step, roadmap format, and cultural-momentum priority are practitioner recommendations, not independently verified outcomes or universal discovery requirements.
+
+<a id="s37"></a>
+## S37 — Mark Ajzenstadt: customer-interaction use-case lens
+
+- **Evidence:** Full practitioner post text supplied without a stable permalink or publication date; reviewed 2026-09-03
+- **Author:** Mark Ajzenstadt, `@mardehaym`, as identified in the supplied material
+- **Contribution:** The post proposes starting candidate discovery from a bounded customer interaction that people complain about, wait for, abandon, or cannot accept, while distinguishing customer-facing workflow changes from internal engineering assistance.
+- **Use in this library:** [Operational-redesign practice note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), discovery qualification, value-surface classification, and customer-verifiable acceptance.
+- **Caution:** The healthcare example, timing, evaluation score, commercial promise, and assertion that customer-facing work should come before cost reduction are self-reported or prescriptive. Customer visibility is a candidate-generation lens, not a hard gate or universal priority.
+
 ## Cross-source convergence
 
 The most repeated ideas are:
@@ -374,3 +401,6 @@ The most repeated ideas are:
 25. Reuse begins by classifying workflow variation and comparable cohorts; standardization cannot erase target-specific policy or validation.
 26. Questionnaires, maturity scores, and curricula can organize investigation and practice, but direct target evidence governs readiness.
 27. Portfolio resources should address the first unresolved hard gate rather than a composite average that hides binding constraints.
+28. Strategic goals and operating evidence need separate passes and an explicit reconciliation; neither seniority nor interview volume proves the workflow.
+29. Candidate selection should name whether value changes a customer interaction, internal enablement, cost or capacity, or risk and control, without making one surface universally superior.
+30. Repeated artifact optimization needs durable hypothesis evidence and a protected promotion evaluator; development gains alone do not authorize release.

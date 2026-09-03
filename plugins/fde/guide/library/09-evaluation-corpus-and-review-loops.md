@@ -93,6 +93,18 @@ There are two connected loops: the agent’s controlled improvement loop and the
 
 “The agent changed its answer on the failing example” is not evidence of improvement. A correction earns trust only when it preserves adjacent behavior and clears an independent retest.
 
+## When improvement becomes a search problem
+
+Repeated optimization of a runnable artifact needs more structure than a queue of unrelated attempts. Before searching over prompts, harnesses, routing, data preparation, model recipes, or other mutable components, declare:
+
+```text
+initial artifact + objective + development evaluator + protected promotion evaluator
+```
+
+Use the development evaluator to steer experiments. Keep the promotion evaluator isolated from proposal and implementation, and use it only to decide whether a candidate generalizes well enough to enter the ordinary release path. For every experiment, preserve the falsifiable hypothesis, factual result, reusable insight, artifact revision, evaluator revision, and disposition. Failed directions become explicit constraints; they are not discarded merely because they did not raise the development score.
+
+A tree can help organize competing hypotheses during a long search, but the data structure is optional. The durable requirements are attributable experiments, compact evidence that survives context loss, an evaluator the search cannot edit or query as an oracle, and promotion through the same safety, authority, compatibility, canary, and rollback gates as any other change. A held-out score can reject a candidate; it cannot authorize a merge, deployment, or business effect. This bounded pattern is adapted from the directly inspectable Arbor skill and its hypothesis-tree workflow. [S35](05-source-index.md#s35)
+
 ## Design the review surface for informed intervention
 
 For consequential work, an approval button alone is not human oversight. The reviewer needs a compact evidence packet:
