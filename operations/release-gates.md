@@ -39,7 +39,7 @@ For a deterministic, optimization, or classical-ML-only system, use the target s
 | System design | Architecture and mechanism records bind behavior, authority, state, failure, and operations; when a foundation-model or agent workflow is selected, the agent-system record is valid against `agent-system.schema.json` |
 | Tool contracts | Valid against `tool-contract.schema.json` |
 | Threat model | Every high/critical threat has prevention, detection, recovery, and test |
-| Evaluation plan | Claim, suite, environment, trial semantics, contamination controls, and decision owner |
+| Evaluation plan | Claim, suite, environment, trial semantics, contamination controls, and decision owner; when oversight is part of the deployment claim, include the policy class, reliability target, reviewer-effectiveness basis, review burden, total-cost model, and qualification method |
 | Adoption and ownership | Intended users, professional work surface, review path, receiving service owner, and enablement plan |
 | Economics | Cost/run, cost/accepted-outcome, and realized-value measurement plans |
 
@@ -71,7 +71,7 @@ Controls: `ARC-002`, `DEL-002`, `CTX-002`, `CTX-005`, `CTX-008`, `TOL-001`, `TOL
 | Trace completeness | `100%` required span/event fields |
 | Retrieval/context | Freshness and provenance SLOs pass where retrieval or governed context is used |
 | Data decision fit | Critical quality, segment coverage, preparation lineage, corrections, and drift meet the admitted manifest |
-| Human review | Evidence packets judged sufficient by named reviewers where review is required |
+| Human review | Evidence packets are sufficient for named reviewers; reviewer effectiveness, burden, latency, capacity, and cost are measured or explicitly bounded where review supports the deployment claim |
 | Field-change integrity | Accepted reframes update only dependency-linked work, preserve prior state, and leave unrelated revisions and digests unchanged |
 | Adoption | Eligible use, completion, override, abandonment, and reviewer load meet predeclared thresholds |
 | Cost | P95 cost/accepted-outcome within budget |
@@ -102,7 +102,7 @@ Use this gate whenever effect authority expands. For a non-agent route, read aut
 | Requirement | Pass condition |
 | --- | --- |
 | Scope | One named behavior segment and effect class |
-| Holdout | Independent replay suite passes |
+| Holdout | The frozen operating policy clears its reliability lower bound and risk constraints on disjoint held-out cases; terminal replay is used only for trajectory-invariant oversight, otherwise the policy is rerun or simulated in the loop |
 | Incidents | No open high/critical control failure |
 | Error budget | Within SLO window |
 | Reviewer load | Capacity and escalation latency within SLO |

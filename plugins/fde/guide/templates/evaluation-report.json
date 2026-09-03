@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/evaluation-report.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "report_id": "bounded_workflow_shadow_report",
   "version": "0.1.0",
   "owner": "evaluation-preparer",
@@ -111,9 +111,9 @@
         {
           "component_id": "node-dependency-lock",
           "uri": "../package-lock.json",
-          "version": "1.33.0",
+          "version": "1.34.0",
           "schema_version": null,
-          "digest": "sha256:73b6f97523d41bbd54e1c662851c415959020e5cda8fe758e558cede44dfc804"
+          "digest": "sha256:cd61f0f7be5e141727527540a345f8f65fb13de927206f5ffb1a8112ed8bde84"
         },
         {
           "component_id": "operational-ontology",
@@ -144,7 +144,7 @@
           "digest": "sha256:4fe9e3f8ddb9a904f0e85889699369179dd66e0123600ef16167e5d415fded74"
         }
       ],
-      "environment_digest": "sha256:a703314baf37a6227f137f00f836e3a836bd7bbf59831e38effcdd7505fd1223",
+      "environment_digest": "sha256:8b9f75f7e089d09ce044e8237c64c052e9ac54defcd04df4278e3ef8532083ed",
       "network_mode": "not_executed"
     }
   },
@@ -180,7 +180,7 @@
       "uri": null,
       "version": null,
       "schema_version": null,
-      "digest": "sha256:092216d500dd05a4ee6e11974468b75c5f3294305edb912afeaad60530a066c2"
+      "digest": "sha256:646b8459b264b2ae1efc093f33fa25dc221da475bcb6475dd1f5a373fea69cc6"
     },
     "minimum_confidence": 0.95
   },
@@ -228,6 +228,68 @@
     "external_network": "not_executed",
     "known_exposures": [],
     "reference_solution_reviewed": false
+  },
+  "deployment_qualification": {
+    "status": "not_evaluated",
+    "rationale": "The template declares the qualification contract but contains no executed policy-selection or held-out qualification evidence.",
+    "workflow_success_metric": "accepted_outcome_rate",
+    "oversight_policy": {
+      "policy_id": "bounded_workflow_review_policy",
+      "version": "0.1.0",
+      "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0",
+      "class": "terminal_accept_or_escalate",
+      "routing_signal": "versioned workflow-specific routing score",
+      "selected_on": "development",
+      "frozen_before_qualification": false,
+      "trajectory_invariant": true
+    },
+    "evidence_partitions": {
+      "development": {
+        "dataset_id": "bounded_workflow_development_cases",
+        "version": "0.1.0",
+        "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+      },
+      "qualification": {
+        "dataset_id": "bounded_workflow_qualification_cases",
+        "version": "0.1.0",
+        "digest": "sha256:4437d91ff17fe266a6754d495a9fdf430b7cbea72a0484cbb60d4f05a2c1aaf0"
+      },
+      "disjoint": true
+    },
+    "sampling": {
+      "unit": "eligible workflow case",
+      "dependence": "Declare clustering, repeated actors, temporal dependence, and any correction before qualification.",
+      "qualification_method": "one-sided lower confidence bound"
+    },
+    "execution_mode": "not_executed",
+    "operating_point": {
+      "target_reliability": 0.95,
+      "observed_reliability": null,
+      "reliability_lower_bound": null,
+      "confidence": null,
+      "confidence_method": null,
+      "autonomous_coverage": null,
+      "human_review_burden": null,
+      "routing_signal_quality": null,
+      "expected_cost_per_case": null,
+      "currency": null
+    },
+    "review_path": {
+      "effectiveness_basis": "unmeasured",
+      "effectiveness": null,
+      "reviewer_population": "named qualified reviewers for the target workflow",
+      "capacity_source": "measured review-capacity exercise",
+      "latency_target_ms": null
+    },
+    "risk_constraints": [
+      "No prohibited effect may be accepted autonomously."
+    ],
+    "scope_assumptions": [
+      "Qualification applies only to the declared workflow population, policy, environment, and reviewer path."
+    ],
+    "requalification_triggers": [
+      "Requalify after a material behavior, context, routing-policy, reviewer-effectiveness, cost, population, or environment change."
+    ]
   },
   "limitations": [
     "This canonical template contains no collected release evidence and therefore records an inconclusive decision."

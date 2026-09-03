@@ -4,6 +4,14 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.34.0] - 2026-09-03
+
+- Add an optional Evaluation Report 1.1 deployment-qualification profile that binds the frozen human-AI oversight policy, disjoint development and qualification evidence, sampling assumptions, reliability lower bound, autonomous coverage, review burden, reviewer-effectiveness basis, total operating cost, and requalification triggers.
+- Distinguish terminal policy replay from trajectory-dependent policy-in-loop reruns, and strengthen release and change guidance so deployment claims qualify the complete operating policy rather than autonomous accuracy alone.
+- Add participant-capacity, baseline-acknowledgment, and decision-yielding proof-work sections to the existing delivery path, plus exact-version, prior-scope, and target-revalidation evidence for reused capability.
+- Record the READY preprint and supplied practitioner proof-loop account with explicit evidence limits; do not adopt their named frameworks, fixed targets, timing, staffing, pricing, private-equity framing, or maturity ladders as Guide defaults.
+- Update the existing evaluation, delivery, readiness, and operating skills, resync the complete FDE plugin snapshot, and add schema, semantic, documentation, and plugin-parity regression coverage without adding a new skill, module, lifecycle, or control family.
+
 ## [1.33.0] - 2026-09-03
 
 - Add a two-aperture discovery loop that reconciles strategic goals and authority with observed operating work, direct technical evidence, and unresolved contradictions without prescribing a CEO-first or fixed interview sequence.
@@ -270,7 +278,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.33.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.34.0...HEAD
+[1.34.0]: https://github.com/davidahmann/fde-guide/compare/v1.33.0...v1.34.0
 [1.33.0]: https://github.com/davidahmann/fde-guide/compare/v1.32.0...v1.33.0
 [1.32.0]: https://github.com/davidahmann/fde-guide/compare/v1.31.0...v1.32.0
 [1.31.0]: https://github.com/davidahmann/fde-guide/compare/v1.30.0...v1.31.0

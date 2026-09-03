@@ -370,6 +370,24 @@ The original sources below establish the library's foundational concepts. For cu
 - **Use in this library:** [Operational-redesign practice note](../research/2026-08-08--operational-redesign-and-applied-ai-practice.md), discovery qualification, value-surface classification, and customer-verifiable acceptance.
 - **Caution:** The healthcare example, timing, evaluation score, commercial promise, and assertion that customer-facing work should come before cost reduction are self-reported or prescriptive. Customer visibility is a candidate-generation lens, not a hard gate or universal priority.
 
+<a id="s38"></a>
+## S38 — Scale AI: READY deployment qualification
+
+- **Evidence:** [READY or Not: Reliable Enterprise Agent Deployment](https://arxiv.org/abs/2609.02095), published 2026-09-02 and reviewed 2026-09-03
+- **Author/publisher:** Scale AI research team
+- **Contribution:** The preprint separates development-stage oversight-policy selection from held-out qualification of the frozen human-AI operating policy, reporting reliability confidence, review burden, cost, risk, and the distinction between terminal replay and trajectory-dependent intervention.
+- **Use in this library:** [Workflow-proof and deployment-qualification note](../research/2026-09-03--workflow-proof-and-deployment-qualification.md), evaluation reports, release gates, change management, and evaluation skills.
+- **Caution:** The retrospective clinical-audit case, reported operating points, confidence method, reliability target, and reviewer assumptions are not universal defaults or independent production validation. Qualification does not replace workflow, security, privacy, adoption, ownership, or release evidence.
+
+<a id="s39"></a>
+## S39 — Mark Ajzenstadt: AI transformation loop
+
+- **Evidence:** Full practitioner post text supplied without a stable permalink or publication date; reviewed 2026-09-03
+- **Author:** Mark Ajzenstadt, `@mardehaym`, as identified in the supplied material
+- **Contribution:** The account makes participant capacity and baseline acknowledgment explicit before a bounded proof, expects material proof work to yield a decision, tested assumption, working increment, or reusable asset, and describes compounding from reusable context, harness, hosting, and governance.
+- **Use in this library:** [Workflow-proof and deployment-qualification note](../research/2026-09-03--workflow-proof-and-deployment-qualification.md), delivery and adoption planning, proof-to-operation gates, and governed field learning.
+- **Caution:** The proposed sequence, five lenses, ten steps, seven-rung ladder, private-equity framing, survey claims, timelines, staffing, pricing, commitments, and customer results are self-reported or prescriptive—not Guide defaults or production proof.
+
 ## Cross-source convergence
 
 The most repeated ideas are:
@@ -404,3 +422,5 @@ The most repeated ideas are:
 28. Strategic goals and operating evidence need separate passes and an explicit reconciliation; neither seniority nor interview volume proves the workflow.
 29. Candidate selection should name whether value changes a customer interaction, internal enablement, cost or capacity, or risk and control, without making one surface universally superior.
 30. Repeated artifact optimization needs durable hypothesis evidence and a protected promotion evaluator; development gains alone do not authorize release.
+31. A deployment claim covers the complete human-AI operating policy: frozen selection, held-out qualification, reliability confidence, review burden, reviewer effectiveness, and total cost—not autonomous accuracy alone.
+32. A bounded proof needs named participant capacity, an acknowledged baseline, and decision-yielding work; reused capability still carries an exact version, prior scope, and target-specific revalidation.

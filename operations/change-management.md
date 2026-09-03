@@ -15,7 +15,7 @@ Controls: `DEL-001`, `DEL-002`, `EVA-006`, `OPS-007`.
 | Capability | New/changed tool, skill, MCP server, browser/code access, egress, credential | Threat update, contract/authorization/security tests, sandbox, scoped canary |
 | Domain/policy | Source, schema, ontology, business or payer rule, policy, approval | Data reconciliation, migration, representative replay, owner approval |
 | State/runtime | Workflow state, checkpoint, concurrency, retry, queue, sandbox, dependency | Compatibility, recovery, load, cancellation, rollback rehearsal |
-| Evaluator | Fixture, grader, rubric, label, hidden test, threshold | Independent review, negative controls, calibration, baseline rerun |
+| Evaluator or deployment policy | Fixture, grader, rubric, label, hidden test, threshold, oversight policy, routing signal, reviewer effectiveness, review cost/capacity | Independent review, negative controls, calibration, policy freeze, held-out qualification, baseline rerun or policy-in-loop rerun |
 | User/operating model | Review surface, escalation, training, support, SLO, autonomy | Operator acceptance, adoption capacity, runbook and ownership review |
 
 ## Candidate manifest
@@ -79,6 +79,8 @@ Apply these additional rules when a model or agent route changes. Other selected
 - Never lower a threshold, weaken a fixture, or alter a grader solely to make the candidate pass.
 
 When a configuration benchmark compares complete routes, freeze the representative tasks, world and policy revisions, resource ceilings, scorer versions, trial rules, and acceptance criteria across the current and candidate release graphs. Retain per-case outcomes, failures, exclusions, uncertainty, safety slices, scorer cost, and an unchanged holdout. A synthesized recommendation or agent-authored diff remains a candidate; it cannot approve, merge, deploy, or alter the evaluator and release evidence that judges it. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
+
+When release authority depends on a human-AI oversight policy, preserve the exact development/qualification split, selected policy, routing signal, reviewer-effectiveness basis, sampling unit, reliability bound, review burden, and total cost. A changed terminal threshold or evaluator may be re-scored from saved evidence only when every required input remains observable and oversight cannot change the trajectory. A changed agent, context, tool, environment, eligible population, reviewer path, or trajectory-dependent intervention requires representative rerun or simulation before a new held-out qualification. [R26-85](../research/2026-09-03--workflow-proof-and-deployment-qualification.md#r26-85)
 
 For a long-running optimization search, bind the initial artifact, objective, development evaluator, and separately controlled promotion evaluator before the first experiment. Each experiment should retain one falsifiable hypothesis, its factual result, a reusable insight, the exact artifact revision, and its disposition. Development results may select the next experiment; they must not expose or alter the promotion evaluator. Test a proposed best candidate on the protected evaluator in a fresh environment, then send it through the normal compatibility, safety, approval, canary, and rollback sequence. A hypothesis tree is one optional way to preserve this state; autonomous search topology is not a release authority. [S35](../library/05-source-index.md#s35)
 

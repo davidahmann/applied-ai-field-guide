@@ -15,13 +15,13 @@ Turn an accepted workflow boundary into one usable, reversible, and supportable 
 
 ## Workflow
 
-1. Confirm the approved segment, accepted outcome, verifier, exclusions, maximum effect, authority ceiling, cost budget, safe fallback, adoption surface, owner, and stop conditions.
+1. Confirm the approved segment, accepted outcome, verifier, exclusions, maximum effect, authority ceiling, cost budget, safe fallback, adoption surface, owner, baseline acknowledgment, required participant capacity and delegates, and stop conditions.
 2. Translate the boundary into one end-to-end slice across input, decision, human work surface, permitted action or staged artifact, source-of-truth verification, telemetry, support, and rollback.
 3. Build deterministic policy, state transitions, authorization, idempotency, and effect verification outside model generation. Add model or agent behavior only where the selection record requires it.
 4. Use real target interfaces or faithful contract doubles. Preserve source revisions, preparation lineage, release dependencies, and customer-specific configuration.
 5. Build contract, component, trajectory, artifact or outcome, safety, operations, adoption, and recovery tests before expanding effect authority.
 6. Put the slice in the operator's real work surface. Observe exposure, completion, correction, override, abandonment, review load, acceptance, and verified effect separately.
-7. Assemble the compatible release evidence, production-readiness gaps, rollout, rollback, support, receiving-team exercises, and exit conditions. Merge is not deployment.
+7. Assemble the compatible release evidence, production-readiness gaps, rollout, rollback, support, receiving-team exercises, and exit conditions. Bind the exact version and prior scope of reused assets and record target revalidation. Merge is not deployment.
 8. Decide `iterate`, `shadow`, `canary_candidate`, `constrain`, or `stop` using target-system authority. Do not claim customer acceptance from test completion.
 
 ## Output contract

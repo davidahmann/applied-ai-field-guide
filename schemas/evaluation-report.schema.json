@@ -7,7 +7,7 @@
   "required": ["$schema", "schema_version", "report_id", "version", "owner", "generated_at", "claim", "objective", "population", "system", "suite", "evaluator", "resource_budgets", "resource_usage", "trials", "results", "contamination_controls", "limitations", "decision", "control_ids"],
   "properties": {
     "$schema": { "type": "string" },
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "report_id": { "$ref": "#/$defs/id" },
     "version": { "$ref": "#/$defs/version" },
     "owner": { "type": "string", "minLength": 2 },
@@ -225,6 +225,7 @@
         "reference_solution_reviewed": { "type": "boolean" }
       }
     },
+    "deployment_qualification": { "$ref": "#/$defs/deploymentQualification" },
     "limitations": { "$ref": "#/$defs/nonEmptyStrings" },
     "decision": {
       "type": "object",
@@ -401,6 +402,146 @@
         "schema_version": { "$ref": "#/$defs/nullableVersion" },
         "digest": { "$ref": "#/$defs/digest" }
       }
+    },
+    "deploymentQualification": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "rationale"],
+          "properties": {
+            "status": { "const": "not_applicable" },
+            "rationale": { "type": "string", "minLength": 10 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "rationale", "workflow_success_metric", "oversight_policy", "evidence_partitions", "sampling", "execution_mode", "operating_point", "review_path", "risk_constraints", "scope_assumptions", "requalification_triggers"],
+          "properties": {
+            "status": { "enum": ["not_evaluated", "qualified", "not_qualified", "insufficient_evidence"] },
+            "rationale": { "type": "string", "minLength": 10 },
+            "workflow_success_metric": { "type": "string", "minLength": 3 },
+            "oversight_policy": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["policy_id", "version", "digest", "class", "routing_signal", "selected_on", "frozen_before_qualification", "trajectory_invariant"],
+              "properties": {
+                "policy_id": { "$ref": "#/$defs/id" },
+                "version": { "$ref": "#/$defs/version" },
+                "digest": { "$ref": "#/$defs/digest" },
+                "class": { "enum": ["terminal_accept_or_escalate", "interleaved_review", "bounded_takeover", "other"] },
+                "routing_signal": { "type": "string", "minLength": 3 },
+                "selected_on": { "const": "development" },
+                "frozen_before_qualification": { "type": "boolean" },
+                "trajectory_invariant": { "type": "boolean" }
+              }
+            },
+            "evidence_partitions": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["development", "qualification", "disjoint"],
+              "properties": {
+                "development": { "$ref": "#/$defs/immutableDataset" },
+                "qualification": { "$ref": "#/$defs/immutableDataset" },
+                "disjoint": { "type": "boolean" }
+              }
+            },
+            "sampling": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["unit", "dependence", "qualification_method"],
+              "properties": {
+                "unit": { "type": "string", "minLength": 3 },
+                "dependence": { "type": "string", "minLength": 10 },
+                "qualification_method": { "type": "string", "minLength": 3 }
+              }
+            },
+            "execution_mode": { "enum": ["terminal_replay", "policy_in_loop_rerun", "not_executed"] },
+            "operating_point": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["target_reliability", "observed_reliability", "reliability_lower_bound", "confidence", "confidence_method", "autonomous_coverage", "human_review_burden", "routing_signal_quality", "expected_cost_per_case", "currency"],
+              "properties": {
+                "target_reliability": { "type": "number", "minimum": 0, "maximum": 1 },
+                "observed_reliability": { "$ref": "#/$defs/nullableRatio" },
+                "reliability_lower_bound": { "$ref": "#/$defs/nullableRatio" },
+                "confidence": { "$ref": "#/$defs/nullableRatio" },
+                "confidence_method": { "type": ["string", "null"], "minLength": 3 },
+                "autonomous_coverage": { "$ref": "#/$defs/nullableRatio" },
+                "human_review_burden": { "$ref": "#/$defs/nullableRatio" },
+                "routing_signal_quality": { "type": ["string", "null"], "minLength": 3 },
+                "expected_cost_per_case": { "type": ["number", "null"], "minimum": 0 },
+                "currency": { "type": ["string", "null"], "pattern": "^[A-Z]{3}$" }
+              }
+            },
+            "review_path": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["effectiveness_basis", "effectiveness", "reviewer_population", "capacity_source", "latency_target_ms"],
+              "properties": {
+                "effectiveness_basis": { "enum": ["measured", "assumed", "mixed", "unmeasured"] },
+                "effectiveness": { "$ref": "#/$defs/nullableRatio" },
+                "reviewer_population": { "type": "string", "minLength": 3 },
+                "capacity_source": { "type": "string", "minLength": 3 },
+                "latency_target_ms": { "type": ["integer", "null"], "minimum": 1 }
+              }
+            },
+            "risk_constraints": { "$ref": "#/$defs/nonEmptyStrings" },
+            "scope_assumptions": { "$ref": "#/$defs/nonEmptyStrings" },
+            "requalification_triggers": { "$ref": "#/$defs/nonEmptyStrings" }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "status": { "const": "qualified" } }, "required": ["status"] },
+              "then": {
+                "properties": {
+                  "oversight_policy": { "type": "object", "properties": { "frozen_before_qualification": { "const": true } } },
+                  "evidence_partitions": { "type": "object", "properties": { "disjoint": { "const": true } } },
+                  "operating_point": {
+                    "type": "object",
+                    "properties": {
+                      "observed_reliability": { "type": "number" },
+                      "reliability_lower_bound": { "type": "number" },
+                      "confidence": { "type": "number" },
+                      "confidence_method": { "type": "string" },
+                      "autonomous_coverage": { "type": "number" },
+                      "human_review_burden": { "type": "number" },
+                      "routing_signal_quality": { "type": "string" },
+                      "expected_cost_per_case": { "type": "number" },
+                      "currency": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": { "properties": { "execution_mode": { "const": "terminal_replay" } }, "required": ["execution_mode"] },
+              "then": { "properties": { "oversight_policy": { "type": "object", "properties": { "trajectory_invariant": { "const": true } } } } }
+            },
+            {
+              "if": { "properties": { "execution_mode": { "const": "policy_in_loop_rerun" } }, "required": ["execution_mode"] },
+              "then": { "properties": { "oversight_policy": { "type": "object", "properties": { "trajectory_invariant": { "const": false } } } } }
+            }
+          ]
+        }
+      ]
+    },
+    "immutableDataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "version", "digest"],
+      "properties": {
+        "dataset_id": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/version" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "nullableRatio": {
+      "oneOf": [
+        { "type": "number", "minimum": 0, "maximum": 1 },
+        { "type": "null" }
+      ]
     },
     "eligiblePopulation": {
       "type": "object",

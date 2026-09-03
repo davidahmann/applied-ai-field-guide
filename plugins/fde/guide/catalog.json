@@ -824,6 +824,12 @@
       "type": "evidence",
       "path": "research/2026-08-30--fde-interaction-workflow-ergonomics.md",
       "tags": ["sources", "fde", "field-discovery", "reframing", "workflow"]
+    },
+    {
+      "id": "evidence.workflow-proof-deployment-qualification",
+      "type": "evidence",
+      "path": "research/2026-09-03--workflow-proof-and-deployment-qualification.md",
+      "tags": ["sources", "proof", "evaluation", "human-review", "deployment"]
     }
   ]
 }

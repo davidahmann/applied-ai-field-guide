@@ -197,7 +197,7 @@ async function createApprovedReleaseFixture(repositoryRoot) {
 
   const report = {
     $schema: "../../schemas/evaluation-report.schema.json",
-    schema_version: "1.2.0",
+    schema_version: "1.1.0",
     report_id: "invoice_exception_pilot_report",
     version: "1.0.0",
     owner: "evaluation-preparer",

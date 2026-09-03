@@ -51,7 +51,8 @@ Use one record per candidate learning. Store source evidence in its governed sys
 | Local constraints and validation that must remain | Policy / data / security / evaluation / release / adoption / support / ownership |
 | Target-specific delivery and support effort | — |
 | Customer-specific effort ratio and prior comparable result | — |
-| Existing governed artifact reused and target validation | — |
+| Existing governed artifact reused, exact version, and prior scope | — |
+| Target revalidation, residual differences, and resulting disposition | — |
 | Recurrence confidence and reviewer | — |
 
 ### Confidentiality and portability

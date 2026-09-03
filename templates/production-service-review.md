@@ -113,6 +113,16 @@ Assign the first broken transition to an owning layer and dated response. Do not
 
 List production behavior clusters, new regressions, evaluator calibration changes, and open gaps.
 
+### Human-AI deployment qualification
+
+Use this section when service reliability depends on an oversight or routing policy. Compare the live operating point with the exact qualified policy; a changed reviewer path, policy, behavior, context, tool, environment, or population may require requalification.
+
+| Policy/version and routing signal | Qualification partition and sampling unit | Reliability target / observed / lower bound | Autonomous coverage / review burden | Reviewer effectiveness basis / latency / capacity | Total cost per case | Drift and decision |
+| --- | --- | --- | --- | --- | ---: | --- |
+| — | — | — | — | — | — | — |
+
+State whether evidence came from terminal replay or a policy-in-loop rerun. Assumed reviewer effectiveness remains a limitation until measured in the declared operating population. [R26-85](../research/2026-09-03--workflow-proof-and-deployment-qualification.md#r26-85)
+
 ### Scorer and observation review
 
 | Scorer/claim/version | Eligible runs, sample, and exclusions | Trace and human-interaction sources | Label authority, calibration, and disagreement | Cost and reviewer burden | Accepted-outcome effect / decision |

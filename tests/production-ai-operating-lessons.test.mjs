@@ -185,3 +185,58 @@ test("system design follows the complete operating path without adopting a layer
   assert.match(research, /“80%” context claim/i);
   assert.match(research, /private model instance per tenant/i);
 });
+
+test("workflow proofs and deployment qualification stay bounded and operational", async () => {
+  const [research, index, sourceIndex, catalogText, delivery, discovery, operations, evaluation, changes, readiness, serviceReview, schemaText, skill] = await Promise.all([
+    read("research/2026-09-03--workflow-proof-and-deployment-qualification.md"),
+    read("research/README.md"),
+    read("library/05-source-index.md"),
+    read("catalog.json"),
+    read("templates/delivery-and-adoption-plan.md"),
+    read("playbooks/01-discovery-and-value.md"),
+    read("playbooks/03-operate-and-scale.md"),
+    read("library/09-evaluation-corpus-and-review-loops.md"),
+    read("operations/change-management.md"),
+    read("templates/production-service-readiness.md"),
+    read("templates/production-service-review.md"),
+    read("schemas/evaluation-report.schema.json"),
+    read(".agents/skills/build-ai-evaluation/SKILL.md"),
+  ]);
+
+  for (const id of ["R26-85", "R26-86"]) {
+    assert.match(research, new RegExp(`## ${id} —`));
+  }
+  assert.match(research, /<a id="r26-85"><\/a>/);
+  assert.match(research, /<a id="r26-86"><\/a>/);
+  assert.match(research, /not Guide defaults/i);
+  assert.match(research, /No new skill, module, maturity ladder, or control family/i);
+  assert.match(index, /workflow-proof-and-deployment-qualification\.md/);
+  assert.match(sourceIndex, /## S38 — Scale AI: READY deployment qualification/);
+  assert.match(sourceIndex, /## S39 — Mark Ajzenstadt: AI transformation loop/);
+  const artifact = JSON.parse(catalogText).artifacts.find(({ path: artifactPath }) => (
+    artifactPath === "research/2026-09-03--workflow-proof-and-deployment-qualification.md"
+  ));
+  assert.equal(artifact?.id, "evidence.workflow-proof-deployment-qualification");
+
+  for (const phrase of [
+    "Proof participation and decision capacity",
+    "Baseline acknowledgment",
+    "Proof-work ledger",
+  ]) assert.match(delivery, new RegExp(phrase, "i"));
+  assert.match(`${discovery}\n${operations}`, /decision instrument/i);
+  assert.match(`${delivery}\n${operations}`, /decision, tested assumption, working increment, or sanitized reusable learning/i);
+  assert.match(`${delivery}\n${operations}`, /exact version and prior scope/i);
+
+  for (const phrase of [
+    "lower confidence bound",
+    "human-review burden",
+    "reviewer effectiveness",
+    "terminal trajectories",
+    "policy in the loop",
+  ]) assert.match(`${evaluation}\n${changes}\n${readiness}\n${serviceReview}\n${skill}`, new RegExp(phrase, "i"));
+  assert.match(readiness, /Evaluation and human-AI deployment qualification/);
+  assert.match(serviceReview, /Human-AI deployment qualification/);
+  const schema = JSON.parse(schemaText);
+  assert.equal(schema.properties.schema_version.const, "1.1.0");
+  assert.ok(schema.properties.deployment_qualification);
+});

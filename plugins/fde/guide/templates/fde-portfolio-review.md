@@ -112,11 +112,11 @@ Allocate the next unit of attention to the first unresolved hard gate or binding
 
 ## Reuse and field-to-product learning
 
-| Candidate | Comparable recurrence | Current target-specific effort | Reused governed artifact and validation | Ownership and reuse-rights status | Productization cost and owner | Expected future effect | Decision |
-| --- | --- | ---: | --- | --- | ---: | --- | --- |
-| — | — | — | — | Cleared / restricted / pending / prohibited | — | Delivery time / support load / quality / safety / cost | — |
+| Candidate | Comparable recurrence | Current target-specific effort | Reused governed artifact, exact version, and prior scope | Target revalidation and residual differences | Ownership and reuse-rights status | Productization cost and owner | Expected future effect | Decision |
+| --- | --- | ---: | --- | --- | --- | ---: | --- | --- |
+| — | — | — | — | — | Cleared / restricted / pending / prohibited | — | Delivery time / support load / quality / safety / cost | — |
 
-Use the [field-learning register](field-learning-register.md) for evidence, confidentiality, ownership, reuse rights, portability, and release disposition. Count reuse only when the artifact was actually used and validated in the target context. Reusing a template, copying customer policy, or avoiding necessary local work is not product leverage.
+Use the [field-learning register](field-learning-register.md) for evidence, confidentiality, ownership, reuse rights, portability, and release disposition. Count reuse only when the exact artifact version was actually used and validated in the target context. Reusing a template, copying customer policy, or avoiding necessary local work is not product leverage; reuse never transfers source-of-truth or approval authority.
 
 ## Sponsor resilience and operating capacity
 

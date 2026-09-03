@@ -23,11 +23,12 @@ Evaluate the product claim in its real environment, not an isolated model answer
 4. Give high-risk slices and prohibited effects independent thresholds that aggregate performance cannot hide.
 5. Run repeated isolated trials with explicit code, rule, optimizer, ML model, data, policy, runtime, budget, and evaluator versions as applicable; add foundation-model, prompt, context, and tool versions only when selected. Track uncertainty and contamination.
 6. When the task requires many optimization experiments, bind the initial artifact, objective, development evaluator, and separately controlled promotion evaluator before search. Preserve each falsifiable hypothesis, factual result, reusable insight, artifact revision, and disposition. Let development evidence steer search, but keep the promotion evaluator hidden from and immutable to proposal and execution; a held-out result still proceeds through ordinary approval and release gates.
-7. Validate outputs, external effects, readback, stop reasons, latency, cost, and resource use—not only final text.
-8. Produce the model/agent evaluation report when that profile applies; otherwise produce the equivalent target-software evaluation record. Record `accept`, `inconclusive`, or `reject`, with limitations and required follow-up.
+7. When deployment depends on human review or routing, define the candidate oversight-policy class and workflow success first. Select the policy on development evidence, freeze it, and qualify the complete human-AI operating point on a disjoint holdout using an appropriate lower confidence bound. Record autonomous coverage, review burden, routing-signal quality, reviewer effectiveness and whether it is measured or assumed, latency, capacity, total cost, sampling dependence, risk constraints, and requalification triggers. Replay saved terminal trajectories only when intervention cannot change the trajectory; otherwise rerun or simulate the policy in the loop.
+8. Validate outputs, external effects, readback, stop reasons, latency, cost, and resource use—not only final text.
+9. Produce the model/agent evaluation report when that profile applies; otherwise produce the equivalent target-software evaluation record. Record `accept`, `inconclusive`, or `reject`, with limitations and required follow-up.
 
 ## Output contract
 
-Return the cases and their source, fixture and grader responsibilities, execution manifest, slice-level results, uncertainty, failure taxonomy, contamination statement, applicable evaluation record and decision, and regression links.
+Return the cases and their source, fixture and grader responsibilities, execution manifest, slice-level results, uncertainty, failure taxonomy, contamination statement, applicable deployment-qualification profile, evaluation record and decision, and regression links.
 
 Do not present self-review as independent proof, tune thresholds to pass a candidate, accept leaked answer keys, or infer production readiness from a benchmark alone.
