@@ -671,7 +671,7 @@ test("the MCP process completes protocol initialization and lists the same bound
   child.stdin.write(`${JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "test", version: "1" } } })}\n`);
   const initialized = await waitFor(1);
   assert.equal(initialized.result.serverInfo.name, "fde-local-copilot");
-  assert.equal(initialized.result.serverInfo.version, "1.32.0");
+  assert.equal(initialized.result.serverInfo.version, "1.33.0");
   assert.deepEqual(initialized.result.capabilities, { tools: { listChanged: false } });
   child.stdin.write(`${JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" })}\n`);
   child.stdin.write(`${JSON.stringify({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} })}\n`);
@@ -783,7 +783,7 @@ test("the installer creates a versioned local package, preserves configuration, 
   const first = run([]);
   assert.equal(first.status, 0, first.stderr);
   const installedRoot = path.join(localHome, "plugins", "fde");
-  assert.equal(JSON.parse(await readFile(path.join(installedRoot, ".codex-plugin", "plugin.json"), "utf8")).version, "1.32.0");
+  assert.equal(JSON.parse(await readFile(path.join(installedRoot, ".codex-plugin", "plugin.json"), "utf8")).version, "1.33.0");
   const config = JSON.parse(await readFile(path.join(localHome, ".config", "fde", "config.json"), "utf8"));
   assert.equal(config.guide_root, path.join(installedRoot, "guide"));
   assert.equal(config.validator_root, root);

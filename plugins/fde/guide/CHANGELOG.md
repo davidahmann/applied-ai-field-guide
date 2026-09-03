@@ -4,6 +4,14 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [1.33.0] - 2026-09-03
+
+- Add a two-aperture discovery loop that reconciles strategic goals and authority with observed operating work, direct technical evidence, and unresolved contradictions without prescribing a CEO-first or fixed interview sequence.
+- Make the candidate value surface explicit across customer-visible interaction, internal enablement, cost or capacity, and risk and control while retaining workflow gates and rejecting customer visibility as a universal priority.
+- Add a bounded long-horizon optimization pattern that records falsifiable hypotheses, results, reusable insights, and exact artifact revisions; development evidence steers search while a separately controlled holdout only admits candidates into the ordinary release path.
+- Attribute the Arbor implementation and the supplied practitioner accounts with explicit evidence limits; add no new lifecycle, schema, score, module, control family, or canonical content file.
+- Update the indirect `fast-uri` dependency from 3.1.5 to 3.1.7, rebind the dependency-lock release evidence, resync the complete FDE plugin snapshot, and supersede the two split Dependabot updates with one coherent release.
+
 ## [1.32.0] - 2026-09-01
 
 - Add a company adoption operating model that treats agents as replaceable components of accountable AI-enabled services, centralizes reusable identity, evaluation, telemetry, security, cost, and delivery rails, and preserves workflow-local outcome, source, policy, effect, support, and retirement authority.
@@ -262,7 +270,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.32.0...HEAD
+[Unreleased]: https://github.com/davidahmann/fde-guide/compare/v1.33.0...HEAD
+[1.33.0]: https://github.com/davidahmann/fde-guide/compare/v1.32.0...v1.33.0
 [1.32.0]: https://github.com/davidahmann/fde-guide/compare/v1.31.0...v1.32.0
 [1.31.0]: https://github.com/davidahmann/fde-guide/compare/v1.30.0...v1.31.0
 [1.30.0]: https://github.com/davidahmann/fde-guide/compare/v1.29.0...v1.30.0

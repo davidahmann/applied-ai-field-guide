@@ -100,3 +100,27 @@ test("deployment and topology choices stay evidence-driven rather than categoric
   assert.match(research, /Multi-model routing and multi-agent decomposition are optional mechanisms/);
   assert.match(research, /cost per accepted outcome/i);
 });
+
+test("long-horizon optimization separates search feedback from promotion authority", async () => {
+  const [sourceIndex, evaluation, changes, skill, research] = await Promise.all([
+    read("library/05-source-index.md"),
+    read("library/09-evaluation-corpus-and-review-loops.md"),
+    read("operations/change-management.md"),
+    read(".agents/skills/build-ai-evaluation/SKILL.md"),
+    read("research/2026-08-08--operational-redesign-and-applied-ai-practice.md"),
+  ]);
+
+  assert.match(sourceIndex, /## S35 — K-Dense AI: Arbor skill/);
+  assert.match(sourceIndex, /1e5eeffbdad3749125afe7ab48a39694e27f181c/);
+  for (const body of [evaluation, changes, skill]) {
+    assert.match(body, /initial artifact/i);
+    assert.match(body, /development evaluator/i);
+    assert.match(body, /promotion evaluator/i);
+    assert.match(body, /hypothesis/i);
+    assert.match(body, /artifact revision/i);
+  }
+  assert.match(evaluation, /A held-out score can reject a candidate; it cannot authorize a merge, deployment, or business effect/i);
+  assert.match(changes, /autonomous search topology is not a release authority/i);
+  assert.match(skill, /held-out result still proceeds through ordinary approval and release gates/i);
+  assert.match(research, /No new lifecycle, score, module, or control family is created/i);
+});

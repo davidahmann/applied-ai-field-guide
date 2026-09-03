@@ -22,8 +22,9 @@ Evaluate the product claim in its real environment, not an isolated model answer
 3. Combine deterministic contract and effect checks with calibrated semantic review and behavioral trajectory checks where appropriate.
 4. Give high-risk slices and prohibited effects independent thresholds that aggregate performance cannot hide.
 5. Run repeated isolated trials with explicit code, rule, optimizer, ML model, data, policy, runtime, budget, and evaluator versions as applicable; add foundation-model, prompt, context, and tool versions only when selected. Track uncertainty and contamination.
-6. Validate outputs, external effects, readback, stop reasons, latency, cost, and resource use—not only final text.
-7. Produce the model/agent evaluation report when that profile applies; otherwise produce the equivalent target-software evaluation record. Record `accept`, `inconclusive`, or `reject`, with limitations and required follow-up.
+6. When the task requires many optimization experiments, bind the initial artifact, objective, development evaluator, and separately controlled promotion evaluator before search. Preserve each falsifiable hypothesis, factual result, reusable insight, artifact revision, and disposition. Let development evidence steer search, but keep the promotion evaluator hidden from and immutable to proposal and execution; a held-out result still proceeds through ordinary approval and release gates.
+7. Validate outputs, external effects, readback, stop reasons, latency, cost, and resource use—not only final text.
+8. Produce the model/agent evaluation report when that profile applies; otherwise produce the equivalent target-software evaluation record. Record `accept`, `inconclusive`, or `reject`, with limitations and required follow-up.
 
 ## Output contract
 

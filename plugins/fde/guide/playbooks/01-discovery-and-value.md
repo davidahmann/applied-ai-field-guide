@@ -24,6 +24,14 @@ One person may hold several ownership or delivery roles during a small pilot, bu
 
 Controls: `FDE-001`, `FDE-002`, `ADP-002`.
 
+## Use strategic and operating apertures
+
+Start broad enough to understand why the work matters, then get close enough to see how it actually happens. The strategic aperture captures owned goals, material blockers, decision deadlines, economic exposure, and who can fund, reshape, or stop the work. The operating aperture inspects representative cases with the operational owner, process knower, operators, source owners, and technical owners.
+
+Return to the people who stated the strategic intent with the observed workflow, contradictions, and missing evidence. A disagreement between the two apertures is a discovery result to resolve, not a reason to average the accounts or write a cleaner roadmap. Seniority does not make a workflow claim true, and an operator observation does not grant funding, policy, or disposition authority.
+
+This is a loop, not a mandatory interview order. Start with the person who has the widest relevant aperture and available authority; follow referrals toward the people, cases, systems, and evidence needed for the current decision. Surveys and transcripts may stage hypotheses, but they do not replace representative observation or direct technical evidence.
+
 ## 1. Qualify before discovery
 
 Apply hard gates before a weighted score. A candidate does not proceed when any of these conditions is true:
@@ -38,6 +46,8 @@ Apply hard gates before a weighted score. A candidate does not proceed when any 
 - No team can own support, incident response, and change after the pilot
 
 Candidates that pass can be ranked by business impact, eligible volume, time saved, avoided loss, verification coverage, context and integration readiness, adoption probability, risk, implementation effort, and time to evidence. Impact-versus-effort is a useful prioritization view, but it does not cancel a missing owner, verifier, or safety boundary. [R26-39]
+
+For each candidate, name its primary value surface: a customer-visible interaction, internal enablement, cost or capacity, or risk and control. When a customer waits, complains, abandons, disputes, or cannot accept the result, test whether one bounded interaction can improve within the evidence window and how the customer or accountable proxy will verify that change. Customer visibility is a useful candidate-generation lens, not a universal priority rule; an internal control, safety, or operating workflow may be more consequential.
 
 Control: `VAL-003`.
 

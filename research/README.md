@@ -2,7 +2,7 @@
 
 This folder holds dated evidence that supports the implementation library.
 
-**Repository source review:** The general source set was last rechecked 2026-08-10; the multi-agent topology note was reviewed 2026-08-14; the Bridgewater PAT field report was reviewed 2026-08-27; Uber's production AI operating reports and Warp's software-factory improvement article were reviewed 2026-08-28; the healthcare-claims context, agentic operating-maturity, and FDE interaction-workflow evidence were reviewed 2026-08-30; and the operational-redesign note was refreshed 2026-09-01 with bounded company-adoption, decision-rights, rapid-proof, and shared-versus-workflow capability evidence. Link reachability and first-party publication do not establish general validity; every implementation pattern still requires local evaluation.
+**Repository source review:** The general source set was last rechecked 2026-08-10; the multi-agent topology note was reviewed 2026-08-14; the Bridgewater PAT field report was reviewed 2026-08-27; Uber's production AI operating reports and Warp's software-factory improvement article were reviewed 2026-08-28; the healthcare-claims context, agentic operating-maturity, and FDE interaction-workflow evidence were reviewed 2026-08-30; and the operational-redesign note was refreshed 2026-09-03 with bounded company-adoption, two-aperture discovery, customer-interaction, and protected optimization-search evidence. Link reachability and first-party publication do not establish general validity; every implementation pattern still requires local evaluation.
 
 ## How sources are admitted
 
