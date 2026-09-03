@@ -1,0 +1,42 @@
+{
+  "name": "applied-ai-field-guide",
+  "version": "2.0.0",
+  "description": "A local-first applied-AI copilot for source-linked fieldwork, delivery decisions, and production assurance.",
+  "author": {
+    "name": "David Ahmann",
+    "url": "https://www.linkedin.com/in/dahmann/"
+  },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "homepage": "https://davidahmann.github.io/applied-ai-field-guide/",
+  "repository": "https://github.com/davidahmann/applied-ai-field-guide",
+  "license": "Apache-2.0",
+  "keywords": [
+    "applied-ai",
+    "fde",
+    "forward-deployed-engineering",
+    "production-ai",
+    "field-discovery",
+    "evaluation"
+  ],
+  "interface": {
+    "displayName": "The Applied AI Field Guide",
+    "shortDescription": "Run evidence-backed AI delivery engagements locally.",
+    "longDescription": "The Applied AI Field Guide combines sixteen focused skills with a private local workspace for source metadata, immutable artifact revisions, recorded human dispositions, declared dependency impact, next-move routing, and compact decision packets. Use it for internal delivery or customer engagements.",
+    "developerName": "David Ahmann",
+    "category": "Productivity",
+    "capabilities": [
+      "Local STDIO MCP",
+      "Sixteen applied-AI workflow skills",
+      "Source-linked engagement workspace",
+      "Immutable artifact revisions",
+      "Declared dependency impact"
+    ],
+    "websiteURL": "https://davidahmann.github.io/applied-ai-field-guide/",
+    "brandColor": "#244BFF",
+    "composerIcon": "./assets/guide-mark.svg",
+    "logo": "./assets/guide-mark.svg",
+    "logoDark": "./assets/guide-mark-dark.svg",
+    "defaultPrompt": "Use $run-ai-engagement to understand this internal or customer engagement, inspect only the evidence needed for the next decision, and leave one accountable next move."
+  }
+}

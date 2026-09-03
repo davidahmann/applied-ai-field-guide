@@ -3,8 +3,9 @@ import { access, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 
-import { pages, site } from "../site/site.config.mjs";
+import { pages, redirects, site } from "../site/site.config.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(root, "site-dist");
@@ -16,6 +17,33 @@ function routeFile(route) {
 function matches(html, pattern) {
   return [...html.matchAll(pattern)].map((match) => match[1]);
 }
+
+test("Escape closes search even while the search field has text", async () => {
+  const handlers = new Map();
+  let prevented = false;
+  let closeCount = 0;
+  const dialog = {
+    open: true,
+    close() { this.open = false; closeCount += 1; },
+    addEventListener() {},
+  };
+  const document = {
+    querySelector: (selector) => selector === "#site-search" ? dialog : null,
+    addEventListener: (name, handler) => handlers.set(name, handler),
+    activeElement: { matches: () => true },
+  };
+  const source = await readFile(path.join(root, "site/assets/site.js"), "utf8");
+  vm.runInNewContext(source, { document, window: { matchMedia: () => ({ matches: false }) } });
+  const event = { key: "Escape", preventDefault() { prevented = true; } };
+  handlers.get("keydown")(event);
+  assert.equal(prevented, true, "do not let the input consume Escape before the dialog");
+  assert.equal(dialog.open, false);
+  assert.equal(closeCount, 1);
+  prevented = false;
+  handlers.get("keydown")(event);
+  assert.equal(prevented, false, "leave Escape outside search unchanged");
+  assert.equal(closeCount, 1);
+});
 
 test("site configuration defines one canonical source per route", () => {
   assert.equal(new Set(pages.map(({ route }) => route)).size, pages.length);
@@ -29,7 +57,7 @@ test("site configuration defines one canonical source per route", () => {
 });
 
 test("the five-minute guide stays concise and routes into canonical depth", async () => {
-  const page = pages.find(({ source }) => source === "guide/fde-guide-in-five-minutes.md");
+  const page = pages.find(({ source }) => source === "guide/field-guide-in-five-minutes.md");
   assert.equal(page?.route, "/five-minute-guide/");
   const source = await readFile(path.join(root, page.source), "utf8");
   const words = source
@@ -42,7 +70,7 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
     "## Before you design anything",
     "## Once the boundary is real",
     "## Prove the service people will actually run",
-    "## Know when to leave",
+    "## Make ownership survive the project",
     "## Keep the working packet small",
     "## Where to go next",
   ]) assert.ok(source.includes(heading), heading);
@@ -52,13 +80,15 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
     "templates/workflow-charter.json",
     "templates/production-service-readiness.md",
     "operations/release-gates.md",
-    "concise FDE Guide](README.md)",
+    "concise Applied AI Field Guide](README.md)",
   ]) assert.ok(source.includes(target), target);
   assert.match(source, /guidance—not production approval/i);
-  assert.match(source, /Don't relabel general staffing as FDE work/);
-  assert.match(source, /holding revenue (?:and|or) production together/);
+  assert.match(source, /only the original builder can change a rule or restore a failed job/);
+  assert.match(source, /An internal team may keep ownership; give it capacity and backup coverage/);
+  assert.match(source, /temporary FDE team should agree on exit evidence and transfer ordinary implementation or support/);
+  assert.match(source, /Neither arrangement should depend on one person's laptop or permanent availability/);
   assert.match(source, /A common Monday starts like this/);
-  assert.match(source, /\*\*Sold brief:\*\*[\s\S]*\*\*Observed:\*\*[\s\S]*\*\*Safe fallback:\*\*[\s\S]*\*\*Decision needed:\*\*/);
+  assert.match(source, /\*\*Inherited brief:\*\*[\s\S]*\*\*Observed:\*\*[\s\S]*\*\*Safe fallback:\*\*[\s\S]*\*\*Decision needed:\*\*/);
   assert.doesNotMatch(source, /## Five rules that matter|### [1-5]\./);
 
   const contractions = source.match(/\b(?:don't|doesn't|isn't|can't|won't|you're|that's|it's|they're|we're|shouldn't|couldn't|wouldn't)\b/gi) ?? [];
@@ -74,7 +104,7 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
 test("the public entry layer routes five common field situations before repository taxonomy", async () => {
   const [overview, shortGuide] = await Promise.all([
     readFile(path.join(root, "README.md"), "utf8"),
-    readFile(path.join(root, "guide/fde-guide-in-five-minutes.md"), "utf8"),
+    readFile(path.join(root, "guide/field-guide-in-five-minutes.md"), "utf8"),
   ]);
 
   assert.ok(overview.indexOf("## Start with what went wrong") < overview.indexOf("## Choose your depth"));
@@ -100,7 +130,7 @@ test("the public entry layer routes five common field situations before reposito
 
 test("the capability roadmap is a bounded secondary entry layer", async () => {
   const page = pages.find(({ source }) => source === "guide/capability-roadmap.md");
-  assert.equal(page?.route, "/forward-deployed-engineer-roadmap/");
+  assert.equal(page?.route, "/applied-ai-capability-roadmap/");
   const source = await readFile(path.join(root, page.source), "utf8");
   for (const heading of [
     "## Choose the responsibility, not the title",
@@ -121,7 +151,7 @@ test("the capability roadmap is a bounded secondary entry layer", async () => {
 
 test("the public guides require direct technical evidence without turning maturity into a gate", async () => {
   const [shortGuide, conciseGuide] = await Promise.all([
-    readFile(path.join(root, "guide", "fde-guide-in-five-minutes.md"), "utf8"),
+    readFile(path.join(root, "guide", "field-guide-in-five-minutes.md"), "utf8"),
     readFile(path.join(root, "guide", "README.md"), "utf8"),
   ]);
   for (const source of [shortGuide, conciseGuide]) {
@@ -169,11 +199,11 @@ test("public lifecycle views preserve one canonical sequence and label compresse
   const [overview, guide, shortGuide, capability] = await Promise.all([
     readFile(path.join(root, "README.md"), "utf8"),
     readFile(path.join(root, "guide/README.md"), "utf8"),
-    readFile(path.join(root, "guide/fde-guide-in-five-minutes.md"), "utf8"),
+    readFile(path.join(root, "guide/field-guide-in-five-minutes.md"), "utf8"),
     readFile(path.join(root, "guide/capability-roadmap.md"), "utf8"),
   ]);
   for (const body of [overview, guide]) {
-    for (const stage of ["Inherit the brief", "Observe and reconcile the work", "Charter value and scope", "Make data fit for the decision", "Select the mechanism", "Build one controlled slice", "Prove it with cases and users", "Launch and transfer ownership", "Operate, learn, or retire"]) {
+    for (const stage of ["Inherit the brief", "Observe and reconcile the work", "Charter value and scope", "Make data fit for the decision", "Select the mechanism", "Build one controlled slice", "Prove it with cases and users", "Launch with operating ownership", "Operate, learn, or retire"]) {
       assert.ok(body.includes(stage), stage);
     }
   }
@@ -189,8 +219,8 @@ test("the two public front doors remain compact while the complete guide keeps a
   ]);
   assert.ok(overview.split(/\s+/).length <= 1100, "README should remain a thin public router");
   assert.ok(guide.split(/\s+/).length <= 2600, "concise Guide should remain readable in one sitting");
-  for (const phrase of ["Monday morning", "The hard conversation can be plain", "Net value is only $320", "Documents can't replace those exercises"]) {
-    assert.ok(guide.includes(phrase), phrase);
+  for (const phrase of ["Monday morning", "the hard conversation can be plain", "Net value is only $320", "Documents can't replace those exercises"]) {
+    assert.ok(guide.toLowerCase().includes(phrase.toLowerCase()), phrase);
   }
   assert.match(maintenance, /consolidation ceiling/);
   assert.match(maintenance, /growth without a compensating merge or removal/i);
@@ -231,6 +261,11 @@ test("every canonical page has accessible structure and complete metadata", asyn
     assert.match(html, /Updated <time datetime="\d{4}-\d{2}-\d{2}">/);
     assert.match(html, /<dialog class="search-dialog"/);
     assert.match(html, /<meta property="og:image"/);
+    assert.match(html, /<meta property="og:image:width" content="1280">/);
+    assert.match(html, /<meta property="og:image:height" content="640">/);
+    assert.match(html, /<meta property="og:image:alt" content="The Applied AI Field Guide:/);
+    assert.match(html, /class="brand-mark" aria-hidden="true">AI<\/span>/);
+    assert.doesNotMatch(html, /class="brand-mark"[^>]*>FDE/);
     const canonical = matches(html, /<link rel="canonical" href="([^"]+)">/g)[0];
     assert.equal(canonical, `${site.url}${page.route}`);
     canonicals.push(canonical);
@@ -239,6 +274,43 @@ test("every canonical page has accessible structure and complete metadata", asyn
     for (const document of structuredData) assert.doesNotThrow(() => JSON.parse(document));
   }
   assert.equal(new Set(canonicals).size, pages.length);
+});
+
+test("renamed pages have contained, non-indexed aliases to the canonical content", async () => {
+  const canonicalRoutes = new Set(pages.map(({ route }) => route));
+  const sitemap = await readFile(path.join(outputRoot, "sitemap.xml"), "utf8");
+  const search = JSON.parse(await readFile(path.join(outputRoot, "assets/search-index.json"), "utf8"));
+  const seen = new Set();
+  for (const { from, to } of redirects) {
+    assert.match(from, /^\/(?:[a-z0-9-]+\/)+$/);
+    assert.ok(canonicalRoutes.has(to), to);
+    assert.ok(!canonicalRoutes.has(from) && !seen.has(from), from);
+    seen.add(from);
+    const html = await readFile(routeFile(from), "utf8");
+    assert.match(html, /<meta name="robots" content="noindex,follow">/);
+    assert.ok(html.includes(`<link rel="canonical" href="${site.url}${to}">`), to);
+    const target = path.posix.relative(from.slice(1), to.slice(1)) + "/";
+    assert.ok(html.includes(`<meta http-equiv="refresh" content="0;url=${target}">`), from);
+    assert.ok(html.includes(`location.replace(${JSON.stringify(target)} + location.hash)`), "preserve old bookmark fragments");
+    assert.ok(html.includes(`<a href="${target}">Continue to `), "no-script fallback");
+    assert.doesNotMatch(html, /location\.search|document\.referrer/, "untrusted input must not choose the redirect target");
+    assert.ok(!sitemap.includes(`${site.url}${from}`), "aliases must not enter the sitemap");
+    assert.ok(!search.some(({ route }) => route === from), "aliases must not create duplicate search results");
+    await access(routeFile(to));
+  }
+  assert.equal(seen.size, 3);
+});
+
+test("renamed section headings preserve existing bookmark anchors", async () => {
+  for (const page of pages.filter((entry) => entry.legacyAnchors)) {
+    const html = await readFile(routeFile(page.route), "utf8");
+    for (const [alias, target] of Object.entries(page.legacyAnchors)) {
+      assert.match(alias, /^[a-z0-9-]+$/);
+      assert.equal(matches(html, new RegExp(`id="(${alias})"`, "g")).length, 1, alias);
+      assert.ok(html.includes(`id="${target}"`), target);
+      assert.ok(html.includes(`<span id="${alias}" aria-hidden="true"></span><h2 id="${target}"`), "old anchors must land at the corresponding section");
+    }
+  }
 });
 
 test("generated internal links, assets, and anchors resolve", async () => {
@@ -290,9 +362,9 @@ test("site output is self-contained and free of retired or local references", as
     "assets/site.css",
     "assets/site.js",
     "assets/search-index.json",
-    "assets/fde-guide-banner.svg",
-    "assets/fde-guide-social.svg",
-    "assets/fde-guide-social.png",
+    "assets/applied-ai-field-guide-banner.svg",
+    "assets/applied-ai-field-guide-social.svg",
+    "assets/applied-ai-field-guide-social.png",
     "assets/ai-value-engineering-scorecard.svg",
     "assets/ai-value-engineering-scorecard.png",
     "downloads/ai-value-engineering-scorecard.pdf",
@@ -317,23 +389,24 @@ test("site output is self-contained and free of retired or local references", as
 
 test("the social preview keeps an editable source and a GitHub-compatible deterministic export", async () => {
   const [source, raster, maintenance] = await Promise.all([
-    readFile(path.join(root, "assets", "fde-guide-social.svg"), "utf8"),
-    readFile(path.join(root, "assets", "fde-guide-social.png")),
+    readFile(path.join(root, "assets", "applied-ai-field-guide-social.svg"), "utf8"),
+    readFile(path.join(root, "assets", "applied-ai-field-guide-social.png")),
     readFile(path.join(root, "docs", "maintainers", "repository-maintenance.md"), "utf8"),
   ]);
 
   assert.match(source, /width="1280" height="640" viewBox="0 0 1280 640"/);
   for (const phrase of [
-    "OPEN SOURCE · FDE FIELD GUIDE",
-    "The work before",
-    "the architecture.",
-    "Messy brief",
-    "Field evidence",
-    "Authorized change",
-    "Accepted system",
-    "github.com/davidahmann/fde-guide",
+    "FREE &amp; OPEN SOURCE",
+    "The Applied AI",
+    "Field Guide.",
+    "Understand the work",
+    "Choose the mechanism",
+    "Prove the outcome",
+    "Operate the system",
+    "github.com/davidahmann/applied-ai-field-guide",
   ]) assert.ok(source.includes(phrase), phrase);
   assert.doesNotMatch(source, /(?:href|src)=["']https?:\/\/|@import|<image\b/i);
+  assert.doesNotMatch(source, /FDE FIELD GUIDE|The work before|the architecture\./);
 
   assert.deepEqual([...raster.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.equal(raster.readUInt32BE(16), 1280);

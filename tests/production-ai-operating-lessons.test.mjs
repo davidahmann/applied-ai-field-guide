@@ -122,7 +122,7 @@ test("delegated authority preserves verifiable per-hop identity and has fail-clo
 test("company agent adoption centralizes rails without centralizing workflow authority", async () => {
   const [playbook, portfolioReview, serviceReview, operations, skill, research] = await Promise.all([
     read("playbooks/03-operate-and-scale.md"),
-    read("templates/fde-portfolio-review.md"),
+    read("templates/workflow-portfolio-review.md"),
     read("templates/production-service-review.md"),
     read("operations/README.md"),
     read(".agents/skills/operate-ai-service/SKILL.md"),

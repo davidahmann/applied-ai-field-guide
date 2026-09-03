@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
-  <title id="title">FDE</title>
-  <rect width="128" height="128" rx="24" fill="#111214"/>
-  <path d="M34 28h18v54h43v18H34z" fill="#fff"/>
-  <path d="M108 16h8v96h-8z" fill="#244BFF"/>
-</svg>

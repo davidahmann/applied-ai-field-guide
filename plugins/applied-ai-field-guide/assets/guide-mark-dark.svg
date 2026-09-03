@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">The Applied AI Field Guide</title>
+  <rect width="128" height="128" rx="24" fill="#F6F5F1"/>
+  <path d="M22 91 43 35h18l21 56H64l-4-13H43l-4 13H22Zm25-27h9l-4.5-16L47 64Z" fill="#111214" fill-rule="evenodd"/>
+  <path d="M90 35h16v56H90zM23 105h83v5H23z" fill="#244BFF"/>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "applied-ai-field-guide": {
+      "command": "node",
+      "args": ["./mcp/server.mjs"],
+      "cwd": ".",
+      "env_vars": ["APPLIED_AI_CONFIG_PATH", "FDE_CONFIG_PATH"]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">The FDE Guide</title>
+  <title id="title">The Applied AI Field Guide</title>
   <rect width="64" height="64" rx="14" fill="#071a2a"/>
   <rect x="7" y="7" width="50" height="50" rx="10" fill="none" stroke="#54d6bb" stroke-width="2"/>
-  <text x="32" y="38" fill="#ffffff" font-family="ui-sans-serif,system-ui,sans-serif" font-size="18" font-weight="700" text-anchor="middle">FDE</text>
+  <text x="32" y="42" fill="#ffffff" font-family="ui-sans-serif,system-ui,sans-serif" font-size="28" font-weight="750" text-anchor="middle">AI</text>
 </svg>

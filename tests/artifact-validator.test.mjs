@@ -11,7 +11,7 @@ import { validateArtifact } from "../scripts/validate-artifact.mjs";
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
 async function temporaryJson(name, value) {
-  const directory = await mkdtemp(path.join(tmpdir(), "fde-guide-artifact-"));
+  const directory = await mkdtemp(path.join(tmpdir(), "applied-ai-field-guide-artifact-"));
   const target = path.join(directory, name);
   await writeFile(target, `${JSON.stringify(value, null, 2)}\n`);
   return target;
@@ -67,7 +67,7 @@ test("CLI help leads with commands available from a private repository clone", (
   assert.match(helpText, /Usage from a repository clone:/);
   assert.match(helpText, /npm run validate:artifact -- <artifact\.json>/);
   assert.match(helpText, /Direct script equivalent:/);
-  assert.doesNotMatch(helpText, /^\s*fde-guide validate/m);
+  assert.doesNotMatch(helpText, /^\s*applied-ai-field-guide validate/m);
 });
 
 test("progressive validation keeps collaborative Markdown plans human-readable and structurally guarded", async () => {

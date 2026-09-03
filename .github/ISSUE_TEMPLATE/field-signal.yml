@@ -1,5 +1,5 @@
 name: Field signal or learning resource
-description: Suggest one anonymized FDE lesson, failure pattern, useful resource, or missing capability topic.
+description: Suggest one anonymized applied-AI lesson, failure pattern, useful resource, or missing capability topic.
 title: "[Field signal]: "
 labels:
   - triage
@@ -30,7 +30,7 @@ body:
   - type: textarea
     id: relevance
     attributes:
-      label: Why it matters for FDE or applied-AI work
+      label: Why it matters for applied-AI delivery or operations
       description: Explain which workflow, decision, delivery stage, failure, or operating responsibility it improves.
     validations:
       required: true

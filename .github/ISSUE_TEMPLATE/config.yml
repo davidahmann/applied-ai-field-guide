@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Architecture discussion
-    url: https://github.com/davidahmann/fde-guide/discussions
+    url: https://github.com/davidahmann/applied-ai-field-guide/discussions
     about: Ask design and implementation questions in Discussions.
   - name: Security report
-    url: https://github.com/davidahmann/fde-guide/security/advisories/new
+    url: https://github.com/davidahmann/applied-ai-field-guide/security/advisories/new
     about: Report vulnerabilities privately.
