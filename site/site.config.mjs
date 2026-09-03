@@ -1,15 +1,23 @@
 export const site = {
-  name: "The FDE Guide",
-  shortName: "FDE Guide",
-  url: "https://davidahmann.github.io/fde-guide",
-  repository: "https://github.com/davidahmann/fde-guide",
+  name: "The Applied AI Field Guide",
+  shortName: "Applied AI Field Guide",
+  url: "https://davidahmann.github.io/applied-ai-field-guide",
+  repository: "https://github.com/davidahmann/applied-ai-field-guide",
   description:
-    "A practical forward deployed engineering guide for field discovery, accountable adaptation, measurable value, and production AI systems.",
+    "Open-source guidance for applied AI teams: understand the work, choose the right mechanism, prove the outcome, and operate the system.",
   author: {
     name: "David Ahmann",
     url: "https://www.linkedin.com/in/dahmann/",
   },
 };
+
+// These aliases live under the current site base. A repository rename does not
+// redirect the previous GitHub Pages project base.
+export const redirects = [
+  { from: "/forward-deployed-engineering/", to: "/applied-ai-delivery/" },
+  { from: "/forward-deployed-engineer-roadmap/", to: "/applied-ai-capability-roadmap/" },
+  { from: "/fde-operating-model/", to: "/applied-ai-operating-model/" },
+];
 
 export const navigation = [
   {
@@ -17,9 +25,9 @@ export const navigation = [
     routes: [
       "/",
       "/five-minute-guide/",
-      "/forward-deployed-engineering/",
-      "/forward-deployed-engineer-roadmap/",
-      "/fde-operating-model/",
+      "/applied-ai-delivery/",
+      "/applied-ai-capability-roadmap/",
+      "/applied-ai-operating-model/",
     ],
   },
   {
@@ -67,58 +75,65 @@ export const pages = [
     route: "/",
     source: "README.md",
     navTitle: "Overview",
-    title: "The FDE Guide: Value Engineering for Production AI",
+    title: "The Applied AI Field Guide: From Real Work to Production",
     description:
-      "An open-source forward deployed engineering guide and executable kit for measurable, secure, production AI-enabled systems.",
+      "An open-source guide and executable kit for applied AI teams, product owners, operators, and FDEs building measurable, secure production systems.",
     type: "SoftwareSourceCode",
   },
   {
     route: "/five-minute-guide/",
-    source: "guide/fde-guide-in-five-minutes.md",
+    source: "guide/field-guide-in-five-minutes.md",
     navTitle: "Five-minute field guide",
-    title: "The FDE Guide in Five Minutes: Start with the Messy Brief",
+    title: "The Applied AI Field Guide in Five Minutes: Start with the Messy Brief",
+    legacyAnchors: { "know-when-to-leave": "make-ownership-survive-the-project" },
     description:
-      "Start with a broken brief, missing process owner, stakeholder conflict, unsafe first slice, or stalled handoff and find the next defensible FDE move.",
+      "Start with a broken brief, missing process owner, stakeholder conflict, unsafe first slice, or stalled handoff and find the next defensible move.",
   },
   {
-    route: "/forward-deployed-engineering/",
+    route: "/applied-ai-delivery/",
     source: "guide/README.md",
-    navTitle: "Forward Deployed Engineering",
-    title: "Forward Deployed Engineer Guide: From Workflow to Production",
+    navTitle: "The complete delivery method",
+    title: "Applied AI Delivery: From Workflow to Production",
+    legacyAnchors: { "1-what-an-fde-is-responsible-for": "1-what-the-delivery-team-is-responsible-for" },
     description:
-      "Learn what forward deployed engineers do and how to move a real workflow from discovery to measurable, business-owned operation.",
+      "A shared delivery method for applied AI teams and forward-deployed engineers: field discovery, value, design, proof, ownership, and operation.",
   },
   {
-    route: "/forward-deployed-engineer-roadmap/",
+    route: "/applied-ai-capability-roadmap/",
     source: "guide/capability-roadmap.md",
-    navTitle: "FDE capability roadmap",
-    title: "Forward Deployed Engineer Roadmap: Skills, Missions, and Evidence",
+    navTitle: "Applied AI capability roadmap",
+    title: "Applied AI Capability Roadmap: Roles, Missions, and Evidence",
     description:
-      "A practical capability roadmap for forward deployed and applied AI engineers, with role boundaries, five missions, starter artifacts, and a glossary.",
+      "A practical capability roadmap for AI engineers, product owners, operators, and FDEs, with role boundaries, practice missions, artifacts, and a glossary.",
   },
   {
     route: "/field-engagement-reframing/",
     source: "playbooks/00-field-engagement-and-reframing.md",
     navTitle: "Field engagement and reframing",
-    title: "FDE Field Engagement: Reframe a Brief with Evidence",
+    title: "Applied AI Fieldwork: Reframe a Brief with Evidence",
     description:
-      "A practical FDE method for finding the process knower, reconciling field contradictions, obtaining scoped decisions, and changing direction without erasing history.",
+      "Find the process knower, reconcile field contradictions, obtain scoped decisions, and change an AI delivery brief without erasing its history.",
   },
   {
     route: "/worked-engagement/invoice-exception/",
     source: "examples/invoice-exception/engagement/README.md",
     navTitle: "Complete worked engagement",
-    title: "Worked FDE Engagement: When the Sold Brief Cannot Ship",
+    title: "Worked AI Delivery Engagement: When the Sold Brief Cannot Ship",
     description:
       "Follow one synthetic invoice engagement from field contradiction and reframe through economics, evaluation, adoption, handoff, and a review-only decision.",
   },
   {
-    route: "/fde-operating-model/",
-    source: "library/10-fde-and-production-agent-synthesis.md",
-    navTitle: "FDE operating model",
-    title: "The FDE Operating Model for Applied AI Delivery",
+    route: "/applied-ai-operating-model/",
+    source: "library/10-applied-ai-delivery-and-operating-model.md",
+    navTitle: "Applied AI operating model",
+    title: "An Operating Model for Applied AI Delivery",
+    legacyAnchors: {
+      "two-linked-practices-one-delivery-system": "shared-responsibilities-one-delivery-system",
+      "the-combined-fde-method": "the-applied-ai-delivery-method",
+      "separate-customer-specific-context-from-reusable-practice": "separate-workflow-specific-context-from-reusable-practice",
+    },
     description:
-      "A practical operating model for forward deployed and internal applied-AI teams: discovery, value, delivery, company adoption, operation, and learning.",
+      "A practical operating model for internal AI teams and delivery partners: discovery, value, delivery, company adoption, operation, and learning.",
   },
   {
     route: "/ai-value-engineering/",
@@ -244,7 +259,7 @@ export const pages = [
     route: "/templates/",
     source: "templates/README.md",
     navTitle: "Templates and contracts",
-    title: "FDE and Production AI Templates",
+    title: "Applied AI Delivery and Production Templates",
     description:
       "Starter artifacts for workflow discovery, value, architecture, evaluation, security, release, adoption, handoff, and service operation.",
   },
@@ -252,8 +267,8 @@ export const pages = [
     route: "/research/",
     source: "research/README.md",
     navTitle: "Research and evidence",
-    title: "Production AI and FDE Research Notes",
+    title: "Applied AI Research Notes and Evidence",
     description:
-      "Dated primary-source research, portable findings, attribution, uncertainty, and implementation implications behind The FDE Guide.",
+      "Dated primary-source research, portable findings, attribution, uncertainty, and implementation implications behind The Applied AI Field Guide.",
   },
 ];

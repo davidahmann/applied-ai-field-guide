@@ -15,6 +15,16 @@ async function json(relativePath) {
   return JSON.parse(await readFile(path.join(root, relativePath), "utf8"));
 }
 
+test("the shared handbook requires a reframe only for a material contradiction", async () => {
+  const handbook = await readFile(path.join(root, "playbooks", "README.md"), "utf8");
+  const stage = handbook.split("\n").find((line) => line.startsWith("| Inherit and reframe |"));
+  const packet = handbook.split("\n").find((line) => line.startsWith("| [Engagement-reframe record]"));
+  assert.ok(stage && packet, "both lifecycle and working-packet routes must remain present");
+  assert.match(stage, /add an engagement-reframe record.*when a material contradiction/i);
+  assert.match(packet, /when evidence materially contradicts the brief/i);
+  assert.match(packet, /do not create a conflict for an otherwise valid brief/i);
+});
+
 test("the canonical and worked engagement reframes are structurally and semantically valid", async () => {
   const schema = await json("schemas/engagement-reframe.schema.json");
   const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -108,8 +118,8 @@ test("the repository keeps one canonical engagement chain instead of duplicating
 test("discovery tests the inherited story against direct technical evidence", async () => {
   const [playbook, discovery, synthesis, research] = await Promise.all([
     readFile(path.join(root, "playbooks", "01-discovery-and-value.md"), "utf8"),
-    readFile(path.join(root, "templates", "fde-discovery-pack.md"), "utf8"),
-    readFile(path.join(root, "library", "10-fde-and-production-agent-synthesis.md"), "utf8"),
+    readFile(path.join(root, "templates", "discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "library", "10-applied-ai-delivery-and-operating-model.md"), "utf8"),
     readFile(path.join(root, "research", "2026-08-08--operational-redesign-and-applied-ai-practice.md"), "utf8"),
   ]);
 
@@ -131,7 +141,7 @@ test("discovery tests the inherited story against direct technical evidence", as
 test("discovery reconciles strategy, operating reality, and the candidate value surface", async () => {
   const [playbook, discovery, sourceIndex, research] = await Promise.all([
     readFile(path.join(root, "playbooks", "01-discovery-and-value.md"), "utf8"),
-    readFile(path.join(root, "templates", "fde-discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "templates", "discovery-pack.md"), "utf8"),
     readFile(path.join(root, "library", "05-source-index.md"), "utf8"),
     readFile(path.join(root, "research", "2026-08-08--operational-redesign-and-applied-ai-practice.md"), "utf8"),
   ]);
@@ -156,7 +166,7 @@ test("field interactions close through an isolated reviewed append loop and a de
   const [playbook, observation, discovery, serviceReview, example, research] = await Promise.all([
     readFile(path.join(root, "playbooks", "00-field-engagement-and-reframing.md"), "utf8"),
     readFile(path.join(root, "templates", "field-observation-log.md"), "utf8"),
-    readFile(path.join(root, "templates", "fde-discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "templates", "discovery-pack.md"), "utf8"),
     readFile(path.join(root, "templates", "production-service-review.md"), "utf8"),
     readFile(path.join(root, "examples", "invoice-exception", "engagement", "README.md"), "utf8"),
     readFile(path.join(root, "research", "2026-08-30--fde-interaction-workflow-ergonomics.md"), "utf8"),

@@ -71,10 +71,10 @@ test("engagement, service, and portfolio artifacts keep value, continuation, cap
   const [delivery, service, portfolio, learning, operations, synthesis, catalogText] = await Promise.all([
     readFile(path.join(root, "templates", "delivery-and-adoption-plan.md"), "utf8"),
     readFile(path.join(root, "templates", "production-service-review.md"), "utf8"),
-    readFile(path.join(root, "templates", "fde-portfolio-review.md"), "utf8"),
+    readFile(path.join(root, "templates", "workflow-portfolio-review.md"), "utf8"),
     readFile(path.join(root, "templates", "field-learning-register.md"), "utf8"),
     readFile(path.join(root, "playbooks", "03-operate-and-scale.md"), "utf8"),
-    readFile(path.join(root, "library", "10-fde-and-production-agent-synthesis.md"), "utf8"),
+    readFile(path.join(root, "library", "10-applied-ai-delivery-and-operating-model.md"), "utf8"),
     readFile(path.join(root, "catalog.json"), "utf8"),
   ]);
 
@@ -120,7 +120,7 @@ test("engagement, service, and portfolio artifacts keep value, continuation, cap
 
   const catalog = JSON.parse(catalogText);
   assert.equal(
-    catalog.artifacts.find((artifact) => artifact.path === "templates/fde-portfolio-review.md")?.id,
+    catalog.artifacts.find((artifact) => artifact.path === "templates/workflow-portfolio-review.md")?.id,
     "template.fde-portfolio-review",
   );
 });
@@ -130,8 +130,8 @@ test("field contributions have owned destinations, reuse rights, and capability-
     readFile(path.join(root, "templates", "delivery-and-adoption-plan.md"), "utf8"),
     readFile(path.join(root, "templates", "field-learning-register.md"), "utf8"),
     readFile(path.join(root, "templates", "customer-enablement-handoff.md"), "utf8"),
-    readFile(path.join(root, "templates", "fde-portfolio-review.md"), "utf8"),
-    readFile(path.join(root, "library", "10-fde-and-production-agent-synthesis.md"), "utf8"),
+    readFile(path.join(root, "templates", "workflow-portfolio-review.md"), "utf8"),
+    readFile(path.join(root, "library", "10-applied-ai-delivery-and-operating-model.md"), "utf8"),
     readFile(path.join(root, "guide", "README.md"), "utf8"),
     readFile(path.join(root, "patterns", "pattern-catalog.json"), "utf8"),
     readFile(path.join(root, "catalog.json"), "utf8"),

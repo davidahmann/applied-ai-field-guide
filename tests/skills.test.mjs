@@ -20,7 +20,7 @@ const expectedSkills = new Map([
   ["qualify-ai-workflow", ["discovery", "workflow", "verifier"]],
   ["reframe-ai-engagement", ["inherited", "process knower", "disposition"]],
   ["review-ai-production-readiness", ["release", "evidence", "rollback"]],
-  ["run-fde-engagement", ["engagement", "next accountable", "continuity"]],
+  ["run-ai-engagement", ["engagement", "next accountable", "continuity"]],
   ["secure-ai-action-boundary", ["identity", "authorization", "idempotency"]],
   ["select-ai-mechanism", ["deterministic", "ml", "agent"]],
   ["transfer-ai-service", ["handoff", "owner", "retire"]],
@@ -39,7 +39,7 @@ const expectedProgressiveRoutes = new Map([
   ["qualify-ai-workflow", ["../../../library/14-twelve-factors-ai-value-engineering.md", "../../../solutions/business-flows/README.md"]],
   ["reframe-ai-engagement", ["../../../solutions/README.md", "not target evidence"]],
   ["review-ai-production-readiness", ["../../../solutions/README.md", "not release evidence"]],
-  ["run-fde-engagement", ["../../../solutions/README.md", "not target evidence"]],
+  ["run-ai-engagement", ["../../../solutions/README.md", "not target evidence"]],
   ["secure-ai-action-boundary", ["../../../solutions/README.md", "not authorization policy"]],
   ["select-ai-mechanism", ["../../../solutions/README.md", "not target policy or evidence"]],
   ["transfer-ai-service", ["../../../solutions/README.md", "not exercised evidence or acceptance"]],
@@ -62,7 +62,7 @@ function quotedYamlValue(body, key) {
   return match[1];
 }
 
-test("the repository exposes exactly sixteen focused FDE and AI engineering skills", async () => {
+test("the repository exposes exactly sixteen focused applied-AI skills", async () => {
   const directories = (await readdir(skillsRoot, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
@@ -123,10 +123,10 @@ test("skills progressively route through the value framework and selected soluti
 });
 
 test("the engagement conductor can reach every focused lifecycle route", async () => {
-  const conductor = await readFile(path.join(skillsRoot, "run-fde-engagement", "SKILL.md"), "utf8");
+  const conductor = await readFile(path.join(skillsRoot, "run-ai-engagement", "SKILL.md"), "utf8");
   for (const skillName of expectedSkills.keys()) {
-    if (skillName === "run-fde-engagement") continue;
-    assert.ok(conductor.includes(`$${skillName}`), `run-fde-engagement cannot route to ${skillName}`);
+    if (skillName === "run-ai-engagement") continue;
+    assert.ok(conductor.includes(`$${skillName}`), `run-ai-engagement cannot route to ${skillName}`);
   }
   assert.match(conductor, /reads governed data or can stage or execute an effect/);
 });
@@ -154,7 +154,7 @@ test("operating, value, transfer, and productization skills carry the portfolio-
     readFile(path.join(skillsRoot, "productize-field-learning", "SKILL.md"), "utf8"),
   ]);
 
-  assert.match(operate, /templates\/fde-portfolio-review\.md/);
+  assert.match(operate, /templates\/workflow-portfolio-review\.md/);
   assert.match(operate, /continuation signals as realized value/i);
   assert.match(value, /maximum duration, evidence cutoff, separate technical, operator, adoption, value, economics, and production-readiness graduation thresholds/i);
   assert.match(transfer, /independent backup/i);
@@ -204,7 +204,7 @@ test("qualification, engagement reframing, and value engineering have distinct f
 
 test("skill interfaces expose situation-first routing cases without claiming host behavior", async () => {
   const cases = [
-    { skill: "run-fde-engagement", prompt: "Keep this live engagement coherent and tell me the next accountable move from the recorded evidence.", terms: ["engagement", "next accountable"] },
+    { skill: "run-ai-engagement", prompt: "Keep this live engagement coherent and tell me the next accountable move from the recorded evidence.", terms: ["engagement", "next accountable"] },
     { skill: "qualify-ai-workflow", prompt: "We have a candidate workflow but have not observed it or named the verifier.", terms: ["workflow", "before value modeling"] },
     { skill: "reframe-ai-engagement", prompt: "The brief is wrong; the sponsor and operator disagree about what may ship.", terms: ["brief is wrong", "sponsor and operator disagree"] },
     { skill: "engineer-ai-value", prompt: "The workflow is bounded. Is it worth funding once adoption and full cost are counted?", terms: ["bounded", "cost"] },
@@ -232,7 +232,7 @@ test("skill interfaces expose situation-first routing cases without claiming hos
 
   const readme = await readFile(path.join(root, "README.md"), "utf8");
   assert.match(readme, /Describe the situation; don't translate it into repository taxonomy first/);
-  assert.match(readme, /These cues don't prove host routing/);
+  assert.match(readme, /Confirm which skill the host selects/);
 });
 
 test("qualification, value engineering, and production review use bounded decision vocabularies", async () => {
@@ -327,7 +327,7 @@ test("public navigation progressively discloses the Guide, Handbook, Engineering
   assert.ok(readme.indexOf("## Who this is for") < readme.indexOf("## Optional: use it with a coding agent"));
   assert.ok(readme.indexOf("## From idea to production") < readme.indexOf("## Optional: use it with a coding agent"));
   for (const body of [readme, guide]) {
-    for (const layer of ["The Guide", "Handbook", "Engineering Kit"]) assert.match(body, new RegExp(layer));
+    for (const layer of ["The Guide", "Handbook", "Engineering Kit"]) assert.match(body.replace(/\*/g, ""), new RegExp(layer));
   }
   for (const body of [readme, agents, llms]) assert.match(body, /guide\/README\.md/);
   assert.equal(catalog.artifacts.find((artifact) => artifact.path === "guide/README.md")?.id, "guide.core");
@@ -342,7 +342,7 @@ test("public navigation progressively discloses the Guide, Handbook, Engineering
   assert.match(readme, /They are not separate frameworks/);
   assert.match(guide, /They are three depths of one method—not separate frameworks/);
 
-  assert.match(readme, /npx skills add davidahmann\/fde-guide/);
+  assert.match(readme, /npx skills add davidahmann\/applied-ai-field-guide/);
   assert.match(readme, /The guide is complete as documentation/);
   assert.ok(agents.indexOf("## Repository map") < agents.indexOf("## Skill routes"));
   assert.ok(llms.indexOf("## Core entry points") < llms.indexOf("## Optional task skills"));

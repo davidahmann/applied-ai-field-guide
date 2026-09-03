@@ -131,6 +131,7 @@ a:hover {
 
 .brand-mark {
   display: grid;
+  flex: 0 0 auto;
   width: 1.9rem;
   height: 1.9rem;
   place-items: center;
@@ -409,6 +410,11 @@ a:hover {
   font-size: 0.88em;
 }
 
+.article-content :not(pre) > code,
+.source-note code {
+  overflow-wrap: anywhere;
+}
+
 .article-content pre {
   max-width: 100%;
   padding: 1rem 1.1rem;
@@ -503,7 +509,12 @@ a:hover {
   gap: 0.55rem;
 }
 
+.search-form label {
+  min-width: 0;
+}
+
 .search-input {
+  width: 100%;
   min-width: 0;
   padding: 0.72rem 0.8rem;
   border: 1px solid var(--line);
@@ -573,6 +584,18 @@ a:hover {
 @media (max-width: 780px) {
   .header-inner {
     width: min(calc(100% - 1.25rem), var(--max));
+    gap: 0.6rem;
+  }
+
+  .brand {
+    min-width: 0;
+    max-width: 16rem;
+    font-size: 0.94rem;
+    line-height: 1.2;
+  }
+
+  .header-actions {
+    flex: 0 0 auto;
   }
 
   .header-action-source,

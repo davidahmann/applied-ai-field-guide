@@ -40,7 +40,7 @@ test("closed-loop improvement binds an exact release graph and protected authori
     read("library/04-production-evaluation-and-governance.md"),
     read("blueprints/controlled-improvement-agent.md"),
     read("operations/change-management.md"),
-    read("library/10-fde-and-production-agent-synthesis.md"),
+    read("library/10-applied-ai-delivery-and-operating-model.md"),
   ]);
   const combined = `${governance}\n${improvement}\n${changes}`;
 
@@ -89,7 +89,7 @@ test("scorers and configuration benchmarks remain governed evaluation evidence",
 test("deployment and topology choices stay evidence-driven rather than categorical", async () => {
   const [enterprise, synthesis, research] = await Promise.all([
     read("library/17-enterprise-integration-and-scale-reality.md"),
-    read("library/10-fde-and-production-agent-synthesis.md"),
+    read("library/10-applied-ai-delivery-and-operating-model.md"),
     read("research/2026-08-28--warp-self-improving-software-factories.md"),
   ]);
 
