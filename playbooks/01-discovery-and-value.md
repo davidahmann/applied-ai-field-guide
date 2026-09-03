@@ -128,7 +128,7 @@ Separate four kinds of evidence:
 | Adoption evidence | Eligible use, completion, override, abandonment, and reviewer load | Does the workflow work for people? |
 | Business evidence | Accepted-outcome change, avoided loss, throughput, revenue, risk | Is value being realized? |
 
-An unmeasured baseline stays labeled `unmeasured`; an estimate stays labeled `estimated`. `illustrative_fixture` is reserved for the repository's canonical structural example and is not an engagement evidence status. A pilot result must not be relabeled as annual realized value.
+An unmeasured baseline stays labeled `unmeasured`; an estimate stays labeled `estimated`. `illustrative_fixture` is reserved for the repository's canonical structural example and is not an engagement evidence status. Before the baseline governs a proof decision, its metric owner and verifier acknowledge the exact source revision, as-of date, exclusions, disputed assumptions, and rebaseline triggers. Preserve disagreement rather than retrofitting the baseline after seeing the result. A pilot result must not be relabeled as annual realized value.
 
 Control: `VAL-001`.
 
@@ -178,7 +178,9 @@ An executive sponsor and an operator judge a pilot differently. Capture both con
 | Operator or domain expert | Work surface, evidence access, exception handling, review load, and support | Shadow comparison, correction/override evidence, training completion, abandonment and wait-time guardrails |
 | Product or applied-AI team | Reusable capability without unsafe generalization | Explicit customer-specific boundary, validated recurrence, destination, and normal release evidence |
 
-Before recommending `pilot`, freeze a time-bounded graduation contract in the [delivery and adoption plan](../templates/delivery-and-adoption-plan.md). Technical performance, operator acceptance, adoption, business-value evidence, full economics, and production readiness are separate gates. Name the evidence cutoff, decision date, owner, and stop, redesign, transfer, or promotion path; a composite score cannot average away a failed gate. `FDE-003`, `VAL-001`, `VAL-002`, `ADP-002`.
+Before recommending `pilot`, freeze a time-bounded graduation contract in the [delivery and adoption plan](../templates/delivery-and-adoption-plan.md). Technical performance, operator acceptance, adoption, business-value evidence, full economics, and production readiness are separate gates. Name the evidence cutoff, decision date, owner, and stop, redesign, transfer, or promotion path; a composite score cannot average away a failed gate. Also confirm the sponsor, workflow owner, operators, data/policy authority, metric owner/verifier, and receiving owner can provide the evidence and decisions the proof requires, with delegates or a stop path when they cannot.
+
+Treat the pilot as a decision instrument, not a miniature transformation. Material proof work should leave an inspectable decision, tested assumption, working increment, or sanitized reusable learning. This is a diagnostic against activity without decision value—not a fixed duration, staffing plan, or excuse to bypass necessary integration, security, adoption, or operating work. `FDE-003`, `VAL-001`, `VAL-002`, `ADP-002`.
 
 The pilot should improve the work around current systems of record before forcing a platform migration. If data ownership, identity, access, or auditability is inadequate, make that remediation a readiness dependency rather than hiding it behind an AI layer. `FDE-003`, `ADP-001`, `ADP-002`.
 

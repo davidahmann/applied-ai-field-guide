@@ -37,9 +37,9 @@ A company adopting agents should operate AI-enabled services, not a headcount of
 
 ### Use a proof-to-operation gate
 
-Predeclare the proof's maximum duration, evidence cutoff, decision owner, and separate technical, operator, adoption, value, economics, data/risk, and production-readiness gates. The decision is `stop`, `reshape`, `continue proving`, or `bounded production`; a successful demonstration cannot average away a failed gate. A 30-day review may be a useful local deadline, but it is not a universal production promise.
+Predeclare the proof's maximum duration, evidence cutoff, decision owner, and separate technical, operator, adoption, value, economics, data/risk, and production-readiness gates. Name the participants whose evidence or decision is required, their real availability, delegates, and the escalation or stop path. The decision is `stop`, `reshape`, `continue proving`, or `bounded production`; a successful demonstration cannot average away a failed gate. A 30-day review may be a useful local deadline, but it is not a universal production promise.
 
-The receiving team must be named before the proof begins. Entry to bounded production requires every applicable mandatory gate to pass with current target-specific evidence, including the accepted outcome and economics thresholds plus exercised receiving-team support, evaluation, release, incident, rollback, change, and retirement capability. Time-bounded remediation is allowed only for an explicitly non-blocking residual; it does not satisfy a required gate. Temporary delivery capacity may support an exercise, but its availability or performance does not prove receiving-team capability.
+The receiving team must be named before the proof begins. The metric owner and verifier acknowledge the baseline revision, exclusions, disputes, and rebaseline conditions before results are compared. Material proof work should yield a decision, tested assumption, working increment, or sanitized reusable learning; work without one needs a concrete rationale or should stop. Entry to bounded production requires every applicable mandatory gate to pass with current target-specific evidence, including the accepted outcome and economics thresholds plus exercised receiving-team support, evaluation, release, incident, rollback, change, and retirement capability. Time-bounded remediation is allowed only for an explicitly non-blocking residual; it does not satisfy a required gate. Temporary delivery capacity may support an exercise, but its availability or performance does not prove receiving-team capability.
 
 ### Earn authority by effect class
 
@@ -87,7 +87,7 @@ Optional external contribution or renewal measures belong in the portfolio revie
 
 Before choosing `standardize`, inventory material workflow variants and classify them as policy-required, segment-specific, role-specific, system-constrained, or accidental dysfunction. Cluster only genuinely comparable workflows. Retain necessary local branches and repair accidental dysfunction before extracting a shared pattern; do not standardize a workaround merely because several teams use it.
 
-Direct resources to the first unresolved hard gate or binding constraint for each workflow. A readiness or maturity score may order investigation, but a portfolio average cannot compensate for missing authority, verifier, lawful data, safety, adoption, or service ownership. Any reused capability still crosses the target workflow's policy, data, security, evaluation, release, adoption, support, and ownership gates.
+Direct resources to the first unresolved hard gate or binding constraint for each workflow. A readiness or maturity score may order investigation, but a portfolio average cannot compensate for missing authority, verifier, lawful data, safety, adoption, or service ownership. Any reused capability names its exact version and prior scope, records material differences, and still crosses the target workflow's policy, data, security, evaluation, release, adoption, support, and ownership gates.
 
 Controls: `FDE-003`, `FDE-004`, `VAL-002`, `VAL-003`, `ADP-002`, `OPS-004`, `CST-001`.
 
@@ -225,7 +225,7 @@ Never transfer customer data, proprietary policy, or confidential workflow detai
 
 Record each candidate in the [field-learning register](../templates/field-learning-register.md). Preserve recurrence, supporting and counter-evidence, confidentiality, permitted destination, product owner, disposition, and validation. A repeated anecdote is not yet a reusable pattern; a sanitized reproducible case with an owner and acceptance test is a product input.
 
-For comparable delivery cohorts, also preserve target-specific delivery and support effort, actual governed-artifact reuse, productization and maintenance cost, and the expected effect on future delivery time, quality, safety, support load, or full cost. A declining customization ratio is evidence of leverage only while the target workflow continues to pass its own gates.
+For comparable delivery cohorts, also preserve target-specific delivery and support effort, the reused governed artifact's exact version and prior scope, target revalidation and residual differences, productization and maintenance cost, and the expected effect on future delivery time, quality, safety, support load, or full cost. A declining customization ratio is evidence of leverage only while the target workflow continues to pass its own gates. Reuse does not transfer authority from the prior target.
 
 Control: `FDE-004`.
 

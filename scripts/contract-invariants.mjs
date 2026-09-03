@@ -75,6 +75,7 @@ export function evaluationOutputDigestPayload(report) {
     trials: report.trials,
     results: report.results,
     contamination_controls: report.contamination_controls,
+    deployment_qualification: report.deployment_qualification,
     limitations: report.limitations,
   };
 }
@@ -294,6 +295,7 @@ export function evaluationReportSemanticErrors(report, label = "evaluation repor
     trials = {},
     results = [],
     contamination_controls: contamination = {},
+    deployment_qualification: qualification,
     decision = {},
   } = report ?? {};
 
@@ -414,6 +416,37 @@ export function evaluationReportSemanticErrors(report, label = "evaluation repor
 
   if (decision.decided_by === report?.owner || decision.independent_from_candidate !== true) {
     errors.push(`${label} decision authority must be independent from the evaluation candidate and report owner`);
+  }
+
+  if (qualification && qualification.status !== "not_applicable") {
+    const policy = qualification.oversight_policy ?? {};
+    const partitions = qualification.evidence_partitions ?? {};
+    const point = qualification.operating_point ?? {};
+    const review = qualification.review_path ?? {};
+
+    if (point.autonomous_coverage !== null && point.human_review_burden !== null
+      && Math.abs((point.autonomous_coverage + point.human_review_burden) - 1) > 1e-9) {
+      errors.push(`${label} deployment qualification autonomous coverage and human-review burden must sum to 1`);
+    }
+    if (review.effectiveness_basis === "unmeasured" && review.effectiveness !== null) {
+      errors.push(`${label} unmeasured reviewer effectiveness must be null`);
+    }
+    if (["measured", "assumed", "mixed"].includes(review.effectiveness_basis)
+      && review.effectiveness === null) {
+      errors.push(`${label} measured or assumed reviewer effectiveness requires a value`);
+    }
+    if (qualification.status === "qualified") {
+      if (policy.frozen_before_qualification !== true || partitions.disjoint !== true) {
+        errors.push(`${label} qualified deployment policy must be frozen and tested on a disjoint qualification partition`);
+      }
+      if (point.observed_reliability < point.target_reliability
+        || point.reliability_lower_bound < point.target_reliability) {
+        errors.push(`${label} qualified deployment policy reliability and its lower confidence bound must meet the target`);
+      }
+      if (point.confidence < report.evaluator?.minimum_confidence) {
+        errors.push(`${label} qualified deployment policy confidence is below the evaluation minimum`);
+      }
+    }
   }
   if (Date.parse(decision.decided_at) < Date.parse(report?.generated_at)) {
     errors.push(`${label} decision predates report generation`);

@@ -22,7 +22,7 @@ The current agent-system, evaluation-report, and solution-release contracts are 
 | [Threat model](threat-model.schema.json) | Assets, boundaries, threats, mitigations, recovery, and negative cases |
 | [Evaluation case](evaluation-case.schema.json) | Replay world, expected trajectory, source-bound reference authority, outcome, graders, and evaluator isolation |
 | [Evaluation output](evaluation-output.schema.json) | Exact isolated-runner output and case-level execution evidence bound to an evaluation report |
-| [Evaluation report](evaluation-report.schema.json) | Tested claim, complete environment, trials, results, uncertainty, contamination, and decision |
+| [Evaluation report](evaluation-report.schema.json) | Tested claim, complete environment, trials, results, uncertainty, contamination, optional human-AI deployment qualification, and decision |
 | [Handoff envelope](handoff-envelope.schema.json) | Objective, verified state, provenance, remaining work, delegated authority, budget, expiry, and terminal reason |
 | [Solution release](solution-release.schema.json) | Compatible artifact versions, deployment segment, migration, rollout, approvals, and rollback |
 | [Trace event](trace-event.schema.json) | Closed, release-bound runtime state and terminal-event evidence |
@@ -31,4 +31,4 @@ The current agent-system, evaluation-report, and solution-release contracts are 
 
 Schema validity does not prove that a value is true or a control is implemented. Templates provide canonical structural examples; executable examples and release evidence must prove behavior.
 
-For a breaking change, update the schema version, canonical template, governed examples, validator mapping, positive and negative tests, and the applicable note in the [`docs/migrations/` index](../docs/migrations/README.md). Evaluation Case 1.1 users should follow the [reference-authority migration](../docs/migrations/evaluation-case-1.1.md); Workflow Charter 1.2 users should follow the [residual-loss migration](../docs/migrations/workflow-charter-1.2.md); Solution Release 1.2 users should follow the [data-context migration](../docs/migrations/solution-release-1.2.md).
+For a breaking change, update the schema version, canonical template, governed examples, validator mapping, positive and negative tests, and the applicable note in the [`docs/migrations/` index](../docs/migrations/README.md). Evaluation Case 1.1 users should follow the [reference-authority migration](../docs/migrations/evaluation-case-1.1.md); Evaluation Report 1.1 users should follow the [deployment-qualification migration](../docs/migrations/evaluation-report-1.1.md); Workflow Charter 1.2 users should follow the [residual-loss migration](../docs/migrations/workflow-charter-1.2.md); Solution Release 1.2 users should follow the [data-context migration](../docs/migrations/solution-release-1.2.md).

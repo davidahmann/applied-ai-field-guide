@@ -2,7 +2,7 @@
 
 This folder holds dated evidence that supports the implementation library.
 
-**Repository source review:** The general source set was last rechecked 2026-08-10; the multi-agent topology note was reviewed 2026-08-14; the Bridgewater PAT field report was reviewed 2026-08-27; Uber's production AI operating reports and Warp's software-factory improvement article were reviewed 2026-08-28; the healthcare-claims context, agentic operating-maturity, and FDE interaction-workflow evidence were reviewed 2026-08-30; and the operational-redesign note was refreshed 2026-09-03 with bounded company-adoption, two-aperture discovery, customer-interaction, and protected optimization-search evidence. Link reachability and first-party publication do not establish general validity; every implementation pattern still requires local evaluation.
+**Repository source review:** The general source set was last rechecked 2026-08-10; the multi-agent topology note was reviewed 2026-08-14; the Bridgewater PAT field report was reviewed 2026-08-27; Uber's production AI operating reports and Warp's software-factory improvement article were reviewed 2026-08-28; the healthcare-claims context, agentic operating-maturity, and FDE interaction-workflow evidence were reviewed 2026-08-30; and the operational-redesign plus workflow-proof and deployment-qualification evidence was reviewed 2026-09-03. Link reachability, first-party publication, or a research preprint does not establish general validity; every implementation pattern still requires local evaluation.
 
 ## How sources are admitted
 
@@ -33,6 +33,7 @@ Social, Reddit, YouTube, and news are research channels—not automatic authorit
 - [Bridgewater PAT: governed institutional analysis](2026-08-27--bridgewater-pocket-analyst-tool.md) — bounded first-party field evidence for codified-method context, typed analytical planning, constrained execution, specialist admission, and controlled feedback learning.
 - [Uber production AI operating lessons](2026-08-28--uber-production-ai-operating-lessons.md) — bounded first-party evidence for causal agent-work cost analysis, direct and downstream model contracts, staged semantic file analysis, and verifiable delegated-agent identity.
 - [Warp software factories: governed configuration improvement](2026-08-28--warp-self-improving-software-factories.md) — bounded vendor evidence for exact configuration baselines, trace scoring, matched configuration comparisons, and protected change proposals, with cloud-only and inherently multi-agent claims rejected as defaults.
+- [Workflow proof and deployment qualification](2026-09-03--workflow-proof-and-deployment-qualification.md) — bounded research and practitioner evidence for decision-yielding proofs, participant capacity, baseline acknowledgment, frozen human-AI policy qualification, review burden, cost, and component-sensitive requalification.
 
 ## Archive
 

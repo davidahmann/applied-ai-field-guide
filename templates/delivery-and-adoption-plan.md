@@ -19,6 +19,21 @@
 | Continuation mechanism, owner, and decision date | External renewal / internal funding or sponsorship / other |
 | Stop conditions | — |
 
+## Proof participation and decision capacity
+
+Name the people whose evidence or decision is required before committing the proof. Record real availability and a delegate or escalation path; a title alone is not capacity. If a required contribution cannot be secured, narrow, defer, or stop the proof instead of treating the missing owner as a later adoption issue.
+
+| Role or decision right | Required contribution | Availability window or decision deadline | Primary | Delegate or backup | Access/evidence required | If unavailable |
+| --- | --- | --- | --- | --- | --- | --- |
+| Sponsor and continuation decision | — | — | — | — | — | Escalate / narrow / defer / stop |
+| Workflow or process ownership | — | — | — | — | — | — |
+| Operator or domain judgment | — | — | — | — | — | — |
+| Data and policy authority | — | — | — | — | — | — |
+| Metric ownership and independent verification | — | — | — | — | — | — |
+| Technical and receiving-service ownership | — | — | — | — | — | — |
+
+Participation needs are target-specific. Practitioner time estimates or staffing patterns are evidence leads, not defaults. Control: `FDE-003`.
+
 ## Requirement-to-release trace
 
 | Requirement | Domain/state | Context/logic | Tool/effect | Security | UX/artifact | Eval | Telemetry | Owner |
@@ -34,6 +49,16 @@ Classify each material field-built asset before implementation. The classificati
 | — | Customer configuration / target-owned extension / shared product or platform / time-bounded experiment / prohibited or deferred | Independent / collaborative / destination-owner only / none | — | — | — | Cleared / restricted / pending / prohibited | — |
 
 For product or platform work, use the destination team's normal codebase, architecture, security, testing, release, telemetry, on-call, and maintenance standards. A temporary parallel service is a potential shadow product and MUST name its production ceiling, expiry, migration or destruction path, and blocking gate. `FDE-004`, `DEL-001`, `OPS-003`.
+
+## Proof-work ledger
+
+A proof is a decision instrument, not a miniature transformation program. Link each material activity to at least one inspectable output; otherwise record why the work remains necessary or stop it.
+
+| Activity | Evidence used | Output class | Output or artifact | Owner | Decision or next move |
+| --- | --- | --- | --- | --- | --- |
+| — | — | Decision / tested assumption / working increment / sanitized reusable learning | — | — | — |
+
+Reusable learning is not automatically a reusable asset. Confidentiality, ownership, permission, sanitization, destination review, exact versioning, and target validation still apply.
 
 ## Milestones
 
@@ -77,6 +102,14 @@ Freeze this contract before pilot entry. Changes to the denominator, event defin
 | — | — | — | — | — | — | — | — |
 
 Record the identity-deduplication rule, late-event policy, timezone, missing-data behavior, and segment keys used to calculate the metric.
+
+### Baseline acknowledgment
+
+Before the baseline supports a proof decision, the metric owner and verifier acknowledge the exact revision, source, exclusions, disputes, and rebaseline conditions. Preserve disagreement instead of editing it away. This is a governed measurement acknowledgment, not legal advice or a substitute for an applicable contract.
+
+| Metric and revision | Source and as-of date | Metric owner | Independent verifier | Acknowledged at | Disputed assumptions or exclusions | Rebaseline trigger |
+| --- | --- | --- | --- | --- | --- | --- |
+| — | — | — | — | — | — | — |
 
 ## Adoption funnel and friction review
 

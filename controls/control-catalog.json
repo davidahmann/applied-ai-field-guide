@@ -62,8 +62,8 @@
       "id": "FDE-003",
       "domain": "delivery",
       "level": "MUST",
-      "requirement": "A pilot MUST keep technical performance, operator acceptance, adoption, business-value evidence, economics, and production readiness as separate gates with explicit stop conditions.",
-      "evidence": ["R26-37", "R26-38", "R26-45"],
+      "requirement": "A pilot MUST keep technical performance, operator acceptance, adoption, business-value evidence, economics, and production readiness as separate gates with explicit stop conditions; before work begins it MUST also name the participant capacity, decision rights, evidence contributions, and baseline acknowledgment needed to reach the gate decision.",
+      "evidence": ["R26-37", "R26-38", "R26-45", "R26-86"],
       "release_gates": ["design", "shadow", "canary"]
     },
     {
@@ -86,8 +86,8 @@
       "id": "VAL-001",
       "domain": "value",
       "level": "MUST",
-      "requirement": "Each workflow MUST define a metric owner, measured or explicitly unmeasured baseline, target, eligible population, measurement window, attribution method, and guardrail metrics.",
-      "evidence": ["R26-39", "R26-41"],
+      "requirement": "Each workflow MUST define a metric owner, measured or explicitly unmeasured baseline, target, eligible population, measurement window, attribution method, and guardrail metrics; the metric owner and verifier MUST acknowledge the baseline revision, unresolved disputes, exclusions, and rebaseline triggers before it supports a proof decision.",
+      "evidence": ["R26-39", "R26-41", "R26-86"],
       "release_gates": ["design", "shadow"]
     },
     {
@@ -446,8 +446,8 @@
       "id": "EVA-006",
       "domain": "evaluation",
       "level": "MUST",
-      "requirement": "Each evaluation report MUST declare its tested claim, complete component and environment versions, resource budgets, trial count, product-appropriate consistency or best-of metric, uncertainty, limitations, and contamination controls.",
-      "evidence": ["R26-47", "R26-52", "R26-53"],
+      "requirement": "Each evaluation report MUST declare its tested claim, complete component and environment versions, resource budgets, trial count, product-appropriate consistency or best-of metric, uncertainty, limitations, and contamination controls. When a deployment claim depends on human oversight or routing, the report MUST also bind the selected policy and routing signal, disjoint development and qualification evidence, sampling assumptions, reliability lower bound, autonomous coverage, review burden, reviewer-effectiveness basis, total operating cost, and requalification triggers.",
+      "evidence": ["R26-47", "R26-52", "R26-53", "R26-85"],
       "release_gates": ["shadow", "canary", "autonomy", "operations"]
     },
     {
@@ -478,8 +478,8 @@
       "id": "HUM-003",
       "domain": "human_review",
       "level": "MUST",
-      "requirement": "Approval controls MUST be risk-tiered and measure acceptance, denial, override, decision latency, and sampled unsafe approvals; automated approval classification MUST NOT be the sole gate for high-stakes effects.",
-      "evidence": ["R26-50", "R26-54"],
+      "requirement": "Approval controls MUST be risk-tiered and measure acceptance, denial, override, decision latency, review burden, reviewer effectiveness, and sampled unsafe approvals; automated approval classification MUST NOT be the sole gate for high-stakes effects.",
+      "evidence": ["R26-50", "R26-54", "R26-85"],
       "release_gates": ["shadow", "canary", "operations"]
     },
     {

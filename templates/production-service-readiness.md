@@ -44,6 +44,7 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 | Rate, cost, and capacity limits | required | — | — | — | `REL-002`, `TOL-005`, `CST-001`, `CST-002` |
 | Telemetry, alerts, and service objectives | required | — | — | — | `OPS-001`, `OPS-004`, `OPS-006` |
 | Failure, degraded operation, and rollback | required | — | — | — | `DEL-002`, `OPS-002`, `OPS-003`, `CTX-009` |
+| Evaluation and human-AI deployment qualification | required | — | — | — | `EVA-001`, `EVA-002`, `EVA-003`, `EVA-005`, `EVA-006`, `HUM-003` |
 | Operator workflow, adoption, and review capacity | required | — | — | — | `ADP-001`, `FDE-003`, `VAL-002`, `OPS-006` |
 | Scaling assumptions and limits | required | — | — | — | `REL-004`, `SEC-005`, `CST-002` |
 | Service ownership and evidence lifecycle | required | — | — | — | `ADP-002`, `DEL-001`, `OPS-007` |
@@ -86,6 +87,13 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 
 - For every severe failure, record detection, containment, safe fallback, readback, recovery, owner, regression, and rollback trigger.
 - Show that new work, writes, identities, egress, and affected capabilities can be stopped without hiding pending effects.
+
+### Evaluation and human-AI deployment qualification
+
+- Bind the tested workflow claim, eligible population, cases, environment, components, resource budgets, trial semantics, uncertainty, contamination controls, and independent decision to the exact release.
+- When the claim depends on human review or routing, bind the frozen oversight policy, disjoint development and qualification evidence, sampling unit and dependence, reliability lower bound, autonomous coverage, review burden, reviewer-effectiveness basis, latency, capacity, total cost, risk constraints, and requalification triggers.
+- Use saved terminal trajectories only when intervention cannot alter subsequent execution. Otherwise require a representative policy-in-loop rerun or faithful simulation.
+- A benchmark, point estimate, assumed reviewer, or unexercised queue cannot advance this row to `tested`.
 
 ### Operator workflow, adoption, and review capacity
 

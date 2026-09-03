@@ -67,6 +67,14 @@ A global pass rate hides the failures that matter. Build a slice matrix before f
 
 Oversample rare, high-consequence conditions. For each required slice, set the evaluator type and a separate acceptance threshold; an average cannot compensate for a prohibited action or a high-value error.
 
+## Qualify the human-AI operating policy
+
+When deployment depends on routing work to people, qualify that complete operating policy—not the agent in isolation. Define workflow success, the eligible population, candidate policy class, routing signal, reviewer path, risk constraints, reliability target, and cost model before selection. Use development evidence to choose the policy, freeze it, then evaluate it on a disjoint qualification partition. A point estimate above target is not enough: the declared lower confidence bound must also clear the target under the stated sampling unit and dependence assumptions.
+
+Report the operating point the evidence actually supports: autonomous coverage, human-review burden, reviewer effectiveness and whether it was measured or assumed, routing-signal quality, review latency and capacity, agent cost, human cost, and relevant failure slices. An attractive automation rate with an overloaded or ineffective review path is not qualified deployment.
+
+Saved terminal trajectories can support policy replay only when the routing decision cannot change what happens next. If an intervention can clarify, correct, retry, redirect, or take over during execution, evaluate the policy in the loop through a representative rerun or faithful simulation. Requalify according to what changed: a terminal scoring threshold may permit a new judgment over preserved evidence, while a changed behavior, context, tool, environment, reviewer path, policy interaction, or eligible population usually requires fresh execution. [R26-85](../research/2026-09-03--workflow-proof-and-deployment-qualification.md#r26-85) `EVA-006`, `HUM-003`.
+
 ## Lint the evaluation corpus itself
 
 Just as a codebase needs tests, the corpus needs automated quality checks. Fail CI when a case is malformed or a change alters protected coverage without an explicit decision.
@@ -130,3 +138,4 @@ This mirrors the feedback structure of a strong practice system: show not only w
 - [S21](05-source-index.md#s21) — Internal exam-prep design review
 - [Production, Evaluation, and Governance](04-production-evaluation-and-governance.md)
 - [Production Implementation Playbook](07-production-implementation-playbook.md)
+- [S38](05-source-index.md#s38) — Scale AI READY deployment qualification

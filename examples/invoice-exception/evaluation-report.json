@@ -1,6 +1,6 @@
 {
   "$schema": "../../schemas/evaluation-report.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "report_id": "invoice_exception_reference_report",
   "version": "2.0.0",
   "owner": "reference-evaluation-preparer",
@@ -109,9 +109,9 @@
         {
           "component_id": "node-dependency-lock",
           "uri": "../../package-lock.json",
-          "version": "1.33.0",
+          "version": "1.34.0",
           "schema_version": null,
-          "digest": "sha256:73b6f97523d41bbd54e1c662851c415959020e5cda8fe758e558cede44dfc804"
+          "digest": "sha256:cd61f0f7be5e141727527540a345f8f65fb13de927206f5ffb1a8112ed8bde84"
         },
         {
           "component_id": "invoice-ontology",
@@ -240,7 +240,7 @@
           "digest": "sha256:6be09a856d1e40d69cf21a3147b686df866c474a4241ed3b24405347cd03eb97"
         }
       ],
-      "environment_digest": "sha256:2ff27db62f4bc02cf4a78278b41303b5ee408a2eb18850abc2b631ba0dc12fab",
+      "environment_digest": "sha256:f0d7697a42c3a98138ba0a5c981ccee315419d14198c1e92c47974e7307484c0",
       "network_mode": "unenforced"
     }
   },
@@ -276,7 +276,7 @@
       "uri": "evaluation-output.json",
       "version": null,
       "schema_version": "1.0.0",
-      "digest": "sha256:193247e289c7cf1034028b4ca92d8920e9637fbe923a6a4e802b1eeed8533004"
+      "digest": "sha256:dd5c3fcf90d49d4af2863ba41e252297259cdd60bbbe8665e9546cc74df7f328"
     },
     "minimum_confidence": 1
   },
@@ -380,6 +380,10 @@
     "external_network": "unenforced",
     "known_exposures": [],
     "reference_solution_reviewed": true
+  },
+  "deployment_qualification": {
+    "status": "not_applicable",
+    "rationale": "This report verifies a deterministic teaching runtime and makes no model or human-oversight deployment claim."
   },
   "limitations": [
     "This deterministic regression evidence does not establish production generalization, customer value, adoption, or service reliability.",

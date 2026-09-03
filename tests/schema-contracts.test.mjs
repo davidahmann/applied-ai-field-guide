@@ -12,6 +12,7 @@ import {
   changeImpactAssessmentSemanticErrors,
   evaluationCaseSemanticErrors,
   evaluationReportSemanticErrors,
+  expectedEvaluationOutputDigest,
   ontologyIdentityErrors,
   patternCatalogErrors,
   solutionReleaseSemanticErrors,
@@ -355,6 +356,57 @@ test("evaluation reports reject mutable graders, cross-trial state, and missing 
   fixture.trials.aggregation = "pass_at_k";
   fixture.trials.k = null;
   assert.equal(validate(fixture), false);
+});
+
+test("evaluation reports bind a frozen human-AI policy to held-out qualification evidence", async () => {
+  const ajv = new Ajv2020({ allErrors: true, strict: true });
+  addFormats(ajv);
+  const validate = ajv.compile(await json("schemas/evaluation-report.schema.json"));
+  const fixture = await json("templates/evaluation-report.json");
+  const qualification = fixture.deployment_qualification;
+  qualification.status = "qualified";
+  qualification.rationale = "The frozen terminal policy clears the declared reliability bound on disjoint held-out cases.";
+  qualification.oversight_policy.frozen_before_qualification = true;
+  qualification.execution_mode = "terminal_replay";
+  qualification.operating_point = {
+    target_reliability: 0.95,
+    observed_reliability: 0.98,
+    reliability_lower_bound: 0.96,
+    confidence: 0.95,
+    confidence_method: "one-sided exact binomial bound",
+    autonomous_coverage: 0.7,
+    human_review_burden: 0.3,
+    routing_signal_quality: "Measured precision and recall on the qualification partition",
+    expected_cost_per_case: 1.25,
+    currency: "USD",
+  };
+  qualification.review_path = {
+    effectiveness_basis: "measured",
+    effectiveness: 0.99,
+    reviewer_population: "qualified target-workflow reviewers",
+    capacity_source: "representative queue and burst exercise",
+    latency_target_ms: 900000,
+  };
+  fixture.evaluator.output.digest = expectedEvaluationOutputDigest(fixture);
+
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors));
+  assert.deepEqual(evaluationReportSemanticErrors(fixture, "fixture"), []);
+
+  const weakBound = structuredClone(fixture);
+  weakBound.deployment_qualification.operating_point.reliability_lower_bound = 0.94;
+  assert.ok(evaluationReportSemanticErrors(weakBound, "fixture").some((error) => error.includes("lower confidence bound")));
+
+  const hiddenLoad = structuredClone(fixture);
+  hiddenLoad.deployment_qualification.operating_point.human_review_burden = 0.2;
+  assert.ok(evaluationReportSemanticErrors(hiddenLoad, "fixture").some((error) => error.includes("must sum to 1")));
+
+  const trajectoryMismatch = structuredClone(fixture);
+  trajectoryMismatch.deployment_qualification.oversight_policy.trajectory_invariant = false;
+  assert.equal(validate(trajectoryMismatch), false);
+
+  const tunedOnHoldout = structuredClone(fixture);
+  tunedOnHoldout.deployment_qualification.evidence_partitions.disjoint = false;
+  assert.equal(validate(tunedOnHoldout), false);
 });
 
 test("approved solution releases require technical, operational, and risk approvals", async () => {
