@@ -4,6 +4,8 @@ Start with the [complete worked engagement](engagement/README.md) if you want to
 
 ## Objective
 
+The optional [document review lab](document-review/README.md) adds an upstream source-to-draft exercise, live-model adapter and operator correction surface. It is intentionally disconnected from the posting tools below.
+
 ```text
 invoice exception event
   -> gather ledger/vendor/policy evidence

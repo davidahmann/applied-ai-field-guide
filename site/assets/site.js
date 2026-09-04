@@ -6,6 +6,7 @@ const results = document.querySelector("#site-search-results");
 const guideNavigation = document.querySelector(".side-nav details");
 
 let searchIndex;
+let searchSequence = 0;
 
 if (window.matchMedia("(max-width: 780px)").matches) {
   guideNavigation?.removeAttribute("open");
@@ -41,8 +42,18 @@ function createResult(item) {
 }
 
 async function search(query) {
+  const sequence = ++searchSequence;
   const terms = normalize(query).split(" ").filter(Boolean);
-  const index = await loadIndex();
+  let index;
+  try { index = await loadIndex(); }
+  catch {
+    if (sequence !== searchSequence) return;
+    results.replaceChildren();
+    const failure = document.createElement("li"); failure.className = "search-empty";
+    failure.textContent = "Search is unavailable. Close this window and use the guide navigation, or try again.";
+    results.append(failure); return;
+  }
+  if (sequence !== searchSequence) return;
   const ranked = index
     .map((item) => {
       const title = normalize(item.title);

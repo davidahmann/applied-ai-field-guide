@@ -8,8 +8,8 @@ authors:
 repository-code: "https://github.com/davidahmann/applied-ai-field-guide"
 url: "https://github.com/davidahmann/applied-ai-field-guide"
 license: Apache-2.0
-version: 2.0.0
-date-released: 2026-09-03
+version: 2.1.0
+date-released: 2026-09-04
 abstract: "A practical guide to fieldwork, value engineering, software delivery, and operations for AI-enabled systems. Built for internal applied-AI teams, product and workflow owners, service operators, and FDEs, with a short orientation, one complete worked engagement, canonical controls, evaluations, and executable teaching references."
 keywords:
   - applied AI

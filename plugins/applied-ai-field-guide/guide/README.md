@@ -14,8 +14,6 @@ An open-source design and verification kit for people building AI into real work
 
 ## Start with what went wrong
 
-Pick the situation in front of you.
-
 | What happened | Start here | Leave with |
 | --- | --- | --- |
 | **The brief doesn't match the real workflow** | [Field engagement and reframing](playbooks/00-field-engagement-and-reframing.md) | One representative case, conflicting claims, a safe fallback, and the person who may decide |
@@ -45,9 +43,11 @@ Use the [12 Factors](library/14-twelve-factors-ai-value-engineering.md) and [one
 
 ## See it working
 
+Try the [invoice practice packet](examples/invoice-exception/document-review/practice.md): a messy brief, difficult documents and review rubric. Its [runnable lab](examples/invoice-exception/document-review/README.md) compares rules with optional model proposals.
+
 The [invoice-exception engagement](examples/invoice-exception/engagement/README.md) follows a sold promise that field evidence kills: reframe, economics, controlled-write [runtime](examples/invoice-exception/reference-loop.mjs), evaluation, blocked handoff, and review-only decision.
 
-The [shipment-risk example](examples/shipment-risk-triage/README.md) combines classical ML, deterministic routing, optional model explanation, and human review without pretending every workflow needs an agent.
+The [shipment-risk example](examples/shipment-risk-triage/README.md) combines classical ML, deterministic routing, optional model explanation, and human review.
 
 ```bash
 npm ci --ignore-scripts
@@ -62,7 +62,7 @@ Before adapting them, use [Enterprise Integration and Scale Reality](library/17-
 
 ## Who this is for
 
-Use it inside your company or on a customer engagement. An internal team may keep operating the service; an FDE may transfer it. Both need evidence of improvement and an owner when it breaks.
+Internal teams may keep operating the service; FDEs may transfer it. Both need evidence of improvement and an owner when it breaks.
 
 | You need to | Use |
 | --- | --- |

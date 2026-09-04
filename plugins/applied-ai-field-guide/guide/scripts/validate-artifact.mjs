@@ -14,6 +14,7 @@ import {
   workflowCharterSemanticErrors,
 } from "./governance-invariants.mjs";
 import { expectedDocumentSchema, governedDocumentSchema } from "./repository-paths.mjs";
+import { artifactTypes, artifactSemanticErrors } from "./artifact-types.mjs";
 
 const repositoryRoot = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
@@ -85,6 +86,13 @@ const typeDefinitions = new Map([
   }],
 ]);
 
+for (const type of artifactTypes) {
+  if (!typeDefinitions.has(type)) typeDefinitions.set(type, {
+    schema: `schemas/${type}.schema.json`,
+    semanticErrors: (document, label) => artifactSemanticErrors(type, document, label),
+  });
+}
+
 function help() {
   return `Usage from a repository clone:
   npm run validate:artifact -- <artifact.json> [--profile starter|complete] [--type TYPE] [--json]
@@ -93,11 +101,12 @@ Direct script equivalent:
   node scripts/validate-artifact.mjs validate <artifact.json> [--profile starter|complete] [--type TYPE] [--json]
 
 Types:
-  workflow-charter | engagement-reframe | data-context-manifest
+  ${artifactTypes.join(" | ")}
 
 Profiles:
   starter   Validate the fields needed for the current decision while preserving
-            the canonical schema's types and closed-object rules.
+            the canonical schema's types and closed-object rules. Available only
+            for workflow-charter, engagement-reframe, and data-context-manifest.
   complete  Validate the complete canonical schema and semantic invariants.
 `;
 }
@@ -152,6 +161,9 @@ function typeFromSchema(schemaPath) {
 }
 
 function inferType(document, inputPath) {
+  const declared = typeof document?.$schema === "string" ? path.posix.basename(document.$schema) : "";
+  const declaredType = artifactTypes.find((type) => declared === `${type}.schema.json`);
+  if (declaredType) return declaredType;
   const shapedSchema = governedDocumentSchema(document);
   const shapedType = typeFromSchema(shapedSchema);
   if (shapedType) return shapedType;
@@ -161,7 +173,8 @@ function inferType(document, inputPath) {
   if (document?.workflow_id && (document?.functional_requirement || document?.outcome)) return "workflow-charter";
 
   const repositoryPath = path.relative(repositoryRoot, inputPath).split(path.sep).join("/");
-  return typeFromSchema(expectedDocumentSchema(repositoryPath, document));
+  return typeFromSchema(expectedDocumentSchema(repositoryPath, document))
+    ?? artifactTypes.find((type) => path.basename(inputPath) === `${type}.json`) ?? null;
 }
 
 function formatAjvErrors(errors = []) {
@@ -169,6 +182,7 @@ function formatAjvErrors(errors = []) {
 }
 
 export async function validateArtifact({ file, profile = "complete", type = null }) {
+  if (!profiles.has(profile)) return { ok: false, profile, type, errors: [`unknown profile ${profile}`] };
   const inputPath = path.resolve(file);
   let document;
   try {
@@ -184,11 +198,14 @@ export async function validateArtifact({ file, profile = "complete", type = null
       file: inputPath,
       profile,
       type: resolvedType,
-      errors: ["artifact type is not recognized; pass --type workflow-charter, engagement-reframe, or data-context-manifest"],
+      errors: ["artifact type is not recognized; pass --type with a type listed by --help"],
     };
   }
 
   const definition = typeDefinitions.get(resolvedType);
+  if (profile === "starter" && !definition.starterPointers) {
+    return { ok: false, profile, type: resolvedType, errors: [`${resolvedType} has no starter profile; use complete`] };
+  }
   const canonicalSchema = JSON.parse(await readFile(path.join(repositoryRoot, definition.schema), "utf8"));
   const schema = profile === "starter" ? cloneForStarter(canonicalSchema) : canonicalSchema;
   const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -203,11 +220,13 @@ export async function validateArtifact({ file, profile = "complete", type = null
         errors.push(`${pointer} is required by the starter decision profile`);
       }
     }
-  } else {
+  } else if (errors.length === 0) {
     errors.push(...definition.semanticErrors(document, path.basename(inputPath)));
   }
 
-  return { ok: errors.length === 0, file: inputPath, profile, type: resolvedType, schema: definition.schema, errors };
+  return { ok: errors.length === 0, file: inputPath, profile, type: resolvedType, schema: definition.schema,
+    validation_scope: profile === "starter" ? "starter_structure" : "single_artifact_contract",
+    limitations: "Checks the fixed local schema and shared single-artifact invariants. Does not resolve referenced files, verify external authority or signatures, or authorize release. Run the repository/target release gate for cross-artifact bindings and evidence.", errors };
 }
 
 async function main() {

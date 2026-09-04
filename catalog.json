@@ -1,8 +1,20 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-09-03",
+  "updated": "2026-09-04",
   "artifacts": [
+    {
+      "id": "example.invoice-document-review",
+      "type": "example",
+      "path": "examples/invoice-exception/document-review/README.md",
+      "tags": ["evaluation", "human-review", "practice", "model-comparison"]
+    },
+    {
+      "id": "example.invoice-practice-packet",
+      "type": "example",
+      "path": "examples/invoice-exception/document-review/practice.md",
+      "tags": ["field-discovery", "practice", "value", "ownership"]
+    },
     {
       "id": "guide.five-minute",
       "type": "standard",

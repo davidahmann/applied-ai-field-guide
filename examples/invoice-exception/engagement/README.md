@@ -4,6 +4,8 @@ This synthetic engagement connects the field work, value decision, system bounda
 
 ## Ten-minute walkthrough
 
+For hands-on practice, use the [invoice document review lab](../document-review/README.md) and [supplied learner packet](../document-review/practice.md). They extend this case with difficult source documents, a rules-versus-model comparison and a review surface; they do not change the release decision below.
+
 You do not need to read the repository first. Use this as a short decision trail:
 
 | Minute | Open | Look for |

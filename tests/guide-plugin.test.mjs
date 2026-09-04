@@ -8,9 +8,45 @@ import { fileURLToPath } from "node:url";
 
 import { callTool, toolDefinitions } from "../plugins/applied-ai-field-guide/mcp/tools.mjs";
 import { digest, loadConfig } from "../plugins/applied-ai-field-guide/mcp/workspace.mjs";
+import { artifactTypes } from "../scripts/artifact-type-names.mjs";
+import { guidancePaths } from "../scripts/guide-search-corpus.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const pluginRoot = path.join(root, "plugins", "applied-ai-field-guide");
+const repositoryVersion = JSON.parse(await readFile(path.join(root, "package.json"), "utf8")).version;
+
+test("search reaches canonical uncataloged chapters and canonical validation is automatic", async (t) => {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "guide-coverage-"));
+  const workspace = path.join(temporary, "engagements"); await mkdir(workspace);
+  const config = path.join(temporary, "config.json");
+  await writeFile(config, JSON.stringify({ guide_root: root, validator_root: root, workspace_root: workspace, max_read_bytes: 65536, max_write_bytes: 262144, allow_confidential_model_context: false }));
+  t.after(() => rm(temporary, { recursive: true, force: true }));
+  const call = (name, args) => callToolInProcess(config, name, args);
+  const paths = await guidancePaths(root);
+  assert.equal(paths.filter((item) => item.startsWith("library/")).length, 18);
+  assert.equal(paths.some((item) => item.startsWith("plugins/")), false);
+  const chapter = "library/16-data-readiness-and-context-contracts.md";
+  const heading = (await readFile(path.join(root, chapter), "utf8")).match(/^# (.+)$/m)[1];
+  const found = await call("guide_search", { query: heading, limit: 10 });
+  const hit = found.results.find((item) => item.path === chapter);
+  assert.ok(hit, JSON.stringify(found)); assert.equal(hit.cataloged, false); assert.equal(hit.artifact_id, null); assert.ok(hit.section); assert.match(hit.content_digest, /^sha256:/);
+  assert.deepEqual(toolDefinitions.find((item) => item.name === "artifact_validate").inputSchema.properties.canonical_type.enum, [...artifactTypes]);
+  await call("engagement_start", { engagement_id: "practice-test", title: "Fictional review", tenant: "practice", workflow: "Review synthetic invoices", classification: "public", retention_summary: "Delete after isolated tests" });
+  const base = { engagement_id: "practice-test", source_refs: [], depends_on: [], status: "proposed" };
+  await call("artifact_save_revision", { ...base, operation_id: "save-bad-report", artifact_id: "bad-report", artifact_type: "evaluation-report", format: "json", content: "{}" });
+  const invalid = await call("artifact_validate", { engagement_id: "practice-test", artifact_id: "bad-report" });
+  assert.equal(invalid.passed, false); assert.equal(invalid.canonical_contract_checked, true);
+  await call("artifact_save_revision", { ...base, operation_id: "save-note", artifact_id: "native-note", artifact_type: "native-record", format: "md", content: "# A practice note\n\nUnverified source summary." });
+  const note = await call("artifact_validate", { engagement_id: "practice-test", artifact_id: "native-note" });
+  assert.equal(note.validation_scope, "file_integrity_only"); assert.equal(note.canonical_contract_checked, false);
+  const save = { ...base, operation_id: "save-routing", artifact_id: "native-design", artifact_type: "native-record", format: "md", content: "# Design\n\nFictional team record.", routing: { covers: ["field-observation"], rationale: "Reviewed source notes cover observation", applicability: "applicable" } };
+  await assert.rejects(() => call("artifact_save_revision", save), (error) => error.code === "ROUTING_EVIDENCE_REQUIRED");
+  await assert.rejects(() => call("artifact_save_revision", { ...save, depends_on: ["native-note"], routing: { ...save.routing, covers: ["production-service-readiness"], applicability: "no_external_integration" } }), (error) => error.code === "INVALID_INPUT");
+  const saved = await call("artifact_save_revision", { ...save, depends_on: ["native-note"] });
+  assert.deepEqual(saved.artifact.routing.covers, ["field-observation"]);
+  const next = await call("next_field_move", { engagement_id: "practice-test" });
+  assert.match(JSON.stringify(next), /scoped human review/);
+});
 const guideFiles = [
   "AGENTS.md", "CHANGELOG.md", "CITATION.cff", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "GOVERNANCE.md",
   "LICENSE", "NOTICE", "README.md", "SECURITY.md", "SUPPORT.md", "catalog.json", "llms.txt", "package.json", "package-lock.json",
@@ -709,7 +745,7 @@ test("the MCP process completes protocol initialization and lists the same bound
   child.stdin.write(`${JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "test", version: "1" } } })}\n`);
   const initialized = await waitFor(1);
   assert.equal(initialized.result.serverInfo.name, "applied-ai-local-copilot");
-  assert.equal(initialized.result.serverInfo.version, "2.0.0");
+  assert.equal(initialized.result.serverInfo.version, repositoryVersion);
   assert.deepEqual(initialized.result.capabilities, { tools: { listChanged: false } });
   child.stdin.write(`${JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" })}\n`);
   child.stdin.write(`${JSON.stringify({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} })}\n`);
@@ -817,7 +853,7 @@ test("the installer creates a versioned local package, preserves configuration, 
   const first = run([]);
   assert.equal(first.status, 0, first.stderr);
   const installedRoot = path.join(localHome, "plugins", "applied-ai-field-guide");
-  assert.equal(JSON.parse(await readFile(path.join(installedRoot, ".codex-plugin", "plugin.json"), "utf8")).version, "2.0.0");
+  assert.equal(JSON.parse(await readFile(path.join(installedRoot, ".codex-plugin", "plugin.json"), "utf8")).version, repositoryVersion);
   const configPath = path.join(localHome, ".config", "applied-ai-field-guide", "config.json");
   const config = JSON.parse(await readFile(configPath, "utf8"));
   assert.equal(config.guide_root, path.join(installedRoot, "guide"));

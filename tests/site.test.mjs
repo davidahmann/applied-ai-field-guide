@@ -10,6 +10,21 @@ import { pages, redirects, site } from "../site/site.config.mjs";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(root, "site-dist");
 
+test("supporting study paths and standalone downloads stay useful outside GitHub", async () => {
+  const sources = ["templates/value-case.md", "playbooks/01-discovery-and-value.md", "examples/invoice-exception/engagement/field-evidence.md", "examples/invoice-exception/document-review/practice.md"];
+  for (const source of sources) {
+    const page = pages.find((item) => item.source === source); assert.ok(page, source);
+    const html = await readFile(routeFile(page.route), "utf8"); assert.match(html, /Download Markdown/);
+    const download = await readFile(path.join(outputRoot, "downloads", source), "utf8");
+    assert.doesNotMatch(download.replace(/```[\s\S]*?```/g, ""), /\]\(\.\.?\//, "standalone Markdown must not depend on sibling files");
+  }
+  const lab = await readFile(path.join(outputRoot, "labs/invoice-review/index.html"), "utf8");
+  assert.match(lab, /\.\.\/\.\.\/worked-engagement\/invoice-exception\//);
+  await access(path.join(outputRoot, "labs/invoice-review/review.mjs"));
+  await access(path.join(outputRoot, "downloads/templates/workflow-charter.json"));
+  await access(path.join(outputRoot, "downloads/schemas/workflow-charter.schema.json"));
+});
+
 function routeFile(route) {
   return path.join(outputRoot, route === "/" ? "" : route.slice(1), "index.html");
 }

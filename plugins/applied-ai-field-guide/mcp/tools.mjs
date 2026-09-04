@@ -1,6 +1,8 @@
 import { spawnSync } from "node:child_process";
 import { lstat, readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
+import { artifactTypes } from "../guide/scripts/artifact-type-names.mjs";
+import { guidancePaths } from "../guide/scripts/guide-search-corpus.mjs";
 
 import {
   GuideError,
@@ -25,7 +27,17 @@ const allowedDispositions = new Set([
   "continue_discovery", "bounded_kickoff", "defer", "stop", "accept", "reject", "revise",
   "proceed", "constrain", "pause", "rollback", "retire", "review_required",
 ]);
-const validationTypes = new Set(["workflow-charter", "engagement-reframe", "data-context-manifest"]);
+const validationTypes = new Set(artifactTypes);
+const routingStages = ["field-observation", "workflow-charter", "value-case", "data-context-manifest", "intelligence-selection-record", "enterprise-integration-map", "production-system-design", "secure-action-boundary-review", "approved-delivery-slice", "evaluation-report", "production-service-readiness", "customer-enablement-handoff", "production-service-review"];
+const routingSchema = {
+  type: "object", additionalProperties: false, required: ["covers", "rationale", "applicability"],
+  properties: {
+    covers: { type: "array", minItems: 1, maxItems: 13, items: { type: "string", enum: routingStages } },
+    rationale: { type: "string", minLength: 20, maxLength: 2000 },
+    applicability: { type: "string", enum: ["applicable", "no_external_integration"] },
+    ownership: { type: "string", enum: ["retained", "transferred"] },
+  },
+};
 const sourceAuthorityStatuses = new Set(["system_of_record", "authoritative_policy", "owner_attested", "observed", "supporting", "unverified"]);
 const classificationRank = new Map([["public", 0], ["internal", 1], ["confidential", 2], ["restricted", 3]]);
 const dispositionsByKind = new Map([
@@ -291,11 +303,12 @@ function requireEngagementModelContextPolicy(config, state) {
   }
 }
 
-function nextMove(state) {
+export function nextMove(state) {
   const latest = latestArtifacts(state);
   const current = currentArtifacts(state);
-  const accepted = acceptedArtifacts(state);
-  const acceptedTypes = new Set(accepted.map(({ artifact_type: type }) => type));
+  // Historical acceptance remains in the ledger, but cannot cover a stage
+  // after a newer current revision withdraws or changes that coverage.
+  const accepted = current.filter((artifact) => reviewForArtifactRevision(state, artifact)?.disposition === "accept");
   const engagementBlocker = activeBlockingDecision(state, "engagement_disposition", ["stop", "defer"]);
   const steps = [
     [["field-observation", "field-observation-log"], "field-observation", "Observe one representative case with the process knower and register its governed source metadata.", "$qualify-ai-workflow"],
@@ -352,8 +365,9 @@ function nextMove(state) {
           : "Review the current reframe with the named authority before chartering a changed boundary.";
       return { stage: "engagement-reframe", skill: "$reframe-ai-engagement", move: reviewMove };
     }
-    const currentStageArtifacts = current.filter(({ artifact_type: type }) => aliases.includes(type));
-    const latestStageArtifacts = latest.filter(({ artifact_type: type }) => aliases.includes(type));
+    const covers = (artifact) => aliases.includes(artifact.artifact_type) || artifact.routing?.covers.includes(stage);
+    const currentStageArtifacts = current.filter(covers);
+    const latestStageArtifacts = latest.filter(covers);
     const stageArtifacts = currentStageArtifacts.length > 0 ? currentStageArtifacts : latestStageArtifacts;
     if (stageArtifacts.length > 1) {
       return {
@@ -363,7 +377,7 @@ function nextMove(state) {
       };
     }
     const latestForStage = stageArtifacts[0];
-    const acceptedForStage = aliases.some((type) => acceptedTypes.has(type));
+    const acceptedForStage = accepted.some(covers);
     if (latestForStage) {
       const review = reviewForArtifactRevision(state, latestForStage);
       if (review?.disposition === "revise") return { stage, skill, move: `Revise ${latestForStage.artifact_id} r${latestForStage.revision} and obtain a new exact-revision review.` };
@@ -374,7 +388,8 @@ function nextMove(state) {
     }
     if (!acceptedForStage) return { stage, skill, move };
   }
-  return { stage: "operate", skill: "$operate-ai-service", move: "Review the live service and decide whether to improve, constrain, pause, transfer, or retire it." };
+  const retained = accepted.some((artifact) => artifact.routing?.ownership === "retained");
+  return { stage: "operate", skill: "$operate-ai-service", ownership: retained ? "retained" : "unspecified_or_transferred", move: retained ? "Review the retained team's service evidence, capacity and backup coverage; no artificial delivery-team exit is required." : "Review the live service and decide whether to improve, constrain, pause, transfer, or retire it." };
 }
 
 export const toolDefinitions = [
@@ -416,7 +431,7 @@ export const toolDefinitions = [
   {
     name: "artifact_validate",
     description: "Validate one saved local artifact revision. Supported canonical JSON artifacts use the Guide's fixed validator; other formats receive bounded structural checks. Read-only and never promotion evidence by itself.",
-    inputSchema: { type: "object", additionalProperties: false, required: ["engagement_id", "artifact_id"], properties: { engagement_id: { type: "string" }, artifact_id: { type: "string" }, revision: { type: "integer", minimum: 1 }, profile: { type: "string", enum: ["starter", "complete"] }, canonical_type: { type: "string", enum: ["workflow-charter", "engagement-reframe", "data-context-manifest"] } } },
+    inputSchema: { type: "object", additionalProperties: false, required: ["engagement_id", "artifact_id"], properties: { engagement_id: { type: "string" }, artifact_id: { type: "string" }, revision: { type: "integer", minimum: 1 }, profile: { type: "string", enum: ["starter", "complete"] }, canonical_type: { type: "string", enum: [...artifactTypes] } } },
   },
   {
     name: "decision_record",
@@ -439,6 +454,9 @@ export const toolDefinitions = [
     inputSchema: { type: "object", additionalProperties: false, required: ["operation_id", "engagement_id", "packet_id"], properties: { operation_id: { type: "string" }, engagement_id: { type: "string" }, packet_id: { type: "string" } } },
   },
 ];
+
+// Optional, evidence-bound coverage metadata; existing workspaces remain valid.
+toolDefinitions.find(({ name }) => name === "artifact_save_revision").inputSchema.properties.routing = routingSchema;
 
 export async function callTool(name, rawInput = {}) {
   const definition = toolDefinitions.find((tool) => tool.name === name);
@@ -505,9 +523,9 @@ async function guideSearch(config, input) {
   };
   const hinted = input.stage ? stageHints[input.stage] || [] : [];
   const candidates = [
-    { path: "README.md", id: "readme", type: "standard", tags: ["orientation"] },
     ...catalog.artifacts,
-  ].filter(({ path: target }) => /\.(?:md|json)$/.test(target));
+    ...(await guidancePaths(config.guideRoot)).map((target) => ({ path: target, id: null, type: "guidance", tags: [] })),
+  ].filter(({ path: target }, index, all) => /\.(?:md|json)$/.test(target) && all.findIndex((item) => item.path === target) === index);
   const results = [];
   for (const candidate of candidates) {
     let file;
@@ -516,15 +534,17 @@ async function guideSearch(config, input) {
     const body = await readFile(file.candidate, "utf8");
     const lines = body.split("\n");
     let best = null;
+    let section = "";
     lines.forEach((line, index) => {
+      if (/^#{1,6} /.test(line)) section = line.replace(/^#+ /, "");
       const lower = line.toLowerCase();
       const matched = terms.filter((term) => lower.includes(term));
       if (matched.length === 0) return;
       const tagText = `${candidate.id} ${candidate.type} ${(candidate.tags || []).join(" ")}`.toLowerCase();
       const score = matched.length * 10 + hinted.filter((hint) => lower.includes(hint) || tagText.includes(hint)).length * 3 + (line.startsWith("#") ? 2 : 0);
-      if (!best || score > best.score) best = { score, line: index + 1, excerpt: line.trim().slice(0, 800) };
+      if (!best || score > best.score) best = { score, line: index + 1, section, excerpt: line.trim().slice(0, 800) };
     });
-    if (best) results.push({ artifact_id: candidate.id, artifact_type: candidate.type, path: candidate.path, tags: candidate.tags || [], ...best });
+    if (best) results.push({ artifact_id: candidate.id, artifact_type: candidate.type, path: candidate.path, content_digest: digest(body), cataloged: candidate.id !== null, tags: candidate.tags || [], ...best });
   }
   results.sort((left, right) => right.score - left.score || left.path.localeCompare(right.path));
   return { query, stage: input.stage || null, result_count: Math.min(results.length, limit), results: results.slice(0, limit), classification: "repository-public", egress: "none", truncated: results.length > limit };
@@ -666,6 +686,15 @@ async function artifactSaveRevision(config, input) {
       }
       const sourceRefs = requireSourceRefs(state, input.source_refs, "source_refs");
       const dependsOn = requireArtifactRefs(state, input.depends_on, "depends_on");
+      if (input.routing) {
+        if (sourceRefs.length + dependsOn.length === 0) throw new GuideError("ROUTING_EVIDENCE_REQUIRED", "equivalent coverage must cite source or artifact evidence");
+        if (new Set(input.routing.covers).size !== input.routing.covers.length) throw new GuideError("INVALID_INPUT", "routing covers must be unique");
+        if (input.routing.applicability === "no_external_integration"
+          && (input.routing.covers.length !== 1 || input.routing.covers[0] !== "enterprise-integration-map")) {
+          throw new GuideError("INVALID_INPUT", "only the external-integration stage supports non-applicability; safety and release checks cannot be skipped");
+        }
+        if (input.routing.ownership && !input.routing.covers.includes("customer-enablement-handoff")) throw new GuideError("INVALID_INPUT", "ownership requires operating-capability coverage, including retained teams");
+      }
       if (dependsOn.includes(artifactId)) throw new GuideError("DEPENDENCY_CYCLE", "an artifact cannot depend on itself");
       requireAcyclicArtifactDependencies(state, artifactId, dependsOn);
       const revision = Math.max(0, ...priorRevisions.map(({ revision: value }) => value)) + 1;
@@ -687,6 +716,7 @@ async function artifactSaveRevision(config, input) {
         depends_on: dependsOn,
         dependency_bindings: dependsOn.map((reference) => bindReference(state, reference)),
         status,
+        ...(input.routing ? { routing: input.routing } : {}),
         created_at: new Date().toISOString(),
       };
       state.artifacts.push(artifact);
@@ -716,8 +746,9 @@ async function artifactValidate(config, input) {
     checks.push({ check: "unresolved_marker", passed: !unresolvedMarkerPattern.test(loaded.body), detail: "no unresolved bracketed work marker" });
   }
   let canonical = null;
-  if (input.canonical_type) {
-    const canonicalType = requireString(input.canonical_type, "canonical_type", { max: 100 });
+  const selectedType = input.canonical_type || (artifact.format === "json" && validationTypes.has(artifact.artifact_type) ? artifact.artifact_type : null);
+  if (selectedType) {
+    const canonicalType = requireString(selectedType, "canonical_type", { max: 100 });
     if (!validationTypes.has(canonicalType)) throw new GuideError("INVALID_INPUT", "canonical_type is not supported by the local validator");
     if (artifact.format !== "json") throw new GuideError("INVALID_INPUT", "canonical validation requires a JSON artifact");
     if (artifact.artifact_type !== canonicalType) throw new GuideError("ARTIFACT_TYPE_MISMATCH", `saved artifact_type ${artifact.artifact_type} cannot be validated as ${canonicalType}`);
@@ -734,7 +765,7 @@ async function artifactValidate(config, input) {
     canonical = { passed: execution.status === 0, status: execution.status, stdout: execution.stdout.trim().slice(0, 32_000), stderr: execution.stderr.trim().slice(0, 8_000), timed_out: execution.error?.code === "ETIMEDOUT", runtime_digest: runtime.digest };
     checks.push({ check: "canonical_contract", passed: canonical.passed, detail: `${canonicalType} ${input.profile || "complete"} validation` });
   }
-  return { artifact: { artifact_id: artifactId, revision: artifact.revision, artifact_type: artifact.artifact_type, content_digest: artifact.content_digest }, passed: checks.every(({ passed }) => passed), checks, canonical, limitations: "This validates local structure and declared invariants only; it is not customer evidence, authority, or production approval." };
+  return { artifact: { artifact_id: artifactId, revision: artifact.revision, artifact_type: artifact.artifact_type, content_digest: artifact.content_digest }, passed: checks.every(({ passed }) => passed), validation_scope: canonical ? (input.profile === "starter" ? "starter_structure" : "single_artifact_contract") : "file_integrity_only", canonical_contract_checked: canonical !== null, checks, canonical, limitations: "A file-integrity pass is not contract validation. Canonical checks cover one artifact, not referenced evidence, external authority, or production approval." };
 }
 
 async function verifyValidatorRuntime(config, canonicalType) {
@@ -743,19 +774,16 @@ async function verifyValidatorRuntime(config, canonicalType) {
     throw new GuideError("VALIDATOR_RUNTIME_UNAVAILABLE", "canonical validation requires the trusted Applied AI Field Guide checkout recorded in validator_root");
   }
   if ((await lstat(config.validatorRoot)).isSymbolicLink()) throw new GuideError("VALIDATOR_RUNTIME_UNAVAILABLE", "validator_root cannot be a symbolic link");
-  const schemaByType = {
-    "workflow-charter": "schemas/workflow-charter.schema.json",
-    "engagement-reframe": "schemas/engagement-reframe.schema.json",
-    "data-context-manifest": "schemas/data-context-manifest.schema.json",
-  };
   const files = [
     "package.json",
     "package-lock.json",
     "scripts/validate-artifact.mjs",
+    "scripts/artifact-types.mjs",
+    "scripts/artifact-type-names.mjs",
     "scripts/governance-invariants.mjs",
     "scripts/contract-invariants.mjs",
     "scripts/repository-paths.mjs",
-    schemaByType[canonicalType],
+    `schemas/${canonicalType}.schema.json`,
   ];
   const bindings = [];
   for (const relative of files) {

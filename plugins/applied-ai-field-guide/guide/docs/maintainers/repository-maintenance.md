@@ -107,6 +107,7 @@ These are maximums, not coverage targets. Raising one requires an explicit maint
 - Treat repository Markdown as the only content source. Add a route in `site/site.config.mjs` only when the source answers a distinct reader question.
 - Keep page titles and descriptions specific, factual, and unique. Do not add keyword lists, synthetic FAQs, duplicate articles, or claims about search ranking.
 - Run `npm run test:site`, then inspect representative desktop and mobile renders before publishing a UI or navigation change.
+- For interactive changes, provision Playwright with Chromium, build the site, then run `node scripts/check-site-browser.mjs`. `PLAYWRIGHT_MODULE` can point to a preinstalled module; `SITE_SCREENSHOT_DIRECTORY` optionally retains desktop/mobile captures. This additional browser lane exercises real search/close behavior and the practice review flow; it is separate from the dependency-light deterministic CI gate.
 - The Pages workflow builds `site-dist/` in CI and deploys only that artifact. Do not commit generated output.
 - Keep `robots.txt`, `sitemap.xml`, structured metadata, the generated web `llms.txt`, and visible source links bound to the same route map.
 - After deployment, verify the canonical URL, core assets, sitemap, crawler policy, and a deep route over HTTPS. Use Search Console or equivalent measurement after ownership is configured; do not infer ranking from a successful deployment.

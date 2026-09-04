@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync } from "node:fs";
+
 export const site = {
   name: "The Applied AI Field Guide",
   shortName: "Applied AI Field Guide",
@@ -35,6 +37,7 @@ export const navigation = [
     routes: [
       "/field-engagement-reframing/",
       "/worked-engagement/invoice-exception/",
+      "/practice/invoice-review/",
     ],
   },
   {
@@ -70,6 +73,25 @@ export const navigation = [
     ],
   },
 ];
+
+// Supporting study pages keep their canonical Markdown and stable source-based
+// routes. They are searchable/linkable without filling the primary navigation.
+function addSupportingPages() {
+for (const directory of ["library", "templates", "playbooks", "operations", "examples/invoice-exception/engagement", "examples/invoice-exception/document-review"]) {
+  for (const entry of readdirSync(new URL(`../${directory}/`, import.meta.url), { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
+    const source = `${directory}/${entry.name}`;
+    if (pages.some((page) => page.source === source)) continue;
+    const heading = readFileSync(new URL(`../${source}`, import.meta.url), "utf8").match(/^# (.+)$/m)?.[1];
+    if (!heading) throw new Error(`Study page needs a heading: ${source}`);
+    const practice = source === "examples/invoice-exception/document-review/practice.md";
+    const area = directory.startsWith("examples") ? "Invoice practice" : directory[0].toUpperCase() + directory.slice(1);
+    pages.push({ source, route: practice ? "/practice/invoice-review/" : `/study/${source.replace(/\.md$/, "").toLowerCase()}/`,
+      navTitle: heading, title: `${heading} · ${area}`,
+      description: `Read ${heading.slice(0, 55)}: ${area.toLowerCase()} guidance with evidence limits, practical checks and editable source material.` });
+  }
+}
+}
 export const pages = [
   {
     route: "/",
@@ -272,3 +294,4 @@ export const pages = [
       "Dated primary-source research, portable findings, attribution, uncertainty, and implementation implications behind The Applied AI Field Guide.",
   },
 ];
+addSupportingPages();

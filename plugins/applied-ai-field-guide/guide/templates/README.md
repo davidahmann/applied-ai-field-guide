@@ -13,6 +13,8 @@ npm run validate:artifact -- ./path/to/workflow-charter.json --profile complete
 
 Supported progressive types are `workflow-charter`, `engagement-reframe`, and `data-context-manifest`. Use `--json` for machine-readable results. Run `npm test` before treating a repository change as complete. Passing artifact validation proves structure and declared invariants only; it does not supply missing field evidence, authority, acceptance, or release approval.
 
+Complete validation supports all 22 governed JSON types, including tools, evaluations, change assessments and solution releases. Run `npm run validate:artifact -- --help` for the fixed local type list; use `--type evaluation-report` when a saved file has an arbitrary name. Files may live outside the clone. Artifact-supplied schema URLs are never fetched or executed. Single-artifact validation uses shared semantic checks where defined, but does not resolve referenced files or verify signatures and external authority; cross-artifact release checks remain in the repository or target-system release gate. `starter` is deliberately unavailable for other types.
+
 ### Why progressive profiles stop at JSON contracts
 
 Starter profiles apply only to closed, machine-readable contracts whose canonical JSON Schema can retain type and unknown-field rules while requiring a smaller decision-bearing subset. The Markdown delivery, readiness, and handoff templates are collaborative working records: their tables carry target evidence, exercises, dissent, owners, and narrative decisions that cannot be made true by structural validation. Converting them to JSON merely for symmetry would create worse human artifacts and another contract surface to maintain.
