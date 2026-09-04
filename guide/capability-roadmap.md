@@ -8,6 +8,8 @@ It is not a certification, hiring standard, fixed curriculum, or claim that one 
 
 ## Choose the responsibility, not the title
 
+No live engagement to practice on? Start with the [self-contained invoice practice packet](../examples/invoice-exception/document-review/practice.md). It supplies a messy brief, source documents, staged reveals, a flawed submission, a browser review exercise and several defensible decisions. You can complete it without customer access.
+
 These roles overlap. The useful distinction is what each person remains accountable for after a design meeting or customer workshop ends.
 
 | Role | Primary accountability | Evidence of good work | Boundary to clarify |

@@ -4,7 +4,7 @@
   "release_id": "invoice_exception_reference_release",
   "version": "3.1.0",
   "release_status": "review",
-  "release_digest": "sha256:fd6e821fbd6b47b5527d5d01c4495542d68acfa045ba049d773a4ca54b6e0802",
+  "release_digest": "sha256:0228f4c16b16cea285abb03a2711ce0473c315eac896bceb8bad75059e0373b4",
   "owner": "reference-release-maintainer",
   "created_at": "2026-08-07T18:00:00Z",
   "workflow_charter_uri": "workflow-charter.json",
@@ -156,7 +156,7 @@
       "uri": "evaluation-report.json",
       "version": "2.0.0",
       "schema_version": "1.1.0",
-      "digest": "sha256:1015a4c9a764555a261844c6908242dafbdbf7419bcca9f2d9c4d9725f1892df",
+      "digest": "sha256:51fe7d1f063966a3faaa2bf40ea4c13bb2642c427fee3b79fb67ca2158f8e2a0",
       "change_summary": "Bind the isolated deterministic regression claim and raw runner evidence."
     },
     {
@@ -172,7 +172,7 @@
       "uri": "README.md",
       "version": null,
       "schema_version": null,
-      "digest": "sha256:cc72a8d8dd9993d8f4e4912457bbf93c215dc84d3f2d30d564b05d915fa869d7",
+      "digest": "sha256:5cb7a24df5405ad4ebd39f0adc1cb86663589ea1bf42202243d195056d7096e8",
       "change_summary": "Bind the documented operator-facing reference workflow."
     },
     {

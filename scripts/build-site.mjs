@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { copyFile, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -85,6 +85,9 @@ async function rewriteLocalTarget(target, currentPage, { image = false } = {}) {
   const parts = splitTarget(target);
   const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(currentPage.source), parts.pathname));
   if (resolved.startsWith("../") || path.posix.isAbsolute(resolved)) return target;
+
+  if (resolved === "examples/invoice-exception/document-review/index.html") return relativeAsset(currentPage.route, "labs/invoice-review/index.html");
+  if (/^templates\/[^/]+\.json$/.test(resolved)) return relativeAsset(currentPage.route, `downloads/${resolved}`);
 
   const mapped = pageBySource.get(resolved) || pageBySource.get(path.posix.join(resolved, "README.md"));
   if (mapped) return `${relativeRoute(currentPage.route, mapped.route)}${parts.query}${parts.hash}`;
@@ -358,7 +361,7 @@ async function renderPage(page) {
           <div class="article-meta"><span>By <a href="${escapeHtml(site.author.url)}">${escapeHtml(site.author.name)}</a></span><span>Updated <time datetime="${escapeHtml(updated)}">${escapeHtml(updated)}</time></span><span>${minutes} min read</span></div>
         </header>
         <div class="article-content">${body}</div>
-        <aside class="source-note"><span>This page is generated from <code>${escapeHtml(page.source)}</code>. The repository remains the source of truth.</span><a href="${escapeHtml(sourceUrl)}">View source</a></aside>
+        <aside class="source-note"><span>This page is generated from <code>${escapeHtml(page.source)}</code>. The repository remains the source of truth.</span><a href="${escapeHtml(sourceUrl)}">View source</a> · <a download href="${escapeHtml(relativeAsset(page.route, `downloads/${page.source}`))}">Download Markdown</a></aside>
       </article>
     </main>
     ${toc}
@@ -431,6 +434,33 @@ async function build() {
   await copyFile(path.join(root, "assets/ai-value-engineering-scorecard.png"), path.join(outputRoot, "assets/ai-value-engineering-scorecard.png"));
   await copyFile(path.join(root, "output/pdf/ai-value-engineering-scorecard.pdf"), path.join(outputRoot, "downloads/ai-value-engineering-scorecard.pdf"));
   await copyFile(path.join(root, "node_modules/mermaid/dist/mermaid.min.js"), path.join(outputRoot, "assets/mermaid.min.js"));
+
+  for (const page of pages) {
+    const body = await readFile(path.join(root, page.source), "utf8");
+    // Standalone downloads use absolute destinations; code samples remain exact.
+    const chunks = body.split(/(```[\s\S]*?```)/g);
+    for (let i = 0; i < chunks.length; i += 2) {
+      const matches = [...chunks[i].matchAll(/\]\(([^\s)]+)\)/g)];
+      for (const match of matches) {
+        const target = match[1];
+        const rewritten = target.startsWith("#") ? `${canonicalUrl(page.route)}${target}` : await rewriteLocalTarget(target, page);
+        const absolute = new URL(rewritten, canonicalUrl(page.route)).href;
+        chunks[i] = chunks[i].replace(match[0], `](${absolute})`);
+      }
+    }
+    const destination = path.join(outputRoot, "downloads", page.source);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, chunks.join(""));
+  }
+  for (const directory of ["templates", "schemas"]) {
+    await mkdir(path.join(outputRoot, "downloads", directory), { recursive: true });
+    for (const entry of await readdir(path.join(root, directory))) if (entry.endsWith(".json")) await copyFile(path.join(root, directory, entry), path.join(outputRoot, "downloads", directory, entry));
+  }
+  await mkdir(path.join(outputRoot, "labs/invoice-review"), { recursive: true });
+  for (const name of ["index.html", "sources.mjs", "engine.mjs", "review.mjs"]) {
+    const body = await readFile(path.join(root, "examples/invoice-exception/document-review", name), "utf8");
+    await writeFile(path.join(outputRoot, "labs/invoice-review", name), name === "index.html" ? body.replace("../engagement/README.md", "../../worked-engagement/invoice-exception/") : body);
+  }
 
   const searchIndex = rendered.map((page) => ({
     route: page.route,

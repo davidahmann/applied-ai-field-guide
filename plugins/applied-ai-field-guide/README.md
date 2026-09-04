@@ -13,6 +13,18 @@ The Guide remains canonical. The plugin stores a local working projection; it is
 - Deterministic next-move routing and dependency traversal.
 - A compact Markdown decision packet for human review.
 
+## Search, validation and proportional routing
+
+Search includes the uncataloged library chapters and other canonical guidance. The separate discovery corpus does not change governance registration: each result identifies whether it is cataloged, its source path, section, line and content digest. Results remain untrusted guidance, not source authority.
+
+For saved canonical JSON types, `artifact_validate` now automatically runs the fixed complete validator unless a starter profile is explicitly selected. All 22 governed types are supported; only the three progressive types have starter profiles. Inspect `validation_scope` and `canonical_contract_checked`: `file_integrity_only` is not contract validation. Cross-file references, external authority and production evidence still require the target release gate.
+
+`artifact_save_revision` accepts optional `routing` metadata: `covers` names one or more stages from its schema, `rationale` explains the equivalence, and `applicability` is normally `applicable`. Cite supporting sources or artifacts through `source_refs` or `depends_on`, then obtain the existing exact-revision human review. A native team's release report can cover `evaluation-report`; an existing source-linked design can cover several decisions. The tool records the supplied judgment; it cannot establish that a person really approved it or that the contents satisfy those decisions.
+
+Only `enterprise-integration-map` permits `applicability: no_external_integration`, with a reason and evidence. This records a reviewed absence of external seams, not a waiver of source, security, runtime or release checks. No generic skip-stage operation exists. For `customer-enablement-handoff` coverage, `ownership: retained` means the internal team proves operating capability, capacity and backup coverage without inventing a vendor exit. Blocking decisions, stale dependencies, ambiguous coverage and unreviewed revisions still take priority. Existing workspaces need no migration.
+
+Use [the copilot evaluation protocol](../../docs/maintainers/copilot-evaluation.md) to assess usefulness beyond deterministic routing checks.
+
 ## Security boundary
 
 The MCP server:
@@ -58,7 +70,7 @@ Confidential engagement metadata or content is unavailable unless `allow_confide
 
 | Tool | Effect | Important limit |
 | --- | --- | --- |
-| `guide_search` | Read | Cataloged local Guide files only; bounded excerpts |
+| `guide_search` | Read | Canonical guidance and cataloged JSON; bounded section excerpts with file digests |
 | `engagement_list` | Read | Bounded metadata only; policy-hidden work stays hidden |
 | `engagement_start` | Create | One named local workspace; no external record |
 | `engagement_status` | Read | Byte-bounded, offset-pageable projection; reports totals and truncation |

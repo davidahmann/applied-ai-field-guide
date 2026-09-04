@@ -4,6 +4,16 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-09-04
+
+- Extend standalone and local-plugin complete validation to all 22 governed JSON types using fixed local schemas and shared invariants. Keep starter profiles limited to the three decision-bearing contracts; distinguish file integrity, single-artifact checks and cross-artifact release proof.
+- Search uncataloged canonical guidance without converting the governance catalog into a content index. Return source sections, lines and digests alongside bounded excerpts.
+- Accept evidence-linked, exact-revision-reviewed coverage from existing team documents; preserve blocking decisions, ambiguous or stale evidence, safety checks and retained-team operating responsibility.
+- Extend the existing invoice engagement with a self-contained learner packet, difficult documents, an optional live model adapter, a rules baseline, a correction/rejection/escalation surface and measured-run logs with explicit human-effectiveness limits. Keep the new lab disconnected from posting and payments.
+- Add executable copilot-routing scenarios and a separate host-model review protocol. Do not present deterministic tool tests as proof of model-host judgment.
+- Render supporting library, playbook, operations, worked-record and template pages on the canonical site; add portable Markdown and JSON downloads, the review lab, and recoverable search errors. The site remains a projection of repository content.
+- Refresh the personal plugin snapshot and teaching-release dependency bindings; net file-count change is zero across `guide/`, `library/`, top-level `templates/` and `blueprints/`. The new exercise deepens the existing example rather than adding another lifecycle or framework.
+
 ## [2.0.0] - 2026-09-03
 
 - Reposition the project as **The Applied AI Field Guide**: fieldwork, value, engineering, and operations for internal applied-AI teams, product and workflow owners, service operators, and FDEs. Broaden the existing front doors and lifecycle guidance without adding another method or treating agents as mandatory.
@@ -286,7 +296,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/593a44b2e18c62eb0646eba412412de67473a378...v2.0.0
 [1.34.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v1.33.0...593a44b2e18c62eb0646eba412412de67473a378
 [1.33.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v1.32.0...v1.33.0

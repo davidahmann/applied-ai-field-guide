@@ -8,6 +8,9 @@ Read [AGENTS.md](AGENTS.md) before modifying this repository.
 
 ## Core entry points
 
+- Self-contained learner packet: [Invoice practice](examples/invoice-exception/document-review/practice.md)
+- Source-to-draft model and operator lab: [Document review](examples/invoice-exception/document-review/README.md)
+
 - Human overview: [README.md](README.md)
 - Searchable web guide: [The Applied AI Field Guide](https://davidahmann.github.io/applied-ai-field-guide/)
 - Situation-first five-minute orientation: [guide/field-guide-in-five-minutes.md](guide/field-guide-in-five-minutes.md)

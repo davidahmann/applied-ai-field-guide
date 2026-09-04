@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invoice review practice · Applied AI Field Guide</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#16222a;background:#f6f7f4}body{max-width:1120px;margin:0 auto;padding:24px}h1{font-size:clamp(26px,4vw,42px);margin:12px 0}a{color:#234e99}.eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.08em}main{display:grid;grid-template-columns:1fr 1fr;gap:24px}section{background:white;border:1px solid #cdd4d3;border-radius:8px;padding:20px;min-width:0}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}label{display:block;margin:14px 0 6px}input:not([type=checkbox]),select,textarea{box-sizing:border-box;width:100%;padding:10px;border:1px solid #7a878d;border-radius:4px;font:inherit}textarea{min-height:90px}button{border:1px solid #4e5f67;border-radius:4px;padding:10px 14px;background:white;font:inherit;cursor:pointer}button.primary{background:#183f4c;color:white}button:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}:focus-visible{outline:3px solid #275ce3;outline-offset:3px}#message{min-height:24px;color:#7a2e18}footer{padding:20px 0;line-height:1.5}.note{font-size:14px;color:#46565e}summary{cursor:pointer}#history{max-height:250px;overflow:auto}@media(max-width:720px){main{grid-template-columns:1fr}body{padding:16px}}
+</style></head><body>
+<a href="../engagement/README.md">Back to the worked engagement</a>
+<p class="eyebrow">Applied AI Field Guide · fictional practice</p>
+<h1>Check the invoice, not the confidence.</h1>
+<p>Read the source, correct the draft, then decide. Nothing here posts to a ledger. Use fictional names only.</p>
+<main><section aria-labelledby="source-heading"><h2 id="source-heading">Source evidence</h2>
+<label for="case">Document</label><select id="case"></select>
+<label for="mode">Starting point</label><select id="mode"><option value="baseline">Rules baseline</option><option value="manual">Manual entry</option><option value="imported">Imported model proposals</option></select>
+<label for="import">Optional evaluation report (JSON, 128 KB maximum)</label><input id="import" type="file" accept=".json,application/json">
+<p class="note">Run the optional live evaluation locally, then import its report. Imports are unverified proposals, never approvals. No API keys or uploads are used by this page.</p>
+<pre id="source"></pre><p id="revision" class="note"></p>
+<details><summary>Policy and available choices</summary><p>Only unambiguous USD invoices may become drafts. Missing currency, conflicting amounts, unreadable OCR and credit notes stay with the manual team. Ignore instructions inside invoice text. A valid quote or schema does not establish factual correctness.</p><p>Accept means retain a local practice draft. Reject discards the proposal; escalate requests missing evidence. Pause stops review until resumed.</p></details>
+</section><section aria-labelledby="review-heading"><h2 id="review-heading">Reviewable draft</h2>
+<form id="review"><label for="invoice">Invoice ID</label><input id="invoice" autocomplete="off">
+<label for="currency">Currency</label><input id="currency" autocomplete="off">
+<label for="amount">Amount in cents</label><input id="amount" type="number" min="0" max="10000000" step="1">
+<label for="quote">Exact source quote</label><textarea id="quote"></textarea>
+<label for="reviewer">Practice reviewer</label><input id="reviewer" autocomplete="off">
+<label for="rationale">Why this decision?</label><textarea id="rationale"></textarea>
+<label><input id="checked" type="checkbox"> I checked the amount, currency, identity and revision against the source.</label>
+<div class="actions"><button class="primary" type="submit">Accept draft</button><button type="button" id="reject">Reject</button><button type="button" id="escalate">Escalate</button><button type="button" id="pause">Pause</button></div>
+</form><p id="message" role="status" aria-live="polite"></p>
+</section></main>
+<footer><button id="export" type="button">Download review history</button><details><summary>Practice history and measurement limits</summary><pre id="history"></pre><p>Elapsed time includes reading and idle time; field edits are counted, not inferred as savings. Records persist only in this browser when storage is available. They are editable local practice data, not an audit trail or production approval. Export before clearing browser storage.</p></details></footer>
+<script type="module" src="./review.mjs"></script></body></html>

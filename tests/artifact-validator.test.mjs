@@ -7,8 +7,39 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { validateArtifact } from "../scripts/validate-artifact.mjs";
+import { artifactTypes } from "../scripts/artifact-type-names.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+
+test("every governed JSON type supports bounded complete validation outside the clone", async () => {
+  for (const type of artifactTypes) {
+    const file = await temporaryJson("unrecognized-name.json", { $schema: `https://untrusted.invalid/${type}.schema.json` });
+    const invalid = await validateArtifact({ file, type });
+    assert.equal(invalid.ok, false, type);
+    assert.equal(invalid.type, type);
+    assert.ok(invalid.errors.length, type);
+    const inferred = await validateArtifact({ file });
+    assert.equal(inferred.type, type, "schema basename selects a fixed LOCAL validator, never a fetch");
+    if (!["workflow-charter", "engagement-reframe", "data-context-manifest"].includes(type)) {
+      assert.equal((await validateArtifact({ file, type, profile: "starter" })).ok, false);
+    }
+  }
+});
+
+test("evaluation, tool and release checks retain shared semantic invariants", async () => {
+  for (const [type, fixture] of [["evaluation-report", "examples/invoice-exception/evaluation-report.json"], ["solution-release", "examples/invoice-exception/solution-release.json"], ["tool-contract", "examples/invoice-exception/tools/read-invoice.json"]]) {
+    const value = JSON.parse(await readFile(path.join(root, fixture), "utf8"));
+    const file = await temporaryJson("external.json", value);
+    const result = await validateArtifact({ file, type });
+    assert.equal(result.ok, true, `${type}: ${result.errors.join("; ")}`);
+    assert.equal(result.validation_scope, "single_artifact_contract");
+    if (type === "solution-release") {
+      value.release_digest = `sha256:${"0".repeat(64)}`;
+      const corrupt = await validateArtifact({ file: await temporaryJson("external.json", value), type });
+      assert.equal(corrupt.ok, false, "valid-shaped but stale release digest must fail");
+    }
+  }
+});
 
 async function temporaryJson(name, value) {
   const directory = await mkdtemp(path.join(tmpdir(), "applied-ai-field-guide-artifact-"));
