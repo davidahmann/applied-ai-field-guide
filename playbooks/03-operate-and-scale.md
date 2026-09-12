@@ -225,7 +225,7 @@ Never transfer customer data, proprietary policy, or confidential workflow detai
 
 Record each candidate in the [field-learning register](../templates/field-learning-register.md). Preserve recurrence, supporting and counter-evidence, confidentiality, permitted destination, product owner, disposition, and validation. A repeated anecdote is not yet a reusable pattern; a sanitized reproducible case with an owner and acceptance test is a product input.
 
-For comparable delivery cohorts, also preserve target-specific delivery and support effort, the reused governed artifact's exact version and prior scope, target revalidation and residual differences, productization and maintenance cost, and the expected effect on future delivery time, quality, safety, support load, or full cost. A declining customization ratio is evidence of leverage only while the target workflow continues to pass its own gates. Reuse does not transfer authority from the prior target.
+For comparable delivery cohorts, also preserve target-specific delivery and support effort, the reused governed artifact's exact version and prior scope, target revalidation and residual differences, productization and maintenance cost, and the expected effect on future delivery time, quality, safety, support load, or full cost. A declining customization ratio shows reusable advantage only while the target workflow continues to pass its own gates. Reuse does not transfer authority from the prior target.
 
 Control: `FDE-004`.
 

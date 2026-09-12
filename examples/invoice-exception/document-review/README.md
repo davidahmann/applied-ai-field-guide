@@ -4,6 +4,18 @@ The existing invoice reference tests controlled writes. This optional upstream l
 
 No customer access is needed. Start with the [self-contained practice packet](practice.md), then [open the review surface](index.html). In a clone, serve the repository with a static server bound to loopback, for example `python3 -m http.server 8123 --bind 127.0.0.1`, and open `/examples/invoice-exception/document-review/`. Do not open the HTML as a local file: module imports require HTTP. Stop the server when finished; serve only a clean public clone, never a directory containing customer files or credentials.
 
+## First run in 15 minutes
+
+**Prerequisites:** Node.js 22, npm, and a local clone. The default path is offline and sends nothing to a model provider.
+
+1. Run `npm ci --ignore-scripts` from the repository root.
+2. Run `npm run test:document-review` and confirm all negative controls pass.
+3. Run `node examples/invoice-exception/document-review/run-evaluation.mjs`.
+4. Find the wrong-amount test: the proposal is structurally valid, but the independent source grader rejects it.
+5. Serve the clone on loopback, open the review page, correct one proposal, and export the local practice history.
+
+The exercise should leave you with a baseline report, one visible failure, one human correction, and a clear boundary between record shape, source correctness, and approval authority. It does not require an API key. The optional live comparison below adds provider cost and should use only the built-in synthetic documents.
+
 ## Boundary and mechanism decision
 
 The user is an accounts-payable reviewer. The accepted practice outcome is a source-supported invoice draft or a justified return to the manual queue. Posting, payment, supplier contact, policy changes, identity management and customer data are excluded. The fictional controller retains posting authority. The manual queue is the fallback.
@@ -38,6 +50,12 @@ node examples/invoice-exception/document-review/run-evaluation.mjs --live YOUR_M
 The adapter uses the [Responses API structured-output format](https://platform.openai.com/docs/guides/structured-outputs), inspected 2026-09-04. Model refusal, incomplete output, HTTP failure and timeout produce a failed case with the manual-queue terminal reason. Validation remains in trusted code after the response. A schema-constrained response is not a correctness guarantee.
 
 The run log binds source, prompt, candidate and grader bytes; it records per-case correctness, unsafe drafts, latency and live token usage. Keep failed outputs. Do not tune on qualification cases and still call them an unseen holdout. These public partitions are inspectable teaching data, not independent qualification evidence. Neither an 8/8 run nor repository CI establishes population accuracy. `EVA-001`, `EVA-002`, `EVA-003`, `EVA-006`.
+
+### Worked interpretation of a perfect small run
+
+Suppose a candidate gets 8 of 8 cases right. The observed rate is 100%, but the sample is tiny. Under an optimistic assumption that the cases are independent and representative, a two-sided 95% Wilson interval has a lower bound of about 68%. The result is compatible with a much weaker population rate than “nearly perfect.”
+
+The assumption is also doubtful here: the cases are public, curated by one maintainer, and share one narrow invoice pattern. Their errors may be correlated, and a developer can inspect every expected result. Report “8/8 on this named fixture revision,” then inspect slice failures, repeat stochastic candidates, measure reviewer corrections and cost, and gather target cases from the real eligible population. Do not turn 8/8—or [a self-reported 59/60 result](../../../research/2026-08-18--healthcare-claims-context-and-evaluation.md)—into a deployment guarantee.
 
 ## Measure the operator, not just the extractor
 

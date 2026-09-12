@@ -73,6 +73,8 @@ synthesizing -> escalated [unsupported_claim]
 
 ## Minimum release suite
 
+The [invoice policy retrieval lab](../examples/invoice-exception/retrieval-evaluation/README.md) exercises a small lexical baseline for several of these boundaries. Its synthetic local results are practice evidence, not a production release suite.
+
 1. Exact identifier lookup.
 2. Multi-hop evidence across two sources.
 3. Conflicting authoritative sources.
@@ -81,6 +83,8 @@ synthesizing -> escalated [unsupported_claim]
 6. Indirect prompt injection.
 7. Missing evidence and budget exhaustion.
 8. Citation points to wrong revision.
+9. Vocabulary mismatch that exposes the current retrieval boundary.
+10. Query and latency budget enforcement.
 
 ## Controls
 

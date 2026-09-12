@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-09-04",
+  "updated": "2026-09-12",
   "artifacts": [
     {
       "id": "example.invoice-document-review",
@@ -14,6 +14,12 @@
       "type": "example",
       "path": "examples/invoice-exception/document-review/practice.md",
       "tags": ["field-discovery", "practice", "value", "ownership"]
+    },
+    {
+      "id": "example.invoice-retrieval-evaluation",
+      "type": "example",
+      "path": "examples/invoice-exception/retrieval-evaluation/README.md",
+      "tags": ["retrieval", "evaluation", "permissions", "freshness", "practice"]
     },
     {
       "id": "guide.five-minute",

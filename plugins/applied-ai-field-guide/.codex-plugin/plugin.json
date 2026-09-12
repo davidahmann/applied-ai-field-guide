@@ -1,6 +1,6 @@
 {
   "name": "applied-ai-field-guide",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A local-first applied-AI copilot for source-linked fieldwork, delivery decisions, and production assurance.",
   "author": {
     "name": "David Ahmann",

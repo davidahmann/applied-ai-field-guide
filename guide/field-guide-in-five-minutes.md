@@ -1,8 +1,8 @@
 # The Applied AI Field Guide in Five Minutes
 
-> The brief is probably wrong somewhere. Your first job is to find out where.
+> Before you choose a model, find the work, evidence, and decision that matter.
 
-A common Monday starts like this: “Build an agent that clears invoice exceptions.” By 9:40, the analyst has shown you three queues, an unmentioned spreadsheet, and a controller-only policy check. The request described one workflow. The work has four.
+A common Monday starts like this: “Build an agent that clears invoice exceptions.” By 9:40, the analyst has shown you three queues, an unmentioned spreadsheet, and a controller-only policy check. The request described one workflow. The work has four. Sometimes the brief is wrong. Sometimes the data, design, evaluation, or operating path is the problem.
 
 Don't open the architecture diagram yet.
 
@@ -10,19 +10,19 @@ Whether you're on an internal AI team or a customer engagement, first find what 
 
 This page is guidance—not production approval, customer authority, or a substitute for the target organization's policy, security, architecture, and risk review.
 
-## Start with what broke
+## Start with today's job
 
 You don't need to learn the repository before using it. Pick the line that sounds closest to today.
 
-| What you walked into | Do this next | Leave the first pass with |
+| You need to… | Do this next | Leave the first pass with |
 | --- | --- | --- |
+| **Decide where AI could help** | Follow one recent case, define the decision and accepted outcome, then compare rules, retrieval, models, agents, and human review. Start with [Discovery and Value](../playbooks/01-discovery-and-value.md). | An observed decision, verifier, baseline, and smallest plausible mechanism |
+| **Build or repair an AI feature** | Bound one vertical slice through the real source, user surface, failure path, and owner. Use [Solution and Delivery](../playbooks/02-solution-and-delivery.md) and the [invoice review lab](../examples/invoice-exception/document-review/README.md). | One testable path, explicit exclusions, and a result a user can inspect or reject |
+| **Find why retrieval or answers are weak** | Separate retrieval, source support, permissions, freshness, and abstention. Use [Context and Knowledge Systems](../library/02-context-and-knowledge-systems.md) and the [retrieval lab](../examples/invoice-exception/retrieval-evaluation/README.md). | A failed case tied to the layer that owns the repair |
+| **Prepare a release or material change** | Test the exact behavior and dependency versions, then name rollout and rollback conditions. Use the [release gates](../operations/release-gates.md). | A bounded release claim and the evidence still missing |
 | **The brief doesn't match the work** | Preserve what was promised or requested, then follow one recent case with the person who handled it. Use the [field-engagement playbook](../playbooks/00-field-engagement-and-reframing.md). | The inherited claim, the observed reality, and the next decision written separately |
-| **Nobody can explain the whole process** | Find the process knower through recent exceptions, repairs, and handoffs—not the org chart. Start a [field-observation log](../templates/field-observation-log.md). | One named operator or owner and one representative case you can inspect |
 | **The sponsor, operator, and policy disagree** | Cite each claim, name the safe fallback, and ask the actual disposition authority for a scoped decision. Use the [engagement-reframe record](../templates/engagement-reframe.json). | A bounded conflict, its evidence, and an accepted, rejected, or deferred reframe |
-| **The team needs to prove a safe first slice** | Define one accepted outcome, its verifier, eligible work, exclusions, and maximum effect before selecting technology. Use [Discovery and Value](../playbooks/01-discovery-and-value.md), then [build one vertical slice](../playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice). | A testable boundary and a reason this slice is worth running |
 | **Something was built, but nobody will accept or own it** | Stop adding features. Check acceptance evidence, operating ownership, rollback, support, and transfer with [production readiness](../templates/production-service-readiness.md) and the [customer handoff](../templates/customer-enablement-handoff.md). | A named gap, owner, and decision to repair, constrain, transfer, pause, or retire |
-
-Start with the closest row.
 
 ## Before you design anything
 
@@ -40,13 +40,13 @@ Now write the conflict in plain English. For example:
 >
 > **Decision needed:** whether to test that bounded review path for two weeks.
 
-That note is often more useful than another discovery workshop. It gives the right person something concrete to accept, reject, narrow, or defer. Until that happens, preserve the original brief and don't quietly rewrite the project around your preferred solution.
+It gives the right person something concrete to accept, reject, narrow, or defer. Until that happens, preserve the original brief.
 
 This is a compressed field path, not the [canonical lifecycle](../README.md#from-idea-to-production).
 
 ```mermaid
 flowchart LR
-    A["Inherit the brief"] --> B["Follow one real case"]
+    A["Understand the request"] --> B["Follow one real case"]
     B --> C["Name the conflict"]
     C --> D["Get a scoped decision"]
     D --> E["Build one bounded slice"]
@@ -58,31 +58,31 @@ flowchart LR
 
 Define what success means before choosing the mechanism. Name the eligible work, current baseline, intended outcome, accountable owner, and independent verifier. Add the decision deadline, full-cost ceiling, guardrails, and the conditions for continuing, reshaping, pausing, or stopping.
 
-If nobody with authority can accept the outcome, you're still in discovery. That's inconvenient, but useful to know before the team spends six weeks polishing a demo.
+If nobody with authority can accept the outcome, you're still in discovery.
 
-Then split the workflow into actual decisions. A rule may handle eligibility. Retrieval may find the governing passage. A model may draft a comparison. A person may still own the judgment. Compare deterministic software, optimization, classical machine learning, retrieval, a bounded model call, an agent workflow, and human review where each is relevant. Use the simplest route that meets the need.
+Then split the workflow into decisions. A rule may handle eligibility. Retrieval may find the governing passage. A model may draft a comparison. A person may still own the judgment. Compare deterministic software, optimization, classical machine learning, retrieval, a bounded model call, an agent workflow, and human review as relevant. Use the simplest route that meets the need.
 
 The model can propose. It can't grant itself permission or prove that an effect occurred. Trusted software has to enforce identity, tenant, scope, policy, approval, duplicate safety, and effect limits. For a consequential action, read the result back from the authoritative system before telling anyone it is done.
 
 ## Prove the service people will actually run
 
-A tidy happy path isn't enough. Test normal work, awkward exceptions, stale sources, dependency failures, policy changes, retries, recovery, reviewer capacity, cost, and latency. Bind the result to the exact data, behavior, tools, software, and policy versions that ran.
+A tidy happy path isn't enough. Test normal work, exceptions, stale sources, dependency failures, policy changes, recovery, reviewer capacity, cost, and latency. Bind the result to the exact data, behavior, tools, software, and policy versions that ran.
 
-Watch the human side too. Can the operator understand the evidence? Does review fit inside the working day? Are people correcting the system, bypassing it, or abandoning it? A model score won't answer those questions.
+Watch the human side too. Can the operator understand the evidence? Does review fit inside the day? Are people correcting, bypassing, or abandoning the system?
 
 Before launch, use the [release gates](../operations/release-gates.md) to name the operating owner, telemetry, support route, rollback trigger, change process, and retirement conditions. A canary without somebody watching it is just a smaller unattended release.
 
 ## Make ownership survive the project
 
-The people running the service need to operate, evaluate, change, release, recover, support, and retire it. Practice those jobs during the pilot. Don't wait until the last week to discover that only the original builder can change a rule or restore a failed job.
+The people running the service need to operate, evaluate, release, change, recover, support, and retire it. Practice those jobs during the pilot. Don't wait until the last week to discover that only the original builder can change a rule or restore a failed job.
 
 An internal team may keep ownership; give it capacity and backup coverage. A temporary FDE team should agree on exit evidence and transfer ordinary implementation or support once the important uncertainty is resolved. Neither arrangement should depend on one person's laptop or permanent availability.
 
-Track eligible work through exposure, completion, acceptance, and effect. Fix the first break; don't assume training or exceed support capacity.
+Track eligible work through exposure, completion, acceptance, and effect. Fix the first break.
 
 ## Keep the working packet small
 
-Don't fill every template. Create the evidence needed for the next consequential decision:
+Create only the evidence needed for the next consequential decision:
 
 - an [observation log](../templates/field-observation-log.md) for what happened in the work;
 - an [engagement reframe](../templates/engagement-reframe.json) when field evidence contradicts the brief;
@@ -91,7 +91,7 @@ Don't fill every template. Create the evidence needed for the next consequential
 - representative [evaluation cases](../templates/evaluation-case.json) before making a release claim;
 - [production readiness](../templates/production-service-readiness.md) and [handoff evidence](../templates/customer-enablement-handoff.md) before launch or a change of owner.
 
-If an artifact doesn't help someone make, verify, operate, or revisit a decision, you probably don't need it yet.
+Skip artifacts that don't help someone make, verify, operate, or revisit a decision.
 
 ## Where to go next
 

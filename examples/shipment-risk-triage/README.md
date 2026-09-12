@@ -1,4 +1,4 @@
-# Shipment-Risk Triage: an FDE End-to-End Walkthrough
+# Shipment-Risk Triage: an End-to-End Applied AI Walkthrough
 
 This compact, fictional reference follows one workflow from field discovery to operated service ownership. It intentionally combines a versioned ML risk score, deterministic routing policy, an optional foundation-model explanation, and a human decision. It is not an agent: no model or score can authorize or change a shipment.
 
@@ -21,7 +21,7 @@ Shipment event
 
 The accepted outcome is **a coordinator accepts or rejects a correctly routed review case with current evidence**. The system never claims that a risk score, explanation, or queue entry fixed a shipment.
 
-## Follow the FDE journey
+## Follow the delivery journey
 
 | Stage | What the team does | Evidence in this reference | Production decision |
 | --- | --- | --- | --- |

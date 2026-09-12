@@ -65,6 +65,8 @@ If you need more runnable software and AI-engineering practice, use Rohit Ghumar
 
 The companion is optional. Its route-specific inclusion of retrieval and RAG does not make retrieval, RAG, a model call, or an agent mandatory in this Guide. Course artifacts and quiz results show practice, not production readiness, live customer experience, target-system approval, or accepted value. Use this roadmap for field judgment and accountability; use the companion when you need more implementation repetition.
 
+For a local exercise in this repository, start with the [invoice document-review lab](../examples/invoice-exception/document-review/README.md), then use the [policy retrieval evaluation lab](../examples/invoice-exception/retrieval-evaluation/README.md) to separate ranking quality from permissions, freshness, citation integrity, conflicts, and abstention.
+
 ## Five practice missions
 
 Use these missions in order when learning the method. On real work, enter at the current lifecycle stage and preserve prior evidence. A repository exercise demonstrates reasoning and implementation technique; it does not substitute for production experience, user acceptance, or target-system approval.

@@ -21,7 +21,7 @@ Freeze stage definitions, cohort boundaries, time windows, currencies, and cost-
 
 ## Operating-model and decision-rights health
 
-Centralize reusable rails where that creates leverage; keep outcome, source, policy, effect, service, and retirement accountability with named workflow owners. Record temporary delivery capacity as temporary. A shared team, platform, model, or budget does not inherit target authority.
+Centralize reusable rails where they reduce repeated work; keep outcome, source, policy, effect, service, and retirement accountability with named workflow owners. Record temporary delivery capacity as temporary. A shared team, platform, model, or budget does not inherit target authority.
 
 | Role or capability | Accountable owner | Boundary | Decision authority | Last exercised evidence | Substitution or continuity gap | Action |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -116,7 +116,7 @@ Allocate the next unit of attention to the first unresolved hard gate or binding
 | --- | --- | ---: | --- | --- | --- | ---: | --- | --- |
 | — | — | — | — | — | Cleared / restricted / pending / prohibited | — | Delivery time / support load / quality / safety / cost | — |
 
-Use the [field-learning register](field-learning-register.md) for evidence, confidentiality, ownership, reuse rights, portability, and release disposition. Count reuse only when the exact artifact version was actually used and validated in the target context. Reusing a template, copying customer policy, or avoiding necessary local work is not product leverage; reuse never transfers source-of-truth or approval authority.
+Use the [field-learning register](field-learning-register.md) for evidence, confidentiality, ownership, reuse rights, portability, and release disposition. Count reuse only when the exact artifact version was actually used and validated in the target context. Reusing a template, copying customer policy, or avoiding necessary local work does not prove product advantage; reuse never transfers source-of-truth or approval authority.
 
 ## Sponsor resilience and operating capacity
 
