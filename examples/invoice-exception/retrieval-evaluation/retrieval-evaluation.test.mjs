@@ -2,10 +2,11 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { corpus } from "./corpus.mjs";
+import { createEmbeddingHybridCandidate, createOpenAICompatibleEmbedder } from "./embedding-hybrid.mjs";
 import { expectations, gradeCase } from "./grade.mjs";
 import { queries } from "./queries.mjs";
 import { admissibleDocuments, retrieve } from "./retriever.mjs";
-import { evaluate } from "./run-evaluation.mjs";
+import { evaluate, evaluateAsync } from "./run-evaluation.mjs";
 
 const query = (id) => queries.find(({ case_id }) => case_id === id);
 
@@ -98,9 +99,76 @@ test("grader binds authority metadata and rejects duplicate evidence without inf
   assert.equal(grade.ndcg_at_k, 1);
 });
 
-test("candidate code has no evaluator, network, environment or filesystem dependency", async () => {
+test("the bundled BM25 candidate has no evaluator, network, environment or filesystem dependency", async () => {
   const source = await readFile(new URL("./retriever.mjs", import.meta.url), "utf8");
   assert.doesNotMatch(source, /grade\.mjs|node:(?:fs|http|https|net)|\bfetch\s*\(|process\.env/);
+});
+
+test("an opt-in hybrid candidate embeds only admitted evidence and keeps the same independent safety grade", async () => {
+  const embeddedBatches = [];
+  const embed = async (texts) => {
+    embeddedBatches.push(texts);
+    return {
+      vectors: texts.map((text) => {
+        if (text.includes("greenlight") || text.includes("Accounts-payable correction policy")) return [1, 0];
+        if (text.includes("Zulu overseas") || text.includes("Southwind Zulu") || text.includes("June-outage")) return [-1, 0];
+        return [0, 1];
+      }),
+      input_tokens: texts.length * 10,
+    };
+  };
+  const candidate = createEmbeddingHybridCandidate({ embed, name: "fixture-hybrid" });
+  const result = await candidate(query("vocabulary-mismatch"), corpus);
+  assert.equal(result.evidence[0].source_id, "policy-ap17-v3");
+  assert.equal(result.evidence[0].instruction_authority, false);
+  assert.ok(embeddedBatches[0].every((text) => !text.includes("Southwind") && !text.includes("ATTENTION AI") && !text.includes("nightly check")));
+
+  const noAccess = await candidate(query("missing-policy-scope"), corpus);
+  assert.equal(noAccess.disposition, "insufficient_evidence");
+  assert.equal(embeddedBatches.length, 1, "inadmissible documents never reach the embedding boundary");
+  const report = await evaluateAsync(candidate);
+  assert.equal(report.candidate, "fixture-hybrid");
+  assert.equal(report.metrics.authorization_or_stale_leaks, 0);
+  assert.equal(report.metrics.instruction_authority_violations, 0);
+  assert.equal(report.candidate_runtime.input_tokens, 470);
+  assert.equal(report.disposition, "inconclusive_for_deployment");
+});
+
+test("the explicit provider adapter is unavailable without valid configuration and reports provider usage only when supplied", async () => {
+  assert.throws(() => createOpenAICompatibleEmbedder({ endpoint: "http://example.test/v1/embeddings", apiKey: "test", model: "fixture" }), /https/);
+  assert.throws(() => createOpenAICompatibleEmbedder({ endpoint: "https://example.test/v1/embeddings", apiKey: "", model: "fixture" }), /API key/);
+
+  const requests = [];
+  const embed = createOpenAICompatibleEmbedder({
+    endpoint: "https://provider.example/v1/embeddings",
+    apiKey: "test-key",
+    model: "fixture-model",
+    inputUsdPerMillion: 2,
+    fetchImpl: async (url, init) => {
+      requests.push({ url: String(url), init });
+      const input = JSON.parse(init.body).input;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          data: input.map((text, index) => ({
+            index,
+            embedding: text.includes("greenlight") || text.includes("Accounts-payable correction policy") ? [1, 0]
+              : (text.includes("Zulu overseas") || text.includes("Southwind Zulu") || text.includes("June-outage") ? [-1, 0] : [0, 1]),
+          })),
+          usage: { prompt_tokens: input.length * 4 },
+        }),
+      };
+    },
+  });
+  const candidate = createEmbeddingHybridCandidate({ embed, providerMetrics: embed.metrics, name: "configured-provider-hybrid" });
+  const report = await evaluateAsync(candidate);
+  assert.equal(report.metrics.authorization_or_stale_leaks, 0);
+  assert.equal(report.candidate_runtime.provider.request_count, 9);
+  assert.equal(report.candidate_runtime.provider.input_tokens, 168);
+  assert.equal(report.metrics.estimated_external_api_cost_usd, 0.000336);
+  assert.ok(requests.every(({ url, init }) => url === "https://provider.example/v1/embeddings" && init.headers.authorization === "Bearer test-key"));
+  assert.ok(requests.every(({ init }) => !JSON.parse(init.body).input.slice(1).some((text) => text.includes("Southwind") || text.includes("nightly check"))));
 });
 
 test("unsafe candidates fail even when they add a relevant result", () => {
@@ -182,4 +250,12 @@ test("candidate input is isolated from frozen evaluation fixtures", () => {
   assert.equal(report.cases[0].grade.passed_safety, false);
   assert.ok(report.metrics.authorization_or_stale_leaks > 0);
   assert.ok(report.metrics.mean_recall_at_3 < 1);
+
+  const documentMutatingCandidate = (item, documents) => {
+    documents[0].text = "altered candidate-local text";
+    return retrieve(item, documents);
+  };
+  const documentReport = evaluate(documentMutatingCandidate);
+  assert.equal(corpus[0].text.startsWith("Policy AP-17 revision 3."), true);
+  assert.equal(documentReport.cases[0].grade.passed_safety, false);
 });

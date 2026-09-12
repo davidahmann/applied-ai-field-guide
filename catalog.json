@@ -22,6 +22,12 @@
       "tags": ["retrieval", "evaluation", "permissions", "freshness", "practice"]
     },
     {
+      "id": "example.invoice-durable-recovery",
+      "type": "example",
+      "path": "examples/invoice-exception/durable-recovery/README.md",
+      "tags": ["durable-execution", "recovery", "idempotency", "readback", "practice"]
+    },
+    {
       "id": "guide.five-minute",
       "type": "standard",
       "path": "guide/field-guide-in-five-minutes.md",

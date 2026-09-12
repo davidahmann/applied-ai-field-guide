@@ -132,7 +132,7 @@ Keep every route observable, testable, replaceable, and costed. Add multiple age
 
 ## 7. Design the whole decision system
 
-The model sits inside a software and operating boundary. Design the domain and state, governed context, behavior, authority, typed capabilities, durable runtime, operator work surface, and operating path together.
+Design domain state, governed context, behavior, authority, capabilities, runtime, work surface, and operation together. The [retrieval evaluation lab](../examples/invoice-exception/retrieval-evaluation/README.md) keeps a local baseline beside an opt-in hybrid comparison; the [durable recovery lab](../examples/invoice-exception/durable-recovery/README.md) makes restart and readback inspectable. Neither is target-system evidence.
 
 The central action rule is:
 
