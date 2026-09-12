@@ -48,6 +48,7 @@ export const navigation = [
       "/worked-engagement/invoice-exception/",
       "/practice/invoice-review/",
       "/practice/invoice-policy-retrieval/",
+      "/practice/invoice-durable-recovery/",
     ],
   },
   {
@@ -228,6 +229,14 @@ export const pages = [
     title: "AI Retrieval Evaluation Lab: Invoice Policy Evidence",
     description:
       "Run a synthetic retrieval evaluation that separates ranking quality from permissions, freshness, conflicts, source support, abstention, latency, and cost.",
+  },
+  {
+    route: "/practice/invoice-durable-recovery/",
+    source: "examples/invoice-exception/durable-recovery/README.md",
+    navTitle: "Durable recovery lab",
+    title: "Durable Recovery Lab: Restart, Readback, and Safe Retry",
+    description:
+      "Practice safe recovery after an ambiguous AI workflow effect through persisted intent, idempotency, source-of-truth readback, and explicit escalation.",
   },
   {
     route: "/ai-workflows-vs-agents/",

@@ -4,7 +4,7 @@ Start with the [complete worked engagement](engagement/README.md) if you want to
 
 ## Objective
 
-The optional [document review lab](document-review/README.md) adds an upstream source-to-draft exercise, live-model adapter, and operator correction surface. The [policy retrieval lab](retrieval-evaluation/README.md) separately tests ranking, permissions, freshness, citation integrity, conflict surfacing, and abstention before answer generation. Both are intentionally disconnected from the posting tools below.
+The optional [document review lab](document-review/README.md) adds an upstream source-to-draft exercise, live-model adapter, and operator correction surface. The [policy retrieval lab](retrieval-evaluation/README.md) separately tests a deterministic baseline and an opt-in hybrid candidate against ranking, permissions, freshness, citation integrity, conflict surfacing, and abstention before answer generation. The [durable recovery lab](durable-recovery/README.md) separately tests a persisted operation intent, ambiguous effect, restart, readback, and escalation. All three are intentionally disconnected from the posting tools below.
 
 ```text
 invoice exception event
@@ -46,6 +46,7 @@ flowchart LR
 | Adoption, handoff, and evidence review | [`engagement/adoption-and-handoff.md`](engagement/adoption-and-handoff.md) and [`engagement/service-review.md`](engagement/service-review.md) |
 | Source-to-draft review practice | [`document-review/README.md`](document-review/README.md) |
 | Policy retrieval evaluation practice | [`retrieval-evaluation/README.md`](retrieval-evaluation/README.md) |
+| Durable recovery practice | [`durable-recovery/README.md`](durable-recovery/README.md) |
 | Workflow charter | [`workflow-charter.json`](workflow-charter.json) |
 | Agent design | [`agent-system.json`](agent-system.json) |
 | Ontology | [`ontology.json`](ontology.json) |

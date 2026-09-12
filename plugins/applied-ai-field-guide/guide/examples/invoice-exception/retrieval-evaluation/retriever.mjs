@@ -27,7 +27,14 @@ export function admissibleDocuments(query, documents) {
   );
 }
 
-function scoreDocuments(question, documents, { k1 = 1.2, b = 0.75 } = {}) {
+export function assertQuery(query) {
+  if (!query || typeof query !== "object") throw new Error("query must be an object");
+  if (typeof query.question !== "string" || query.question.length < 2 || query.question.length > 240) throw new Error("question must contain 2 to 240 characters");
+  if (!Number.isInteger(query.top_k) || query.top_k < 1 || query.top_k > 5) throw new Error("top_k must be between 1 and 5");
+  if (!Number.isInteger(query.query_budget) || query.query_budget < 1 || query.query_budget > 3) throw new Error("query_budget must be between 1 and 3");
+}
+
+export function scoreLexicalDocuments(question, documents, { k1 = 1.2, b = 0.75 } = {}) {
   const queryTerms = [...new Set(tokenize(question))];
   const tokenized = documents.map((document) => tokenize(`${document.title} ${document.topic} ${document.text}`));
   const averageLength = tokenized.reduce((sum, tokens) => sum + tokens.length, 0) / Math.max(tokenized.length, 1);
@@ -48,16 +55,8 @@ function scoreDocuments(question, documents, { k1 = 1.2, b = 0.75 } = {}) {
   });
 }
 
-export function retrieve(query, documents, { minimumScore = 0.5 } = {}) {
-  if (typeof query.question !== "string" || query.question.length < 2 || query.question.length > 240) throw new Error("question must contain 2 to 240 characters");
-  if (!Number.isInteger(query.top_k) || query.top_k < 1 || query.top_k > 5) throw new Error("top_k must be between 1 and 5");
-  if (!Number.isInteger(query.query_budget) || query.query_budget < 1 || query.query_budget > 3) throw new Error("query_budget must be between 1 and 3");
-  const admissible = admissibleDocuments(query, documents);
-  const ranked = scoreDocuments(query.question, admissible)
-    .filter(({ score }) => score >= minimumScore)
-    .sort((left, right) => right.score - left.score || left.document.source_id.localeCompare(right.document.source_id))
-    .slice(0, query.top_k);
-  const evidence = ranked.map(({ document, score }) => ({
+export function evidenceFromRanked(ranked) {
+  return ranked.map(({ document, score }) => ({
     source_id: document.source_id,
     revision: document.revision,
     owner: document.owner,
@@ -66,6 +65,16 @@ export function retrieve(query, documents, { minimumScore = 0.5 } = {}) {
     score: Number(score.toFixed(6)),
     instruction_authority: false,
   }));
+}
+
+export function retrieve(query, documents, { minimumScore = 0.5 } = {}) {
+  assertQuery(query);
+  const admissible = admissibleDocuments(query, documents);
+  const ranked = scoreLexicalDocuments(query.question, admissible)
+    .filter(({ score }) => score >= minimumScore)
+    .sort((left, right) => right.score - left.score || left.document.source_id.localeCompare(right.document.source_id))
+    .slice(0, query.top_k);
+  const evidence = evidenceFromRanked(ranked);
   return {
     case_id: query.case_id,
     disposition: evidence.length ? "evidence_found" : "insufficient_evidence",

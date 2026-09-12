@@ -11,7 +11,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(root, "site-dist");
 
 test("supporting study paths and standalone downloads stay useful outside GitHub", async () => {
-  const sources = ["templates/value-case.md", "playbooks/01-discovery-and-value.md", "examples/invoice-exception/engagement/field-evidence.md", "examples/invoice-exception/document-review/practice.md", "examples/invoice-exception/retrieval-evaluation/README.md"];
+  const sources = ["templates/value-case.md", "playbooks/01-discovery-and-value.md", "examples/invoice-exception/engagement/field-evidence.md", "examples/invoice-exception/document-review/practice.md", "examples/invoice-exception/retrieval-evaluation/README.md", "examples/invoice-exception/durable-recovery/README.md"];
   for (const source of sources) {
     const page = pages.find((item) => item.source === source); assert.ok(page, source);
     const html = await readFile(routeFile(page.route), "utf8"); assert.match(html, /Download Markdown/);

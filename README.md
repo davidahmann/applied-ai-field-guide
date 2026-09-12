@@ -19,6 +19,7 @@ An open-source design and verification kit for people choosing, building, evalua
 | **Decide where AI could help** | [Discovery and Value](playbooks/01-discovery-and-value.md), then [mechanism selection](library/12-software-architecture-and-intelligence-selection.md) | An observed decision, accepted outcome, verifier, value hypothesis, and simplest plausible mechanism |
 | **Build a useful first feature** | [Build one vertical slice](playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice) and try the [invoice review lab](examples/invoice-exception/document-review/README.md) | One bounded path through real inputs, a usable review surface, failure behavior, and test cases |
 | **Fix weak retrieval or unsupported answers** | [Context and knowledge systems](library/02-context-and-knowledge-systems.md) and the [retrieval evaluation lab](examples/invoice-exception/retrieval-evaluation/README.md) | Separate evidence for retrieval, source support, permissions, freshness, abstention, latency, and cost |
+| **Make a retry or recovery path safe** | [Enterprise integration reality](library/17-enterprise-integration-and-scale-reality.md) and the [durable recovery lab](examples/invoice-exception/durable-recovery/README.md) | A stable operation identity, explicit ambiguity, source-of-truth readback, and an escalation path instead of a duplicated effect |
 | **Test a model, prompt, source, or policy change** | [Production evaluation](library/04-production-evaluation-and-governance.md) and [change impact](templates/change-impact-assessment.json) | A bounded claim, representative cases, affected dependencies, rollback conditions, and a release decision |
 | **Launch or operate a system** | [Production readiness](templates/production-service-readiness.md) and [production operations](operations/README.md) | The missing evidence or capability, its owner, and a release, repair, constraint, pause, or retirement decision |
 | **Rescue a brief that does not match the work** | [Five-minute Guide](guide/field-guide-in-five-minutes.md) and [field engagement and reframing](playbooks/00-field-engagement-and-reframing.md) | One representative case, conflicting claims, a safe fallback, and the person who may decide |
@@ -46,13 +47,14 @@ Use the [12 Factors](library/14-twelve-factors-ai-value-engineering.md) and [one
 
 Try the [invoice practice packet](examples/invoice-exception/document-review/practice.md): a messy brief, difficult documents and review rubric. Its [runnable lab](examples/invoice-exception/document-review/README.md) compares rules with optional model proposals.
 
-The [invoice-exception engagement](examples/invoice-exception/engagement/README.md) follows a sold promise that field evidence kills: reframe, economics, controlled-write [runtime](examples/invoice-exception/reference-loop.mjs), evaluation, blocked handoff, and review-only decision.
+The [invoice-exception engagement](examples/invoice-exception/engagement/README.md) follows a sold promise that field evidence kills: reframe, economics, controlled-write [runtime](examples/invoice-exception/reference-loop.mjs), retrieval comparison, restart-safe recovery practice, evaluation, blocked handoff, and review-only decision.
 
 The [shipment-risk example](examples/shipment-risk-triage/README.md) combines classical ML, deterministic routing, optional model explanation, and human review.
 
 ```bash
 npm ci --ignore-scripts
 npm run test:retrieval-evaluation
+npm run test:durable-recovery
 npm run test:reference
 npm run test:evals
 npm run test:hybrid

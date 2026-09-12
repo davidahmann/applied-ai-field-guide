@@ -16,6 +16,22 @@ node examples/invoice-exception/retrieval-evaluation/run-evaluation.mjs
 
 The command prints a report for ten public synthetic queries. Expect zero authorization, stale-source, citation, instruction-authority, and budget violations. Also expect one failed vocabulary-mismatch case. That miss is deliberate: a lexical baseline should not look perfect because the fixture was written around its tokenizer.
 
+### Optional hybrid comparison
+
+The baseline is the default because it is dependency-free and never makes a network call. A reader can explicitly run an OpenAI-compatible embeddings endpoint through the optional candidate:
+
+```bash
+RETRIEVAL_EMBEDDING_ENDPOINT="https://provider.example/v1/embeddings" \
+RETRIEVAL_EMBEDDING_API_KEY="reader-supplied-key" \
+RETRIEVAL_EMBEDDING_MODEL="reader-supplied-model" \
+RETRIEVAL_EMBEDDING_INPUT_USD_PER_MILLION="reader-supplied-current-price" \
+node examples/invoice-exception/retrieval-evaluation/run-evaluation.mjs --candidate=hybrid
+```
+
+The endpoint, model, key, and optional current input price are reader configuration. The lab does not read them unless `--candidate=hybrid` is supplied, does not ship a provider default, and makes no live provider call in CI. The adapter sends the question and only documents already admitted by tenant, scope, status, effective date, and permission checks. It never turns retrieved text into instruction authority. Before using any target source, obtain the target's egress, classification, indexing, retention, and provider approval; an allowed read does not automatically authorize external embedding.
+
+The comparison records provider-reported input tokens and estimates input API cost only if the reader supplied a current price. It does not estimate storage, vector indexing, egress, review, support, or failure cost. It uses public synthetic cases, so either output remains `inconclusive_for_deployment`.
+
 ## Read the result in layers
 
 | Layer | Check | Repair when it fails |
@@ -35,6 +51,7 @@ Do not collapse these into one score. High recall can coexist with a tenant leak
 - [corpus.mjs](corpus.mjs) contains the source text and synthetic authority metadata.
 - [queries.mjs](queries.mjs) contains candidate-visible questions and caller context.
 - [retriever.mjs](retriever.mjs) filters first, then runs a small deterministic BM25 baseline.
+- [embedding-hybrid.mjs](embedding-hybrid.mjs) exposes an opt-in, provider-neutral hybrid boundary plus an explicit OpenAI-compatible adapter; neither path is active in the baseline.
 - [grade.mjs](grade.mjs) owns relevance labels, expected dispositions, and forbidden sources outside the candidate.
 - [retrieval-evaluation.test.mjs](retrieval-evaluation.test.mjs) exercises positive and adversarial behavior.
 
@@ -53,12 +70,12 @@ The local baseline reports zero external API cost because it calls no model or h
 
 ## Extend it without changing the claim
 
-Keep the corpus, queries, admissibility rules, grader, and budget fixed. The runner freezes its canonical fixtures, gives a clone of each query to the candidate, and grades against the untouched query. Add a candidate that uses stemming, synonyms, embeddings, hybrid search, or reranking. Give it an explicit name and external API cost; an omitted cost is reported as unknown, not zero. Compare candidates on the same cases and preserve the lexical miss. If you tune on a qualification case, move it to development and replace it with a new case before making a qualification claim.
+Keep the corpus, queries, admissibility rules, grader, and budget fixed. The runner freezes its canonical fixtures, gives a clone of each query and the corpus to the candidate, and grades against the untouched query. The optional hybrid candidate filters before embedding and combines normalized lexical and cosine scores; replace its embedding function only through its explicit interface. Give any candidate an explicit name and external API cost; an omitted cost is reported as unknown, not zero. Compare candidates on the same cases and preserve the lexical miss. If you tune on a qualification case, move it to development and replace it with a new case before making a qualification claim.
 
 Before generating answers, add claim-level source support, citation-revision checks, an explicit conflict response, and a safe abstention. Before production, replace every synthetic source and permission field with target-system identity, policy, ingestion, correction, freshness, audit, and revocation evidence.
 
 ## Limits
 
-All sources, people, tenants, dates, and labels are fictional. The public development and qualification partitions are inspectable, not an independent holdout. This baseline does not show that BM25 beats vector or hybrid retrieval. It includes no embeddings, reranker, or answer-generating model. Retrieval recall does not prove answer correctness, and a matching citation does not prove the source is true. Local negative tests do not prove real tenant isolation, security, customer value, adoption, production readiness, or release approval.
+All sources, people, tenants, dates, and labels are fictional. The public development and qualification partitions are inspectable, not an independent holdout. The baseline does not show that BM25 beats vector or hybrid retrieval; an optional hybrid result from this fixture does not show the reverse. The baseline includes no embeddings, reranker, or answer-generating model. Retrieval recall does not prove answer correctness, and a matching citation does not prove the source is true. Local negative tests do not prove real tenant isolation, security, provider egress safety, customer value, adoption, production readiness, or release approval.
 
 Use [Context and Knowledge Systems](../../../library/02-context-and-knowledge-systems.md) for the broader design, the [bounded retrieval blueprint](../../../blueprints/bounded-retrieval-agent.md) for a production boundary, and [release gates](../../../operations/release-gates.md) before making a target-system claim.

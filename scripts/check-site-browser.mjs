@@ -41,6 +41,10 @@ try {
     await page.getByRole("heading", { name: "Invoice Policy Retrieval Evaluation Lab", exact: true }).waitFor();
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `retrieval overflow at ${width}`);
     if (screenshotDirectory) await page.screenshot({ path: path.join(screenshotDirectory, `retrieval-${width}.png`), fullPage: true });
+    await page.goto(`${origin}${base}/practice/invoice-durable-recovery/`);
+    await page.getByRole("heading", { name: "Durable Recovery Lab: One Effect, an Interrupted Process, and Readback", exact: true }).waitFor();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `durable recovery overflow at ${width}`);
+    if (screenshotDirectory) await page.screenshot({ path: path.join(screenshotDirectory, `durable-recovery-${width}.png`), fullPage: true });
     await page.goto(`${origin}${base}/labs/invoice-review/`);
     await page.locator("#invoice").waitFor();
     await page.locator("#reviewer").fill("Fictional reviewer"); await page.locator("#rationale").fill("Checked the final invoice against the source.");
@@ -71,5 +75,5 @@ try {
   await page.goto(`${origin}${base}/`); await page.getByRole("button", { name: /search/i }).first().click();
   await page.getByText(/Search is unavailable/).waitFor(); await page.getByRole("button", { name: "Close", exact: true }).click();
   assert.equal(await page.locator("#site-search").isVisible(), false);
-  console.log("Browser checks passed: desktop/mobile navigation, retrieval route, search/Escape/error recovery, review/pause/reject/escalate, import rejection, export, persistence and overflow.");
+  console.log("Browser checks passed: desktop/mobile navigation, retrieval and durable-recovery routes, search/Escape/error recovery, review/pause/reject/escalate, import rejection, export, persistence and overflow.");
 } finally { await browser.close(); await new Promise((resolve) => server.close(resolve)); }
