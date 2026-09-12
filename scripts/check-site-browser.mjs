@@ -5,7 +5,9 @@ import { createServer } from "node:http";
 import { mkdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
+const playwrightModule = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
+const chromium = playwrightModule.chromium ?? playwrightModule.default?.chromium;
+if (!chromium) throw new Error("Playwright module does not expose Chromium");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../site-dist");
 const screenshotDirectory = process.env.SITE_SCREENSHOT_DIRECTORY;
 if (screenshotDirectory) await mkdir(screenshotDirectory, { recursive: true });
@@ -35,6 +37,10 @@ try {
     await page.locator(".search-result").first().waitFor();
     await page.keyboard.press("Escape"); assert.equal(await page.locator("#site-search").isVisible(), false);
     if (screenshotDirectory) await page.screenshot({ path: path.join(screenshotDirectory, `practice-${width}.png`), fullPage: true });
+    await page.goto(`${origin}${base}/practice/invoice-policy-retrieval/`);
+    await page.getByRole("heading", { name: "Invoice Policy Retrieval Evaluation Lab", exact: true }).waitFor();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `retrieval overflow at ${width}`);
+    if (screenshotDirectory) await page.screenshot({ path: path.join(screenshotDirectory, `retrieval-${width}.png`), fullPage: true });
     await page.goto(`${origin}${base}/labs/invoice-review/`);
     await page.locator("#invoice").waitFor();
     await page.locator("#reviewer").fill("Fictional reviewer"); await page.locator("#rationale").fill("Checked the final invoice against the source.");
@@ -65,5 +71,5 @@ try {
   await page.goto(`${origin}${base}/`); await page.getByRole("button", { name: /search/i }).first().click();
   await page.getByText(/Search is unavailable/).waitFor(); await page.getByRole("button", { name: "Close", exact: true }).click();
   assert.equal(await page.locator("#site-search").isVisible(), false);
-  console.log("Browser checks passed: desktop/mobile navigation, search/Escape/error recovery, review/pause/reject/escalate, import rejection, export, persistence and overflow.");
+  console.log("Browser checks passed: desktop/mobile navigation, retrieval route, search/Escape/error recovery, review/pause/reject/escalate, import rejection, export, persistence and overflow.");
 } finally { await browser.close(); await new Promise((resolve) => server.close(resolve)); }

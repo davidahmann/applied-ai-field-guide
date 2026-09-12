@@ -61,6 +61,12 @@ Proceed only with recommendation and staging for the named domestic price-varian
 
 The next field move is not “add more autonomy.” It is to observe ten eligible cases, confirm the population and authority boundary, measure reviewer effort and recommendation quality, and decide whether the forecast in the value case remains plausible.
 
+## Optional positive practice path
+
+The [practice packet's R4 branch](../document-review/practice.md#round-5-a-narrow-path-earns-a-limited-pilot) shows how a decision can change when new evidence closes a bounded set of gaps. In that alternate synthetic branch, a predeclared shadow trial, reviewer source checks, capacity result, backup recovery exercise, and metric-owner verification support a limited review-only pilot for fixed-format invoices.
+
+That decision still retains reviewer approval, manual fallback, exact release binding, and stop conditions. It does not authorize automatic posting or establish target authentication, durable state, audit, long-run behavior, support cost, customer acceptance, or realized savings. The current worked engagement remains review-only and blocked from deployment; the alternate path exists to practice earning a narrow “yes” without turning it into a broader claim.
+
 ## What this example does not prove
 
 - The synthetic observation represents a real customer population.

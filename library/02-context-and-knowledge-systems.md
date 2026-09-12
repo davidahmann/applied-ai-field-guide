@@ -159,6 +159,8 @@ High usage is evidence of adoption, not proof of accuracy or value. Cerebras rep
 
 ## Evaluation checklist
 
+Run the [invoice policy retrieval lab](../examples/invoice-exception/retrieval-evaluation/README.md) for a small executable example that keeps admission, retrieval, conflict, citation, and abstention evidence separate.
+
 - Does exact evidence rank above semantic approximations when identifiers match?
 - Can paraphrased questions retrieve the correct source?
 - Are results current for fast-changing systems and durable for evergreen knowledge?
@@ -169,6 +171,7 @@ High usage is evidence of adoption, not proof of accuracy or value. Cerebras rep
 - Does reranking improve task success, not only similarity scores?
 - Are conflicting sources surfaced rather than silently averaged?
 - Can production misses become replayable retrieval tests?
+- Are authorization, stale-source, and citation failures kept outside aggregate quality scores so a good average cannot hide them?
 
 ## 2026 update: progressive capabilities, tainted context, and sufficiency
 

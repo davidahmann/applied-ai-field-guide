@@ -6,11 +6,11 @@ Use these playbooks to move one workflow from an important problem to business-o
 
 ## Lifecycle
 
-This is an operational view of the [canonical delivery lifecycle](../README.md#from-idea-to-production), not a separate process. Preserve and inspect every inherited brief; create a reframe record only when representative evidence materially contradicts its claims or boundary.
+This is an operational view of the [canonical delivery lifecycle](../README.md#from-idea-to-production), not a separate process. Preserve and inspect the initial request. Create a reframe record only when representative evidence materially contradicts its claims or boundary.
 
 ```mermaid
 flowchart LR
-    I["Inherit and reframe"] --> Q["Qualify"]
+    I["Understand and reframe if needed"] --> Q["Qualify"]
     Q --> D["Discover"]
     D --> C["Charter"]
     C --> S["Design"]
@@ -25,7 +25,7 @@ flowchart LR
 
 | Stage | Primary question | Required output | Decision |
 | --- | --- | --- | --- |
-| Inherit and reframe | What was promised or requested, what actually happens, and who may change the boundary? | Current field brief, representative evidence, and next field move; add an engagement-reframe record and safe fallback when a material contradiction changes the boundary | Continue discovery, bounded kickoff, defer, or stop |
+| Understand and reframe if needed | What was requested, what actually happens, and who may change the boundary? | Preserved request, representative evidence, and next move; add an engagement-reframe record and safe fallback when a material contradiction changes the boundary | Continue discovery, bounded kickoff, defer, or stop |
 | Qualify | Is this problem important, owned, bounded, and verifiable? | Candidate brief and gate result | Discover, defer, or do not build |
 | Discover | How does the work actually happen, including exceptions and workarounds? | Observation log, current-state workflow, source map, exception set | Charter or stop |
 | Charter | Which outcome, segment, verifier, value hypothesis, and risk ceiling define success? | [Workflow charter](../templates/workflow-charter.json) and [value case](../templates/value-case.md) | Pilot, defer, or do not build |

@@ -114,7 +114,7 @@ Do not move raw customer data, proprietary policy, credentials, identifiers, or 
 
 An accepted learning changes production only through its destination's normal architecture, security, review, compatible-release, evaluation, approval, support, and rollback gates. The learning record is evidence for a decision; it is not release authorization. Recurrence does not establish ownership, license, confidentiality clearance, or reuse permission.
 
-A lower customer-specific effort ratio is useful only when outcomes, adoption, safety, supportability, and full cost remain healthy across comparable contexts. Template reuse, copied customer policy, or skipped local validation does not establish product leverage.
+A lower customer-specific effort ratio is useful only when outcomes, adoption, safety, supportability, and full cost remain healthy across comparable contexts. Template reuse, copied customer policy, or skipped local validation does not establish product advantage.
 
 Standardization is a field-learning disposition, not permission to flatten variation. Preserve policy-required, segment-specific, role-specific, and system-constrained differences. Repair accidental dysfunction before treating the result as a reusable pattern, and retain every target's normal validation and release gates.
 

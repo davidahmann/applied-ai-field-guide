@@ -9,7 +9,9 @@ The most useful allocation rule in the source set is:
 | Work type | Best default | Why |
 | --- | --- | --- |
 | Structured inputs, explicit rules, predictable path | Deterministic software | Cheaper, testable, and easier to govern |
-| Variable path, interpretation, cross-system context | Agent | Useful judgment under bounded uncertainty |
+| Evidence lookup across governed sources | Retrieval or a source-specific query | Finds attributable context; does not establish that the source is correct or authoritative |
+| Bounded interpretation, extraction, classification, or drafting | Foundation-model call | Handles variable language; needs source checks, abstention, and a fallback |
+| Multi-step judgment whose next step genuinely depends on changing evidence or tools | Bounded agent workflow | Coordinates a variable path; adds state, permission, cost, and failure complexity |
 | Accountability, deep ambiguity, trust, undefined quality | Human or human-led copilot | Consequences or standards require ownership |
 
 This classification happens at the **step** level, not necessarily at the workflow level. A single process can use software for validation, an agent for synthesis, and a human for approval.
@@ -18,7 +20,7 @@ This classification happens at the **step** level, not necessarily at the workfl
 
 The most painful process is not automatically the best process to automate. Candidate workflows should be compared on:
 
-- Business value: revenue, cost, risk reduction, or strategic leverage
+- Business value: revenue, cost, risk reduction, or strategic advantage
 - Manual effort and cycle time displaced
 - Frequency and volume
 - Key-person dependency

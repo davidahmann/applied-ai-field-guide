@@ -231,8 +231,8 @@ test("skill interfaces expose situation-first routing cases without claiming hos
   }
 
   const readme = await readFile(path.join(root, "README.md"), "utf8");
-  assert.match(readme, /Describe the situation; don't translate it into repository taxonomy first/);
-  assert.match(readme, /Confirm which skill the host selects/);
+  assert.match(readme, /Describe the situation in ordinary language/);
+  assert.match(readme, /confirm which skill the host selects/i);
 });
 
 test("qualification, value engineering, and production review use bounded decision vocabularies", async () => {
@@ -322,9 +322,9 @@ test("public navigation progressively discloses the Guide, Handbook, Engineering
   const llms = await readFile(path.join(root, "llms.txt"), "utf8");
   const catalog = JSON.parse(await readFile(path.join(root, "catalog.json"), "utf8"));
 
+  assert.ok(readme.indexOf("## Start with the job in front of you") < readme.indexOf("## Choose your depth"));
   assert.ok(readme.indexOf("## Choose your depth") < readme.indexOf("## See it working"));
-  assert.ok(readme.indexOf("## See it working") < readme.indexOf("## Who this is for"));
-  assert.ok(readme.indexOf("## Who this is for") < readme.indexOf("## Optional: use it with a coding agent"));
+  assert.ok(readme.indexOf("## See it working") < readme.indexOf("## Optional: use it with a coding agent"));
   assert.ok(readme.indexOf("## From idea to production") < readme.indexOf("## Optional: use it with a coding agent"));
   for (const body of [readme, guide]) {
     for (const layer of ["The Guide", "Handbook", "Engineering Kit"]) assert.match(body.replace(/\*/g, ""), new RegExp(layer));
@@ -340,7 +340,7 @@ test("public navigation progressively discloses the Guide, Handbook, Engineering
   assert.match(readme, /npm run test:reference/);
   assert.ok(readme.split(/\s+/).length < guide.split(/\s+/).length, "README must remain the shorter entry door");
   assert.match(readme, /They are not separate frameworks/);
-  assert.match(guide, /They are three depths of one method—not separate frameworks/);
+  assert.match(guide, /They are three depths of one method/);
 
   assert.match(readme, /npx skills add davidahmann\/applied-ai-field-guide/);
   assert.match(readme, /The guide is complete as documentation/);

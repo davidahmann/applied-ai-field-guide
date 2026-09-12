@@ -110,6 +110,7 @@ These are maximums, not coverage targets. Raising one requires an explicit maint
 - For interactive changes, provision Playwright with Chromium, build the site, then run `node scripts/check-site-browser.mjs`. `PLAYWRIGHT_MODULE` can point to a preinstalled module; `SITE_SCREENSHOT_DIRECTORY` optionally retains desktop/mobile captures. This additional browser lane exercises real search/close behavior and the practice review flow; it is separate from the dependency-light deterministic CI gate.
 - The Pages workflow builds `site-dist/` in CI and deploys only that artifact. Do not commit generated output.
 - Keep `robots.txt`, `sitemap.xml`, structured metadata, the generated web `llms.txt`, and visible source links bound to the same route map.
+- GitHub Pages serves this repository under a project path. Its generated `robots.txt` documents intended project discovery but does not control the `davidahmann.github.io` host root; manage host-wide crawler policy separately.
 - After deployment, verify the canonical URL, core assets, sitemap, crawler policy, and a deep route over HTTPS. Use Search Console or equivalent measurement after ownership is configured; do not infer ranking from a successful deployment.
 
 ## Social preview procedure

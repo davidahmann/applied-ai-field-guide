@@ -5,7 +5,7 @@ The engagement does not select “an agent” for the workflow. It assigns the s
 | Decision step | Selected mechanism | Why | Fallback and verifier |
 | --- | --- | --- | --- |
 | Check tenant, identity, revision, and required fields | Deterministic software | Closed invariants with exact failure states | Deny and return to the existing queue; contract tests verify behavior |
-| Retrieve the active policy and cited invoice evidence | Governed retrieval | The reviewer needs current, attributable sources | Mark evidence insufficient; source revisions and permissions are verified |
+| Retrieve the active policy and cited invoice evidence | Governed retrieval | The reviewer needs current, attributable sources | Mark evidence insufficient; source revisions and permissions are verified in the target system and practiced in the [retrieval lab](../retrieval-evaluation/README.md) |
 | Suggest a resolution and assemble an evidence packet | One typed model-assisted proposal, only if target evaluation justifies it | Language interpretation may help on variable exception evidence | No proposal or manual review; reviewer checks cited evidence |
 | Validate proposal shape and policy constraints | Deterministic software | A model must not define its own allowed action | Reject invalid proposal; schema and invariant tests verify behavior |
 | Approve the correction | Human review | Policy assigns accountability to a designated reviewer | Existing manual queue; approval is bound to identity, policy, expiry, and proposal digest |

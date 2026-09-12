@@ -170,8 +170,9 @@ function renderJsonLd(page, heading, updated) {
     license: "https://www.apache.org/licenses/LICENSE-2.0",
     author: { "@type": "Person", name: site.author.name, url: site.author.url },
     isPartOf: { "@type": "WebSite", name: site.name, url: `${site.url}/` },
-    codeRepository: site.repository,
   };
+  if (common["@type"] === "SoftwareSourceCode") common.codeRepository = site.repository;
+  else common.mainEntityOfPage = canonicalUrl(page.route);
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -476,7 +477,7 @@ async function build() {
   await writeFile(path.join(outputRoot, "sitemap.xml"), sitemap);
   await writeFile(
     path.join(outputRoot, "robots.txt"),
-    `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: Claude-User\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`,
+    `# Project-scoped discovery copy; host-root crawler policy lives at https://davidahmann.github.io/robots.txt\nUser-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: Claude-User\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`,
   );
   const llms = `# ${site.name}\n\n> ${site.description}\n\nCanonical repository: ${site.repository}\nLicense: Apache-2.0\n\n## Read the guide\n\n${rendered
     .map((page) => `- [${page.navTitle}](${canonicalUrl(page.route)}): ${page.description}`)

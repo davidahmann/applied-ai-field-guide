@@ -4,6 +4,15 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-09-12
+
+- Replace the field-only public entrance with task-first routes for choosing an AI opportunity, building or repairing a feature, evaluating retrieval, testing a material change, and operating a service. Keep accountable reframing as a focused route when the request conflicts with observed work.
+- Add a dependency-free invoice-policy retrieval lab with a deterministic BM25 baseline, pre-ranking tenant, scope, revision, and time filters, independent grading, an intentional vocabulary miss, conflict and abstention cases, and separate ranking, citation, safety, latency, and cost evidence.
+- Extend the existing invoice practice path with a bounded positive pilot branch and a worked interpretation of small-sample evidence without changing the canonical engagement's review-only decision or claiming customer proof.
+- Publish distinct human-review, context-and-retrieval, and retrieval-practice web routes; correct article structured data, document GitHub Pages crawler-policy limits, and keep canonical Markdown as the only content source.
+- Add a repository-wide prose audit based on Peter Yang's MIT-licensed `no-ai-slop` editing rubric, with the upstream source and license preserved in `NOTICE`. Treat source quotations and essential technical vocabulary as review context rather than claiming authorship detection.
+- Refresh the local Applied AI Field Guide plugin and teaching-release dependency bindings. Net file-count change is zero across `guide/`, `library/`, top-level `templates/`, and `blueprints/`; the new technical depth stays inside the existing example and lifecycle rather than adding another framework or product module.
+
 ## [2.1.0] - 2026-09-04
 
 - Extend standalone and local-plugin complete validation to all 22 governed JSON types using fixed local schemas and shared invariants. Keep starter profiles limited to the three decision-bearing contracts; distinguish file integrity, single-artifact checks and cross-artifact release proof.
@@ -296,7 +305,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/593a44b2e18c62eb0646eba412412de67473a378...v2.0.0
 [1.34.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v1.33.0...593a44b2e18c62eb0646eba412412de67473a378

@@ -40,6 +40,16 @@ Update your disposition without erasing R1. Show which scope, value, evaluation 
 
 Source packet R3: the same AP technology team will build and operate this internally. There is no delivery vendor to “exit.” The team has one operator, no backup, and no rehearsed recovery path. What would an operating-capability review require before pilot traffic? Do not invent an external handoff; do not waive support, capacity or recovery evidence.
 
+## Round 5 — A narrow path earns a limited pilot
+
+This is an alternate synthetic branch for practice, not the current decision in the worked engagement.
+
+Source packet R4: over a new predeclared two-week shadow trial, two AP reviewers process 40 eligible fixed-format invoices. The rules baseline produces 38 correct source-supported drafts and escalates two unreadable documents. Reviewers accept all 38 drafts after source checks, report no missed corrections, and complete every case within the declared queue limit. The backup operator restores the local practice service from a clean fixture and runs the rollback exercise. Controller policy still prohibits automatic posting. The metric owner verifies the counts against the frozen eligible-case list; the technical owner binds the exact fixture, code, test, and policy revisions.
+
+Write the gate decision. A defensible answer permits a limited **review-only** pilot for that fixed-format segment, retains the manual queue and reviewer approval, and stops on a source mismatch, capacity breach, policy change, or unverified release. It does not approve automatic posting or claim realized savings. Name what remains unproved: target authentication, durable state, tamper-evident audit, representative long-run behavior, support load, and sustained business value.
+
+This branch is an offline, local exercise over fictional data. Target data and traffic remain blocked until authentication, authorization, audit, privacy, operational-readiness, and release gates pass in the target environment.
+
 ## Review rubric
 
 Score each row 0 (absent/wrong), 1 (named but unsupported), or 2 (source-linked, bounded and actionable). No certification is implied. Any authority bypass or fabricated observed result requires revision regardless of total score.
@@ -61,7 +71,9 @@ Score each row 0 (absent/wrong), 1 (named but unsupported), or 2 (source-linked,
 
 **Simpler build:** “For fixed-format documents, retain deterministic parsing plus reviewer checks. Escalate other formats; do not purchase model complexity until its incremental benefit is measured.” This is defensible only if the eligible segment and fallback remain explicit.
 
-There is no defensible “ship automatic payment” answer in this packet. The materials lack authority, economic proof and operational readiness. A stronger answer says exactly what evidence could change its current decision.
+**Limited review-only pilot:** “The exact fixed-format rules build may enter a bounded pilot for the predeclared segment because the new shadow run, source checks, capacity result, backup recovery, and metric-owner verification meet that local gate. Keep reviewer approval and the manual queue. Do not connect posting or expand the population until the missing target-system and operating evidence is supplied.” This applies only to R4's alternate branch.
+
+There is no defensible “ship automatic payment” answer in this packet. R1–R3 lack authority, economic proof, and operational readiness. R4 supports only the narrow review-only pilot described above. A stronger answer says exactly which evidence changed the decision and which authority remains unchanged.
 
 ## Next route
 

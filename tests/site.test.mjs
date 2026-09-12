@@ -11,7 +11,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(root, "site-dist");
 
 test("supporting study paths and standalone downloads stay useful outside GitHub", async () => {
-  const sources = ["templates/value-case.md", "playbooks/01-discovery-and-value.md", "examples/invoice-exception/engagement/field-evidence.md", "examples/invoice-exception/document-review/practice.md"];
+  const sources = ["templates/value-case.md", "playbooks/01-discovery-and-value.md", "examples/invoice-exception/engagement/field-evidence.md", "examples/invoice-exception/document-review/practice.md", "examples/invoice-exception/retrieval-evaluation/README.md"];
   for (const source of sources) {
     const page = pages.find((item) => item.source === source); assert.ok(page, source);
     const html = await readFile(routeFile(page.route), "utf8"); assert.match(html, /Download Markdown/);
@@ -81,7 +81,7 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
     .match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) ?? [];
   assert.ok(words.length >= 700 && words.length <= 1_100, `five-minute guide has ${words.length} words`);
   for (const heading of [
-    "## Start with what broke",
+    "## Start with today's job",
     "## Before you design anything",
     "## Once the boundary is real",
     "## Prove the service people will actually run",
@@ -116,27 +116,25 @@ test("the five-minute guide stays concise and routes into canonical depth", asyn
   assert.ok(new Set(sentenceCounts).size >= 3, "five-minute guide should vary paragraph rhythm");
 });
 
-test("the public entry layer routes five common field situations before repository taxonomy", async () => {
+test("the public entry layer routes common applied-AI jobs before repository taxonomy", async () => {
   const [overview, shortGuide] = await Promise.all([
     readFile(path.join(root, "README.md"), "utf8"),
     readFile(path.join(root, "guide/field-guide-in-five-minutes.md"), "utf8"),
   ]);
 
-  assert.ok(overview.indexOf("## Start with what went wrong") < overview.indexOf("## Choose your depth"));
+  assert.ok(overview.indexOf("## Start with the job in front of you") < overview.indexOf("## Choose your depth"));
   for (const situation of [
-    "The brief doesn't match the real workflow",
-    "Nobody can identify the real process owner or expert",
-    "The sponsor, operator, and policy disagree",
-    "The team needs to prove one safe slice",
-    "Something was built, but acceptance or ownership is stuck",
+    "Decide where AI could help",
+    "Build a useful first feature",
+    "Fix weak retrieval or unsupported answers",
+    "Test a model, prompt, source, or policy change",
+    "Launch or operate a system",
   ]) assert.ok(overview.includes(situation), situation);
 
   for (const route of [
     "playbooks/00-field-engagement-and-reframing.md",
-    "templates/field-observation-log.md",
-    "templates/engagement-reframe.json",
-    "playbooks/02-solution-and-delivery.md#5-build-a-vertical-slice",
-    "templates/customer-enablement-handoff.md",
+    "playbooks/02-solution-and-delivery.md",
+    "examples/invoice-exception/retrieval-evaluation/README.md",
   ]) {
     assert.ok(overview.includes(route), route);
     assert.ok(shortGuide.includes(`../${route}`), route);
@@ -218,7 +216,7 @@ test("public lifecycle views preserve one canonical sequence and label compresse
     readFile(path.join(root, "guide/capability-roadmap.md"), "utf8"),
   ]);
   for (const body of [overview, guide]) {
-    for (const stage of ["Inherit the brief", "Observe and reconcile the work", "Charter value and scope", "Make data fit for the decision", "Select the mechanism", "Build one controlled slice", "Prove it with cases and users", "Launch with operating ownership", "Operate, learn, or retire"]) {
+    for (const stage of ["Understand the request and workflow", "Observe and reconcile the work", "Charter value and scope", "Make data fit for the decision", "Select the mechanism", "Build one controlled slice", "Prove it with cases and users", "Launch with operating ownership", "Operate, learn, or retire"]) {
       assert.ok(body.includes(stage), stage);
     }
   }
@@ -286,7 +284,8 @@ test("every canonical page has accessible structure and complete metadata", asyn
     canonicals.push(canonical);
     const structuredData = matches(html, /<script type="application\/ld\+json">(.*?)<\/script>/gs);
     assert.equal(structuredData.length, 2, page.route);
-    for (const document of structuredData) assert.doesNotThrow(() => JSON.parse(document));
+    const parsed = structuredData.map((document) => JSON.parse(document));
+    assert.equal("codeRepository" in parsed[0], page.type === "SoftwareSourceCode", page.route);
   }
   assert.equal(new Set(canonicals).size, pages.length);
 });
@@ -366,6 +365,7 @@ test("sitemap, crawler policy, and machine index cover the public guide", async 
     assert.ok(llms.includes(canonical), canonical);
   }
   assert.match(robots, /User-agent: \*/);
+  assert.match(robots, /Project-scoped discovery copy/);
   for (const crawler of ["OAI-SearchBot", "Claude-SearchBot", "Claude-User", "Google-Extended"]) {
     assert.ok(robots.includes(`User-agent: ${crawler}\nAllow: /`), crawler);
   }

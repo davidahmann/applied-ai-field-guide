@@ -23,32 +23,39 @@ export const redirects = [
 
 export const navigation = [
   {
-    label: "Start",
+    label: "Start with the work",
     routes: [
       "/",
       "/five-minute-guide/",
       "/applied-ai-delivery/",
-      "/applied-ai-capability-roadmap/",
-      "/applied-ai-operating-model/",
     ],
   },
   {
-    label: "Field practice",
+    label: "Choose and build",
     routes: [
+      "/ai-value-engineering/",
+      "/ai-data-readiness/",
+      "/human-review-ai/",
+      "/ai-context-and-retrieval/",
+      "/ai-workflows-vs-agents/",
+    ],
+  },
+  {
+    label: "Practice",
+    routes: [
+      "/applied-ai-capability-roadmap/",
       "/field-engagement-reframing/",
       "/worked-engagement/invoice-exception/",
       "/practice/invoice-review/",
+      "/practice/invoice-policy-retrieval/",
     ],
   },
   {
-    label: "Design",
+    label: "Design and fund",
     routes: [
-      "/ai-value-engineering/",
       "/ai-value-engineering-scorecard/",
       "/funding-ai-for-accepted-outcomes/",
-      "/ai-data-readiness/",
       "/enterprise-ai-integration/",
-      "/ai-workflows-vs-agents/",
       "/production-ai-agent-architecture/",
       "/workflow-automation-examples/",
     ],
@@ -60,6 +67,7 @@ export const navigation = [
       "/ai-agent-security/",
       "/computer-use-agent-security/",
       "/production-ai-readiness/",
+      "/applied-ai-operating-model/",
       "/operations/",
     ],
   },
@@ -106,10 +114,10 @@ export const pages = [
     route: "/five-minute-guide/",
     source: "guide/field-guide-in-five-minutes.md",
     navTitle: "Five-minute field guide",
-    title: "The Applied AI Field Guide in Five Minutes: Start with the Messy Brief",
+    title: "The Applied AI Field Guide in Five Minutes: Start with the Work",
     legacyAnchors: { "know-when-to-leave": "make-ownership-survive-the-project" },
     description:
-      "Start with a broken brief, missing process owner, stakeholder conflict, unsafe first slice, or stalled handoff and find the next defensible move.",
+      "Choose where AI helps, repair a weak feature, test a release, resolve conflicting evidence, or establish ownership for a live service.",
   },
   {
     route: "/applied-ai-delivery/",
@@ -196,6 +204,30 @@ export const pages = [
     title: "Enterprise AI Integration: From Teaching Code to Target Evidence",
     description:
       "Bridge local AI examples to enterprise deployment through source authority, reconciliation, identity, durable execution, restricted promotion, and target evidence.",
+  },
+  {
+    route: "/human-review-ai/",
+    source: "library/01-product-process-and-ux.md",
+    navTitle: "Human review and product design",
+    title: "Human Review in AI Systems: Product, Workflow, and Adoption Design",
+    description:
+      "Design AI-enabled work around real users, explicit authority, correction paths, review capacity, adoption evidence, and accessible operating surfaces.",
+  },
+  {
+    route: "/ai-context-and-retrieval/",
+    source: "library/02-context-and-knowledge-systems.md",
+    navTitle: "Context and retrieval",
+    title: "AI Context and Retrieval: Sources, Permissions, Freshness, and Evidence",
+    description:
+      "Design and evaluate AI context and retrieval across source authority, permissions, freshness, conflicts, citations, abstention, latency, and cost.",
+  },
+  {
+    route: "/practice/invoice-policy-retrieval/",
+    source: "examples/invoice-exception/retrieval-evaluation/README.md",
+    navTitle: "Retrieval evaluation lab",
+    title: "AI Retrieval Evaluation Lab: Invoice Policy Evidence",
+    description:
+      "Run a synthetic retrieval evaluation that separates ranking quality from permissions, freshness, conflicts, source support, abstention, latency, and cost.",
   },
   {
     route: "/ai-workflows-vs-agents/",

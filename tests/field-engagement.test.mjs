@@ -17,7 +17,7 @@ async function json(relativePath) {
 
 test("the shared handbook requires a reframe only for a material contradiction", async () => {
   const handbook = await readFile(path.join(root, "playbooks", "README.md"), "utf8");
-  const stage = handbook.split("\n").find((line) => line.startsWith("| Inherit and reframe |"));
+  const stage = handbook.split("\n").find((line) => line.startsWith("| Understand and reframe if needed |"));
   const packet = handbook.split("\n").find((line) => line.startsWith("| [Engagement-reframe record]"));
   assert.ok(stage && packet, "both lifecycle and working-packet routes must remain present");
   assert.match(stage, /add an engagement-reframe record.*when a material contradiction/i);

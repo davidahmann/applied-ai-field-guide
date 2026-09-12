@@ -1,6 +1,6 @@
 # Data Readiness and Context Contracts
 
-Data readiness is not “we have data” and it is not a warehouse, vector index, or model-training project. It is evidence that the specific information needed for one bounded decision is authoritative, accessible, representative, timely, lawful, economical, and operable.
+Data readiness is evidence that the specific information needed for one bounded decision is authoritative, accessible, representative, timely, lawful, economical, and operable. A warehouse, vector index, model-training project, or claim that “we have data” does not establish it.
 
 The governing question is:
 
@@ -42,7 +42,7 @@ Start from the workflow charter: decision, eligible population, exclusions, grai
 
 Record system, environment, interface, residency, owner, source-of-truth status, schema, revision, freshness, classification, tenant and field scope, retention, deletion, and correction behavior. Observe what operators trust when SOWs, policy, runbooks, code, databases, and actual practice disagree.
 
-Treat codified methods, expert logic, metric definitions, analytical routines, and tool interfaces as sources too. Record owner, version, provenance, applicable population, permitted purpose, authority class, dependencies, review date, and correction path. A widely used internal method can be valuable context without becoming source-of-truth state, action authority, or anonymous evaluation ground truth. The [Bridgewater PAT field report](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76) illustrates the leverage of institutional legibility while remaining first-party and non-portable.
+Treat codified methods, expert logic, metric definitions, analytical routines, and tool interfaces as sources too. Record owner, version, provenance, applicable population, permitted purpose, authority class, dependencies, review date, and correction path. A widely used internal method can be valuable context without becoming source-of-truth state, action authority, or anonymous evaluation ground truth. The [Bridgewater PAT field report](../research/2026-08-27--bridgewater-pocket-analyst-tool.md#r26-76) illustrates the value of institutional legibility while remaining first-party and non-portable.
 
 ### 3. Profile decision-critical quality
 

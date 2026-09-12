@@ -2,9 +2,9 @@
 
 > From a real workflow to measurable, operated value.
 
-This is the shared mental model for turning an AI request into a useful, supportable change to real work. It covers discovery, value, engineering, adoption, and operation—whether you work inside the organization or alongside a customer. If a brief is already breaking, start with the [five-minute field guide](field-guide-in-five-minutes.md). Come back here when you need the full loop.
+This is the shared mental model for turning an AI request into a useful, supportable change to real work. If you need the next move now, start with the [five-minute field guide](field-guide-in-five-minutes.md). Come back here for the full loop.
 
-The **Guide** explains the method. The [Handbook](../playbooks/README.md) supports live delivery. The [Engineering Kit](../templates/README.md) provides contracts, controls, code, and tests. They are three depths of one method—not separate frameworks.
+The **Guide** explains the method. The [Handbook](../playbooks/README.md) supports delivery. The [Engineering Kit](../templates/README.md) provides contracts, controls, code, and tests. They are three depths of one method.
 
 **Reading time:** about 15 minutes. This is guidance, not production approval or a substitute for a target organization's policy, security, architecture, or risk review.
 
@@ -19,11 +19,11 @@ The team turns an ambiguous operating problem into a supported software service 
 | Engineering | What is the smallest reliable system that can improve the workflow? |
 | Operation | Can the team prove the result, support it, change it, and eventually retire it? |
 
-Applied-AI engineers build and test the behavior. Product and workflow owners decide which work should change. Platform, data, security, and service teams own their boundaries. An FDE connects these responsibilities in an unfamiliar operating environment. Titles vary; record the actual decision rights and missing expertise rather than asking one person to own everything.
+Applied-AI engineers build and test the behavior. Product and workflow owners decide which work should change. Platform, data, security, and service teams own their boundaries. An FDE connects these responsibilities in an unfamiliar environment. Record the actual decision rights and missing expertise.
 
 The output is an **owned change to real work** with a verifier, bounded authority, full-cost case, operating team, and exit path.
 
-> **Tokens are an input. Autonomy is a design choice. Accepted outcomes are the product.**
+Tokens are an input and autonomy is a design choice. The product is an independently accepted outcome.
 
 ## 2. The operating loop
 
@@ -31,7 +31,7 @@ The repository uses one canonical lifecycle:
 
 ```mermaid
 flowchart LR
-    A["Inherit the brief"] --> B["Observe and reconcile the work"]
+    A["Understand the request and workflow"] --> B["Observe and reconcile the work"]
     B --> C["Charter value and scope"]
     C --> D["Make data fit for the decision"]
     D --> E["Select the mechanism"]
@@ -44,7 +44,7 @@ flowchart LR
 
 | Stage | Decision evidence |
 | --- | --- |
-| Inherit the brief | Exact inherited claims and source revisions |
+| Understand the request and workflow | Exact requested outcome, source revision, intended users, current path, and decision boundary |
 | Observe and reconcile the work | Representative cases, exceptions, roles, competing claims, and a safe fallback |
 | Charter value and scope | Baseline, accepted outcome, verifier, population, value hypothesis, guardrails, and risk ceiling |
 | Make data fit for the decision | Source authority, quality thresholds, preparation lineage, output ownership, cost, and failure behavior |
@@ -58,15 +58,17 @@ Stopping or narrowing weak work is a valid result. A sponsor, model score, renew
 
 ## 3. Observe the work before designing the system
 
+Requests arrive as tickets, mandates, statements of work, incidents, or live-service changes. Preserve the request and its source, then follow recent cases through the workflow.
+
 Monday morning, the sponsor says invoice exceptions should post automatically. By lunch, the queue owner has shown you the approval step and the controls manager has cited the policy that requires it. You haven't found a prompting problem. You've found a boundary the brief got wrong. It makes no difference whether that brief came from sales, a product roadmap, or an internal executive request.
 
 Treat the inherited brief as a hypothesis. Preserve it before improving it. Find the process knower through a recent case and a material exception; compare what was promised or requested with operator practice, system behavior, and policy; then ask the person who actually controls the affected boundary for a scoped decision.
 
-The hard conversation can be plain. On a customer engagement:
+The hard conversation can be plain:
 
 > We sold automatic posting. The walkthrough and controls policy require approval first. We can still reduce queue time by recommending and staging a correction. Until the service owner accepts, rejects, or defers that narrower path, the manual queue stays in place.
 
-Don't soften the evidence, ask a sponsor to overrule an operating owner, or let silence become approval.
+Don't soften the evidence or let silence become approval.
 
 Test the story against the target environment too. Inspect the decision-bearing code or configuration, data and reconciliation seams, identity and permission boundaries, and representative execution or failure evidence. Questionnaires, diagrams, and maturity scores help organize investigation; they don't prove readiness. Missing access stays visible as an unknown or blocker.
 
@@ -188,10 +190,13 @@ Use the [field-learning register](../templates/field-learning-register.md) and [
 
 The [invoice-exception reference](../examples/invoice-exception/README.md) connects a [complete worked engagement](../examples/invoice-exception/engagement/README.md) to an executable controlled-write system. Read its [runtime](../examples/invoice-exception/reference-loop.mjs), [evaluation report](../examples/invoice-exception/evaluation-report.json), and [regression tests](../examples/invoice-exception/reference-loop.test.mjs).
 
+The [invoice policy retrieval lab](../examples/invoice-exception/retrieval-evaluation/README.md) separates ranking quality from permission, freshness, citation, conflict, abstention, latency, and cost.
+
 The [shipment-risk walkthrough](../examples/shipment-risk-triage/README.md) combines classical ML, deterministic policy, optional model explanation, and human review. Its [runtime](../examples/shipment-risk-triage/shipment-risk-triage.mjs) shows why an AI-enabled system need not be agent-first.
 
 ```bash
 npm ci --ignore-scripts
+npm run test:retrieval-evaluation
 npm run test:reference
 npm run test:evals
 npm run test:hybrid
