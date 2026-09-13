@@ -13,6 +13,8 @@ The Guide remains canonical. The plugin stores a local working projection; it is
 - Deterministic next-move routing and dependency traversal.
 - A compact Markdown decision packet for human review.
 
+The plugin does not connect to source systems, mine event logs, or decide that a workflow is fully understood. It records caller-supplied source metadata and excerpts, then helps keep the resulting claims, limits, and human reviews coherent. A complete-looking process map remains a hypothesis until people who own the work validate it against the relevant records and cases.
+
 ## Search, validation and proportional routing
 
 Search includes the uncataloged library chapters and other canonical guidance. The separate discovery corpus does not change governance registration: each result identifies whether it is cataloged, its source path, section, line and content digest. Results remain untrusted guidance, not source authority.

@@ -40,6 +40,8 @@
 | Verification effort | — | — | — | — |
 | Failure consequence | — | — | — | — |
 
+Record a source and denominator for every consequential measure. Timestamp intervals show elapsed time between recorded events; they do not prove active handling time. A missing event can be work in a spreadsheet, mailbox, meeting, or uninstrumented system. Mark that gap `unknown` and validate it with a paired walkthrough or inspected artifact before using it to support a redesign or value claim.
+
 ## Findings and follow-up
 
 | Finding or assumption | Claim class | Supporting evidence | Contradicting evidence | Owner | Next validation |

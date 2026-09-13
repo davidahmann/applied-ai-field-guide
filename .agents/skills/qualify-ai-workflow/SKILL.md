@@ -17,14 +17,15 @@ Turn a proposed use case into an evidence-backed workflow decision. Do not selec
 ## Workflow
 
 1. Preserve the inherited workflow story and source passages as hypotheses. Separately name the sponsor, process knower, operator, disposition authority, owner, and verifier; never infer one role from another.
-2. Find or verify the process knower through a recent case, exception queue, workaround, escalation, or recovery path. Inspect representative normal and exceptional work and record its population limits.
-3. Compare consequential `sold`, `stated`, `observed`, `system_enforced`, and `policy_authorized` claims. Preserve conflicts; when one changes the boundary, invoke `$reframe-ai-engagement` before chartering.
-4. Name the user, interface, trigger, decision, inputs, permitted action, accepted outcome, safe fallback, and next accountable field move.
-5. Record the baseline as measured or explicitly unmeasured. Define the eligible population, measurement window, target, attribution method, and guardrails.
-6. Separate operational, knowledge/context, evaluation/training, and telemetry/feedback uses. Identify source ownership, authority, time semantics, access, quality unknowns, preparation, output obligations, adoption, service ownership, and maximum tolerable effect.
-7. Assess factors 1–6 and preliminary hard-gate blockers. Record one business-flow pattern or `none` without importing its objects, policies, or measures as observations.
-8. Keep technical feasibility, operator acceptance, adoption, business value, economics, and production readiness separate. Give each gate an owner and stop condition.
-9. Decide `discover`, `defer`, or `do_not_build`. State whether the current boundary is ready for value modeling, plus the evidence required to change the decision.
+2. Find or verify the process knower through a recent case, exception queue, workaround, escalation, or recovery path. Inspect representative normal and exceptional work, record population limits, and distinguish active handling from wait or rework time when it matters.
+3. Before proposing a redesign hypothesis, record which consequential steps are directly recorded, observed, reported, inferred, disputed, or unknown. A timestamp gap shows elapsed time between recorded events; it does not establish touch time or work outside the system. Validate consequential gaps with a paired walkthrough or inspected artifact.
+4. Compare consequential `sold`, `stated`, `observed`, `system_enforced`, and `policy_authorized` claims. Preserve conflicts; when one changes the boundary, invoke `$reframe-ai-engagement` before chartering.
+5. Name the user, interface, trigger, decision, inputs, permitted action, accepted outcome, safe fallback, and next accountable field move.
+6. Record the baseline as measured or explicitly unmeasured. Define the eligible population, measurement window, target, attribution method, and guardrails.
+7. Separate operational, knowledge/context, evaluation/training, and telemetry/feedback uses. Identify source ownership, authority, time semantics, access, quality unknowns, preparation, output obligations, adoption, service ownership, and maximum tolerable effect.
+8. Assess factors 1–6 and preliminary hard-gate blockers. Record one business-flow pattern or `none` without importing its objects, policies, or measures as observations.
+9. Keep technical feasibility, operator acceptance, adoption, business value, economics, and production readiness separate. Give each gate an owner and stop condition.
+10. Decide `discover`, `defer`, or `do_not_build`. State whether the current boundary is ready for value modeling, plus the evidence required to change the decision.
 
 ## Output contract
 
@@ -33,7 +34,7 @@ Return:
 - a completed discovery summary, current field brief, and workflow-charter draft;
 - the functional-requirement tuple and workflow boundary;
 - baseline, target, verifier, guardrails, and adoption hypothesis;
-- role map, representative case, consequential claim comparison or explicit no-conflict finding, preliminary factor gates, data-readiness assessment, blockers, risk ceiling, selected pattern or `none`, and next field move;
+- role map, representative case, workflow-reconstruction limits, consequential claim comparison or explicit no-conflict finding, preliminary factor gates, data-readiness assessment, blockers, risk ceiling, selected pattern or `none`, and next field move;
 - one explicit decision with rationale.
 
 Do not invent observations, measurements, approvals, or source access. Stop before solution design when the outcome, verifier, owner, accessible context, adoption path, or risk ceiling remains materially unresolved.

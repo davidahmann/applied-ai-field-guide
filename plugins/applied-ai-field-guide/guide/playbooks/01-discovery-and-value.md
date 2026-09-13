@@ -114,6 +114,20 @@ When the work is still vague, do one small investigation before proposing a solu
 
 This is a first look, not a data-quality assessment. Ten cases can expose a useful question; they cannot establish a defect rate, represent the full population, or replace source profiling, reconciliation, or readiness evidence.
 
+### Decide whether discovery is sufficient for a redesign hypothesis
+
+Before proposing a changed workflow, confirm that the bounded segment has enough evidence for someone else to challenge the proposal:
+
+- A normal case and a materially different exception have been traced from trigger to completion, including the systems, handoffs, decisions, and completion signal.
+- Active handling, waiting, rework, and their sources or denominators are distinguished where timing is consequential.
+- One upstream creator and one downstream user have identified constraints that can change the boundary or expected value.
+- Each material statement is marked as a direct record, observed behavior, reported practice, inference, or unresolved conflict, with its source and owner.
+- An accountable owner can decide whether to test the proposed change and what remains out of scope.
+
+System logs quantify recorded events. A timestamp gap can show elapsed time between those events, but it can omit work in a spreadsheet, mailbox, meeting, or uninstrumented system. Pair log analysis with walkthroughs and artifact inspection; keep an unobserved step or disputed cause `unknown`.
+
+This checkpoint supports a limited, testable redesign hypothesis. It does not establish population-wide process quality, authorize a change, or settle a policy or ownership dispute. When a missing answer could materially change the boundary, ask that next question before choosing a mechanism.
+
 ### Check the technical reality directly
 
 Before assigning a readiness score or proposing an architecture, inspect enough of the target environment to test the workflow story. The relevant evidence depends on the boundary, but it commonly includes:
