@@ -221,3 +221,21 @@ test("the guide adds practical investigation, adoption, results, and finance-rev
   assert.match(finance, /does not provide accounting, audit, tax, or financial-reporting advice/i);
   for (const artifactPath of ["templates/results-walkthrough.md", "examples/finance-variance-commentary/README.md"]) assert.ok(catalog.artifacts.some((artifact) => artifact.path === artifactPath), artifactPath);
 });
+
+test("discovery separates recorded event timing from workflow understanding before a redesign hypothesis", async () => {
+  const [playbook, discovery, observation, skill] = await Promise.all([
+    readFile(path.join(root, "playbooks", "01-discovery-and-value.md"), "utf8"),
+    readFile(path.join(root, "templates", "discovery-pack.md"), "utf8"),
+    readFile(path.join(root, "templates", "field-observation-log.md"), "utf8"),
+    readFile(path.join(root, ".agents", "skills", "qualify-ai-workflow", "SKILL.md"), "utf8"),
+  ]);
+
+  assert.match(playbook, /## Decide whether discovery is sufficient for a redesign hypothesis/);
+  assert.match(playbook, /System logs quantify recorded events/i);
+  assert.match(playbook, /does not establish population-wide process quality, authorize a change, or settle a policy or ownership dispute/i);
+  assert.match(discovery, /## Workflow reconstruction and redesign checkpoint/);
+  assert.match(discovery, /recorded, observed, reported, inferred, or still disputed/i);
+  assert.match(discovery, /not necessarily the whole workflow/i);
+  assert.match(observation, /Timestamp intervals show elapsed time between recorded events; they do not prove active handling time/i);
+  assert.match(skill, /timestamp gap shows elapsed time between recorded events; it does not establish touch time/i);
+});

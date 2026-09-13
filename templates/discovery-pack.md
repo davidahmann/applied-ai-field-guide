@@ -97,6 +97,21 @@ The sponsor readout is a projection of these dated receipts and the current gove
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | | | | | | | | |
 
+## Workflow reconstruction and redesign checkpoint
+
+Complete this checkpoint before presenting a changed workflow. It documents whether the evidence is sufficient for a bounded redesign hypothesis; it is not a process-maturity score, production approval, or evidence that every case follows the same path.
+
+| Evidence question | Current answer and source | Limitation, contradiction, or unknown | Owner and next validation |
+| --- | --- | --- | --- |
+| Can a normal case and a materially different exception be reconstructed from trigger to completion? | | | |
+| Are active handling, wait, and rework time distinguished with a source and denominator? | | | |
+| Which upstream input and downstream use can change the proposed boundary or value? | | | |
+| Which source wins for each decision-critical conflict, or who must resolve it? | | | |
+| Which steps are directly recorded, observed, reported, inferred, or still disputed? | | | |
+| Who can approve a bounded test of the redesign, and what remains out of scope? | | | |
+
+Event records show recorded system activity, not necessarily the whole workflow. A gap between timestamps measures elapsed time between those records; it does not prove active handling time or explain work that happened in a mailbox, spreadsheet, meeting, or uninstrumented system. Validate consequential gaps with a paired walkthrough or inspected artifact, and retain the uncertainty when it cannot be resolved.
+
 ## Source-of-truth map
 
 | Source ID | Objects | Owner | Read/write | Classification | Freshness SLO | Identity | API maturity | Failure mode |

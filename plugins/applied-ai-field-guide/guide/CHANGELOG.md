@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.4.2] - 2026-09-13
+
+- Add one discovery-to-redesign checkpoint to the existing workflow investigation: reconstruct a normal case and material exception, distinguish active handling from wait and rework time, test upstream and downstream constraints, and record which claims are recorded, observed, reported, inferred, disputed, or unknown.
+- Clarify that event logs describe recorded activity. Timestamp gaps alone do not establish touch time, policy, ownership, or uninstrumented work; consequential gaps need a walkthrough or inspected artifact, and unresolved uncertainty stays visible.
+- Update workflow qualification and the local plugin guidance to keep source-linked investigation, evidence limits, and human validation explicit. Refresh the packaged Guide and release bindings. No new lifecycle, control family, schema, connector, process-mining service, or automated discovery claim is introduced.
+
 ## [2.4.1] - 2026-09-12
 
 - Clarify that a stored CRM field, relationship, score, or operational summary derived from records, rules, or model output is a revisable claim, not source truth: retain its evidence, producer configuration, time semantics, lifecycle status, owner, correction path, and prior revision.
@@ -326,7 +332,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.1...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.2...HEAD
+[2.4.2]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.2.0...v2.3.0
