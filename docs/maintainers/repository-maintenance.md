@@ -53,11 +53,13 @@ The v1.26.0 inventory is the consolidation ceiling for the densest public layers
 | Layer | Ceiling | Rule |
 | --- | ---: | --- |
 | `library/*.md` | 18 | Merge or retire a chapter before adding one |
-| top-level `templates/*` | 36 | Extend an existing decision artifact before introducing another |
+| top-level `templates/*` | 37 | Extend an existing decision artifact before introducing another |
 | `blueprints/*.md` | 12 | Add a blueprint only after a distinct boundary cannot fit an existing design |
 | `guide/*.md` | 5 | Keep two main front doors; audience pages must answer a distinct decision |
 
 These are maximums, not coverage targets. Raising one requires an explicit maintainer decision in the changelog: what could not be merged, who owns the new artifact, which route it replaces or improves, and what would trigger retirement. Content-bearing releases must report the net file-count change for these layers; growth without a compensating merge or removal is a failed consolidation review.
+
+The repository test suite parses this table and counts the named layers. Change the ceiling and its matching assertion together only after recording the required maintainer decision; do not rely on a reviewer remembering the inventory.
 
 ## Contract change matrix
 
@@ -112,6 +114,7 @@ These are maximums, not coverage targets. Raising one requires an explicit maint
 - Keep `robots.txt`, `sitemap.xml`, structured metadata, the generated web `llms.txt`, and visible source links bound to the same route map.
 - GitHub Pages serves this repository under a project path. Its generated `robots.txt` documents intended project discovery but does not control the `davidahmann.github.io` host root; manage host-wide crawler policy separately.
 - After deployment, verify the canonical URL, core assets, sitemap, crawler policy, and a deep route over HTTPS. Use Search Console or equivalent measurement after ownership is configured; do not infer ranking from a successful deployment.
+- After a repository rename, verify the previous GitHub Pages project base separately. Current-site aliases cannot serve the previous base. If it no longer resolves, maintain a minimal public redirect stub under the old repository name; it should contain only a canonical link and redirect to the new base, not a forked copy of the guide.
 
 ## Social preview procedure
 
