@@ -4,6 +4,17 @@ The Applied AI Field Guide is a personal Codex copilot for internal applied-AI t
 
 The Guide remains canonical. The plugin stores a local working projection; it is not a business system of record, CRM, document-management system, approval service, authorization boundary, or production release system.
 
+## Start here
+
+This is a **personal Codex plugin**. The server uses local STDIO MCP, but other MCP hosts are not yet documented or tested here; do not treat them as supported installations.
+
+1. Follow [Install from this checkout](#install-from-this-checkout) once, then open a fresh Codex task.
+2. Describe the live situation in ordinary language and ask Codex to use `$run-ai-engagement` for the next decision.
+3. Keep customer content in its approved system. Register only permitted source metadata or small approved excerpts.
+4. Start one local engagement, save the first working artifact, review its exact revision with the accountable person, then ask for the next field move.
+
+For example: “I inherited an AI feature brief. Help me capture one representative case, name the missing authority, and leave the smallest accountable next move.” The plugin may organize the working packet; it cannot verify the story, approve a change, or replace the people who own the work.
+
 ## What it adds
 
 - Sixteen focused Guide skills, including an engagement conductor, decision-scoped data readiness, enterprise integration, material change impact, and approved-slice delivery.
@@ -25,7 +36,7 @@ For saved canonical JSON types, `artifact_validate` now automatically runs the f
 
 Only `enterprise-integration-map` permits `applicability: no_external_integration`, with a reason and evidence. This records a reviewed absence of external seams, not a waiver of source, security, runtime or release checks. No generic skip-stage operation exists. For `customer-enablement-handoff` coverage, `ownership: retained` means the internal team proves operating capability, capacity and backup coverage without inventing a vendor exit. Blocking decisions, stale dependencies, ambiguous coverage and unreviewed revisions still take priority. Existing workspaces need no migration.
 
-Use [the copilot evaluation protocol](../../docs/maintainers/copilot-evaluation.md) to assess usefulness beyond deterministic routing checks.
+The deterministic suites verify the local tool boundary and routing rules. **Host-model usefulness is not independently evaluated in this release.** Use [the copilot evaluation protocol](../../docs/maintainers/copilot-evaluation.md) before claiming that the plugin improves a practitioner's work or changing reusable skills from trial feedback.
 
 ## Security boundary
 

@@ -40,7 +40,7 @@ They are not separate frameworks. The [capability roadmap](guide/capability-road
 
 Start with the work and the accepted outcome, not a model or agent topology. Compare deterministic software, optimization, classical ML, retrieval, a foundation-model call, a bounded agent workflow, and human review. Choose the smallest mechanism that can safely do the job.
 
-Tokens are an input and autonomy is a design choice. The product is an independently accepted outcome.
+Tokens are an input. Autonomy is a design choice. Accepted outcomes are the product.
 
 Use the [12 Factors](library/14-twelve-factors-ai-value-engineering.md) and [one-page scorecard](guide/ai-value-engineering-scorecard.md) to test the outcome, verifier, adoption, authority, cost, and proof. The [executive funding route](guide/funding-ai-for-accepted-outcomes.md) supports the investment decision.
 

@@ -2,7 +2,7 @@
 
 > From a real workflow to measurable, operated value.
 
-This is the shared mental model for turning an AI request into a useful, supportable change to real work. If you need the next move now, start with the [five-minute field guide](field-guide-in-five-minutes.md). Come back here for the full loop.
+This guide turns an AI request into a useful, supportable change to work. For the next move, start with the [five-minute field guide](field-guide-in-five-minutes.md); return here for the full loop.
 
 The **Guide** explains the method. The [Handbook](../playbooks/README.md) supports delivery. The [Engineering Kit](../templates/README.md) provides contracts, controls, code, and tests. They are three depths of one method.
 
@@ -21,9 +21,9 @@ The team turns an ambiguous operating problem into a supported software service 
 
 Applied-AI engineers build and test the behavior. Product and workflow owners decide which work should change. Platform, data, security, and service teams own their boundaries. An FDE connects these responsibilities in an unfamiliar environment. Record the actual decision rights and missing expertise.
 
-The output is an **owned change to real work** with a verifier, bounded authority, full-cost case, operating team, and exit path.
+The output is an **owned change to work** with a verifier, bounded authority, full-cost case, operating team, and exit.
 
-Tokens are an input and autonomy is a design choice. The product is an independently accepted outcome.
+Tokens are an input. Autonomy is a design choice. Accepted outcomes are the product.
 
 ## 2. The operating loop
 
@@ -68,7 +68,7 @@ The hard conversation can be plain:
 
 > We sold automatic posting. The walkthrough and controls policy require approval first. We can still reduce queue time by recommending and staging a correction. Until the service owner accepts, rejects, or defers that narrower path, the manual queue stays in place.
 
-Don't soften the evidence or let silence become approval.
+The point isn't to embarrass the sponsor. It is to make the consequence decidable. Don't soften the evidence or let silence become approval.
 
 Test the story against the target environment too. Inspect the decision-bearing code or configuration, data and reconciliation seams, identity and permission boundaries, and representative execution or failure evidence. Questionnaires, diagrams, and maturity scores help organize investigation; they don't prove readiness. Missing access stays visible as an unknown or blocker.
 

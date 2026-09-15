@@ -234,6 +234,10 @@ test("the two public front doors remain compact while the complete guide keeps a
   ]);
   assert.ok(overview.split(/\s+/).length <= 1100, "README should remain a thin public router");
   assert.ok(guide.split(/\s+/).length <= 2600, "concise Guide should remain readable in one sitting");
+  for (const body of [overview, guide]) {
+    assert.match(body, /Tokens are an input\. Autonomy is a design choice\. Accepted outcomes are the product\./);
+  }
+  assert.match(guide, /The point isn't to embarrass the sponsor\. It is to make the consequence decidable\./);
   for (const phrase of ["Monday morning", "the hard conversation can be plain", "Net value is only $320", "Documents can't replace those exercises"]) {
     assert.ok(guide.toLowerCase().includes(phrase.toLowerCase()), phrase);
   }

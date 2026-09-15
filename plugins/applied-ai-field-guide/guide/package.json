@@ -1,6 +1,6 @@
 {
   "name": "applied-ai-field-guide",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "A practical field guide to choosing, building, proving, and operating AI-enabled systems with measurable value.",
   "private": true,
   "license": "Apache-2.0",
@@ -49,6 +49,7 @@
     "test:prose": "node --test tests/prose-quality.test.mjs && npm run lint:prose",
     "test:paths": "node --test tests/repository-paths.test.mjs",
     "test:repository": "node --test tests/repository-validation.test.mjs",
+    "test:maintainers": "node --test tests/maintainer-governance.test.mjs",
     "test:contracts": "node --test tests/schema-contracts.test.mjs",
     "test:tool-security": "node --test tests/tool-security.test.mjs",
     "test:telemetry": "node --test tests/telemetry-contracts.test.mjs",
@@ -70,7 +71,7 @@
     "test:evals": "node --test examples/invoice-exception/run-evals.test.mjs",
     "test:hybrid": "node --test examples/shipment-risk-triage/shipment-risk-triage.test.mjs",
     "test:site": "npm run build:site && node --test tests/site.test.mjs",
-    "test": "npm run validate && npm run test:artifact-validator && npm run test:document-review && npm run test:retrieval-evaluation && npm run test:durable-recovery && npm run test:copilot && npm run test:markdown && npm run test:prose && npm run test:paths && npm run test:repository && npm run test:contracts && npm run test:tool-security && npm run test:telemetry && npm run test:governance && npm run test:release-integrity && npm run test:release-gates && npm run test:solutions && npm run test:value-framework && npm run test:data-readiness && npm run test:field-practice && npm run test:production-readiness && npm run test:enterprise-reality && npm run test:production-ai-operations && npm run test:factory-improvement && npm run test:skills && npm run test:guide-plugin && npm run test:policy && npm run test:reference && npm run test:evals && npm run test:hybrid && npm run test:site"
+    "test": "npm run validate && npm run test:artifact-validator && npm run test:document-review && npm run test:retrieval-evaluation && npm run test:durable-recovery && npm run test:copilot && npm run test:markdown && npm run test:prose && npm run test:paths && npm run test:repository && npm run test:maintainers && npm run test:contracts && npm run test:tool-security && npm run test:telemetry && npm run test:governance && npm run test:release-integrity && npm run test:release-gates && npm run test:solutions && npm run test:value-framework && npm run test:data-readiness && npm run test:field-practice && npm run test:production-readiness && npm run test:enterprise-reality && npm run test:production-ai-operations && npm run test:factory-improvement && npm run test:skills && npm run test:guide-plugin && npm run test:policy && npm run test:reference && npm run test:evals && npm run test:hybrid && npm run test:site"
   },
   "devDependencies": {
     "ajv": "8.20.0",

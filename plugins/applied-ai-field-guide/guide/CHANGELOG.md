@@ -4,6 +4,13 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.4.3] - 2026-09-15
+
+- Enforce the four maintainer consolidation ceilings with a deterministic test. Resolve the pre-existing `templates/` 37-versus-36 mismatch by raising that ceiling to 37: `results-walkthrough.md` remains a distinct one-page evidence-and-decision communication route, owned by David Ahmann, rather than being buried inside the operational `production-service-review.md`. It improves the results readout; retire or merge it when a concise, audience-neutral results page can be reached from the service review without carrying operating-review detail. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
+- Restore the compact three-beat value principle at both public front doors and the field-reframing sentence that keeps conflict factual and decidable.
+- Add a short Codex-only plugin starting path and make the current evidence boundary explicit: deterministic tool behavior is tested, while host-model usefulness remains unqualified until an independent recorded review uses the existing protocol.
+- Add a minimal public redirect stub at the former GitHub Pages project base and document why current-site aliases cannot repair a missing old base.
+
 ## [2.4.2] - 2026-09-13
 
 - Add one discovery-to-redesign checkpoint to the existing workflow investigation: reconstruct a normal case and material exception, distinguish active handling from wait and rework time, test upstream and downstream constraints, and record which claims are recorded, observed, reported, inferred, disputed, or unknown.
@@ -332,7 +339,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.2...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.3...HEAD
+[2.4.3]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.3.0...v2.4.0
