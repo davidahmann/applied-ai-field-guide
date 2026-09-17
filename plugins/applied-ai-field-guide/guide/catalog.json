@@ -1,8 +1,20 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-09-12",
+  "updated": "2026-09-17",
   "artifacts": [
+    {
+      "id": "evidence.bugbasher-business-experiment",
+      "type": "evidence",
+      "path": "research/2026-09-17--bugbasher-business-experiment.md",
+      "tags": ["operations", "evaluation", "delayed-outcomes", "practitioner-lead"]
+    },
+    {
+      "id": "example.service-referral",
+      "type": "example",
+      "path": "examples/service-referral/README.md",
+      "tags": ["operations", "evaluation", "delayed-outcomes", "walkthrough"]
+    },
     {
       "id": "example.invoice-document-review",
       "type": "example",

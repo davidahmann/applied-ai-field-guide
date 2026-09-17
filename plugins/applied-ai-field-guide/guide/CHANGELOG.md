@@ -4,6 +4,13 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.4.4] - 2026-09-17
+
+- Add a service-referral case that separates supplied BugBasher claims from a fictional delayed-payment exercise. Keep the article's publication details and results unverified, and distinguish payment, referral acceptance, and a completed job.
+- Extend existing evaluation and service-review guidance with observation windows, pending outcomes, late-event attribution, blocked receiving dependencies, and tested approval routes. No new control, schema, skill, lifecycle, or runtime is introduced.
+- Add one canonical public case route and plugin search coverage; correct the README's in-memory description of the durable-recovery lab and stale data-readiness heading selectors in the browser check. Refresh release metadata, teaching-release bindings, and the local plugin snapshot.
+- Consolidation: add one bounded case and one research note, owned by David Ahmann. The case teaches delayed business outcomes without duplicating the invoice engagement; merge or retire it if another example covers those decisions. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
+
 ## [2.4.3] - 2026-09-15
 
 - Enforce the four maintainer consolidation ceilings with a deterministic test. Resolve the pre-existing `templates/` 37-versus-36 mismatch by raising that ceiling to 37: `results-walkthrough.md` remains a distinct one-page evidence-and-decision communication route, owned by David Ahmann, rather than being buried inside the operational `production-service-review.md`. It improves the results readout; retire or merge it when a concise, audience-neutral results page can be reached from the service review without carrying operating-review detail. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
@@ -339,7 +346,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.3...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.4...HEAD
+[2.4.4]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.3...v2.4.4
 [2.4.3]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.0...v2.4.1

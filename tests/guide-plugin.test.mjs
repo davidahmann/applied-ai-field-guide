@@ -22,6 +22,8 @@ test("search reaches canonical uncataloged chapters and canonical validation is 
   await writeFile(config, JSON.stringify({ guide_root: root, validator_root: root, workspace_root: workspace, max_read_bytes: 65536, max_write_bytes: 262144, allow_confidential_model_context: false }));
   t.after(() => rm(temporary, { recursive: true, force: true }));
   const call = (name, args) => callToolInProcess(config, name, args);
+  const referral = await call("guide_search", { query: "service referral delayed payment", limit: 10 });
+  assert.ok(referral.results.some((item) => item.path === "examples/service-referral/README.md" && item.artifact_id === "example.service-referral"));
   const paths = await guidancePaths(root);
   assert.equal(paths.filter((item) => item.startsWith("library/")).length, 18);
   assert.equal(paths.some((item) => item.startsWith("plugins/")), false);

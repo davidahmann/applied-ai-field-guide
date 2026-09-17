@@ -4,7 +4,7 @@
 
 ![The Applied AI Field Guide: Discover value, design the system, govern decisions, release safely, operate outcomes](assets/applied-ai-field-guide-banner.svg)
 
-An open-source design and verification kit for people choosing, building, evaluating, and operating AI in real work: applied-AI engineers, product and workflow owners, service operators, and forward-deployed engineers (FDEs).
+An open-source design and verification kit for applied-AI engineers, product and workflow owners, service operators, and forward-deployed engineers (FDEs).
 
 [![Repository validation](https://github.com/davidahmann/applied-ai-field-guide/actions/workflows/validate.yml/badge.svg)](https://github.com/davidahmann/applied-ai-field-guide/actions/workflows/validate.yml)
 [![Latest release](https://img.shields.io/github/v/release/davidahmann/applied-ai-field-guide)](https://github.com/davidahmann/applied-ai-field-guide/releases/latest)
@@ -34,7 +34,7 @@ An open-source design and verification kit for people choosing, building, evalua
 | **Handbook** | Running a live engagement | [Lifecycle playbooks](playbooks/README.md) |
 | **Engineering Kit** | Contracts, controls, architecture, evaluations, operations, and executable evidence | [Templates](templates/README.md), [controls](controls/control-catalog.json), and [examples](examples/invoice-exception/README.md) |
 
-They are not separate frameworks. The [capability roadmap](guide/capability-roadmap.md) is a learning route, not a certification.
+They are not separate frameworks. Use the [capability roadmap](guide/capability-roadmap.md) to plan practice.
 
 ## The core idea
 
@@ -54,6 +54,8 @@ The [shipment-risk example](examples/shipment-risk-triage/README.md) combines cl
 
 The [finance variance-commentary walkthrough](examples/finance-variance-commentary/README.md) shows a review-first path: code calculates, owners explain, finance approves the model draft.
 
+The [service-referral case](examples/service-referral/README.md) separates a reported business experiment from fictional practice with blocked work and delayed payments.
+
 ```bash
 npm ci --ignore-scripts
 npm run test:retrieval-evaluation
@@ -63,7 +65,7 @@ npm run test:evals
 npm run test:hybrid
 ```
 
-These are in-memory teaching systems. Passing tests proves only the declared local behavior—not customer value, production readiness, or deployment approval.
+The runnable examples use simulated services; the durable-recovery lab also persists local state. Passing tests proves only the declared local behavior—not customer value, production readiness, or deployment approval. The finance and referral walkthroughs are reading exercises.
 
 Before adapting them, use [Enterprise Integration and Scale Reality](library/17-enterprise-integration-and-scale-reality.md) to replace teaching conveniences with target evidence.
 
@@ -110,7 +112,7 @@ Pin the source. Skills grant no authority or evidence. Give an agent [AGENTS.md]
 
 The [Applied AI Field Guide local plugin](plugins/applied-ai-field-guide/README.md) adds local continuity for sources, revisions, decisions, dependencies, and review packets. Keep restricted content in its approved source system; local execution is not permission to copy it.
 
-Describe the situation in ordinary language and confirm which skill the host selects. The skills cover engagement continuity, workflow qualification, value, data, mechanism selection, design, evaluation, security, release, operation, transfer, and reusable learning.
+Describe the situation in ordinary language and confirm which skill the host selects.
 
 ## Scope and contribution
 
