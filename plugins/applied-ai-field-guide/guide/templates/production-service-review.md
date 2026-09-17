@@ -57,6 +57,8 @@ This readout is a projection, not a new source of truth, approval, or acceptance
 
 Explain attribution, non-adoption, downstream rework, avoided loss evidence, realized residual loss, fixed cost, and any rebaseline. Deduct residual loss separately only when it is not already netted from avoided loss or unit value.
 
+When outcomes are delayed, record the observation window, evidence cutoff, pending count and age, producing offer or behavior version, and late-event corrections. Keep the earlier as-of result inspectable. Separate activity, payment, delivery, acceptance, and downstream benefit where they are different events; missing observations remain unknown. See the [service-referral case](../examples/service-referral/README.md). `EVA-006`, `OPS-001`.
+
 ### Agent-work cost drivers when applicable
 
 Keep full cost per accepted outcome as the decision measure. Use the factor chain only to explain model-mediated spend changes; reconcile it with tool, compute, storage, wait, retry, human-review, recovery, and allocated-service cost.
@@ -104,6 +106,8 @@ Include unauthorized, prohibited, duplicate, effect-unknown, and readback-mismat
 | Support contacts and training gaps | — | — | — | — | — |
 
 Assign the first broken transition to an owning layer and dated response. Do not prescribe training until access, routing, integration, data quality, product friction, behavior quality, policy, and reviewer capacity have been checked.
+
+For a blocked receiving dependency, name the missing capacity or decision, queue age, owner, approved backup route, response target, and safe waiting state. Decide whether to pause intake or new commitments while preserving support and reconciliation for existing work. Exercise both delivery of an approval request and receipt of its answer; silence does not grant permission to proceed or discover a new contact route. `IAM-003`, `OPS-003`, `OPS-006`.
 
 ## Evaluation and behavior
 

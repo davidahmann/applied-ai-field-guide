@@ -79,6 +79,8 @@ Hex's “Metric City” concept simulates roughly 90 days of evolving work to te
 
 Production evaluation should also track cohort and time effects, policy changes, data freshness, and drift. The banking case in the five-pillar presentation illustrates why: a satisfaction drop reportedly traced to stale vector data after a policy change. [S10]
 
+For outcomes that arrive later, declare the observation window, authoritative event source, producing offer or behavior version, and evidence cutoff before the trial. Keep pending cases separate from failed cases. Record event time and observation time; append late outcomes to their original cohort and preserve earlier as-of reports. An expired window means no outcome was observed within that window, not that one can never arrive. Safety, spend, or contact limits can still stop a trial early. The [service-referral case](../examples/service-referral/README.md) works through a payment received after a premature failure judgment. `EVA-006`, `OPS-001`.
+
 Every production failure should be triaged into:
 
 1. A replayable example

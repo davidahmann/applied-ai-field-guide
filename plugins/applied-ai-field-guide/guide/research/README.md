@@ -17,6 +17,8 @@ Social, Reddit, YouTube, and news are research channels—not automatic authorit
 
 ## Current research sets
 
+- [BugBasher business experiment](2026-09-17--bugbasher-business-experiment.md) — supplied practitioner lead for blocked dependencies, delayed outcomes, approval routes, and behavioral changes; publication details and results remain unverified, with a separate fictional service-referral exercise.
+
 - [Production-agent source ledger](2026-02-07--2026-08-07-production-agent-source-ledger.md) — vetted findings reviewed from 2026-02-07 through 2026-08-07, plus explicitly marked canonical sources published earlier and revalidated during that window; includes implementation patterns, anti-patterns, and source-quality notes.
 - [AI Engineer production-agent video index](2026-08-07--ai-engineer-production-agent-video-index.md) — chapter-level practitioner talks with corroboration and claim limits.
 - [Operational-redesign and applied-AI practice note](2026-08-08--operational-redesign-and-applied-ai-practice.md) — supplied practitioner material, reviewed organizational and company-adoption reports, a directly reviewed change framework, and an inspected open-source curriculum, with portable field, decision-rights, proof, operating, and learning mechanics separated from attribution, forecast, maturity, and production-proof claims.

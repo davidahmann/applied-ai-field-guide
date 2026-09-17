@@ -73,6 +73,22 @@ test("site configuration defines one canonical source per route", () => {
   assert.equal(finance?.route, "/worked-walkthrough/finance-variance-commentary/");
 });
 
+test("service-referral case stays discoverable and separates reported events from fictional practice", async () => {
+  const page = pages.find(({ source }) => source === "examples/service-referral/README.md");
+  assert.equal(page?.route, "/worked-walkthrough/service-referral/");
+  const html = await readFile(routeFile(page.route), "utf8");
+  assert.match(html, /Everything in this section is fictional/);
+  assert.match(html, /Publication details and the underlying results remain unverified/);
+  assert.match(html, /Keep the outcome pending/);
+  assert.match(html, /append a dated correction/);
+  assert.match(html, /Do not deliver twice/);
+  const home = await readFile(routeFile("/"), "utf8");
+  assert.ok(matches(home, /href="([^"]+)"/g).some((href) => new URL(href, `${site.url}/`).href === `${site.url}${page.route}`));
+  const download = await readFile(path.join(outputRoot, "downloads", page.source), "utf8");
+  assert.match(download, /research\/2026-09-17--bugbasher-business-experiment\.md#r26-87/);
+  assert.doesNotMatch(download.replace(/```[\s\S]*?```/g, ""), /\]\(\.\.?\//);
+});
+
 test("the five-minute guide stays concise and routes into canonical depth", async () => {
   const page = pages.find(({ source }) => source === "guide/field-guide-in-five-minutes.md");
   assert.equal(page?.route, "/five-minute-guide/");

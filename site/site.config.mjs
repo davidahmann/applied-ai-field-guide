@@ -47,6 +47,7 @@ export const navigation = [
       "/field-engagement-reframing/",
       "/worked-engagement/invoice-exception/",
       "/worked-walkthrough/finance-variance-commentary/",
+      "/worked-walkthrough/service-referral/",
       "/practice/invoice-review/",
       "/practice/invoice-policy-retrieval/",
       "/practice/invoice-durable-recovery/",
@@ -161,6 +162,14 @@ export const pages = [
     title: "Finance Variance Commentary: Deterministic Numbers, Reviewable AI Drafts",
     description:
       "A fictional finance walkthrough that keeps calculations and policy deterministic, makes owner explanations attributable, and leaves approval with finance.",
+  },
+  {
+    route: "/worked-walkthrough/service-referral/",
+    source: "examples/service-referral/README.md",
+    navTitle: "Service-referral case",
+    title: "Agent Business Case: Delayed Payments and Blocked Work",
+    description:
+      "Examine a reported agent-run referral business and a fictional exercise in delayed payments, missing providers, approval waits, and duplicate delivery.",
   },
   {
     route: "/applied-ai-operating-model/",
