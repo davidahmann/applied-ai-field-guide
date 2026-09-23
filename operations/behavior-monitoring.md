@@ -67,6 +67,8 @@ When an automated or human scorer reviews production runs, bind every grade to t
 
 Scorers inform diagnosis and evaluation. They MUST NOT grant action authority, prove source-of-truth completion, or directly update prompts, skills, policies, thresholds, graders, or deployed behavior. Monitor scorer disagreement, calibration, false-positive and false-negative behavior, coverage, drift, latency, cost, and reviewer burden. Fail or abstain according to the declared evaluation contract when the scorer, required evidence, or sampling process is unavailable or invalid. [R26-81](../research/2026-08-28--warp-self-improving-software-factories.md#r26-81)
 
+When a run fails across several turns, annotate the earliest **observable divergence**, its evidence and owner, and the later effects that depend on it. Do not count every inherited error as a separate root cause or infer one from a final answer alone. Keep an unknown-origin state for incomplete traces, and verify any claimed business effect at its source. [R26-90](../research/2026-09-23--decision-models-and-decision-learning.md#r26-90)
+
 ## Trace-derived improvement
 
 Recurring trace papercuts MAY produce a sanitized failure record, replay case, and candidate prompt, skill, route, tool, or context change. Production traces MUST NOT directly rewrite prompts, skills, labels, graders, policies, thresholds, or deployed code. Apply purpose and confidentiality review, contamination controls, independent evaluation, change approval, canary, rollback, and the normal release authority before adoption. `FDE-004`, `EVA-004`, `EVA-006`, `OPS-007`.

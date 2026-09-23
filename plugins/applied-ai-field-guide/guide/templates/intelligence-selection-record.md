@@ -50,6 +50,8 @@ Controls: `ARC-004`, `ARC-005`, `VAL-001`, `VAL-002`, `CST-001`, `CST-002`.
 
 When the selected mechanism feeds another model, optimizer, policy, or workflow, test the direct and downstream contracts separately. A local score improvement does not establish a better customer-visible decision. Version any material aggregation, feature, calibration, or post-processing component and include it in downstream replay and rollback evidence. [R26-78](../research/2026-08-28--uber-production-ai-operating-lessons.md#r26-78)
 
+For a bounded classification or routing decision, an optional comparison uses the **same source-bound, held-out cases** for rules, a conventional classifier, a compact structured-output model, and a decision-only model. Exclude a route when it cannot meet the data or authority contract. Set thresholds on development cases, freeze them for the holdout, and report false negatives and positives by risk slice, abstentions, calibration where meaningful, review load, latency, and full cost per accepted outcome. Check provider egress and retention before submitting case material. Typed output, a low unit price, or a vendor benchmark does not establish decision quality or permission to act. Keep arithmetic, policy, and effects at the trusted software boundary. [R26-88](../research/2026-09-23--decision-models-and-decision-learning.md#r26-88), [R26-89](../research/2026-09-23--decision-models-and-decision-learning.md#r26-89)
+
 ## Decision
 
 Record the selected mechanism, approver, date, limitations, and next review. Link an [architecture decision record](architecture-decision-record.md) when the choice changes the system boundary, data contract, security posture, or release unit.

@@ -168,6 +168,10 @@ The committing service, not the model or harness, signs the canonical `service_r
 
 Controls: `IAM-001`, `IAM-002`, `REL-001`, `REL-003`, `OPS-001`.
 
+## Consequential human decisions
+
+For a human approval, rejection, correction, or override that can change a consequential workflow decision, the deployment SHOULD keep a purpose-bound decision record: proposal and evidence references, source and policy revisions, authorized actor, disposition, stated reason or reason-unknown, and later independently verified outcome when available. Link it to the run and effect receipt without putting raw business identifiers or sensitive free text in the shared trace event. Classify, minimize, restrict, and retain the reason under the owning organization's data policy. A reviewer reason is evidence to investigate, not policy or a ground-truth label. Missing reasons and pending outcomes stay explicit. A candidate rule change still needs owner review, independent evaluation, approval, and the ordinary release path. `OPS-001`, `HUMAN-003`, `EVA-006`, `OPS-007`. [R26-91](../research/2026-09-23--decision-models-and-decision-learning.md#r26-91)
+
 ## Stop reasons
 
 The shared vocabulary is `completed`, `completed_after_timeout_recovery`, `tenant_mismatch`, `stale_source_revision`, `stale_policy`, `context_load_failed`, `validation_failed`, `policy_denied`, `policy_denied_at_commit`, `idempotency_conflict`, `approval_rejected`, `approval_expired`, `approval_time_invalid`, `approval_identity_invalid`, `approval_digest_mismatch`, `policy_denied_before_commit`, `release_not_admitted`, `service_receipt_invalid`, `readback_denied`, `readback_mismatch`, `budget_exhausted`, `timeout_exhausted`, `cancelled`, `circuit_breaker`, and `internal_error`.

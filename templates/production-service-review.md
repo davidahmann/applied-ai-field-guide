@@ -197,6 +197,8 @@ Continuation signals route attention and planning. A contract, budget, sponsor, 
 
 Maintain detailed records in the [field-learning register](field-learning-register.md). Link the incident and reconciliation record instead of duplicating sensitive evidence here.
 
+For recurring human overrides or exceptions, sample the proposal, source evidence, policy revision, stated reason, counterexamples, and eventual verified outcome against the eligible population. Give a named workflow or policy owner a dated choice: clarify guidance, test a change to executable behavior, preserve a bounded exception, or reject the proposed learning. Record operator disagreement and time to verified disposition where it helps expose unresolved work. Frequency alone does not turn a workaround into policy; any behavior change follows the normal evaluation, approval, and release path. `OPS-001`, `EVA-006`, `OPS-007`. [R26-91](../research/2026-09-23--decision-models-and-decision-learning.md#r26-91)
+
 ## Decisions and actions
 
 | Decision/action | Evidence | Owner | Due | Verification |

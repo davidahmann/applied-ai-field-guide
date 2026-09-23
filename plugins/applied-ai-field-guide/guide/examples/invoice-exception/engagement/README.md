@@ -67,6 +67,10 @@ The [practice packet's R4 branch](../document-review/practice.md#round-5-a-narro
 
 That decision still retains reviewer approval, manual fallback, exact release binding, and stop conditions. It does not authorize automatic posting or establish target authentication, durable state, audit, long-run behavior, support cost, customer acceptance, or realized savings. The current worked engagement remains review-only and blocked from deployment; the alternate path exists to practice earning a narrow “yes” without turning it into a broader claim.
 
+## Optional decision-learning exercise
+
+In a **fictional follow-on review**, three reviewers reject a proposed correction for the same supplier. One says the purchase-order price is stale; another cites an amended contract; the third gives no reason. Those are three observations, not proof that the proposal rule is wrong or that every invoice from the supplier needs a new rule. The owner would inspect source revisions and eligible cases, ask the reviewers about the disagreement, and compare outcomes with counterexamples. The disposition might be to repair source freshness, clarify review guidance, retain a manual exception, or test a revised rule. Any revision needs its own evaluation and release approval. This exercise is not part of the five passing fixture cases and supplies no customer outcome evidence. [R26-91](../../../research/2026-09-23--decision-models-and-decision-learning.md#r26-91)
+
 ## What this example does not prove
 
 - The synthetic observation represents a real customer population.

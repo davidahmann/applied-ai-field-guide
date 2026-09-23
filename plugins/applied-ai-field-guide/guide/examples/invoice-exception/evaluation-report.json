@@ -109,9 +109,9 @@
         {
           "component_id": "node-dependency-lock",
           "uri": "../../package-lock.json",
-          "version": "2.4.4",
+          "version": "2.4.5",
           "schema_version": null,
-          "digest": "sha256:6200487e1d3646d9d762cb12db04ea3b7aea27dd318870776561f59be4474420"
+          "digest": "sha256:ca5dc1457629c05ac13707a1ca5ce726835d1bea4fad48f843ad48c5d32a90ac"
         },
         {
           "component_id": "invoice-ontology",
@@ -237,10 +237,10 @@
           "uri": "../../operations/telemetry-contract.md",
           "version": null,
           "schema_version": null,
-          "digest": "sha256:6be09a856d1e40d69cf21a3147b686df866c474a4241ed3b24405347cd03eb97"
+          "digest": "sha256:e996c99a028739dcc49d173c8314f1220da64b9e1fbc79bccb0da8e01fabe670"
         }
       ],
-      "environment_digest": "sha256:ba61a330c22e5d47cfb477562cffa21a1e6d34cf8c835aae96165822f1ceef0d",
+      "environment_digest": "sha256:8aa39e9cb6bcd05c914602adc4bcb36560f481f6aa0913b8e0e96271be003a9e",
       "network_mode": "unenforced"
     }
   },
@@ -276,7 +276,7 @@
       "uri": "evaluation-output.json",
       "version": null,
       "schema_version": "1.0.0",
-      "digest": "sha256:71b8659769cdac0cf43773a093c5de55cbd17be3da3e37570566478e8b56ebce"
+      "digest": "sha256:eb4f6e5bdede1206cd7c96e14bcd6fd26f07aa1b277f0a9aed782773e5f3c36f"
     },
     "minimum_confidence": 1
   },

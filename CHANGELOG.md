@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.4.5] - 2026-09-23
+
+- Add a dated, caveated review of decision-only models, repeated judge ratings, first-divergence diagnosis, and reasoned human overrides. These sources do not establish a model default, a new release score, or automatic policy learning.
+- Add an optional same-case mechanism comparison and sharpen evaluation, monitoring, telemetry, adoption, and service review around first wrong steps and owner-reviewed exceptions. A fictional invoice follow-on shows the decision without expanding the five-case reference result.
+- Refresh release metadata and the local plugin snapshot. No control, schema, skill, lifecycle stage, or runtime was added. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
+
 ## [2.4.4] - 2026-09-17
 
 - Add a service-referral case that separates supplied BugBasher claims from a fictional delayed-payment exercise. Keep the article's publication details and results unverified, and distinguish payment, referral acceptance, and a completed job.
@@ -346,7 +352,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.4...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.5...HEAD
+[2.4.5]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.4...v2.4.5
 [2.4.4]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.3...v2.4.4
 [2.4.3]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.1...v2.4.2
