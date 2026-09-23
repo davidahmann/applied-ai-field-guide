@@ -166,6 +166,8 @@ Use a short, recurring working session while the workflow is changing. This is a
 
 When a short demonstration helps, show the prior path, changed path, one correction or exception, and what still needs evidence. Do not present a demonstration, attendance, or positive feedback as adoption, accepted outcome, or realized value.
 
+Give an operator or domain reviewer time to challenge recurring proposals and recorded reasons, not just click approve. Name the workflow or policy owner who will resolve disputed exceptions and report the disposition back. Capture only decisions needed for this workflow under its confidentiality and retention rules; a collection of overrides is not a standing mandate to automate them. [R26-91](../research/2026-09-23--decision-models-and-decision-learning.md#r26-91)
+
 ## Stakeholder value and productization boundary
 
 | Audience | Outcome or workday benefit | New responsibility | Acceptance evidence | Customer-specific or reusable | Owner |

@@ -1,8 +1,14 @@
 {
   "$schema": "./schemas/artifact-catalog.schema.json",
   "schema_version": "1.1.0",
-  "updated": "2026-09-17",
+  "updated": "2026-09-23",
   "artifacts": [
+    {
+      "id": "evidence.decision-models-and-decision-learning",
+      "type": "evidence",
+      "path": "research/2026-09-23--decision-models-and-decision-learning.md",
+      "tags": ["decision-models", "evaluation", "operations", "field-learning"]
+    },
     {
       "id": "evidence.bugbasher-business-experiment",
       "type": "evidence",

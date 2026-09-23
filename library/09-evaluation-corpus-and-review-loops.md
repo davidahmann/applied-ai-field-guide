@@ -99,6 +99,8 @@ There are two connected loops: the agent’s controlled improvement loop and the
 4. **Retest:** evaluate against an independent holdout or replay world from the same slice, plus the original regression.
 5. **Promote carefully:** run offline, shadow or canary, then expand only when the declared quality and safety thresholds still hold.
 
+For a multi-step failure, mark the **first observable wrong step** and distinguish it from later steps that inherited the bad state. Check source revisions, tool inputs and outputs, policy decisions, and external readback before assigning cause; mark the origin unknown if the trace cannot show it. Add a replay case for the initiating defect and another for any consequential downstream effect. This is a diagnostic aid, not a new composite release score. [R26-90](../research/2026-09-23--decision-models-and-decision-learning.md#r26-90)
+
 “The agent changed its answer on the failing example” is not evidence of improvement. A correction earns trust only when it preserves adjacent behavior and clears an independent retest.
 
 ## When improvement becomes a search problem

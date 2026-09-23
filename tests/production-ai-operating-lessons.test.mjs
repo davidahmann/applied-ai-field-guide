@@ -10,6 +10,39 @@ async function read(repositoryPath) {
   return readFile(path.join(root, repositoryPath), "utf8");
 }
 
+test("decision-model evidence stays bounded and decision learning keeps human authority", async () => {
+  const [research, index, catalogText, selection, evaluation, monitoring, telemetry, serviceReview, adoption, invoice] = await Promise.all([
+    read("research/2026-09-23--decision-models-and-decision-learning.md"),
+    read("research/README.md"),
+    read("catalog.json"),
+    read("templates/intelligence-selection-record.md"),
+    read("library/09-evaluation-corpus-and-review-loops.md"),
+    read("operations/behavior-monitoring.md"),
+    read("operations/telemetry-contract.md"),
+    read("templates/production-service-review.md"),
+    read("templates/delivery-and-adoption-plan.md"),
+    read("examples/invoice-exception/engagement/README.md"),
+  ]);
+  for (const id of ["R26-88", "R26-89", "R26-90", "R26-91"]) {
+    assert.match(research, new RegExp(`## ${id} —`));
+  }
+  assert.match(research, /not independently verified production outcomes/i);
+  assert.match(research, /No new control family/i);
+  assert.match(index, /decision-models-and-decision-learning\.md/);
+  const artifact = JSON.parse(catalogText).artifacts.find(({ path: artifactPath }) => (
+    artifactPath === "research/2026-09-23--decision-models-and-decision-learning.md"
+  ));
+  assert.equal(artifact?.id, "evidence.decision-models-and-decision-learning");
+  assert.match(selection, /same source-bound, held-out cases/i);
+  assert.match(selection, /provider egress and retention/i);
+  assert.match(evaluation, /first observable wrong step/i);
+  assert.match(monitoring, /earliest \*\*observable divergence\*\*/i);
+  assert.match(telemetry, /A reviewer reason is evidence to investigate, not policy or a ground-truth label/i);
+  assert.match(serviceReview, /Frequency alone does not turn a workaround into policy/i);
+  assert.match(adoption, /time to challenge recurring proposals/i);
+  assert.match(invoice, /not part of the five passing fixture cases/i);
+});
+
 test("Uber operating evidence is dated, cataloged, bounded, and reachable", async () => {
   const [research, index, sourceIndex, catalogText] = await Promise.all([
     read("research/2026-08-28--uber-production-ai-operating-lessons.md"),
