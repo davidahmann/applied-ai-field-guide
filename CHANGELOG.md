@@ -8,6 +8,7 @@ Notable changes to this project are recorded here.
 
 - Add a workflow-specific team coverage view to the capability roadmap. It names the business-analysis, product, architecture, data, engineering, evaluation, security, adoption, and service work to cover without prescribing eight full-time roles or letting a title confer approval authority.
 - Extend the existing delivery plan and engagement skills to record the needed skills, decision rights, real capacity, delegates, and missing-coverage disposition before a proof or slice proceeds. Refresh the public route description and local plugin snapshot; add regression checks for the staffing path.
+- Rerun the five-case deterministic invoice example under Node 24.20.0 and refresh its dated report, raw output, and draft release bindings after the dependency-lock update.
 - No new control, schema, lifecycle, canonical artifact, or runtime capability was added. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
 
 ## [2.4.6] - 2026-09-24

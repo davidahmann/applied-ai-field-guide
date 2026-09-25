@@ -21,9 +21,12 @@ test("delivery staffing names skills and capacity without turning titles into ap
   for (const contribution of ["Workflow analysis", "Data engineering", "Evaluation and independent checking", "Security, privacy, and risk", "Adoption and service operation"]) {
     assert.ok(roadmap.includes(contribution), contribution);
   }
-  for (const contribution of ["Business analysis and user experience", "Architecture and integration", "Data engineering or source-system expertise", "Evaluation and quality", "Adoption, support, and recovery"]) {
+  for (const contribution of ["business analysis or UX", "architecture and integration", "data or source-system expertise", "evaluation", "security/privacy/risk review", "adoption or support"]) {
     assert.ok(plan.includes(contribution), contribution);
   }
+  assert.match(plan, /Add only the contributions that matter here/);
+  assert.match(plan, /seek formal approval only where target policy or a risk gate requires it/);
+  assert.doesNotMatch(plan, /\| Business analysis and user experience \|/);
   assert.match(plan, /One person may cover several functions, but independent verification and risk acceptance remain separate/);
   assert.match(plan, /If a needed contribution cannot be secured, narrow, defer, or stop/);
   assert.match(conductor, /distinguish decision rights from the skills and available time needed/);

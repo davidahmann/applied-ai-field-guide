@@ -33,15 +33,10 @@ Name the people whose evidence, delivery skill, or decision is required before c
 | Data and policy authority | — | — | — | — | — | — |
 | Metric ownership and independent verification | — | — | — | — | — | — |
 | Technical and receiving-service ownership | — | — | — | — | — | — |
-| Business analysis and user experience | Observe cases; test the changed work surface and exception path | — | — | — | — | — |
-| Architecture and integration | Validate source, identity, state, effect, and failure boundaries | — | — | — | — | — |
-| Data engineering or source-system expertise | Verify quality, preparation, lineage, freshness, and reconciliation where needed | — | — | — | — | — | — |
-| Software, AI, or ML engineering | Build and test the selected mechanism; add ML skill only if the route needs it | — | — | — | — | — | — |
-| Evaluation and quality | Design representative and negative cases with a domain expert | — | — | — | — | — | — |
-| Security, privacy, and risk review | Review data use, permissions, effect limits, and applicable approvals | — | — | — | — | — | — |
-| Adoption, support, and recovery | Rehearse training, support, incident response, and retained or transferred ownership | — | — | — | — | — | — |
+| Workflow-specific contribution | — | — | — | — | — | — |
+| Workflow-specific contribution | — | — | — | — | — | — |
 
-Mark an inapplicable contribution with a reason and approver; do not leave the row blank or treat a job title as proof of skill or capacity. Participation needs are target-specific. Practitioner time estimates or staffing patterns are evidence leads, not defaults. Controls: `FDE-003`, `ADP-002`.
+Check whether this proof needs business analysis or UX, architecture and integration, data or source-system expertise, software/AI/ML engineering, evaluation, security/privacy/risk review, and adoption or support. Add only the contributions that matter here. Explain omitted material coverage; seek formal approval only where target policy or a risk gate requires it. A job title does not prove skill or capacity. Practitioner time estimates and staffing patterns are evidence leads, not defaults. Controls: `FDE-003`, `ADP-002`.
 
 ## Requirement-to-release trace
 
