@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.4.6] - 2026-09-24
+
+- Add a failed-amount-to-change walkthrough to the existing invoice lab. It separates an agent-drafted case from source-owned reference truth, independent checks, human review, and conditional route regression; it does not claim the proposed fix was implemented or released.
+- Extend the existing source-to-outcome architecture map and link it from the concise Guide. Add a provider-configuration verification prompt in production readiness. Vendor diagrams remain review inputs, not release evidence.
+- Refresh release metadata and the local plugin snapshot. No control, schema, skill, lifecycle stage, runtime, or new canonical artifact was added. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
+
 ## [2.4.5] - 2026-09-23
 
 - Add a dated, caveated review of decision-only models, repeated judge ratings, first-divergence diagnosis, and reasoned human overrides. These sources do not establish a model default, a new release score, or automatic policy learning.
@@ -352,7 +358,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.5...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.6...HEAD
+[2.4.6]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.5...v2.4.6
 [2.4.5]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.4...v2.4.5
 [2.4.4]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.3...v2.4.4
 [2.4.3]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.2...v2.4.3

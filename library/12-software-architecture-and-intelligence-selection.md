@@ -78,7 +78,13 @@ flowchart LR
     H --> I["Source-of-truth readback"]
     I --> J["Outcome, quality, adoption, and cost"]
     J --> A
+    K["Identity, access, and data limits"] -.-> A
+    K -.-> G
+    L["Evaluation, traces, and rollback"] -.-> C
+    L -.-> J
 ```
+
+Each arrow needs a named owner, an authority limit, and failure behavior. The model can be absent from the decision step; source, action, and verification boundaries still apply. Build shared infrastructure only after more than one workflow proves the need for it.
 
 The [hybrid intelligence-system blueprint](../blueprints/hybrid-intelligence-system.md) gives the exact component, state, trust-boundary, failure, telemetry, and release-test checklist. The default is serial and simple: add parallelism, additional models, or multiple agents only when measured constraints justify them.
 
