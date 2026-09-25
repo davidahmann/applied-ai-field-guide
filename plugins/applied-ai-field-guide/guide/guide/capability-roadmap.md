@@ -24,6 +24,23 @@ These roles overlap. The useful distinction is what each person remains accounta
 
 No role receives authority merely from its title. Production access, approvals, release decisions, customer commitments, and risk acceptance still belong to the target system and its accountable owners.
 
+## Staff the workflow you have
+
+Start with the decisions and work that this workflow requires, then name the people who can do them. One person may cover several functions; a specialist may join for one review rather than the whole project. Record availability and a backup in the [delivery and adoption plan](../templates/delivery-and-adoption-plan.md#proof-participation-and-decision-capacity). An org chart or a named architect is not evidence that the team has time to inspect a source, run an evaluation, or support a release.
+
+| Work to cover | Skills and contribution to check | Bring in when… |
+| --- | --- | --- |
+| Workflow analysis and domain judgment | A business analyst, process owner, or operator traces real cases, exceptions, handoffs, policy, and who accepts the result | At discovery; keep a domain reviewer available for evaluation and adoption |
+| Product and experience | A workflow or product owner sets scope and acceptance; UX or service-design skill tests the work surface, correction, rejection, and escalation | Before choosing the slice; add dedicated design help when users must change how they work |
+| Solution architecture and integration | An architect or technical lead maps source systems, identity, state, effects, failure paths, and the target release environment | Before design is accepted and whenever an integration or authority boundary changes |
+| Data engineering | A data engineer or source-system specialist checks access, quality, preparation, lineage, freshness, and reconciliation | When decision-bearing data crosses systems or needs a maintained preparation path |
+| Software and AI engineering | Engineers implement the smallest selected mechanism, application surface, deterministic rules, tests, telemetry, and deployment; add ML expertise for a trained predictive model | During build and change; the selected mechanism determines which specialism is needed |
+| Evaluation and independent checking | A QA or evaluation practitioner designs repeatable tests with a domain expert and an independent verifier of the business result | Before a pilot claim or release decision; separate implementation from acceptance authority |
+| Security, privacy, and risk | Relevant owners review permissions, data use, action limits, threat paths, and required approvals | Before governed data or effects enter the slice, and again when scope or autonomy expands |
+| Adoption and service operation | Operators, an enablement lead where needed, and a service owner rehearse use, support, incidents, recovery, cost review, and change | From pilot planning through handoff or retained ownership |
+
+These are contributions, not eight mandatory full-time hires. A small internal team may combine roles; a regulated or integration-heavy workflow may need several specialists. Do not let a combined role approve its own independent check. If a needed person, decision right, or operating capacity is missing, reduce the slice, find coverage, or defer the gate rather than marking the box complete. `FDE-003`, `ADP-002`.
+
 ## The capability map
 
 The capability view below shows how practice compounds; it is not a second lifecycle. Follow the [canonical delivery loop](../README.md#from-idea-to-production) on live work. Software, data, security, product judgment, and communication support every stage rather than forming separate tracks.

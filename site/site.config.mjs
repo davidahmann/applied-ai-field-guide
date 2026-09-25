@@ -137,7 +137,7 @@ export const pages = [
     navTitle: "Applied AI capability roadmap",
     title: "Applied AI Capability Roadmap: Roles, Missions, and Evidence",
     description:
-      "A practical capability roadmap for AI engineers, product owners, operators, and FDEs, with role boundaries, practice missions, artifacts, and a glossary.",
+      "Map the skills and team coverage an applied-AI workflow needs, then practice the work through evidence-backed missions and artifacts.",
   },
   {
     route: "/field-engagement-reframing/",

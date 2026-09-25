@@ -34,7 +34,7 @@ An open-source design and verification kit for applied-AI engineers, product and
 | **Handbook** | Running a live engagement | [Lifecycle playbooks](playbooks/README.md) |
 | **Engineering Kit** | Contracts, controls, architecture, evaluations, operations, and executable evidence | [Templates](templates/README.md), [controls](controls/control-catalog.json), and [examples](examples/invoice-exception/README.md) |
 
-They are not separate frameworks. Use the [capability roadmap](guide/capability-roadmap.md) to plan practice.
+They are not separate frameworks. Use the [capability roadmap](guide/capability-roadmap.md) to staff a workflow.
 
 ## The core idea
 
@@ -70,8 +70,6 @@ The runnable examples use simulated services; the durable-recovery lab also pers
 Before adapting them, use [Enterprise Integration and Scale Reality](library/17-enterprise-integration-and-scale-reality.md) to replace teaching conveniences with target evidence.
 
 ## From idea to production
-
-The canonical lifecycle:
 
 ```mermaid
 flowchart LR

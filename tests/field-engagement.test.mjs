@@ -11,6 +11,25 @@ import { engagementReframeSemanticErrors } from "../scripts/governance-invariant
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
+test("delivery staffing names skills and capacity without turning titles into approvals", async () => {
+  const [roadmap, plan, conductor, delivery] = await Promise.all([
+    readFile(path.join(root, "guide", "capability-roadmap.md"), "utf8"),
+    readFile(path.join(root, "templates", "delivery-and-adoption-plan.md"), "utf8"),
+    readFile(path.join(root, ".agents", "skills", "run-ai-engagement", "SKILL.md"), "utf8"),
+    readFile(path.join(root, ".agents", "skills", "deliver-approved-ai-slice", "SKILL.md"), "utf8"),
+  ]);
+  for (const contribution of ["Workflow analysis", "Data engineering", "Evaluation and independent checking", "Security, privacy, and risk", "Adoption and service operation"]) {
+    assert.ok(roadmap.includes(contribution), contribution);
+  }
+  for (const contribution of ["Business analysis and user experience", "Architecture and integration", "Data engineering or source-system expertise", "Evaluation and quality", "Adoption, support, and recovery"]) {
+    assert.ok(plan.includes(contribution), contribution);
+  }
+  assert.match(plan, /One person may cover several functions, but independent verification and risk acceptance remain separate/);
+  assert.match(plan, /If a needed contribution cannot be secured, narrow, defer, or stop/);
+  assert.match(conductor, /distinguish decision rights from the skills and available time needed/);
+  assert.match(delivery, /Narrow or defer the slice when a needed specialist or independent verifier is unavailable/);
+});
+
 async function json(relativePath) {
   return JSON.parse(await readFile(path.join(root, relativePath), "utf8"));
 }

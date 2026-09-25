@@ -4,6 +4,12 @@ Notable changes to this project are recorded here.
 
 ## [Unreleased]
 
+## [2.4.7] - 2026-09-25
+
+- Add a workflow-specific team coverage view to the capability roadmap. It names the business-analysis, product, architecture, data, engineering, evaluation, security, adoption, and service work to cover without prescribing eight full-time roles or letting a title confer approval authority.
+- Extend the existing delivery plan and engagement skills to record the needed skills, decision rights, real capacity, delegates, and missing-coverage disposition before a proof or slice proceeds. Refresh the public route description and local plugin snapshot; add regression checks for the staffing path.
+- No new control, schema, lifecycle, canonical artifact, or runtime capability was added. Net file-count change: `library` 18 (0), top-level `templates` 37 (0), `blueprints` 12 (0), and `guide` 5 (0).
+
 ## [2.4.6] - 2026-09-24
 
 - Add a failed-amount-to-change walkthrough to the existing invoice lab. It separates an agent-drafted case from source-owned reference truth, independent checks, human review, and conditional route regression; it does not claim the proposed fix was implemented or released.
@@ -358,7 +364,8 @@ Notable changes to this project are recorded here.
 - Add a transactional invoice-exception reference with executable policy, runtime, contract, and adversarial replay tests.
 - Add a dated evidence ledger with explicit source-quality and claim boundaries.
 
-[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.6...HEAD
+[Unreleased]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.7...HEAD
+[2.4.7]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.6...v2.4.7
 [2.4.6]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.5...v2.4.6
 [2.4.5]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.4...v2.4.5
 [2.4.4]: https://github.com/davidahmann/applied-ai-field-guide/compare/v2.4.3...v2.4.4

@@ -165,6 +165,7 @@ test("the capability roadmap is a bounded secondary entry layer", async () => {
   const source = await readFile(path.join(root, page.source), "utf8");
   for (const heading of [
     "## Choose the responsibility, not the title",
+    "## Staff the workflow you have",
     "## The capability map",
     "## Five practice missions",
     "## The quick-start engagement pack",
@@ -173,6 +174,7 @@ test("the capability roadmap is a bounded secondary entry layer", async () => {
     assert.ok(source.includes(heading), heading);
   }
   assert.match(source, /not a certification, hiring standard, fixed curriculum/);
+  assert.match(source, /These are contributions, not eight mandatory full-time hires/);
   assert.match(source, /does not substitute for production experience, user acceptance, or target-system approval/);
   assert.match(source, /## Optional technical companion/);
   assert.match(source, /AI Engineering from Scratch/);
