@@ -16,6 +16,18 @@ No customer access is needed. Start with the [self-contained practice packet](pr
 
 The exercise should leave you with a baseline report, one visible failure, one human correction, and a clear boundary between record shape, source correctness, and approval authority. It does not require an API key. The optional live comparison below adds provider cost and should use only the built-in synthetic documents.
 
+### From a failed case to a proposed change
+
+The existing [wrong-amount test](document-review.test.mjs) changes `doc-a`'s proposal from the source's USD 120.50 to USD 120.00. The record passes shape validation; the separate source grader rejects it. That is the failure to carry into the change loop, not a reason to declare the extractor fixed.
+
+1. Draft a scenario from the failed run: source `doc-a` at its recorded revision, the wrong proposal, the expected source-supported amount, a forbidden acceptance of USD 120.00, and the manual-queue fallback. An agent can draft this card, but the source owner and independent evaluation approver must settle its expected result. The candidate cannot edit the grader or pass signal.
+2. Propose one bounded fix, such as checking a clearly labeled `Total` against the proposed amount before showing a draft. Leave conflicting or unreadable amounts for review; do not silently pick a number. Keep the scenario and fix attributable in one reviewable change.
+3. Run the wrong-amount negative control and neighboring cases: narrative wording, a disputed total, and a superseded estimate. Ask whether the fix caught the error without turning valid work into false certainty. Test a separate, controlled holdout before making a deployment claim; this public eight-document lab is **not** such a holdout.
+4. Have a person review the source rule, changed behavior, exclusions, grader independence, and fallback. If the target service has primary and fallback model routes or distinct runtimes, replay both under their actual policies. A pass on one route does not cover the other.
+5. Only then consider the ordinary shadow, canary, rollback, and operating gates. This lab implements the failed-case test, not the proposed fix, independent holdout, dual-runtime check, or production promotion.
+
+See the [evaluation review loop](../../../library/09-evaluation-corpus-and-review-loops.md#turn-review-into-a-learning-loop) and [change management](../../../operations/change-management.md) before changing a live route.
+
 ## Boundary and mechanism decision
 
 The user is an accounts-payable reviewer. The accepted practice outcome is a source-supported invoice draft or a justified return to the manual queue. Posting, payment, supplier contact, policy changes, identity management and customer data are excluded. The fictional controller retains posting authority. The manual queue is the fallback.

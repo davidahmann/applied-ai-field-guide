@@ -60,6 +60,7 @@ Start every row as `required`. Change a row to `not applicable` only with a name
 
 - Name each source owner, interface, extraction cursor, schema and semantic revision, freshness objective, deletion and late-arrival behavior, transformation build, quarantine, and independent reconciliation.
 - Exercise incomplete extracts, unmatched keys, corrected history, backfills, schema drift, restricted-network promotion, artifact provenance, credential rotation, and rollback where applicable.
+- For each external model, tool, or runtime provider in the path, verify the actual account and configuration: data destination and region, retention and deletion, training use, logging access, credential scope, and upgrade or rollback behavior. Record contract and test evidence for the selected route; a vendor security diagram or "zero retention" label is a question to verify, not target-system proof.
 - A completed request, file load, or batch proves transport only. Advance the row to `tested` only when target-system evidence reconciles the declared business population and failure cases.
 - Use [Enterprise Integration and Scale Reality](../library/17-enterprise-integration-and-scale-reality.md) to map local or teaching components to target responsibilities without mandating one infrastructure stack.
 

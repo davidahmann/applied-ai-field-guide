@@ -132,7 +132,7 @@ Keep every route observable, testable, replaceable, and costed. Add multiple age
 
 ## 7. Design the whole decision system
 
-Design domain state, governed context, behavior, authority, capabilities, runtime, work surface, and operation together. The [retrieval evaluation lab](../examples/invoice-exception/retrieval-evaluation/README.md) keeps a local baseline beside an opt-in hybrid comparison; the [durable recovery lab](../examples/invoice-exception/durable-recovery/README.md) makes restart and readback inspectable. Neither is target-system evidence.
+Design domain state, context, behavior, authority, runtime, work surface, and operation together. The [decision-system map](../library/12-software-architecture-and-intelligence-selection.md#design-a-hybrid-system-intentionally) shows the path. The [retrieval lab](../examples/invoice-exception/retrieval-evaluation/README.md) compares baselines; the [recovery lab](../examples/invoice-exception/durable-recovery/README.md) tests restart and readback. Neither is target-system evidence.
 
 The central action rule is:
 
