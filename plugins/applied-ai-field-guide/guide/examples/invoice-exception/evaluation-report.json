@@ -2,9 +2,9 @@
   "$schema": "../../schemas/evaluation-report.schema.json",
   "schema_version": "1.1.0",
   "report_id": "invoice_exception_reference_report",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "owner": "reference-evaluation-preparer",
-  "generated_at": "2026-09-04T23:08:56.757Z",
+  "generated_at": "2026-09-25T15:49:43.056Z",
   "claim": "The exact invoice-exception deterministic runtime passes all five committed regression cases under the recorded host-process environment.",
   "objective": "regression",
   "population": {
@@ -80,7 +80,7 @@
       },
       "sandbox": {
         "component_id": "local-node-host-process",
-        "version": "22.19.0",
+        "version": "24.20.0",
         "image_digest": null,
         "isolation": "host_process",
         "cpu_limit": null,
@@ -89,7 +89,7 @@
         "max_wall_time_ms": null,
         "network_enforced": false,
         "wall_time_enforced": false,
-        "digest": "sha256:d6420dbcf8288e622a4212413e5c905e9392a308c4f6c84d2b527cca58c2a51c"
+        "digest": "sha256:247ff36f8bf76f3cb2bb55929e2f46e25f072bc0737b11a03af7426309bea7d0"
       },
       "world": {
         "component_id": "invoice-reference-world",
@@ -109,9 +109,9 @@
         {
           "component_id": "node-dependency-lock",
           "uri": "../../package-lock.json",
-          "version": "2.4.6",
+          "version": "2.4.7",
           "schema_version": null,
-          "digest": "sha256:7c7ef1f52d5144f19556467993cdb146fd2c8c89580f43f428386f2f5e1e9e33"
+          "digest": "sha256:265bb326f39851bbcbc67893fded6478e6466aca459833cd11418281576ce401"
         },
         {
           "component_id": "invoice-ontology",
@@ -240,7 +240,7 @@
           "digest": "sha256:e996c99a028739dcc49d173c8314f1220da64b9e1fbc79bccb0da8e01fabe670"
         }
       ],
-      "environment_digest": "sha256:b6be7fd259b0b5252fe765cd9a88eb60d9f67ab4a16615b36d5991887cdbec61",
+      "environment_digest": "sha256:26bdeb87188ba76141d30672920fcf3435541cbb39d0448f5c599797fa6f9250",
       "network_mode": "unenforced"
     }
   },
@@ -276,7 +276,7 @@
       "uri": "evaluation-output.json",
       "version": null,
       "schema_version": "1.0.0",
-      "digest": "sha256:6f423c37679d06dae13896ba218c575a5b1bc5eb302ef7dab1fa5348cb1ddef6"
+      "digest": "sha256:2f44538fe82d39391b851104a6fda901e0fe52f2140f07574b7220768bc75c12"
     },
     "minimum_confidence": 1
   },
@@ -292,7 +292,7 @@
     "turns": 0,
     "tool_calls": 30,
     "total_tokens": 0,
-    "wall_time_ms": 65,
+    "wall_time_ms": 49,
     "cost_usd": 0,
     "peak_parallel_workers": 1
   },
@@ -394,7 +394,7 @@
     "rationale": "The bound executable runner and independent deterministic grader returned passing evidence for every exact committed regression case under the declared host-process limitations.",
     "decided_by": "deterministic-reference-grader",
     "authority_role": "repository-regression-evaluator",
-    "decided_at": "2026-09-04T23:08:56.757Z",
+    "decided_at": "2026-09-25T15:49:43.056Z",
     "independent_from_candidate": true
   },
   "control_ids": [

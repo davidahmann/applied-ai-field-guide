@@ -10,7 +10,7 @@ The **Guide** explains the method. The [Handbook](../playbooks/README.md) suppor
 
 ## 1. What the delivery team is responsible for
 
-The team turns an ambiguous operating problem into a supported software service that improves an accepted outcome. That takes several kinds of work:
+The team turns a messy operating problem into a supported service with an accepted outcome. That takes several kinds of work:
 
 | Responsibility | Question |
 | --- | --- |
@@ -19,7 +19,7 @@ The team turns an ambiguous operating problem into a supported software service 
 | Engineering | What is the smallest reliable system that can improve the workflow? |
 | Operation | Can the team prove the result, support it, change it, and eventually retire it? |
 
-Applied-AI engineers build and test the behavior. Product and workflow owners decide which work should change. Platform, data, security, and service teams own their boundaries. An FDE connects these responsibilities in an unfamiliar environment. Record the actual decision rights and missing expertise.
+Applied-AI engineers build and test the behavior. Product and workflow owners decide which work should change. Platform, data, security, and service teams own their boundaries. An FDE connects these responsibilities in an unfamiliar environment. Check [team coverage](capability-roadmap.md#staff-the-workflow-you-have) and record missing expertise in the [delivery plan](../templates/delivery-and-adoption-plan.md#proof-participation-and-decision-capacity).
 
 The output is an **owned change to work** with a verifier, bounded authority, full-cost case, operating team, and exit.
 

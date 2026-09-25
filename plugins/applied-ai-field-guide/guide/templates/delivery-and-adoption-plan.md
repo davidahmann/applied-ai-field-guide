@@ -23,7 +23,7 @@ Use for one customer or internal workflow. Name the eventual service owner at pi
 
 ## Proof participation and decision capacity
 
-Name the people whose evidence or decision is required before committing the proof. Record real availability and a delegate or escalation path; a title alone is not capacity. If a required contribution cannot be secured, narrow, defer, or stop the proof instead of treating the missing owner as a later adoption issue.
+Name the people whose evidence, delivery skill, or decision is required before committing the proof. Use the [capability roadmap](../guide/capability-roadmap.md#staff-the-workflow-you-have) to check the functions against this workflow; do not copy its list as a fixed team. Record real availability and a delegate or escalation path. One person may cover several functions, but independent verification and risk acceptance remain separate where required. If a needed contribution cannot be secured, narrow, defer, or stop the proof instead of treating the missing owner as a later adoption issue.
 
 | Role or decision right | Required contribution | Availability window or decision deadline | Primary | Delegate or backup | Access/evidence required | If unavailable |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -33,8 +33,10 @@ Name the people whose evidence or decision is required before committing the pro
 | Data and policy authority | — | — | — | — | — | — |
 | Metric ownership and independent verification | — | — | — | — | — | — |
 | Technical and receiving-service ownership | — | — | — | — | — | — |
+| Workflow-specific contribution | — | — | — | — | — | — |
+| Workflow-specific contribution | — | — | — | — | — | — |
 
-Participation needs are target-specific. Practitioner time estimates or staffing patterns are evidence leads, not defaults. Control: `FDE-003`.
+Check whether this proof needs business analysis or UX, architecture and integration, data or source-system expertise, software/AI/ML engineering, evaluation, security/privacy/risk review, and adoption or support. Add only the contributions that matter here. Explain omitted material coverage; seek formal approval only where target policy or a risk gate requires it. A job title does not prove skill or capacity. Practitioner time estimates and staffing patterns are evidence leads, not defaults. Controls: `FDE-003`, `ADP-002`.
 
 ## Requirement-to-release trace
 

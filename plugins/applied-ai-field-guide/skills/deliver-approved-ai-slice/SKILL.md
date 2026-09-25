@@ -15,7 +15,7 @@ Turn an accepted workflow boundary into one usable, reversible, and supportable 
 
 ## Workflow
 
-1. Confirm the approved segment, accepted outcome, verifier, exclusions, maximum effect, authority ceiling, cost budget, safe fallback, adoption surface, owner, baseline acknowledgment, required participant capacity and delegates, and stop conditions.
+1. Confirm the approved segment, accepted outcome, verifier, exclusions, maximum effect, authority ceiling, cost budget, safe fallback, adoption surface, owner, baseline acknowledgment, required decision rights, delivery skills, available capacity and delegates, and stop conditions. Narrow or defer the slice when a needed specialist or independent verifier is unavailable.
 2. Translate the boundary into one end-to-end slice across input, decision, human work surface, permitted action or staged artifact, source-of-truth verification, telemetry, support, and rollback.
 3. Build deterministic policy, state transitions, authorization, idempotency, and effect verification outside model generation. Add model or agent behavior only where the selection record requires it.
 4. Use real target interfaces or faithful contract doubles. Preserve source revisions, preparation lineage, release dependencies, and customer-specific configuration.
